@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algebraic Identities - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #1b5e20; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #4caf50; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c8e6c9; text-align: left; font-size: 1.1em; }
+        .formula-table th { background: #4caf50; color: white; }
+        
+        .math-eq { font-family: 'Times New Roman', serif; font-style: italic; font-size: 1.3em; color: #1b5e20; font-weight: bold; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #4caf50; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 600px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        .svg-canvas-large { max-width: 450px; height: 450px; }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #81c784; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.6em; display: block; margin-top: 5px; font-family: monospace; }
+        
+        /* Q&A SECTION */
+        .qa-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #4caf50; }
+        .qa-question { font-weight: bold; color: #1b5e20; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #4caf50; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter2.html" class="back-btn">⬅️ Back to Chapter Index</a>
+
+    <h1>🧬 Algebraic Identities</h1>
+    <p class="subtitle">Universal mathematical truths that never change!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Core Identities</h2>
+        <p>An identity is an algebraic equation that is <strong>true for all values</strong> of the variables occurring in it. Memorizing these standard identities acts as a master key for expanding polynomials and factoring complex equations.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Identity Name</th>
+                <th>The Formula</th>
+            </tr>
+            <tr>
+                <td><strong>Identity I (Perfect Square Sum)</strong></td>
+                <td><span class="math-eq">(x + y)² = x² + 2xy + y²</span></td>
+            </tr>
+            <tr>
+                <td><strong>Identity II (Perfect Square Diff)</strong></td>
+                <td><span class="math-eq">(x - y)² = x² - 2xy + y²</span></td>
+            </tr>
+            <tr>
+                <td><strong>Identity III (Difference of Squares)</strong></td>
+                <td><span class="math-eq">x² - y² = (x + y)(x - y)</span></td>
+            </tr>
+            <tr>
+                <td><strong>Identity IV (Standard Product)</strong></td>
+                <td><span class="math-eq">(x + a)(x + b) = x² + (a + b)x + ab</span></td>
+            </tr>
+            <tr>
+                <td><strong>Identity V (Conditional Cubic)</strong></td>
+                <td><span class="math-eq">If x + y + z = 0, then x³ + y³ + z³ = 3xyz</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE VISUAL SQUARE (GEOMETRIC PROOF) -->
+    <div class="section-box">
+        <h2 style="color: #ff9800; text-align: center; margin-top: 0;">📐 1. Visual Proof: (x + y)²</h2>
+        <p style="text-align: center; color: #666;">Algebra represents real geometry! The formula <strong>(x + y)² = x² + 2xy + y²</strong> calculates the area of a square with side length (x + y). Adjust the sizes of x and y to see how the 4 internal boxes always perfectly add up.</p>
+
+        <div class="interactive-container" style="background: #fff8e1; border-color: #ffb300;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #f57c00;">
+                    <label style="color: #e65100; font-weight: bold;">Size of x: <span id="val-geo-x">5</span></label>
+                    <input type="range" id="s-geo-x" min="2" max="10" value="5">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2;">
+                    <label style="color: #0d47a1; font-weight: bold;">Size of y: <span id="val-geo-y">3</span></label>
+                    <input type="range" id="s-geo-y" min="2" max="10" value="3">
+                </div>
+            </div>
+
+            <svg id="geo-svg" class="svg-canvas svg-canvas-large" viewBox="0 0 500 500">
+                <g id="geo-group" transform="translate(40, 40)"></g>
+                <text id="lbl-top-x" font-size="24px" font-weight="bold" fill="#e65100" text-anchor="middle">x</text>
+                <text id="lbl-top-y" font-size="24px" font-weight="bold" fill="#0d47a1" text-anchor="middle">y</text>
+                <text id="lbl-left-x" font-size="24px" font-weight="bold" fill="#e65100" text-anchor="end">x</text>
+                <text id="lbl-left-y" font-size="24px" font-weight="bold" fill="#0d47a1" text-anchor="end">y</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #ff9800; background: #fff3e0; flex-basis: 100%;">
+                    <span style="color: #e65100; font-size: 1.2em;">Total Area Equation</span>
+                    <div style="font-family: 'Times New Roman', serif; font-size: 1.5em; color: #d84315; margin-top: 10px; font-weight: bold;">
+                        (<span style="color:#e65100;">x</span> + <span style="color:#0d47a1;">y</span>)² = <span style="color:#e65100;">x²</span> + <span style="color:#4caf50;">xy</span> + <span style="color:#4caf50;">xy</span> + <span style="color:#0d47a1;">y²</span>
+                    </div>
+                    <div id="geo-math-live" style="font-family: monospace; font-size: 1.4em; color: #333; margin-top: 10px;">
+                        (5 + 3)² = 25 + 15 + 15 + 9
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE DIFFERENCE OF SQUARES -->
+    <div class="section-box">
+        <h2 style="color: #1976d2; text-align: center; margin-top: 0;">✂️ 2. Visual Proof: x² - y²</h2>
+        <p style="text-align: center; color: #666;">What happens when you take a big square (x²) and cut a smaller square (y²) out of the corner? You get an L-shape! If you slice that L-shape and rearrange the pieces, they perfectly form a rectangle of width <strong>(x + y)</strong> and height <strong>(x - y)</strong>.</p>
+
+        <div class="interactive-container" style="background: #e3f2fd; border-color: #1976d2;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #1565c0;">
+                    <label style="color: #0d47a1; font-weight: bold;">Big Square (x): <span id="val-diff-x">8</span></label>
+                    <input type="range" id="s-diff-x" min="5" max="10" value="8">
+                </div>
+                <div class="slider-group" style="border-color: #c2185b;">
+                    <label style="color: #ad1457; font-weight: bold;">Cutout Square (y): <span id="val-diff-y">4</span></label>
+                    <input type="range" id="s-diff-y" min="2" max="9" value="4">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 700 350" style="max-width: 700px; height: 350px;">
+                <!-- Left Side: x^2 - y^2 (The L Shape) -->
+                <g id="diff-left-group" transform="translate(50, 50)"></g>
+                <text x="150" y="30" font-size="20px" font-weight="bold" fill="#1565c0" text-anchor="middle">Step 1: x² - y²</text>
+                
+                <!-- Right Side: (x+y)(x-y) (The Rearranged Rectangle) -->
+                <g id="diff-right-group" transform="translate(350, 50)"></g>
+                <text x="500" y="30" font-size="20px" font-weight="bold" fill="#2e7d32" text-anchor="middle">Step 2: (x + y)(x - y)</text>
+                
+                <!-- Arrow -->
+                <text x="300" y="180" font-size="30px" fill="#333" text-anchor="middle">➡️</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #1976d2; background: #fff; flex-basis: 100%;">
+                    <div style="font-family: 'Times New Roman', serif; font-size: 1.5em; color: #1565c0; font-weight: bold;">
+                        <span style="color:#1565c0;">x²</span> - <span style="color:#c2185b;">y²</span> = (<span style="color:#1565c0;">x</span> + <span style="color:#c2185b;">y</span>)(<span style="color:#1565c0;">x</span> - <span style="color:#c2185b;">y</span>)
+                    </div>
+                    <div id="diff-math-live" style="font-family: monospace; font-size: 1.4em; color: #333; margin-top: 10px;">
+                        8² - 4² = (8 + 4)(8 - 4)  ➡️  64 - 16 = (12)(4) = 48
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: ZERO SUM CUBIC TESTER -->
+    <div class="section-box">
+        <h2 style="color: #7b1fa2; text-align: center; margin-top: 0;">⚖️ 3. The Zero-Sum Cubic Tester</h2>
+        <p style="text-align: center; color: #666;">Identity V is a special magic trick! If three numbers (x, y, and z) add up to exactly 0, then the sum of their cubes will <em>always</em> be equal to 3 &times; x &times; y &times; z. Move the sliders for x and y to test this!</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #9c27b0;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #7b1fa2;">
+                    <label style="color: #4a148c; font-weight: bold;">Value x: <span id="val-cub-x">4</span></label>
+                    <input type="range" id="s-cub-x" min="-10" max="10" value="4">
+                </div>
+                <div class="slider-group" style="border-color: #7b1fa2;">
+                    <label style="color: #4a148c; font-weight: bold;">Value y: <span id="val-cub-y">-1</span></label>
+                    <input type="range" id="s-cub-y" min="-10" max="10" value="-1">
+                </div>
+                <div class="slider-group" style="border-color: #d32f2f; background: #ffebee;">
+                    <label style="color: #b71c1c; font-weight: bold;">Auto-Calculated z: <span id="val-cub-z">-3</span></label>
+                    <div style="font-size: 0.85em; color: #c62828; margin-top: 5px;">(Forces x+y+z = 0)</div>
+                </div>
+            </div>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #7b1fa2; background: #fff;">
+                    <span style="color: #4a148c; font-size: 1.1em;">Left Side: x³ + y³ + z³</span>
+                    <span id="cub-lhs-steps" class="val-num" style="color: #555; font-size: 1.1em; margin-bottom: 10px;">(4)³ + (-1)³ + (-3)³</span>
+                    <span id="cub-lhs-final" class="val-num" style="color: #4a148c; font-size: 2em; border-top: 2px solid #eee; padding-top: 10px;">36</span>
+                </div>
+                
+                <div style="font-size: 2.5em; font-weight: bold; color: #333; display: flex; align-items: center; justify-content: center;">
+                    =
+                </div>
+
+                <div class="dash-card" style="border-color: #7b1fa2; background: #fff;">
+                    <span style="color: #4a148c; font-size: 1.1em;">Right Side: 3xyz</span>
+                    <span id="cub-rhs-steps" class="val-num" style="color: #555; font-size: 1.1em; margin-bottom: 10px;">3(4)(-1)(-3)</span>
+                    <span id="cub-rhs-final" class="val-num" style="color: #4a148c; font-size: 2em; border-top: 2px solid #eee; padding-top: 10px;">36</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: Evaluate 102² without directly multiplying 102 × 102.</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Step 1:</strong> Break 102 into a simpler addition sum: (100 + 2)². <br>
+                <strong>Step 2:</strong> Apply Identity I: (x + y)² = x² + 2xy + y² where x=100, y=2.<br>
+                <strong>Step 3:</strong> Expand.<br>
+                (100)² + 2(100)(2) + (2)²<br>
+                10000 + 400 + 4<br>
+                <strong>Final Answer: 10404</strong>
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: Factorize the expression: 49x² - 64y².</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans2">
+                <strong>Step 1:</strong> Recognize that this is a "Difference of Squares" matching Identity III: a² - b².<br>
+                <strong>Step 2:</strong> Find the square roots of each term.<br>
+                The square root of 49x² is 7x.<br>
+                The square root of 64y² is 8y.<br>
+                <strong>Step 3:</strong> Rewrite using the pattern (a + b)(a - b).<br>
+                <strong>Final Answer: (7x + 8y)(7x - 8y)</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic2_4.html" class="nav-btn">← Prev Topic</a>
+        <a href="topic2_6.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. VISUAL SQUARE (GEOMETRY PROOF) LOGIC ---
+        const sGeoX = document.getElementById('s-geo-x');
+        const sGeoY = document.getElementById('s-geo-y');
+
+        function updateGeo() {
+            let x = parseInt(sGeoX.value);
+            let y = parseInt(sGeoY.value);
+
+            document.getElementById('val-geo-x').textContent = x;
+            document.getElementById('val-geo-y').textContent = y;
+
+            let totalUnits = x + y;
+            let maxSvgSize = 350; 
+            let pxPerUnit = maxSvgSize / totalUnits;
+
+            let widthX = x * pxPerUnit;
+            let widthY = y * pxPerUnit;
+
+            let group = document.getElementById('geo-group');
+            group.innerHTML = '';
+
+            let b1 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            b1.setAttribute("x", 0); b1.setAttribute("y", 0);
+            b1.setAttribute("width", widthX); b1.setAttribute("height", widthX);
+            b1.setAttribute("fill", "#ffe0b2"); b1.setAttribute("stroke", "#e65100"); b1.setAttribute("stroke-width", "2");
+            group.appendChild(b1);
+
+            let t1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            t1.setAttribute("x", widthX/2); t1.setAttribute("y", widthX/2 + 8);
+            t1.setAttribute("font-size", "24px"); t1.setAttribute("font-family", "Times New Roman"); t1.setAttribute("font-style", "italic");
+            t1.setAttribute("fill", "#e65100"); t1.setAttribute("text-anchor", "middle"); t1.textContent = "x²";
+            group.appendChild(t1);
+
+            let b2 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            b2.setAttribute("x", widthX); b2.setAttribute("y", 0);
+            b2.setAttribute("width", widthY); b2.setAttribute("height", widthX);
+            b2.setAttribute("fill", "#c8e6c9"); b2.setAttribute("stroke", "#4caf50"); b2.setAttribute("stroke-width", "2");
+            group.appendChild(b2);
+
+            let t2 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            t2.setAttribute("x", widthX + widthY/2); t2.setAttribute("y", widthX/2 + 8);
+            t2.setAttribute("font-size", "20px"); t2.setAttribute("font-family", "Times New Roman"); t2.setAttribute("font-style", "italic");
+            t2.setAttribute("fill", "#2e7d32"); t2.setAttribute("text-anchor", "middle"); t2.textContent = "xy";
+            group.appendChild(t2);
+
+            let b3 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            b3.setAttribute("x", 0); b3.setAttribute("y", widthX);
+            b3.setAttribute("width", widthX); b3.setAttribute("height", widthY);
+            b3.setAttribute("fill", "#c8e6c9"); b3.setAttribute("stroke", "#4caf50"); b3.setAttribute("stroke-width", "2");
+            group.appendChild(b3);
+
+            let t3 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            t3.setAttribute("x", widthX/2); t3.setAttribute("y", widthX + widthY/2 + 8);
+            t3.setAttribute("font-size", "20px"); t3.setAttribute("font-family", "Times New Roman"); t3.setAttribute("font-style", "italic");
+            t3.setAttribute("fill", "#2e7d32"); t3.setAttribute("text-anchor", "middle"); t3.textContent = "xy";
+            group.appendChild(t3);
+
+            let b4 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            b4.setAttribute("x", widthX); b4.setAttribute("y", widthX);
+            b4.setAttribute("width", widthY); b4.setAttribute("height", widthY);
+            b4.setAttribute("fill", "#bbdefb"); b4.setAttribute("stroke", "#1976d2"); b4.setAttribute("stroke-width", "2");
+            group.appendChild(b4);
+
+            let t4 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            t4.setAttribute("x", widthX + widthY/2); t4.setAttribute("y", widthX + widthY/2 + 8);
+            t4.setAttribute("font-size", "24px"); t4.setAttribute("font-family", "Times New Roman"); t4.setAttribute("font-style", "italic");
+            t4.setAttribute("fill", "#0d47a1"); t4.setAttribute("text-anchor", "middle"); t4.textContent = "y²";
+            group.appendChild(t4);
+
+            document.getElementById('lbl-top-x').setAttribute('x', 40 + widthX/2);
+            document.getElementById('lbl-top-x').setAttribute('y', 30);
+            document.getElementById('lbl-top-y').setAttribute('x', 40 + widthX + widthY/2);
+            document.getElementById('lbl-top-y').setAttribute('y', 30);
+
+            document.getElementById('lbl-left-x').setAttribute('x', 30);
+            document.getElementById('lbl-left-x').setAttribute('y', 40 + widthX/2 + 8);
+            document.getElementById('lbl-left-y').setAttribute('x', 30);
+            document.getElementById('lbl-left-y').setAttribute('y', 40 + widthX + widthY/2 + 8);
+
+            let x2 = x*x;
+            let y2 = y*y;
+            let xy = x*y;
+            document.getElementById('geo-math-live').innerHTML = `(${x} + ${y})² = ${x2} + ${xy} + ${xy} + ${y2} &nbsp; ➡️ &nbsp; ${(x+y)*(x+y)} = ${x2 + xy + xy + y2}`;
+        }
+
+        sGeoX.addEventListener('input', updateGeo);
+        sGeoY.addEventListener('input', updateGeo);
+        updateGeo();
+
+        // --- 2. DIFFERENCE OF SQUARES LOGIC ---
+        const sDiffX = document.getElementById('s-diff-x');
+        const sDiffY = document.getElementById('s-diff-y');
+
+        function updateDiffSquares() {
+            let x = parseInt(sDiffX.value);
+            let y = parseInt(sDiffY.value);
+
+            // Enforce x > y for visual geometry logic
+            if (y >= x) {
+                y = x - 1;
+                sDiffY.value = y;
+            }
+
+            document.getElementById('val-diff-x').textContent = x;
+            document.getElementById('val-diff-y').textContent = y;
+
+            let maxSvgSize = 250; 
+            let pxPerUnit = maxSvgSize / 10; // Max x is 10
+
+            let widthX = x * pxPerUnit;
+            let widthY = y * pxPerUnit;
+            let widthXY = (x - y) * pxPerUnit;
+
+            // -- Left Group (L-Shape) --
+            let lGroup = document.getElementById('diff-left-group');
+            lGroup.innerHTML = '';
+
+            // Draw full x^2 outline
+            let bigSq = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            bigSq.setAttribute("x", 0); bigSq.setAttribute("y", 0);
+            bigSq.setAttribute("width", widthX); bigSq.setAttribute("height", widthX);
+            bigSq.setAttribute("fill", "none"); bigSq.setAttribute("stroke", "#ccc"); bigSq.setAttribute("stroke-dasharray", "5,5");
+            lGroup.appendChild(bigSq);
+
+            // Draw Rect 1: Top part of L (width x, height x-y)
+            let r1 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            r1.setAttribute("x", 0); r1.setAttribute("y", 0);
+            r1.setAttribute("width", widthX); r1.setAttribute("height", widthXY);
+            r1.setAttribute("fill", "#bbdefb"); r1.setAttribute("stroke", "#1565c0"); r1.setAttribute("stroke-width", "2");
+            lGroup.appendChild(r1);
+
+            // Draw Rect 2: Bottom part of L (width x-y, height y)
+            let r2 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            r2.setAttribute("x", 0); r2.setAttribute("y", widthXY);
+            r2.setAttribute("width", widthXY); r2.setAttribute("height", widthY);
+            r2.setAttribute("fill", "#bbdefb"); r2.setAttribute("stroke", "#1565c0"); r2.setAttribute("stroke-width", "2");
+            lGroup.appendChild(r2);
+
+            // Draw cutout y^2
+            let ySq = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            ySq.setAttribute("x", widthXY); ySq.setAttribute("y", widthXY);
+            ySq.setAttribute("width", widthY); ySq.setAttribute("height", widthY);
+            ySq.setAttribute("fill", "#ffcdd2"); ySq.setAttribute("stroke", "#c2185b"); ySq.setAttribute("stroke-width", "2"); ySq.setAttribute("stroke-dasharray", "4,4");
+            lGroup.appendChild(ySq);
+            
+            // Cutout text
+            let yt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            yt.setAttribute("x", widthXY + widthY/2); yt.setAttribute("y", widthXY + widthY/2 + 5);
+            yt.setAttribute("font-size", "16px"); yt.setAttribute("fill", "#c2185b"); yt.setAttribute("text-anchor", "middle"); yt.textContent = "-y²";
+            lGroup.appendChild(yt);
+
+
+            // -- Right Group (Rearranged Rectangle) --
+            let rGroup = document.getElementById('diff-right-group');
+            rGroup.innerHTML = '';
+
+            // Draw Rect 1 (width x, height x-y)
+            let rr1 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            rr1.setAttribute("x", 0); rr1.setAttribute("y", 0);
+            rr1.setAttribute("width", widthX); rr1.setAttribute("height", widthXY);
+            rr1.setAttribute("fill", "#c8e6c9"); rr1.setAttribute("stroke", "#2e7d32"); rr1.setAttribute("stroke-width", "2");
+            rGroup.appendChild(rr1);
+
+            // Draw Rect 2 (width y, height x-y). Attached to the right side of Rect 1.
+            let rr2 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            rr2.setAttribute("x", widthX); rr2.setAttribute("y", 0);
+            rr2.setAttribute("width", widthY); rr2.setAttribute("height", widthXY);
+            rr2.setAttribute("fill", "#a5d6a7"); rr2.setAttribute("stroke", "#1b5e20"); rr2.setAttribute("stroke-width", "2");
+            rGroup.appendChild(rr2);
+
+            // Labels for Rearranged Rectangle
+            let rrt1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            rrt1.setAttribute("x", (widthX + widthY)/2); rrt1.setAttribute("y", widthXY + 20);
+            rrt1.setAttribute("font-size", "16px"); rrt1.setAttribute("font-weight", "bold"); rrt1.setAttribute("fill", "#2e7d32"); rrt1.setAttribute("text-anchor", "middle"); rrt1.textContent = "(x + y)";
+            rGroup.appendChild(rrt1);
+
+            let rrt2 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            rrt2.setAttribute("x", -10); rrt2.setAttribute("y", widthXY/2 + 5);
+            rrt2.setAttribute("font-size", "16px"); rrt2.setAttribute("font-weight", "bold"); rrt2.setAttribute("fill", "#2e7d32"); rrt2.setAttribute("text-anchor", "end"); rrt2.textContent = "(x - y)";
+            rGroup.appendChild(rrt2);
+
+            // Update Math Text
+            document.getElementById('diff-math-live').innerHTML = `${x}² - ${y}² = (${x} + ${y})(${x} - ${y}) &nbsp; ➡️ &nbsp; ${x*x} - ${y*y} = (${x+y})(${x-y}) = ${(x*x)-(y*y)}`;
+        }
+
+        sDiffX.addEventListener('input', updateDiffSquares);
+        sDiffY.addEventListener('input', updateDiffSquares);
+        updateDiffSquares();
+
+
+        // --- 3. ZERO SUM CUBIC TESTER LOGIC ---
+        const sCubX = document.getElementById('s-cub-x');
+        const sCubY = document.getElementById('s-cub-y');
+
+        function wrapNeg(val) { return val < 0 ? `(${val})` : val; }
+
+        function updateCubic() {
+            let x = parseInt(sCubX.value);
+            let y = parseInt(sCubY.value);
+            let z = -(x + y); // Enforce zero-sum constraint
+
+            document.getElementById('val-cub-x').textContent = x;
+            document.getElementById('val-cub-y').textContent = y;
+            document.getElementById('val-cub-z').textContent = z;
+
+            let lhsSteps = `${wrapNeg(x)}³ + ${wrapNeg(y)}³ + ${wrapNeg(z)}³`;
+            let rhsSteps = `3(${wrapNeg(x)})(${wrapNeg(y)})(${wrapNeg(z)})`;
+
+            let lhsFinal = Math.pow(x, 3) + Math.pow(y, 3) + Math.pow(z, 3);
+            let rhsFinal = 3 * x * y * z;
+
+            document.getElementById('cub-lhs-steps').textContent = lhsSteps;
+            document.getElementById('cub-rhs-steps').textContent = rhsSteps;
+            document.getElementById('cub-lhs-final').textContent = lhsFinal;
+            document.getElementById('cub-rhs-final').textContent = rhsFinal;
+        }
+
+        sCubX.addEventListener('input', updateCubic);
+        sCubY.addEventListener('input', updateCubic);
+        updateCubic();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer Step-by-Step';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

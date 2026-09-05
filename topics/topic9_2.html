@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Properties of Chords - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #00838f; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #00838f; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #00838f; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #80deea; font-size: 0.95em; min-width: 140px; flex: 1; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+        
+        .proof-box { background: #e0f7fa; padding: 20px; border-radius: 10px; border-left: 6px solid #00838f; margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
+        .proof-box h3 { color: #006064; margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e0f7fa; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00838f; }
+        .qa-question { font-weight: bold; color: #006064; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #00838f; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #00838f; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #006064; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>📏 Properties of Chords</h1>
+    <p class="subtitle">Discovering symmetry and angles hidden inside the circle!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Chord Theorems</h2>
+        <p>Because a circle is perfectly symmetrical around its center, the straight lines drawn inside it (chords) obey incredibly strict, predictable rules.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Theorem</th>
+                <th>The Rule</th>
+            </tr>
+            <tr>
+                <td><strong>Equal Chords & Equal Angles</strong></td>
+                <td>Equal chords of a circle subtend (create) perfectly equal angles at the center. The converse is also true: if central angles are equal, the chords must be equal.</td>
+            </tr>
+            <tr>
+                <td><strong>The Perpendicular Bisector</strong></td>
+                <td>The perpendicular drawn from the center of a circle to a chord perfectly bisects it (cuts it into two equal halves).</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: EQUAL CHORDS, EQUAL ANGLES -->
+    <div class="section-box">
+        <h2 style="color: #ff8f00; text-align: center; margin-top: 0;">📐 1. Equal Chords Subtend Equal Angles</h2>
+        <p style="text-align: center; color: #666;">Adjust the lengths of the two chords. The moment you make <strong>Chord 1</strong> exactly equal to <strong>Chord 2</strong>, watch how their central angles mathematically lock to the exact same value!</p>
+
+        <div class="interactive-container" style="background: #fff8e1; border-color: #ffb300;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #d32f2f; background: #ffebee;">
+                    <label style="color: #b71c1c; font-weight: bold;">Chord 1 Length: <span id="val-c1">120</span> units</label>
+                    <input type="range" id="s-c1" min="50" max="180" value="120">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Chord 2 Length: <span id="val-c2">150</span> units</label>
+                    <input type="range" id="s-c2" min="50" max="180" value="150">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
+                <circle cx="250" cy="175" r="100" fill="rgba(255, 143, 0, 0.05)" stroke="#ff8f00" stroke-width="4"/>
+                <circle cx="250" cy="175" r="5" fill="#333"/>
+                
+                <!-- Central Angle Wedges -->
+                <path id="wedge1" fill="rgba(211, 47, 47, 0.2)" stroke="none"/>
+                <path id="wedge2" fill="rgba(25, 118, 210, 0.2)" stroke="none"/>
+
+                <!-- Radii -->
+                <line id="r1a" x1="250" y1="175" stroke="#ccc" stroke-width="2"/>
+                <line id="r1b" x1="250" y1="175" stroke="#ccc" stroke-width="2"/>
+                <line id="r2a" x1="250" y1="175" stroke="#ccc" stroke-width="2"/>
+                <line id="r2b" x1="250" y1="175" stroke="#ccc" stroke-width="2"/>
+
+                <!-- Chords -->
+                <line id="chord1" stroke="#d32f2f" stroke-width="6" stroke-linecap="round"/>
+                <line id="chord2" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
+
+                <!-- Labels -->
+                <text id="lbl-ang1" font-weight="bold" fill="#d32f2f" font-size="16px" text-anchor="middle"></text>
+                <text id="lbl-ang2" font-weight="bold" fill="#1976d2" font-size="16px" text-anchor="middle"></text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #ff8f00; background: #fff; flex-basis: 100%;">
+                    <span id="c-status" style="color: #d32f2f; font-size: 1.4em; font-weight: bold;">Chords are unequal. Central angles differ.</span>
+                </div>
+            </div>
+
+            <div class="proof-box" style="border-left-color: #ff8f00; background: #fff8e1;">
+                <h3 style="color: #e65100;">💡 Why does this work? (The Proof)</h3>
+                <p>Drawing lines from the center to the ends of the chords forms two triangles. The sides of these triangles are radii of the circle, meaning <strong>two pairs of sides are already equal</strong>. When you adjust the sliders to make the chords equal, the third pair of sides match. By the <strong>SSS (Side-Side-Side) Congruence Rule</strong>, the two triangles become perfectly identical! Therefore, their central angles must be exactly equal by CPCT.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE PERPENDICULAR BISECTOR -->
+    <div class="section-box">
+        <h2 style="color: #00897b; text-align: center; margin-top: 0;">📉 2. The Perpendicular Bisector</h2>
+        <p style="text-align: center; color: #666;">Move the chord up and down. A straight perpendicular line dropped from the center will <strong>always</strong> slice the chord exactly in half, creating two perfectly equal segments!</p>
+
+        <div class="interactive-container" style="background: #e0f2f1; border-color: #00897b;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #00695c; background: #fff; width: 80%;">
+                    <label style="color: #004d40; font-weight: bold;">Slide Chord Vertically</label>
+                    <input type="range" id="s-perp-y" min="20" max="110" value="70">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
+                <circle cx="250" cy="150" r="120" fill="none" stroke="#00897b" stroke-width="4"/>
+                <circle cx="250" cy="150" r="5" fill="#333"/>
+                <text x="245" y="140" font-weight="bold" fill="#333">Center</text>
+
+                <!-- Chord Halves -->
+                <line id="chord-half1" stroke="#e65100" stroke-width="6" stroke-linecap="round"/>
+                <line id="chord-half2" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
+
+                <!-- Perpendicular Line -->
+                <line id="perp-line" x1="250" y1="150" x2="250" stroke="#333" stroke-width="3" stroke-dasharray="6,4"/>
+                
+                <!-- 90 Degree Box -->
+                <path id="box-90" fill="rgba(0,0,0,0.1)" stroke="#333" stroke-width="2"/>
+
+                <!-- Midpoint -->
+                <circle id="mid-dot" cx="250" r="6" fill="#333"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #e65100; background: #fff;">
+                    <span style="color: #e65100; font-size: 1.1em; display: block; margin-bottom: 5px;">Left Segment Length</span>
+                    <span id="len-h1" class="val-num" style="color: #e65100; font-size: 1.6em;"></span>
+                </div>
+                <div class="dash-card" style="border-color: #1976d2; background: #fff;">
+                    <span style="color: #1976d2; font-size: 1.1em; display: block; margin-bottom: 5px;">Right Segment Length</span>
+                    <span id="len-h2" class="val-num" style="color: #1976d2; font-size: 1.6em;"></span>
+                </div>
+            </div>
+
+            <div class="proof-box" style="border-left-color: #00897b; background: #e0f2f1;">
+                <h3 style="color: #00695c;">💡 Why does this work? (The Proof)</h3>
+                <p>Imagine drawing two radii connecting the center to the ends of the chord. This forms two small right-angled triangles. Both triangles share the perpendicular line as a common height. Their hypotenuses are both radii of the circle, meaning they are equal. By the <strong>RHS (Right-Angle Hypotenuse Side) congruence rule</strong>, the two triangles are mathematically identical, meaning their base segments must be exactly equal!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: Two chords in a circle, AB and CD, both measure 10 cm. If chord AB subtends an angle of 50° at the center, what angle does CD subtend at the center?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>50°.</strong><br><br>
+                According to the chord theorems, equal chords of a circle always subtend perfectly equal angles at the center.
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: A perpendicular is dropped from the center of a circle to a chord of length 24 cm. What are the lengths of the two segments it creates?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>12 cm each.</strong><br><br>
+                The perpendicular from the center to a chord perfectly bisects it, splitting the 24 cm chord into two equal 12 cm halves.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic9_1.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter9.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic9_3.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        function polarToCartesian(cx, cy, r, angleInRads) {
+            return {
+                x: cx + r * Math.cos(angleInRads),
+                y: cy - r * Math.sin(angleInRads)
+            };
+        }
+
+        function createWedge(cx, cy, r, startRad, endRad) {
+            let start = polarToCartesian(cx, cy, r, startRad);
+            let end = polarToCartesian(cx, cy, r, endRad);
+            return `M ${cx} ${cy} L ${start.x} ${start.y} A ${r} ${r} 0 0 1 ${end.x} ${end.y} Z`;
+        }
+
+        // --- 1. EQUAL CHORDS LOGIC ---
+        const sC1 = document.getElementById('s-c1');
+        const sC2 = document.getElementById('s-c2');
+
+        function updateEqualChords() {
+            let l1 = parseInt(sC1.value);
+            let l2 = parseInt(sC2.value);
+            
+            document.getElementById('val-c1').textContent = l1;
+            document.getElementById('val-c2').textContent = l2;
+
+            let cx = 250, cy = 175, r = 100;
+
+            // Angle = 2 * arcsin(L / 2R)
+            let angRad1 = 2 * Math.asin(l1 / (2 * r));
+            let angRad2 = 2 * Math.asin(l2 / (2 * r));
+            
+            let deg1 = Math.round(angRad1 * 180 / Math.PI);
+            let deg2 = Math.round(angRad2 * 180 / Math.PI);
+
+            // Left Chord (centered at 180 deg / PI rad)
+            let start1 = Math.PI - angRad1/2;
+            let end1 = Math.PI + angRad1/2;
+            let p1a = polarToCartesian(cx, cy, r, start1);
+            let p1b = polarToCartesian(cx, cy, r, end1);
+
+            document.getElementById('chord1').setAttribute('x1', p1a.x); document.getElementById('chord1').setAttribute('y1', p1a.y);
+            document.getElementById('chord1').setAttribute('x2', p1b.x); document.getElementById('chord1').setAttribute('y2', p1b.y);
+            document.getElementById('r1a').setAttribute('x2', p1a.x); document.getElementById('r1a').setAttribute('y2', p1a.y);
+            document.getElementById('r1b').setAttribute('x2', p1b.x); document.getElementById('r1b').setAttribute('y2', p1b.y);
+            document.getElementById('wedge1').setAttribute('d', createWedge(cx, cy, 35, start1, end1));
+            
+            let lbl1 = polarToCartesian(cx, cy, 55, Math.PI);
+            document.getElementById('lbl-ang1').setAttribute('x', lbl1.x); document.getElementById('lbl-ang1').setAttribute('y', lbl1.y + 5);
+            document.getElementById('lbl-ang1').textContent = `${deg1}°`;
+
+            // Right Chord (centered at 0 deg / 0 rad)
+            let start2 = -angRad2/2 + 2*Math.PI;
+            let end2 = angRad2/2;
+            let p2a = polarToCartesian(cx, cy, r, start2);
+            let p2b = polarToCartesian(cx, cy, r, end2);
+
+            document.getElementById('chord2').setAttribute('x1', p2a.x); document.getElementById('chord2').setAttribute('y1', p2a.y);
+            document.getElementById('chord2').setAttribute('x2', p2b.x); document.getElementById('chord2').setAttribute('y2', p2b.y);
+            document.getElementById('r2a').setAttribute('x2', p2a.x); document.getElementById('r2a').setAttribute('y2', p2a.y);
+            document.getElementById('r2b').setAttribute('x2', p2b.x); document.getElementById('r2b').setAttribute('y2', p2b.y);
+            document.getElementById('wedge2').setAttribute('d', createWedge(cx, cy, 35, start2, end2));
+
+            let lbl2 = polarToCartesian(cx, cy, 55, 0);
+            document.getElementById('lbl-ang2').setAttribute('x', lbl2.x); document.getElementById('lbl-ang2').setAttribute('y', lbl2.y + 5);
+            document.getElementById('lbl-ang2').textContent = `${deg2}°`;
+
+            let status = document.getElementById('c-status');
+            if (l1 === l2) {
+                status.textContent = "✅ Chords are Equal! Central angles are identical.";
+                status.style.color = "#2e7d32";
+                document.getElementById('chord1').setAttribute('stroke', '#388e3c');
+                document.getElementById('chord2').setAttribute('stroke', '#388e3c');
+            } else {
+                status.textContent = "Chords are unequal. Central angles differ.";
+                status.style.color = "#d32f2f";
+                document.getElementById('chord1').setAttribute('stroke', '#d32f2f');
+                document.getElementById('chord2').setAttribute('stroke', '#1976d2');
+            }
+        }
+        sC1.addEventListener('input', updateEqualChords);
+        sC2.addEventListener('input', updateEqualChords);
+        updateEqualChords();
+
+        // --- 2. PERPENDICULAR BISECTOR LOGIC ---
+        const sPerpY = document.getElementById('s-perp-y');
+
+        function updatePerp() {
+            let offset = parseInt(sPerpY.value);
+            let cx = 250, cy = 150, r = 120;
+            let y = cy + offset;
+            
+            let xDist = Math.sqrt(r*r - offset*offset);
+            
+            // Left half
+            document.getElementById('chord-half1').setAttribute('x1', cx - xDist); document.getElementById('chord-half1').setAttribute('y1', y);
+            document.getElementById('chord-half1').setAttribute('x2', cx); document.getElementById('chord-half1').setAttribute('y2', y);
+            
+            // Right half
+            document.getElementById('chord-half2').setAttribute('x1', cx); document.getElementById('chord-half2').setAttribute('y1', y);
+            document.getElementById('chord-half2').setAttribute('x2', cx + xDist); document.getElementById('chord-half2').setAttribute('y2', y);
+
+            // Perpendicular Drop
+            document.getElementById('perp-line').setAttribute('y2', y);
+            document.getElementById('mid-dot').setAttribute('cy', y);
+
+            // 90 box
+            document.getElementById('box-90').setAttribute('d', `M 250 ${y-15} L 265 ${y-15} L 265 ${y}`);
+
+            let len = xDist.toFixed(1);
+            document.getElementById('len-h1').textContent = `${len} units`;
+            document.getElementById('len-h2').textContent = `${len} units`;
+        }
+        sPerpY.addEventListener('input', updatePerp);
+        updatePerp();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

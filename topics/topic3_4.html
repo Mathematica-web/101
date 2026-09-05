@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area of a Triangle - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #00838f; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #00838f; color: white; }
+        
+        .math-eq { font-family: 'Times New Roman', serif; font-style: italic; font-size: 1.2em; color: #006064; font-weight: bold; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #00838f; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 550px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #4dd0e1; font-size: 0.95em; min-width: 120px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e0f7fa; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00838f; }
+        .qa-question { font-weight: bold; color: #006064; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #00838f; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #00838f; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter3.html" class="back-btn">⬅️ Back to Chapter Index</a>
+
+    <h1>📐 Area of a Triangle</h1>
+    <p class="subtitle">Finding the space inside a polygon using just its corners!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>From Coordinates to Area</h2>
+        <p>If you know the exact (x, y) coordinates of the three vertices of a triangle, you don't need a ruler to measure its base or height! You can calculate its exact area using clever geometric algebra.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Method</th>
+                <th>How it Works</th>
+            </tr>
+            <tr>
+                <td><strong>The Standard Formula (NCERT)</strong></td>
+                <td><span class="math-eq">Area = &frac12; | x₁(y₂ - y₃) + x₂(y₃ - y₁) + x₃(y₁ - y₂) |</span><br><br>The classic algebraic expansion used in textbooks. It perfectly computes the area by summing three distinct trapezoids formed by the vertices.</td>
+            </tr>
+            <tr>
+                <td><strong>The Shoelace Method</strong></td>
+                <td>A criss-cross visual trick. You stack the coordinates in columns, multiply diagonally downwards, then multiply diagonally upwards, and subtract the two sums!</td>
+            </tr>
+            <tr>
+                <td><strong>The 3x3 Grid Method</strong></td>
+                <td>A more advanced array technique. By placing the coordinates into a square mathematical grid and copying the first two columns, we can draw diagonal lines to evaluate the area visually.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE TRIANGLE PLOTTER (NCERT FORMULA) -->
+    <div class="section-box">
+        <h2 style="color: #00838f; text-align: center; margin-top: 0;">📍 1. Define Your Triangle</h2>
+        <p style="text-align: center; color: #666;">Adjust the coordinates for vertices A, B, and C. The dashboard below uses the Standard textbook formula to calculate the exact area.</p>
+
+        <div class="interactive-container" style="background: #e0f7fa; border-color: #00838f;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #d32f2f; background: #ffebee;">
+                    <label style="color: #b71c1c; font-weight: bold;">Point A (x₁): <span id="val-a-x">-3</span></label>
+                    <input type="range" id="s-a-x" min="-5" max="5" value="-3">
+                    <label style="color: #b71c1c; font-weight: bold; margin-top: 10px; display: block;">Point A (y₁): <span id="val-a-y">-2</span></label>
+                    <input type="range" id="s-a-y" min="-5" max="5" value="-2">
+                </div>
+                
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Point B (x₂): <span id="val-b-x">4</span></label>
+                    <input type="range" id="s-b-x" min="-5" max="5" value="4">
+                    <label style="color: #0d47a1; font-weight: bold; margin-top: 10px; display: block;">Point B (y₂): <span id="val-b-y">-1</span></label>
+                    <input type="range" id="s-b-y" min="-5" max="5" value="-1">
+                </div>
+
+                <div class="slider-group" style="border-color: #388e3c; background: #e8f5e9;">
+                    <label style="color: #1b5e20; font-weight: bold;">Point C (x₃): <span id="val-c-x">1</span></label>
+                    <input type="range" id="s-c-x" min="-5" max="5" value="1">
+                    <label style="color: #1b5e20; font-weight: bold; margin-top: 10px; display: block;">Point C (y₃): <span id="val-c-y">4</span></label>
+                    <input type="range" id="s-c-y" min="-5" max="5" value="4">
+                </div>
+            </div>
+
+            <svg id="tri-svg" class="svg-canvas" viewBox="-30 -30 360 360" style="height:300px; max-width:400px;">
+                <defs>
+                    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+                        <rect width="30" height="30" fill="none" stroke="#eee" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                <rect x="0" y="0" width="300" height="300" fill="url(#grid)" />
+                <line x1="0" y1="150" x2="300" y2="150" stroke="#333" stroke-width="2"/>
+                <line x1="150" y1="0" x2="150" y2="300" stroke="#333" stroke-width="2"/>
+
+                <polygon id="tri-polygon" points="" fill="#b2ebf2" stroke="#00838f" stroke-width="3" opacity="0.6"/>
+
+                <circle id="dot-a" r="6" fill="#d32f2f"/>
+                <text id="lbl-a" fill="#d32f2f" font-weight="bold" font-size="14px">A</text>
+                
+                <circle id="dot-b" r="6" fill="#1976d2"/>
+                <text id="lbl-b" fill="#1976d2" font-weight="bold" font-size="14px">B</text>
+
+                <circle id="dot-c" r="6" fill="#388e3c"/>
+                <text id="lbl-c" fill="#388e3c" font-weight="bold" font-size="14px">C</text>
+            </svg>
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00838f; background: #fff; flex-basis: 100%;">
+                    <span style="color: #006064; font-size: 1.1em; margin-bottom: 10px; display: block;">Standard Formula Calculation</span>
+                    <span id="ncert-calc" class="val-num" style="color: #555; font-size: 1em; font-family: monospace;">&frac12; | x₁(y₂ - y₃) + x₂(y₃ - y₁) + x₃(y₁ - y₂) |</span>
+                    <span id="ncert-steps" class="val-num" style="color: #333; font-size: 1.1em; margin: 10px 0;"></span>
+                    <span id="final-area" class="val-num" style="color: #00838f; font-size: 2.2em; border-top: 2px solid #b2ebf2; padding-top: 10px;">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: SHOELACE METHOD -->
+    <div class="section-box">
+        <h2 style="color: #e65100; text-align: center; margin-top: 0;">👟 2. The Shoelace Method</h2>
+        <p style="text-align: center; color: #666;">Stack the coordinates vertically and repeat the first point at the bottom. Multiply down the <span style="color:#2e7d32; font-weight:bold;">Green Diagonals</span> and add them up. Multiply up the <span style="color:#d32f2f; font-weight:bold;">Red Diagonals</span> and add them up. Finally, subtract the red total from the green total and divide by 2!</p>
+
+        <div class="interactive-container" style="background: #fff3e0; border-color: #e65100;">
+            <svg id="shoe-svg" class="svg-canvas" viewBox="0 0 550 250" style="height:250px; background:transparent; border:none; box-shadow:none;">
+                <!-- Column Headers -->
+                <text x="180" y="30" font-weight="bold" font-size="20px" fill="#555">X</text>
+                <text x="280" y="30" font-weight="bold" font-size="20px" fill="#555">Y</text>
+                
+                <!-- Vertical Bars -->
+                <line x1="130" y1="40" x2="130" y2="230" stroke="#333" stroke-width="3"/>
+                <line x1="330" y1="40" x2="330" y2="230" stroke="#333" stroke-width="3"/>
+
+                <!-- Green Diagonals (Down) -->
+                <line x1="190" y1="60" x2="270" y2="100" stroke="#4caf50" stroke-width="3" opacity="0.6"/>
+                <line x1="190" y1="110" x2="270" y2="150" stroke="#4caf50" stroke-width="3" opacity="0.6"/>
+                <line x1="190" y1="160" x2="270" y2="200" stroke="#4caf50" stroke-width="3" opacity="0.6"/>
+
+                <!-- Red Diagonals (Up) -->
+                <line x1="270" y1="60" x2="190" y2="100" stroke="#f44336" stroke-width="3" opacity="0.6"/>
+                <line x1="270" y1="110" x2="190" y2="150" stroke="#f44336" stroke-width="3" opacity="0.6"/>
+                <line x1="270" y1="160" x2="190" y2="200" stroke="#f44336" stroke-width="3" opacity="0.6"/>
+
+                <!-- Coordinates Text -->
+                <!-- A -->
+                <text id="shoe-x1" x="180" y="70" font-size="22px" font-weight="bold" fill="#d32f2f">-3</text>
+                <text id="shoe-y1" x="280" y="70" font-size="22px" font-weight="bold" fill="#d32f2f">-2</text>
+                <!-- B -->
+                <text id="shoe-x2" x="180" y="120" font-size="22px" font-weight="bold" fill="#1976d2">4</text>
+                <text id="shoe-y2" x="280" y="120" font-size="22px" font-weight="bold" fill="#1976d2">-1</text>
+                <!-- C -->
+                <text id="shoe-x3" x="180" y="170" font-size="22px" font-weight="bold" fill="#388e3c">1</text>
+                <text id="shoe-y3" x="280" y="170" font-size="22px" font-weight="bold" fill="#388e3c">4</text>
+                <!-- A (Repeated) -->
+                <text id="shoe-x4" x="180" y="220" font-size="22px" font-weight="bold" fill="#d32f2f">-3</text>
+                <text id="shoe-y4" x="280" y="220" font-size="22px" font-weight="bold" fill="#d32f2f">-2</text>
+
+                <!-- Calculations -->
+                <text x="360" y="80" font-size="16px" fill="#2e7d32" font-weight="bold">↘ <span id="shoe-g1">3</span></text>
+                <text x="360" y="130" font-size="16px" fill="#2e7d32" font-weight="bold">↘ <span id="shoe-g2">16</span></text>
+                <text x="360" y="180" font-size="16px" fill="#2e7d32" font-weight="bold">↘ <span id="shoe-g3">-2</span></text>
+
+                <text x="40" y="80" font-size="16px" fill="#c62828" font-weight="bold"><span id="shoe-r1">-8</span> ↙</text>
+                <text x="40" y="130" font-size="16px" fill="#c62828" font-weight="bold"><span id="shoe-r2">-1</span> ↙</text>
+                <text x="40" y="180" font-size="16px" fill="#c62828" font-weight="bold"><span id="shoe-r3">-12</span> ↙</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #4caf50; background: #e8f5e9;">
+                    <span style="color: #1b5e20;">Green Sum</span>
+                    <span id="shoe-sum-g" class="val-num" style="color: #2e7d32;">17</span>
+                </div>
+                <div class="dash-card" style="border-color: #f44336; background: #ffebee;">
+                    <span style="color: #b71c1c;">Red Sum</span>
+                    <span id="shoe-sum-r" class="val-num" style="color: #c62828;">-21</span>
+                </div>
+                <div class="dash-card" style="border-color: #e65100; background: #fff; flex-basis: 100%;">
+                    <span style="color: #bf360c; font-size: 1.1em;">Area = &frac12; | Green - Red |</span>
+                    <span id="shoe-final" class="val-num" style="color: #e65100; font-size: 1.8em; margin-top: 10px;">&frac12; | 17 - (-21) | = 19</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: THE 3x3 GRID METHOD -->
+    <div class="section-box">
+        <h2 style="color: #7b1fa2; text-align: center; margin-top: 0;">🧮 3. The 3x3 Grid Method</h2>
+        <p style="text-align: center; color: #666;">Another easy visual way to compute the area is by placing the coordinates into a 3x3 math grid, with <strong>1s</strong> in the final column. To solve it, copy the first two columns to the outside. Then, just like the Shoelace method, multiply along the diagonals!</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #9c27b0;">
+            <svg id="grid-svg" class="svg-canvas" viewBox="0 0 550 220" style="height:220px; background:transparent; border:none; box-shadow:none;">
+                <!-- Main Array Brackets -->
+                <path d="M 120 30 L 100 30 L 100 190 L 120 190" fill="none" stroke="#333" stroke-width="4"/>
+                <path d="M 280 30 L 300 30 L 300 190 L 280 190" fill="none" stroke="#333" stroke-width="4"/>
+                
+                <!-- Separator Line for copied columns -->
+                <line x1="320" y1="30" x2="320" y2="190" stroke="#ccc" stroke-width="2" stroke-dasharray="5,5"/>
+
+                <!-- Green Diagonals (Down) -->
+                <line x1="130" y1="50" x2="270" y2="170" stroke="#4caf50" stroke-width="4" opacity="0.4"/>
+                <line x1="200" y1="50" x2="350" y2="170" stroke="#4caf50" stroke-width="4" opacity="0.4"/>
+                <line x1="270" y1="50" x2="430" y2="170" stroke="#4caf50" stroke-width="4" opacity="0.4"/>
+
+                <!-- Red Diagonals (Up) -->
+                <line x1="130" y1="170" x2="270" y2="50" stroke="#f44336" stroke-width="4" opacity="0.4"/>
+                <line x1="200" y1="170" x2="350" y2="50" stroke="#f44336" stroke-width="4" opacity="0.4"/>
+                <line x1="270" y1="170" x2="430" y2="50" stroke="#f44336" stroke-width="4" opacity="0.4"/>
+
+                <!-- Original 3x3 Data -->
+                <!-- Row 1 -->
+                <text id="arr-r1-c1" x="130" y="60" font-size="22px" font-weight="bold" fill="#333" text-anchor="middle">-3</text>
+                <text id="arr-r1-c2" x="200" y="60" font-size="22px" font-weight="bold" fill="#333" text-anchor="middle">-2</text>
+                <text x="270" y="60" font-size="22px" font-weight="bold" fill="#333" text-anchor="middle">1</text>
+                <!-- Row 2 -->
+                <text id="arr-r2-c1" x="130" y="120" font-size="22px" font-weight="bold" fill="#333" text-anchor="middle">4</text>
+                <text id="arr-r2-c2" x="200" y="120" font-size="22px" font-weight="bold" fill="#333" text-anchor="middle">-1</text>
+                <text x="270" y="120" font-size="22px" font-weight="bold" fill="#333" text-anchor="middle">1</text>
+                <!-- Row 3 -->
+                <text id="arr-r3-c1" x="130" y="180" font-size="22px" font-weight="bold" fill="#333" text-anchor="middle">1</text>
+                <text id="arr-r3-c2" x="200" y="180" font-size="22px" font-weight="bold" fill="#333" text-anchor="middle">4</text>
+                <text x="270" y="180" font-size="22px" font-weight="bold" fill="#333" text-anchor="middle">1</text>
+
+                <!-- Copied Columns -->
+                <!-- Row 1 -->
+                <text id="copy-r1-c1" x="350" y="60" font-size="22px" font-weight="bold" fill="#888" text-anchor="middle">-3</text>
+                <text id="copy-r1-c2" x="430" y="60" font-size="22px" font-weight="bold" fill="#888" text-anchor="middle">-2</text>
+                <!-- Row 2 -->
+                <text id="copy-r2-c1" x="350" y="120" font-size="22px" font-weight="bold" fill="#888" text-anchor="middle">4</text>
+                <text id="copy-r2-c2" x="430" y="120" font-size="22px" font-weight="bold" fill="#888" text-anchor="middle">-1</text>
+                <!-- Row 3 -->
+                <text id="copy-r3-c1" x="350" y="180" font-size="22px" font-weight="bold" fill="#888" text-anchor="middle">1</text>
+                <text id="copy-r3-c2" x="430" y="180" font-size="22px" font-weight="bold" fill="#888" text-anchor="middle">4</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #4caf50; background: #e8f5e9;">
+                    <span style="color: #1b5e20;">Green Products (Down)</span>
+                    <span id="grid-sum-g" class="val-num" style="color: #2e7d32; font-size: 1.1em;">(3) + (-2) + (16) = 17</span>
+                </div>
+                <div class="dash-card" style="border-color: #f44336; background: #ffebee;">
+                    <span style="color: #b71c1c;">Red Products (Up)</span>
+                    <span id="grid-sum-r" class="val-num" style="color: #c62828; font-size: 1.1em;">(-1) + (-12) + (-8) = -21</span>
+                </div>
+                <div class="dash-card" style="border-color: #9c27b0; background: #fff; flex-basis: 100%;">
+                    <span style="color: #7b1fa2; font-size: 1.1em;">Area = &frac12; | Green - Red |</span>
+                    <span id="grid-final" class="val-num" style="color: #9c27b0; font-size: 1.8em; margin-top: 10px;">&frac12; | 17 - (-21) | = 19</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: What does it mean if the Area of the triangle is calculated to be exactly 0?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>The points are collinear!</strong><br><br>
+                If a "triangle" has zero area, it means it has zero height. The three points A, B, and C must lie perfectly flat on the exact same straight line.
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: Does it matter which point I label as A, B, or C?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>No, it doesn't matter!</strong><br><br>
+                As long as you place the points in a consistent cycle, the absolute value bars | | in the formulas ensure that any negative area automatically flips back to a positive geometrical area. Try rearranging the points in the Shoelace formula and notice how the final area stays exactly the same!
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic3_3.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter4.html" class="nav-btn">Next Chapter ➡️</a>
+    </div>
+
+    <script>
+        const scale = 30; // 1 unit = 30px
+        const cx = 150;
+        const cy = 150;
+        
+        function mapX(x) { return cx + (x * scale); }
+        function mapY(y) { return cy - (y * scale); }
+        function wrapNeg(val) { return val < 0 ? `(${val})` : val; }
+
+        const sAx = document.getElementById('s-a-x');
+        const sAy = document.getElementById('s-a-y');
+        const sBx = document.getElementById('s-b-x');
+        const sBy = document.getElementById('s-b-y');
+        const sCx = document.getElementById('s-c-x');
+        const sCy = document.getElementById('s-c-y');
+
+        function updateAll() {
+            let x1 = parseInt(sAx.value); let y1 = parseInt(sAy.value);
+            let x2 = parseInt(sBx.value); let y2 = parseInt(sBy.value);
+            let x3 = parseInt(sCx.value); let y3 = parseInt(sCy.value);
+
+            // 1. Update Labels & Visual Triangle
+            document.getElementById('val-a-x').textContent = x1; document.getElementById('val-a-y').textContent = y1;
+            document.getElementById('val-b-x').textContent = x2; document.getElementById('val-b-y').textContent = y2;
+            document.getElementById('val-c-x').textContent = x3; document.getElementById('val-c-y').textContent = y3;
+
+            let pAx = mapX(x1), pAy = mapY(y1);
+            let pBx = mapX(x2), pBy = mapY(y2);
+            let pCx = mapX(x3), pCy = mapY(y3);
+
+            document.getElementById('dot-a').setAttribute('cx', pAx); document.getElementById('dot-a').setAttribute('cy', pAy);
+            document.getElementById('lbl-a').setAttribute('x', pAx - 15); document.getElementById('lbl-a').setAttribute('y', pAy - 10);
+            
+            document.getElementById('dot-b').setAttribute('cx', pBx); document.getElementById('dot-b').setAttribute('cy', pBy);
+            document.getElementById('lbl-b').setAttribute('x', pBx + 10); document.getElementById('lbl-b').setAttribute('y', pBy - 10);
+            
+            document.getElementById('dot-c').setAttribute('cx', pCx); document.getElementById('dot-c').setAttribute('cy', pCy);
+            document.getElementById('lbl-c').setAttribute('x', pCx - 5); document.getElementById('lbl-c').setAttribute('y', pCy + 20);
+
+            document.getElementById('tri-polygon').setAttribute('points', `${pAx},${pAy} ${pBx},${pBy} ${pCx},${pCy}`);
+
+            // NCERT Formula Math Logic
+            let part1 = x1 * (y2 - y3);
+            let part2 = x2 * (y3 - y1);
+            let part3 = x3 * (y1 - y2);
+            
+            let ncertStr = `&frac12; | ${x1}(${y2} - ${wrapNeg(y3)}) + ${x2}(${y3} - ${wrapNeg(y1)}) + ${x3}(${y1} - ${wrapNeg(y2)}) |`;
+            let ncertStr2 = `&frac12; | (${part1}) + (${part2}) + (${part3}) |`;
+            
+            document.getElementById('ncert-steps').innerHTML = `${ncertStr}<br>= ${ncertStr2}`;
+
+            let g1 = x1*y2, g2 = x2*y3, g3 = x3*y1;
+            let r1 = y1*x2, r2 = y2*x3, r3 = y3*x1;
+            let sumG = g1 + g2 + g3;
+            let sumR = r1 + r2 + r3;
+            let area = 0.5 * Math.abs(sumG - sumR);
+
+            document.getElementById('final-area').textContent = `Area = ${area}`;
+
+            // 2. Update Shoelace
+            document.getElementById('shoe-x1').textContent = x1; document.getElementById('shoe-y1').textContent = y1;
+            document.getElementById('shoe-x2').textContent = x2; document.getElementById('shoe-y2').textContent = y2;
+            document.getElementById('shoe-x3').textContent = x3; document.getElementById('shoe-y3').textContent = y3;
+            document.getElementById('shoe-x4').textContent = x1; document.getElementById('shoe-y4').textContent = y1;
+
+            document.getElementById('shoe-g1').textContent = g1;
+            document.getElementById('shoe-g2').textContent = g2;
+            document.getElementById('shoe-g3').textContent = g3;
+            
+            document.getElementById('shoe-r1').textContent = r1;
+            document.getElementById('shoe-r2').textContent = r2;
+            document.getElementById('shoe-r3').textContent = r3;
+
+            document.getElementById('shoe-sum-g').textContent = sumG;
+            document.getElementById('shoe-sum-r').textContent = sumR;
+            document.getElementById('shoe-final').innerHTML = `&frac12; | ${sumG} - (${sumR}) | = ${area}`;
+
+            // 3. Update 3x3 Grid
+            document.getElementById('arr-r1-c1').textContent = x1; document.getElementById('arr-r1-c2').textContent = y1;
+            document.getElementById('arr-r2-c1').textContent = x2; document.getElementById('arr-r2-c2').textContent = y2;
+            document.getElementById('arr-r3-c1').textContent = x3; document.getElementById('arr-r3-c2').textContent = y3;
+            
+            document.getElementById('copy-r1-c1').textContent = x1; document.getElementById('copy-r1-c2').textContent = y1;
+            document.getElementById('copy-r2-c1').textContent = x2; document.getElementById('copy-r2-c2').textContent = y2;
+            document.getElementById('copy-r3-c1').textContent = x3; document.getElementById('copy-r3-c2').textContent = y3;
+
+            document.getElementById('grid-sum-g').textContent = `(${g1}) + (${y1*1*x3}) + (${1*x2*y3}) = ${sumG}`;
+            document.getElementById('grid-sum-r').textContent = `(${1*y2*x3}) + (${x1*1*y3}) + (${y1*x2*1}) = ${sumR}`;
+            document.getElementById('grid-final').innerHTML = `&frac12; | ${sumG} - (${sumR}) | = ${area}`;
+        }
+
+        sAx.addEventListener('input', updateAll); sAy.addEventListener('input', updateAll);
+        sBx.addEventListener('input', updateAll); sBy.addEventListener('input', updateAll);
+        sCx.addEventListener('input', updateAll); sCy.addEventListener('input', updateAll);
+        updateAll();
+
+        // Q&A LOGIC
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

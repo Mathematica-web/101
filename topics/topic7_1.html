@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Congruence - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #004d40; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #00695c; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2dfdb; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #00695c; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #00695c; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 300px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #4db6ac; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+        select { width: 100%; padding: 8px; margin-top: 10px; border-radius: 5px; border: 2px solid #4db6ac; font-family: inherit; font-weight: bold; color: #004d40; cursor: pointer; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e0f2f1; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00695c; }
+        .qa-question { font-weight: bold; color: #004d40; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #00695c; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #00695c; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #004d40; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>📐 Introduction to Congruence</h1>
+    <p class="subtitle">When two shapes are absolutely, perfectly identical!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>What Does "Congruent" Mean?</h2>
+        <p>In geometry, two figures are exactly <strong>congruent</strong> (symbol: ≅) if they have the exact same shape and the exact same size. If you were to cut one out and place it over the other, they would completely cover each other without any gaps or overlaps.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Concept</th>
+                <th>Real-Life Example</th>
+            </tr>
+            <tr>
+                <td><strong>Congruent Lines</strong></td>
+                <td>Two fresh, unsharpened pencils from the exact same box.</td>
+            </tr>
+            <tr>
+                <td><strong>Congruent Circles</strong></td>
+                <td>Two identical 10-Rupee coins.</td>
+            </tr>
+            <tr>
+                <td><strong>Congruent Triangles</strong></td>
+                <td>Two identical triangular sandwiches cut from the same square bread.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE SUPERPOSITION PRINCIPLE -->
+    <div class="section-box">
+        <h2 style="color: #ff8f00; text-align: center; margin-top: 0;">🎯 1. The Superposition Test</h2>
+        <p style="text-align: center; color: #666;">The ultimate test of congruence is <strong>superposition</strong> (placing one thing on top of another). Slide the orange triangle over the green triangle to prove they are mathematically identical!</p>
+
+        <div class="interactive-container" style="background: #fff8e1; border-color: #ffb300;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #e65100; background: #ffebee; width: 80%;">
+                    <label style="color: #b71c1c; font-weight: bold; font-size: 1.2em;">Slide to Superimpose</label>
+                    <input type="range" id="s-super" min="0" max="100" value="0">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 250" style="height: 250px; background: #fafafa;">
+                <!-- Fixed Green Triangle -->
+                <polygon points="120,50 60,200 220,200" fill="#b2dfdb" stroke="#00695c" stroke-width="4"/>
+                <text x="130" y="150" font-weight="bold" fill="#004d40" font-size="20px" text-anchor="middle">Δ ABC</text>
+
+                <!-- Moving Orange Triangle -->
+                <g id="super-poly">
+                    <polygon points="380,50 320,200 480,200" fill="rgba(255, 179, 0, 0.8)" stroke="#e65100" stroke-width="4"/>
+                    <text x="390" y="150" font-weight="bold" fill="#b71c1c" font-size="20px" text-anchor="middle">Δ PQR</text>
+                </g>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #ff8f00; background: #fff; flex-basis: 100%;">
+                    <span id="super-status" class="val-num" style="color: #e65100; font-size: 1.8em;">Triangles are separated.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: CPCT HIGHLIGHTER -->
+    <div class="section-box">
+        <h2 style="color: #00897b; text-align: center; margin-top: 0;">🔍 2. The Golden Rule: CPCT</h2>
+        <p style="text-align: center; color: #666;"><strong>CPCT</strong> stands for "Corresponding Parts of Congruent Triangles". It means that if two triangles are proven to be identical, then all their matching sides and matching angles are automatically equal. Select a part to see its match!</p>
+
+        <div class="interactive-container" style="background: #e0f2f1; border-color: #00897b;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #00695c; background: #fff; width: 60%;">
+                    <label style="color: #00695c; font-weight: bold; font-size: 1.1em;">Select Corresponding Parts to Highlight</label>
+                    <select id="sel-cpct">
+                        <option value="none">-- Select a Part --</option>
+                        <option value="sideAB">Side AB ≅ Side DE</option>
+                        <option value="sideBC">Side BC ≅ Side EF</option>
+                        <option value="sideAC">Side AC ≅ Side DF</option>
+                        <option value="angA">Angle A ≅ Angle D</option>
+                        <option value="angB">Angle B ≅ Angle E</option>
+                        <option value="angC">Angle C ≅ Angle F</option>
+                    </select>
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 250" style="height: 250px; background: #fafafa;">
+                <!-- Triangle ABC -->
+                <polygon points="120,40 50,190 220,190" fill="#f5f5f5" stroke="#ccc" stroke-width="3" id="poly-abc"/>
+                <text x="120" y="30" font-weight="bold" fill="#333" font-size="18px" text-anchor="middle">A</text>
+                <text x="35" y="205" font-weight="bold" fill="#333" font-size="18px" text-anchor="middle">B</text>
+                <text x="235" y="205" font-weight="bold" fill="#333" font-size="18px" text-anchor="middle">C</text>
+
+                <!-- Triangle DEF -->
+                <polygon points="380,40 310,190 480,190" fill="#f5f5f5" stroke="#ccc" stroke-width="3" id="poly-def"/>
+                <text x="380" y="30" font-weight="bold" fill="#333" font-size="18px" text-anchor="middle">D</text>
+                <text x="295" y="205" font-weight="bold" fill="#333" font-size="18px" text-anchor="middle">E</text>
+                <text x="495" y="205" font-weight="bold" fill="#333" font-size="18px" text-anchor="middle">F</text>
+
+                <!-- Dynamic Highlights (Hidden by default) -->
+                <!-- SIDES -->
+                <line id="hl-sideAB" x1="120" y1="40" x2="50" y2="190" stroke="#d32f2f" stroke-width="8" opacity="0"/>
+                <line id="hl-sideDE" x1="380" y1="40" x2="310" y2="190" stroke="#d32f2f" stroke-width="8" opacity="0"/>
+                
+                <line id="hl-sideBC" x1="50" y1="190" x2="220" y2="190" stroke="#1976d2" stroke-width="8" opacity="0"/>
+                <line id="hl-sideEF" x1="310" y1="190" x2="480" y2="190" stroke="#1976d2" stroke-width="8" opacity="0"/>
+
+                <line id="hl-sideAC" x1="120" y1="40" x2="220" y2="190" stroke="#388e3c" stroke-width="8" opacity="0"/>
+                <line id="hl-sideDF" x1="380" y1="40" x2="480" y2="190" stroke="#388e3c" stroke-width="8" opacity="0"/>
+
+                <!-- ANGLES (Using simple path arcs) -->
+                <path id="hl-angA" d="M 106 70 A 30 30 0 0 0 134 70" fill="none" stroke="#d32f2f" stroke-width="6" opacity="0"/>
+                <path id="hl-angD" d="M 366 70 A 30 30 0 0 0 394 70" fill="none" stroke="#d32f2f" stroke-width="6" opacity="0"/>
+
+                <path id="hl-angB" d="M 80 190 A 30 30 0 0 1 65 160" fill="none" stroke="#1976d2" stroke-width="6" opacity="0"/>
+                <path id="hl-angE" d="M 340 190 A 30 30 0 0 1 325 160" fill="none" stroke="#1976d2" stroke-width="6" opacity="0"/>
+
+                <path id="hl-angC" d="M 190 190 A 30 30 0 0 0 205 160" fill="none" stroke="#388e3c" stroke-width="6" opacity="0"/>
+                <path id="hl-angF" d="M 450 190 A 30 30 0 0 0 465 160" fill="none" stroke="#388e3c" stroke-width="6" opacity="0"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00897b; background: #fff; flex-basis: 100%;">
+                    <span id="cpct-status" style="color: #00695c; font-size: 1.3em;">Select a part to see CPCT in action!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: THE RULE OF NAMING -->
+    <div class="section-box">
+        <h2 style="color: #7b1fa2; text-align: center; margin-top: 0;">✍️ 3. The Order Matters</h2>
+        <p style="text-align: center; color: #666;">In geometry, if we write <strong>ΔABC ≅ ΔPQR</strong>, the order of the letters is a strict rule. It means Vertex A maps exactly to Vertex P, B maps to Q, and C maps to R. Notice how Triangle PQR is drawn upside down below? Slide to map the points and see why visual position doesn't matter—only the written order matters!</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #9c27b0;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #7b1fa2; background: #fff; width: 80%;">
+                    <label style="color: #4a148c; font-weight: bold; font-size: 1.2em;">Map the Vertices</label>
+                    <input type="range" id="s-map" min="0" max="3" value="0" step="1">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 250" style="height: 250px; background: #fafafa;">
+                <!-- Triangle ABC -->
+                <polygon points="120,40 50,190 220,190" fill="#fff" stroke="#333" stroke-width="2"/>
+                <text x="120" y="25" font-weight="bold" fill="#333" font-size="20px" text-anchor="middle">A</text>
+                <text x="30" y="205" font-weight="bold" fill="#333" font-size="20px" text-anchor="middle">B</text>
+                <text x="240" y="205" font-weight="bold" fill="#333" font-size="20px" text-anchor="middle">C</text>
+
+                <!-- Triangle PQR (rotated 180 degrees to prove mapping order) -->
+                <polygon points="395,190 465,40 295,40" fill="#fff" stroke="#333" stroke-width="2"/>
+                <text x="395" y="215" font-weight="bold" fill="#d32f2f" font-size="20px" text-anchor="middle">P</text>
+                <text x="475" y="30" font-weight="bold" fill="#1976d2" font-size="20px" text-anchor="middle">Q</text>
+                <text x="285" y="30" font-weight="bold" fill="#388e3c" font-size="20px" text-anchor="middle">R</text>
+
+                <!-- Mapping Lines -->
+                <line id="map-ap" x1="125" y1="50" x2="390" y2="180" stroke="#d32f2f" stroke-width="4" stroke-dasharray="10,5" opacity="0"/>
+                <line id="map-bq" x1="60" y1="185" x2="455" y2="50" stroke="#1976d2" stroke-width="4" stroke-dasharray="10,5" opacity="0"/>
+                <line id="map-cr" x1="225" y1="180" x2="290" y2="50" stroke="#388e3c" stroke-width="4" stroke-dasharray="10,5" opacity="0"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #9c27b0; background: #fff; flex-basis: 100%;">
+                    <span id="map-status" style="color: #4a148c; font-size: 1.5em; font-weight: bold;">ΔABC ≅ ΔPQR</span>
+                    <span id="map-detail" style="color: #666; font-size: 1.1em; margin-top: 5px; display: block;">Slide to reveal how the letters align.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: If we know that ΔXYZ ≅ ΔLMN, what side is strictly equal to side YZ?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Side MN!</strong><br><br>
+                Because the order of letters dictates the mapping, the last two letters of the first triangle (Y and Z) perfectly correspond to the last two letters of the second triangle (M and N). By CPCT, Side YZ = Side MN.
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: Can two circles with different radii be congruent?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>No.</strong><br><br>
+                Congruence requires both the exact same shape AND the exact same size. While all circles have the same shape, different radii mean they have different sizes. They would not perfectly superimpose over one another.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="../chapters/chapter7.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic7_2.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. SUPERPOSITION LOGIC ---
+        const sSuper = document.getElementById('s-super');
+
+        function updateSuperposition() {
+            let t = parseInt(sSuper.value) / 100; // 0 to 1
+            
+            // The target distance to perfectly overlap is -260px on the X axis.
+            let currentX = -260 * t;
+            
+            document.getElementById('super-poly').setAttribute('transform', `translate(${currentX}, 0)`);
+
+            let status = document.getElementById('super-status');
+            if (t === 1) {
+                status.textContent = "✅ Perfectly Congruent! They align exactly.";
+                status.style.color = "#2e7d32";
+            } else if (t === 0) {
+                status.textContent = "Triangles are separated.";
+                status.style.color = "#e65100";
+            } else {
+                status.textContent = "Sliding into position...";
+                status.style.color = "#00695c";
+            }
+        }
+
+        sSuper.addEventListener('input', updateSuperposition);
+        updateSuperposition();
+
+
+        // --- 2. CPCT HIGHLIGHTER LOGIC ---
+        const selCpct = document.getElementById('sel-cpct');
+        const elements = ['sideAB', 'sideDE', 'sideBC', 'sideEF', 'sideAC', 'sideDF', 'angA', 'angD', 'angB', 'angE', 'angC', 'angF'];
+
+        function resetHighlights() {
+            elements.forEach(id => {
+                document.getElementById(`hl-${id}`).setAttribute('opacity', '0');
+            });
+        }
+
+        function updateCpct() {
+            resetHighlights();
+            let val = selCpct.value;
+            let status = document.getElementById('cpct-status');
+
+            if (val === 'sideAB') {
+                document.getElementById('hl-sideAB').setAttribute('opacity', '1');
+                document.getElementById('hl-sideDE').setAttribute('opacity', '1');
+                status.innerHTML = "By CPCT: <strong style='color:#d32f2f;'>Side AB = Side DE</strong>";
+            } else if (val === 'sideBC') {
+                document.getElementById('hl-sideBC').setAttribute('opacity', '1');
+                document.getElementById('hl-sideEF').setAttribute('opacity', '1');
+                status.innerHTML = "By CPCT: <strong style='color:#1976d2;'>Side BC = Side EF</strong>";
+            } else if (val === 'sideAC') {
+                document.getElementById('hl-sideAC').setAttribute('opacity', '1');
+                document.getElementById('hl-sideDF').setAttribute('opacity', '1');
+                status.innerHTML = "By CPCT: <strong style='color:#388e3c;'>Side AC = Side DF</strong>";
+            } else if (val === 'angA') {
+                document.getElementById('hl-angA').setAttribute('opacity', '1');
+                document.getElementById('hl-angD').setAttribute('opacity', '1');
+                status.innerHTML = "By CPCT: <strong style='color:#d32f2f;'>Angle A = Angle D</strong>";
+            } else if (val === 'angB') {
+                document.getElementById('hl-angB').setAttribute('opacity', '1');
+                document.getElementById('hl-angE').setAttribute('opacity', '1');
+                status.innerHTML = "By CPCT: <strong style='color:#1976d2;'>Angle B = Angle E</strong>";
+            } else if (val === 'angC') {
+                document.getElementById('hl-angC').setAttribute('opacity', '1');
+                document.getElementById('hl-angF').setAttribute('opacity', '1');
+                status.innerHTML = "By CPCT: <strong style='color:#388e3c;'>Angle C = Angle F</strong>";
+            } else {
+                status.textContent = "Select a part to see CPCT in action!";
+            }
+        }
+
+        selCpct.addEventListener('change', updateCpct);
+
+
+        // --- 3. THE ORDER MATTERS LOGIC ---
+        const sMap = document.getElementById('s-map');
+
+        function updateMapping() {
+            let step = parseInt(sMap.value);
+            let detail = document.getElementById('map-detail');
+            
+            document.getElementById('map-ap').setAttribute('opacity', step >= 1 ? '1' : '0');
+            document.getElementById('map-bq').setAttribute('opacity', step >= 2 ? '1' : '0');
+            document.getElementById('map-cr').setAttribute('opacity', step >= 3 ? '1' : '0');
+
+            if (step === 0) {
+                detail.textContent = "Slide to reveal how the letters align.";
+            } else if (step === 1) {
+                detail.innerHTML = "First letters: <strong style='color:#d32f2f;'>Vertex A ↔ Vertex P</strong>";
+            } else if (step === 2) {
+                detail.innerHTML = "Second letters: <strong style='color:#1976d2;'>Vertex B ↔ Vertex Q</strong>";
+            } else if (step === 3) {
+                detail.innerHTML = "Third letters: <strong style='color:#388e3c;'>Vertex C ↔ Vertex R</strong>. The mapping crosses over to match the names!";
+            }
+        }
+
+        sMap.addEventListener('input', updateMapping);
+        updateMapping();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

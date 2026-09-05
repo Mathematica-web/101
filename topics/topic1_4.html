@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irrational Numbers - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #0d47a1; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #1976d2; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #bbdefb; text-align: left; }
+        .formula-table th { background: #1976d2; color: white; font-size: 1.1em; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #1976d2; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 600px; height: 350px; background: #f5f5f5; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #90caf9; font-size: 1em; }
+        input[type=range] { width: 250px; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; }
+        .val-num { font-size: 1.8em; display: block; margin-top: 5px; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e3f2fd; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #1976d2; }
+        .qa-question { font-weight: bold; color: #0d47a1; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; }
+        .show-answer-btn { background: #1976d2; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #1976d2; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter1.html" class="back-btn">⬅️ Back to Chapter</a>
+
+    <h1>🌪️ Irrational Numbers</h1>
+    <p class="subtitle">The rebel numbers that refuse to be simple fractions!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>What makes a number Irrational?</h2>
+        <p>While rational numbers are clean, orderly, and can always be written as a fraction (p/q), irrational numbers are exactly the opposite. They represent quantities that cannot be perfectly captured by simple division.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Characteristic</th>
+                <th>The Rule</th>
+            </tr>
+            <tr>
+                <td><strong>Fraction Rule</strong></td>
+                <td><strong>CANNOT</strong> be written in the form p/q (where p and q are integers).</td>
+            </tr>
+            <tr>
+                <td><strong>Decimal Expansion</strong></td>
+                <td>They have <strong>Non-Terminating</strong> (never-ending) AND <strong>Non-Repeating</strong> (no regular pattern) decimals.</td>
+            </tr>
+            <tr>
+                <td><strong>Famous Examples</strong></td>
+                <td><strong>&pi; (Pi)</strong>: The ratio of a circle's circumference to its diameter.<br><strong>&radic;2, &radic;3, &radic;5</strong>: Square roots of non-perfect squares.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE ROOT SCANNER -->
+    <div class="section-box">
+        <h2 style="color: #9c27b0; text-align: center; margin-top: 0;">🔍 1. The Square Root Scanner</h2>
+        <p style="text-align: center; color: #666;">Not all square roots are irrational! If the number inside the root is a "Perfect Square" (like 4, 9, or 16), the result is a clean rational integer. Drag the scanner to test numbers from 1 to 50!</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #ab47bc;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #8e24aa; background: #e1bee7;">
+                    <label style="color: #4a148c; font-weight: bold;">Scan Number (N): <span id="val-scan">2</span></label>
+                    <input type="range" id="s-scan" min="1" max="50" value="2">
+                </div>
+            </div>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #8e24aa; flex-basis: 30%;">
+                    <span style="color: #6a1b9a;">Mathematical Form</span>
+                    <span id="calc-sqrt" class="val-num" style="color: #4a148c; font-size: 2.5em;">&radic;2</span>
+                </div>
+                <div class="dash-card" style="border-color: #4a148c; flex-basis: 30%;">
+                    <span style="color: #6a1b9a;">Decimal Output</span>
+                    <span id="calc-dec" class="val-num" style="color: #4a148c; font-family: monospace;">1.414213...</span>
+                </div>
+            </div>
+
+            <div class="live-dashboard">
+                <div class="dash-card" id="card-verdict" style="border-color: #e91e63; background: #fce4ec; flex-basis: 100%;">
+                    <span style="color: #880e4f; font-size: 1.2em;">Classification Verdict</span>
+                    <span id="calc-verdict" class="val-num" style="color: #c2185b; font-size: 2em;">IRRATIONAL</span>
+                    <span id="calc-reason" style="color: #c2185b; font-weight: normal; margin-top: 5px; display: block;">2 is not a perfect square. The decimal never ends and never repeats!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE SPIRAL OF THEODORUS -->
+    <div class="section-box">
+        <h2 style="color: #ff9800; text-align: center; margin-top: 0;">🌀 2. The Spiral of Roots</h2>
+        <p style="text-align: center; color: #666;">Even though irrational lengths like <strong>&radic;2</strong> or <strong>&radic;3</strong> have infinite decimals, we can easily draw them on paper using the Pythagorean Theorem! This famous shape is called the <em>Spiral of Theodorus</em>.</p>
+
+        <div class="interactive-container" style="background: #fff8e1; border-color: #ffb300;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #f57c00;">
+                    <label style="color: #e65100; font-weight: bold;">Number of Triangles: <span id="val-tri">1</span></label>
+                    <input type="range" id="s-tri" min="1" max="15" value="1">
+                </div>
+            </div>
+
+            <svg id="spiral-svg" class="svg-canvas" viewBox="0 0 600 350" style="background: #fff;">
+                <g id="spiral-group"></g>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #f57c00; background: #ffe0b2; flex-basis: 100%;">
+                    <span style="color: #e65100; font-size: 1.1em;">Latest Hypotenuse Drawn</span>
+                    <span id="calc-hyp" class="val-num" style="color: #d84315; font-family: monospace;">&radic;2</span>
+                    <span style="color: #bf360c; font-weight: normal; display: block; margin-top: 5px;">Built using base &radic;1 and height 1. (&radic;1&sup2; + 1&sup2; = &radic;2)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: We often use 22/7 as the value for Pi (&pi;). Doesn't that make &pi; a rational number?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>No! &pi; is strictly irrational.</strong><br><br>
+                22/7 is just an <em>approximation</em> we use to make calculations easier. If you divide 22 by 7, you get a repeating decimal (3.142857...). The actual value of &pi; (3.14159...) never repeats and never ends.
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: If you multiply two irrational numbers together, will the answer always be irrational?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans2">
+                <strong>No, it can be rational!</strong><br><br>
+                <strong>Step 1:</strong> Take the irrational number &radic;2.<br>
+                <strong>Step 2:</strong> Multiply it by itself: &radic;2 &times; &radic;2.<br>
+                <strong>Step 3:</strong> The roots cancel out, leaving exactly 2.<br>
+                <strong>Final Answer:</strong> Since 2 is a rational number, multiplying two irrationals can sometimes yield a perfectly rational result!
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic1_3.html" class="nav-btn">← Prev Topic</a>
+        <a href="topic1_5.html" class="nav-btn">Next: Law of Exponents ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. ROOT SCANNER LOGIC ---
+        const sScan = document.getElementById('s-scan');
+
+        function updateScanner() {
+            let n = parseInt(sScan.value);
+            document.getElementById('val-scan').textContent = n;
+            
+            document.getElementById('calc-sqrt').innerHTML = `&radic;${n}`;
+
+            let root = Math.sqrt(n);
+            let isPerfect = (root % 1 === 0);
+            
+            let cardVerdict = document.getElementById('card-verdict');
+            let txtVerdict = document.getElementById('calc-verdict');
+            let txtReason = document.getElementById('calc-reason');
+
+            if(isPerfect) {
+                document.getElementById('calc-dec').textContent = root + ".0";
+                
+                cardVerdict.style.borderColor = "#4caf50";
+                cardVerdict.style.background = "#e8f5e9";
+                txtVerdict.style.color = "#2e7d32";
+                txtVerdict.textContent = "RATIONAL";
+                txtReason.style.color = "#1b5e20";
+                txtReason.textContent = `${n} is a perfect square! Its square root is exactly ${root}, which is a neat, tidy integer.`;
+            } else {
+                document.getElementById('calc-dec').textContent = root.toFixed(6) + "...";
+                
+                cardVerdict.style.borderColor = "#e91e63";
+                cardVerdict.style.background = "#fce4ec";
+                txtVerdict.style.color = "#c2185b";
+                txtVerdict.textContent = "IRRATIONAL";
+                txtReason.style.color = "#880e4f";
+                txtReason.textContent = `${n} is NOT a perfect square. The decimal goes on forever without a repeating pattern!`;
+            }
+        }
+
+        sScan.addEventListener('input', updateScanner);
+        updateScanner();
+
+
+        // --- 2. SPIRAL OF THEODORUS LOGIC ---
+        const sTri = document.getElementById('s-tri');
+        const spiralGroup = document.getElementById('spiral-group');
+
+        function drawSpiral() {
+            let count = parseInt(sTri.value);
+            document.getElementById('val-tri').textContent = count;
+            
+            spiralGroup.innerHTML = ''; // Clear previous
+
+            let cx = 300, cy = 175;
+            let scale = 40; 
+            
+            // P0 is the center point
+            let p0 = { x: cx, y: cy };
+            
+            // P1 is the first point on the horizontal axis
+            let currentX = cx + scale;
+            let currentY = cy;
+            let currentAngle = 0; // angle of the hypotenuse from center
+
+            for(let i = 1; i <= count; i++) {
+                // Calculate next point perpendicular to current hypotenuse
+                // The direction is currentAngle + 90 degrees (pi/2 radians)
+                let perpAngle = currentAngle + (Math.PI / 2);
+                
+                let nextX = currentX + (scale * Math.cos(perpAngle));
+                let nextY = currentY + (scale * Math.sin(perpAngle));
+
+                // Draw the Triangle
+                let polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+                polygon.setAttribute("points", `${p0.x},${p0.y} ${currentX},${currentY} ${nextX},${nextY}`);
+                polygon.setAttribute("fill", `hsl(${i * 20}, 70%, 85%)`); // Colorful gradient effect
+                polygon.setAttribute("stroke", "#e65100");
+                polygon.setAttribute("stroke-width", "2");
+                spiralGroup.appendChild(polygon);
+
+                // Draw Right Angle Box
+                // To draw the box, step back slightly along the hypotenuse and the new leg
+                let boxSize = 5;
+                let rx = currentX - (boxSize * Math.cos(currentAngle)) + (boxSize * Math.cos(perpAngle));
+                let ry = currentY - (boxSize * Math.sin(currentAngle)) + (boxSize * Math.sin(perpAngle));
+                
+                let rPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                rPath.setAttribute("d", `M ${currentX - boxSize*Math.cos(currentAngle)},${currentY - boxSize*Math.sin(currentAngle)} L ${rx},${ry} L ${currentX + boxSize*Math.cos(perpAngle)},${currentY + boxSize*Math.sin(perpAngle)}`);
+                rPath.setAttribute("fill", "none");
+                rPath.setAttribute("stroke", "#d84315");
+                rPath.setAttribute("stroke-width", "1");
+                spiralGroup.appendChild(rPath);
+
+                // Add the text label for the new hypotenuse
+                let midX = (p0.x + nextX) / 2;
+                let midY = (p0.y + nextY) / 2;
+                
+                // Offset label slightly outward
+                let labelAngle = Math.atan2(nextY - cy, nextX - cx);
+                let labelX = midX + 15 * Math.cos(labelAngle + Math.PI/2);
+                let labelY = midY + 15 * Math.sin(labelAngle + Math.PI/2);
+
+                let text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                text.setAttribute("x", labelX);
+                text.setAttribute("y", labelY + 5);
+                text.setAttribute("font-size", "14px");
+                text.setAttribute("font-weight", "bold");
+                text.setAttribute("fill", "#bf360c");
+                text.setAttribute("text-anchor", "middle");
+                text.innerHTML = `&radic;${i+1}`;
+                spiralGroup.appendChild(text);
+
+                // Update for next iteration
+                currentX = nextX;
+                currentY = nextY;
+                currentAngle = Math.atan2(currentY - cy, currentX - cx);
+            }
+
+            // Update Dashboard Math
+            document.getElementById('calc-hyp').innerHTML = `&radic;${count + 1}`;
+            let prevRoot = count === 1 ? "1" : `&radic;${count}`;
+            document.getElementById('calc-hyp').nextElementSibling.innerHTML = `Built using base ${prevRoot} and height 1. (${prevRoot}&sup2; + 1&sup2; = &radic;${count+1}&sup2;)`;
+        }
+
+        sTri.addEventListener('input', drawSpiral);
+        drawSpiral();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = id === 'ans1' ? 'Show Answer' : 'Show Answer Step-by-Step';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tangents to a Circle - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #00838f; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #00838f; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #00838f; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #80deea; font-size: 0.95em; min-width: 140px; flex: 1; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+        
+        .proof-box { background: #e0f7fa; padding: 20px; border-radius: 10px; border-left: 6px solid #00838f; margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
+        .proof-box h3 { color: #006064; margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e0f7fa; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00838f; }
+        .qa-question { font-weight: bold; color: #006064; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #00838f; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #00838f; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #006064; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>📉 Tangents and their Lengths</h1>
+    <p class="subtitle">Touching the circle at exactly one microscopic point!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Rules of the Tangent</h2>
+        <p>A tangent is a perfectly straight line that touches the outside of a circle at exactly <strong>one single point</strong> (the point of contact). It never cuts inside. Because it perfectly balances on the edge, it creates two major theorems.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Theorem</th>
+                <th>The Rule</th>
+            </tr>
+            <tr>
+                <td><strong>Theorem 10.1 (Perpendicularity)</strong></td>
+                <td>The tangent at any point of a circle is strictly <strong>perpendicular (90°)</strong> to the radius drawn through the point of contact.</td>
+            </tr>
+            <tr>
+                <td><strong>Theorem 10.2 (External Lengths)</strong></td>
+                <td>The lengths of two tangents drawn from an external point to a circle are exactly <strong>equal</strong>.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE TANGENT RADIUS LOCK -->
+    <div class="section-box">
+        <h2 style="color: #00838f; text-align: center; margin-top: 0;">📐 1. The Tangent-Radius Lock</h2>
+        <p style="text-align: center; color: #666;">Drag the point of contact around the circle. Notice how the tangent line perfectly rotates to remain mathematically locked at exactly 90° to the radius!</p>
+
+        <div class="interactive-container" style="background: #e0f7fa; border-color: #00838f;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #00acc1; background: #fff; width: 80%;">
+                    <label style="color: #006064; font-weight: bold;">Slide Point of Contact (P) around the Circle</label>
+                    <input type="range" id="s-tan-ang" min="0" max="360" value="45">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
+                <circle cx="250" cy="175" r="100" fill="rgba(0, 131, 143, 0.05)" stroke="#ccc" stroke-width="4"/>
+                <circle cx="250" cy="175" r="5" fill="#333"/>
+                <text x="245" y="195" font-weight="bold" fill="#333">O</text>
+
+                <!-- 90 Degree Indicator Box -->
+                <path id="tan-90-box" fill="rgba(216, 27, 96, 0.2)" stroke="#d81b60" stroke-width="2"/>
+
+                <!-- Radius -->
+                <line id="tan-radius" x1="250" y1="175" stroke="#333" stroke-width="3" stroke-dasharray="5,5"/>
+
+                <!-- Tangent Line -->
+                <line id="tan-line" stroke="#00838f" stroke-width="6" stroke-linecap="round"/>
+
+                <!-- Point P -->
+                <circle id="tan-dot-p" r="8" fill="#d81b60" stroke="#fff" stroke-width="2"/>
+                <text id="tan-txt-p" font-weight="bold" fill="#d81b60" font-size="20px">P</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00838f; background: #fff; flex-basis: 100%;">
+                    <span style="color: #006064; font-size: 1.5em; font-weight: bold;">Radius OP ⊥ Tangent Line</span>
+                </div>
+            </div>
+
+            <!-- EDUCATIONAL LOGIC BOX -->
+            <div class="proof-box" style="border-left-color: #00838f; background: #e0f7fa;">
+                <h3 style="color: #006064;">💡 Why does this work? (The Proof)</h3>
+                <p>A tangent touches the circle at exactly one point (P). If you pick any other point (let's say Q) on this tangent line, Q must lie <em>outside</em> the circle. This means the distance from the Center (O) to Q is always greater than the radius OP. Because OP is the absolute shortest possible distance from the center to the tangent line, it geometrically must be strictly perpendicular (90°) to the line!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: EXTERNAL TANGENTS -->
+    <div class="section-box">
+        <h2 style="color: #d81b60; text-align: center; margin-top: 0;">✂️ 2. Equal External Tangents</h2>
+        <p style="text-align: center; color: #666;">Move the external Point P. The system mathematically calculates the exact two points where lines from P gracefully brush the circle. Notice how the lengths of PA and PB are always perfectly identical!</p>
+
+        <div class="interactive-container" style="background: #fce4ec; border-color: #d81b60;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #c2185b; background: #fff;">
+                    <label style="color: #880e4f; font-weight: bold;">Move Point P (Left/Right)</label>
+                    <input type="range" id="s-ext-x" min="260" max="450" value="400">
+                </div>
+                <div class="slider-group" style="border-color: #c2185b; background: #fff;">
+                    <label style="color: #880e4f; font-weight: bold;">Move Point P (Up/Down)</label>
+                    <input type="range" id="s-ext-y" min="50" max="300" value="175">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
+                <circle cx="150" cy="175" r="80" fill="rgba(216, 27, 96, 0.05)" stroke="#ccc" stroke-width="4"/>
+                <circle cx="150" cy="175" r="5" fill="#333"/>
+                <text x="130" y="180" font-weight="bold" fill="#333">Center</text>
+
+                <!-- Radii -->
+                <line id="ext-rad-a" x1="150" y1="175" stroke="#999" stroke-width="3" stroke-dasharray="5,5"/>
+                <line id="ext-rad-b" x1="150" y1="175" stroke="#999" stroke-width="3" stroke-dasharray="5,5"/>
+
+                <!-- Tangents -->
+                <line id="ext-tan-pa" stroke="#1976d2" stroke-width="5" stroke-linecap="round"/>
+                <line id="ext-tan-pb" stroke="#d32f2f" stroke-width="5" stroke-linecap="round"/>
+
+                <!-- Hypotenuse line for proof visually -->
+                <line id="ext-hyp-p" x1="150" y1="175" stroke="#ccc" stroke-width="2" stroke-dasharray="3,3"/>
+
+                <!-- Vertices -->
+                <circle id="ext-dot-a" r="6" fill="#1976d2"/>
+                <text id="ext-txt-a" font-weight="bold" fill="#1976d2" font-size="18px">A</text>
+                
+                <circle id="ext-dot-b" r="6" fill="#d32f2f"/>
+                <text id="ext-txt-b" font-weight="bold" fill="#d32f2f" font-size="18px">B</text>
+
+                <circle id="ext-dot-p" r="8" fill="#6a1b9a" stroke="#fff" stroke-width="2"/>
+                <text id="ext-txt-p" font-weight="bold" fill="#6a1b9a" font-size="20px">P</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #1976d2; background: #fff;">
+                    <span style="color: #0d47a1; font-size: 1.1em; display: block; margin-bottom: 5px;">Length of PA</span>
+                    <span id="len-pa" class="val-num" style="color: #1976d2; font-size: 1.6em;"></span>
+                </div>
+                <div class="dash-card" style="border-color: #d32f2f; background: #fff;">
+                    <span style="color: #b71c1c; font-size: 1.1em; display: block; margin-bottom: 5px;">Length of PB</span>
+                    <span id="len-pb" class="val-num" style="color: #d32f2f; font-size: 1.6em;"></span>
+                </div>
+            </div>
+
+            <!-- EDUCATIONAL LOGIC BOX -->
+            <div class="proof-box" style="border-left-color: #d81b60; background: #fce4ec;">
+                <h3 style="color: #ad1457;">💡 Why does this work? (The Proof)</h3>
+                <p>Imagine drawing a line from the external point P to the Center. This creates two right-angled triangles: ΔPAO and ΔPBO. Because of Theorem 10.1, we know the angles at A and B are exactly 90°. Both triangles share the exact same hypotenuse (the line PO). Also, both triangles have one side that is the radius of the circle (OA = OB). By the <strong>RHS (Right-Angle Hypotenuse Side) congruence rule</strong>, the two triangles are mathematically identical! Therefore, their remaining sides (the tangents PA and PB) MUST be completely equal in length.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: How many tangents can be drawn to a circle from a single point located exactly on the circle's edge?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Exactly one.</strong><br><br>
+                A tangent can only touch the circle at one specific point of contact. Any additional line drawn through that same point would slice inside the circle, becoming a secant.
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: Two tangents are drawn to a circle from an external point P. If the first tangent is 15 cm long, how long is the second one?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>15 cm.</strong><br><br>
+                Theorem 10.2 explicitly proves that the lengths of tangents drawn from an external point to a circle are always perfectly equal.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic9_4.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter9.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="../chapters/chapter10.html" class="nav-btn">Next Chapter ➡️</a>
+    </div>
+
+    <script>
+        function polarToCartesian(cx, cy, r, angleInRads) {
+            return {
+                x: cx + r * Math.cos(angleInRads),
+                y: cy - r * Math.sin(angleInRads) // SVG Y is inverted
+            };
+        }
+
+        // --- 1. TANGENT RADIUS LOCK LOGIC ---
+        const sTanAng = document.getElementById('s-tan-ang');
+
+        function updateTangent() {
+            let deg = parseInt(sTanAng.value);
+            let cx = 250, cy = 175, r = 100;
+            let rad = deg * Math.PI / 180;
+            
+            let posP = polarToCartesian(cx, cy, r, rad);
+
+            document.getElementById('tan-radius').setAttribute('x2', posP.x);
+            document.getElementById('tan-radius').setAttribute('y2', posP.y);
+
+            document.getElementById('tan-dot-p').setAttribute('cx', posP.x);
+            document.getElementById('tan-dot-p').setAttribute('cy', posP.y);
+            
+            document.getElementById('tan-txt-p').setAttribute('x', posP.x + 15 * Math.cos(rad));
+            document.getElementById('tan-txt-p').setAttribute('y', posP.y - 15 * Math.sin(rad));
+
+            // Tangent line perpendicular to radius
+            let tanLen = 120;
+            let tX1 = posP.x - tanLen * Math.sin(rad);
+            let tY1 = posP.y - tanLen * Math.cos(rad);
+            let tX2 = posP.x + tanLen * Math.sin(rad);
+            let tY2 = posP.y + tanLen * Math.cos(rad);
+
+            document.getElementById('tan-line').setAttribute('x1', tX1); document.getElementById('tan-line').setAttribute('y1', tY1);
+            document.getElementById('tan-line').setAttribute('x2', tX2); document.getElementById('tan-line').setAttribute('y2', tY2);
+
+            // 90 degree box construction
+            let boxSize = 15;
+            let bx1 = posP.x - boxSize * Math.cos(rad);
+            let by1 = posP.y + boxSize * Math.sin(rad);
+            
+            let bx2 = bx1 + boxSize * Math.sin(rad);
+            let by2 = by1 + boxSize * Math.cos(rad);
+            
+            let bx3 = posP.x + boxSize * Math.sin(rad);
+            let by3 = posP.y + boxSize * Math.cos(rad);
+
+            document.getElementById('tan-90-box').setAttribute('d', `M ${posP.x} ${posP.y} L ${bx3} ${by3} L ${bx2} ${by2} L ${bx1} ${by1} Z`);
+        }
+        sTanAng.addEventListener('input', updateTangent);
+        updateTangent();
+
+
+        // --- 2. EXTERNAL TANGENTS LOGIC ---
+        const sExtX = document.getElementById('s-ext-x');
+        const sExtY = document.getElementById('s-ext-y');
+
+        function updateExternal() {
+            let px = parseInt(sExtX.value);
+            let py = parseInt(sExtY.value);
+            
+            let cx = 150, cy = 175, r = 80;
+
+            document.getElementById('ext-dot-p').setAttribute('cx', px); document.getElementById('ext-dot-p').setAttribute('cy', py);
+            document.getElementById('ext-txt-p').setAttribute('x', px + 15); document.getElementById('ext-txt-p').setAttribute('y', py + 5);
+
+            document.getElementById('ext-hyp-p').setAttribute('x2', px); document.getElementById('ext-hyp-p').setAttribute('y2', py);
+
+            let dx = px - cx; let dy = py - cy;
+            let dist = Math.sqrt(dx*dx + dy*dy);
+            
+            // Calculate Tangent Points
+            let baseAngle = Math.atan2(dy, dx); 
+            let theta = Math.acos(r / dist); 
+            
+            let angA = baseAngle - theta;
+            let angB = baseAngle + theta;
+
+            let posA = { x: cx + r * Math.cos(angA), y: cy + r * Math.sin(angA) };
+            let posB = { x: cx + r * Math.cos(angB), y: cy + r * Math.sin(angB) };
+
+            document.getElementById('ext-rad-a').setAttribute('x2', posA.x); document.getElementById('ext-rad-a').setAttribute('y2', posA.y);
+            document.getElementById('ext-rad-b').setAttribute('x2', posB.x); document.getElementById('ext-rad-b').setAttribute('y2', posB.y);
+
+            document.getElementById('ext-tan-pa').setAttribute('x1', px); document.getElementById('ext-tan-pa').setAttribute('y1', py);
+            document.getElementById('ext-tan-pa').setAttribute('x2', posA.x); document.getElementById('ext-tan-pa').setAttribute('y2', posA.y);
+
+            document.getElementById('ext-tan-pb').setAttribute('x1', px); document.getElementById('ext-tan-pb').setAttribute('y1', py);
+            document.getElementById('ext-tan-pb').setAttribute('x2', posB.x); document.getElementById('ext-tan-pb').setAttribute('y2', posB.y);
+
+            document.getElementById('ext-dot-a').setAttribute('cx', posA.x); document.getElementById('ext-dot-a').setAttribute('cy', posA.y);
+            document.getElementById('ext-txt-a').setAttribute('x', posA.x - 15); document.getElementById('ext-txt-a').setAttribute('y', posA.y - 10);
+
+            document.getElementById('ext-dot-b').setAttribute('cx', posB.x); document.getElementById('ext-dot-b').setAttribute('cy', posB.y);
+            document.getElementById('ext-txt-b').setAttribute('x', posB.x - 15); document.getElementById('ext-txt-b').setAttribute('y', posB.y + 20);
+
+            let tanLength = Math.sqrt(dist*dist - r*r).toFixed(1);
+            document.getElementById('len-pa').textContent = `${tanLength} units`;
+            document.getElementById('len-pb').textContent = `${tanLength} units`;
+        }
+        sExtX.addEventListener('input', updateExternal);
+        sExtY.addEventListener('input', updateExternal);
+        updateExternal();
+
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics 101 - Class 9</title>
+    <!-- Bring in a friendly, modern font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* 🎨 VISUAL STYLE */
+        body {
+            font-family: 'Nunito', 'Comic Sans MS', sans-serif;
+            background: linear-gradient(-45deg, #fdfbfb, #ebedee, #e0f7fa, #fce4ec);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            margin: 0;
+            padding: 40px 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        h1 {
+            color: #ff4757;
+            font-size: 3.5em;
+            font-weight: 800;
+            margin-bottom: 5px;
+            text-shadow: 3px 3px 0px #fff, 6px 6px 15px rgba(0,0,0,0.1);
+            animation: floatTitle 4s ease-in-out infinite;
+        }
+
+        p.subtitle {
+            color: #636e72;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 50px;
+            letter-spacing: 0.5px;
+        }
+
+        /* 📚 THE CHAPTER GRID */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 🃏 CARD DESIGN */
+        .chapter-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            text-decoration: none; /* Removes the default blue underline from links */
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Card Hover Effects */
+        .chapter-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            background: #ffffff;
+        }
+
+        .chapter-icon {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .chapter-card:hover .chapter-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .chapter-title {
+            font-size: 1.4em;
+            font-weight: 800;
+            color: #2d3436;
+            margin-bottom: 8px;
+        }
+
+        .chapter-desc {
+            font-size: 1em;
+            color: #636e72;
+            font-weight: 600;
+        }
+
+        /* 🎬 ANIMATIONS */
+        @keyframes floatTitle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 🌈 FUN CARD ACCENTS */
+        .card-1 { border-bottom: 6px solid #ff4757; }
+        .card-2 { border-bottom: 6px solid #1dd1a1; }
+        .card-3 { border-bottom: 6px solid #feca57; }
+        .card-4 { border-bottom: 6px solid #5f27cd; }
+        .card-5 { border-bottom: 6px solid #ff9f43; }
+        .card-6 { border-bottom: 6px solid #0abde3; }
+        .card-7 { border-bottom: 6px solid #ee5253; }
+        .card-8 { border-bottom: 6px solid #10ac84; }
+        .card-9 { border-bottom: 6px solid #ff9ff3; }
+        .card-10 { border-bottom: 6px solid #54a0ff; }
+        .card-11 { border-bottom: 6px solid #00d2d3; }
+        .card-12 { border-bottom: 6px solid #f368e0; }
+    </style>
+</head>
+<body>
+
+    <!-- 🌟 HEADER -->
+    <h1>Mathematics 101</h1>
+    <p class="subtitle">Welcome to Class 9! Pick a chapter to start learning.</p>
+
+    <!-- 📚 CHAPTERS LIST -->
+    <div class="grid-container">
+
+        <!-- Chapter 1 -->
+        <a href="chapters/chapter1.html" class="chapter-card card-1">
+            <span class="chapter-icon">🌟</span>
+            <div class="chapter-title">Number System</div>
+            <div class="chapter-desc">Counting, Decimals & Big Numbers</div>
+        </a>
+
+        <!-- Chapter 2 -->
+        <a href="chapters/chapter2.html" class="chapter-card card-2">
+            <span class="chapter-icon">🔤</span>
+            <div class="chapter-title">Polynomials</div>
+            <div class="chapter-desc">Letter Shapes in Math</div>
+        </a>
+
+        <!-- Chapter 3 -->
+        <a href="chapters/chapter3.html" class="chapter-card card-3">
+            <span class="chapter-icon">🗺️</span>
+            <div class="chapter-title">Coordinate Geometry</div>
+            <div class="chapter-desc">Finding Places on a Map</div>
+        </a>
+
+        <!-- Chapter 4 -->
+        <a href="chapters/chapter4.html" class="chapter-card card-4">
+            <span class="chapter-icon">⚖️</span>
+            <div class="chapter-title">Linear Equations</div>
+            <div class="chapter-desc">Balancing Two Scales</div>
+        </a>
+
+        <!-- Chapter 5 -->
+        <a href="chapters/chapter5.html" class="chapter-card card-5">
+            <span class="chapter-icon">🏛️</span>
+            <div class="chapter-title">Euclidean Geometry</div>
+            <div class="chapter-desc">Ancient Math Rules</div>
+        </a>
+
+        <!-- Chapter 6 -->
+        <a href="chapters/chapter6.html" class="chapter-card card-6">
+            <span class="chapter-icon">📐</span>
+            <div class="chapter-title">Lines & Angles</div>
+            <div class="chapter-desc">Straight Lines & Turns</div>
+        </a>
+
+        <!-- Chapter 7 -->
+        <a href="chapters/chapter7.html" class="chapter-card card-7">
+            <span class="chapter-icon">🔺</span>
+            <div class="chapter-title">Triangles</div>
+            <div class="chapter-desc">Three-Sided Friends</div>
+        </a>
+
+        <!-- Chapter 8 -->
+        <a href="chapters/chapter8.html" class="chapter-card card-8">
+            <span class="chapter-icon">🟥</span>
+            <div class="chapter-title">Quadrilaterals</div>
+            <div class="chapter-desc">Four-Sided Buddies</div>
+        </a>
+
+        <!-- Chapter 9 -->
+        <a href="chapters/chapter9.html" class="chapter-card card-9">
+            <span class="chapter-icon">⭕</span>
+            <div class="chapter-title">Circles</div>
+            <div class="chapter-desc">Round Everything</div>
+        </a>
+
+        <!-- Chapter 10 -->
+        <a href="chapters/chapter10.html" class="chapter-card card-10">
+            <span class="chapter-icon">📏</span>
+            <div class="chapter-title">Areas of Parallelograms and Triangles</div>
+            <div class="chapter-desc">Measuring Space Inside</div>
+        </a>
+
+        <!-- Chapter 11 -->
+        <a href="chapters/chapter11.html" class="chapter-card card-11">
+            <span class="chapter-icon">🧊</span>
+            <div class="chapter-title">Surface Area & Volume</div>
+            <div class="chapter-desc">How Much Space Does It Take?</div>
+        </a>
+
+        <!-- Chapter 12 -->
+        <a href="chapters/chapter12.html" class="chapter-card card-12">
+            <span class="chapter-icon">📊</span>
+            <div class="chapter-title">Statistics and Probability</div>
+            <div class="chapter-desc">Data Detective</div>
+        </a>
+
+    </div>
+
+</body>
+</html>

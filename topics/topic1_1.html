@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Systems - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #0d47a1; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #1976d2; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #bbdefb; text-align: left; }
+        .formula-table th { background: #1976d2; color: white; font-size: 1.1em; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #1976d2; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 700px; height: 150px; background: #f5f5f5; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #90caf9; font-size: 0.95em; }
+        input[type=number] { width: 60px; padding: 5px; font-size: 1.1em; text-align: center; border: 2px solid #ccc; border-radius: 5px; }
+        input[type=range] { width: 250px; cursor: pointer; display: block; margin-top: 5px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; }
+        .val-num { font-size: 1.5em; display: block; margin-top: 5px; }
+
+        /* BUTTONS */
+        .btn-group { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .action-btn { padding: 10px 20px; border-radius: 20px; border: none; background: #1976d2; color: white; font-weight: bold; font-size: 1em; cursor: pointer; transition: transform 0.2s, background 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .action-btn:hover { transform: scale(1.05); background: #0d47a1; }
+        .action-btn.active { background: #ff9800; color: white; box-shadow: inset 0 3px 5px rgba(0,0,0,0.2); }
+        
+        /* TOGGLES FOR INTERACTIVE 3 */
+        .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .toggle-btn { padding: 10px 15px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .toggle-btn.btn-irrat.active { background: #e91e63; color: white; border-color: #e91e63; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e3f2fd; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #1976d2; }
+        .qa-question { font-weight: bold; color: #0d47a1; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; }
+        .show-answer-btn { background: #1976d2; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #1976d2; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter1.html" class="back-btn">⬅️ Back to Chapter</a>
+
+    <h1>🔢 Number Systems</h1>
+    <p class="subtitle">The complete family tree of numbers!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Number Family Tree</h2>
+        <p>Every number you have ever learned belongs to a specific category. As you move down the list, the categories get larger and include all the groups above them!</p>
+        <table class="formula-table">
+            <tr>
+                <th>Category</th>
+                <th>Definition & Examples</th>
+            </tr>
+            <tr>
+                <td><strong>Natural Numbers (N)</strong></td>
+                <td>Counting numbers starting from 1. <br><em>Examples: 1, 2, 3, 4...</em></td>
+            </tr>
+            <tr>
+                <td><strong>Whole Numbers (W)</strong></td>
+                <td>All Natural Numbers, plus zero. <br><em>Examples: 0, 1, 2, 3...</em></td>
+            </tr>
+            <tr>
+                <td><strong>Integers (Z)</strong></td>
+                <td>All Whole Numbers, plus their negative counterparts. <br><em>Examples: ...-2, -1, 0, 1, 2...</em></td>
+            </tr>
+            <tr>
+                <td><strong>Rational Numbers (Q)</strong></td>
+                <td>Any number that can be written as a fraction <strong>p/q</strong> (where p and q are integers, and q ≠ 0). <br><em>Examples: 1/2, -3/4, 5 (since 5=5/1), 0.75</em></td>
+            </tr>
+            <tr>
+                <td><strong>Irrational Numbers</strong></td>
+                <td>Numbers that CANNOT be written as a simple fraction. Their decimals go on forever without repeating. <br><em>Examples: &pi;, &radic;2, &radic;3</em></td>
+            </tr>
+            <tr>
+                <td><strong>Real Numbers (R)</strong></td>
+                <td>The ultimate collection! Every Rational and Irrational number combined.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE NUMBER LINE EXPLORER -->
+    <div class="section-box">
+        <h2 style="color: #ff9800; text-align: center; margin-top: 0;">📏 1. The Number Line Explorer</h2>
+        <p style="text-align: center; color: #666;">Every Real Number has a unique, exact spot on the Number Line. Click the numbers below to drop them onto the line and reveal their true category!</p>
+
+        <div class="interactive-container" style="background: #fff3e0; border-color: #ffb300;">
+            <div class="btn-group" id="num-btns">
+                <button class="action-btn" onclick="plotNumber(3, 'Natural', '3', this)">3</button>
+                <button class="action-btn" onclick="plotNumber(0, 'Whole', '0', this)">0</button>
+                <button class="action-btn" onclick="plotNumber(-2, 'Integer', '-2', this)">-2</button>
+                <button class="action-btn" onclick="plotNumber(2.5, 'Rational', '5/2', this)">5/2</button>
+                <button class="action-btn" onclick="plotNumber(-1.25, 'Rational', '-5/4', this)">-5/4</button>
+                <button class="action-btn" onclick="plotNumber(1.414, 'Irrational', '&radic;2', this)">&radic;2</button>
+                <button class="action-btn" onclick="plotNumber(3.1415, 'Irrational', '&pi;', this)">&pi;</button>
+            </div>
+
+            <svg id="numline-svg" class="svg-canvas" viewBox="0 0 700 150">
+                <!-- Base Line -->
+                <line x1="50" y1="75" x2="650" y2="75" stroke="#333" stroke-width="4"/>
+                <!-- Arrows -->
+                <polygon points="50,75 60,70 60,80" fill="#333"/>
+                <polygon points="650,75 640,70 640,80" fill="#333"/>
+                
+                <!-- Tick Marks -4 to 4 -->
+                <g id="ticks" fill="#555" font-weight="bold" font-size="14px" text-anchor="middle">
+                    <line x1="92" y1="65" x2="92" y2="85" stroke="#333" stroke-width="2"/> <text x="92" y="105">-4</text>
+                    <line x1="162" y1="65" x2="162" y2="85" stroke="#333" stroke-width="2"/> <text x="162" y="105">-3</text>
+                    <line x1="232" y1="65" x2="232" y2="85" stroke="#333" stroke-width="2"/> <text x="232" y="105">-2</text>
+                    <line x1="302" y1="65" x2="302" y2="85" stroke="#333" stroke-width="2"/> <text x="302" y="105">-1</text>
+                    <line x1="372" y1="60" x2="372" y2="90" stroke="#d32f2f" stroke-width="3"/> <text x="372" y="110" fill="#d32f2f">0</text>
+                    <line x1="442" y1="65" x2="442" y2="85" stroke="#333" stroke-width="2"/> <text x="442" y="105">1</text>
+                    <line x1="512" y1="65" x2="512" y2="85" stroke="#333" stroke-width="2"/> <text x="512" y="105">2</text>
+                    <line x1="582" y1="65" x2="582" y2="85" stroke="#333" stroke-width="2"/> <text x="582" y="105">3</text>
+                    <line x1="652" y1="65" x2="652" y2="85" stroke="#333" stroke-width="2"/> <text x="652" y="105">4</text>
+                </g>
+
+                <!-- Dynamic Plot Marker -->
+                <g id="plot-marker" style="display: none; transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+                    <circle cx="0" cy="75" r="8" fill="#ff9800" stroke="#fff" stroke-width="2"/>
+                    <line x1="0" y1="75" x2="0" y2="35" stroke="#ff9800" stroke-width="2"/>
+                    <rect x="-25" y="10" width="50" height="25" fill="#ff9800" rx="5"/>
+                    <text id="plot-label" x="0" y="27" fill="white" font-weight="bold" font-size="14px" text-anchor="middle">X</text>
+                </g>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #ff9800; background: #fff3e0;">
+                    <span style="color: #e65100;">Approximate Decimal</span>
+                    <span id="nl-decimal" class="val-num" style="color: #e65100;">-</span>
+                </div>
+                <div class="dash-card" style="border-color: #4caf50; background: #e8f5e9;">
+                    <span style="color: #1b5e20;">Deepest Number Category</span>
+                    <span id="nl-category" class="val-num" style="color: #2e7d32;">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE DECIMAL DETECTIVE -->
+    <div class="section-box">
+        <h2 style="color: #9c27b0; text-align: center; margin-top: 0;">🕵️ 2. The Decimal Detective</h2>
+        <p style="text-align: center; color: #666;">Rational numbers (p/q) have a strict rule: their decimals either <strong>Terminate</strong> (end perfectly) or <strong>Repeat</strong> forever. The secret lies in the denominator (q)! If the prime factors of 'q' are <em>only</em> 2 and/or 5, the decimal will terminate!</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #9c27b0;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #ab47bc; display: flex; flex-direction: column; align-items: center; gap: 5px;">
+                    <span style="color: #8e24aa; font-weight: bold;">Numerator (p)</span>
+                    <input type="number" id="num-p" value="7" min="1" max="100">
+                    <hr style="width: 100%; border-top: 2px solid #ab47bc; margin: 0;">
+                    <input type="number" id="num-q" value="8" min="1" max="100">
+                    <span style="color: #8e24aa; font-weight: bold;">Denominator (q)</span>
+                </div>
+                <button class="action-btn" onclick="analyzeDecimal()" style="background: #9c27b0;">Analyze Fraction</button>
+            </div>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #9c27b0; background: #f3e5f5;">
+                    <span style="color: #4a148c;">Decimal Expansion</span>
+                    <span id="dec-value" class="val-num" style="color: #8e24aa; font-family: monospace;">0.875</span>
+                </div>
+                <div class="dash-card" id="dec-card-type" style="border-color: #4caf50; background: #e8f5e9; flex-basis: 100%;">
+                    <span style="color: #1b5e20;">Expansion Type</span>
+                    <span id="dec-type" class="val-num" style="color: #2e7d32;">Terminating</span>
+                    <span id="dec-reason" style="color: #388e3c; font-size: 0.9em; font-weight: normal;">Denominator (8) only has prime factors 2 and 5.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: THE IRRATIONAL IMPOSSIBLE MACHINE -->
+    <div class="section-box">
+        <h2 style="color: #e91e63; text-align: center; margin-top: 0;">🛑 3. The Irrational Impossible Machine</h2>
+        <p style="text-align: center; color: #666;">Irrational numbers go on forever without repeating. Try to find a perfect fraction (p/q) for them! Select a famous irrational number and slide the denominator (q) from 1 to 1000. Watch the machine hunt for the best numerator (p)—the error gets tiny, but <strong>it never hits exactly zero!</strong></p>
+
+        <div class="interactive-container" style="background: #fce4ec; border-color: #e91e63;">
+            <div class="face-toggles">
+                <button class="toggle-btn btn-irrat active" onclick="setIrrational('pi', this)">&pi; (Pi)</button>
+                <button class="toggle-btn btn-irrat" onclick="setIrrational('sqrt2', this)">&radic;2 (Square Root of 2)</button>
+                <button class="toggle-btn btn-irrat" onclick="setIrrational('phi', this)">&phi; (Golden Ratio)</button>
+            </div>
+
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #c2185b;">
+                    <label style="color: #880e4f; font-weight: bold;">Set Denominator (q): <span id="val-irrat-q">7</span></label>
+                    <input type="range" id="s-irrat-q" min="1" max="1000" value="7">
+                </div>
+            </div>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #c2185b; background: #f8bbd0;">
+                    <span style="color: #880e4f;">Target True Decimal</span>
+                    <span id="target-dec" class="val-num" style="color: #880e4f; font-size: 1.2em; font-family: monospace;">3.14159265...</span>
+                </div>
+                <div class="dash-card" style="border-color: #1976d2; background: #bbdefb;">
+                    <span style="color: #0d47a1;">Closest Possible Fraction</span>
+                    <span id="best-frac" class="val-num" style="color: #1976d2; font-size: 1.6em;">22 / 7</span>
+                    <span id="best-frac-dec" style="color: #1565c0; font-size: 0.9em; font-family: monospace;">= 3.14285714</span>
+                </div>
+                <div class="dash-card" style="border-color: #d32f2f; background: #ffebee; flex-basis: 100%;">
+                    <span style="color: #b71c1c; font-size: 1.1em;">Mathematical Error (Difference)</span>
+                    <span id="error-val" class="val-num" style="color: #d32f2f; font-size: 1.5em; font-family: monospace;">0.00126449</span>
+                    <span style="color: #d32f2f; font-weight: normal; font-size: 0.9em;">Close, but an exact fraction is mathematically impossible!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: Is zero (0) a rational number? Can you write it in the form p/q?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Yes, zero is a rational number!</strong><br><br>
+                A rational number must be writable as p/q, where p and q are integers and q is not zero.<br>
+                We can write zero as 0/1, 0/5, or 0/-12.<br>
+                Since p=0 (an integer) and q=1 (an integer not equal to zero), it perfectly fits the definition!
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: Without performing long division, determine if 13/3125 will have a terminating or non-terminating repeating decimal expansion.</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans2">
+                <strong>Step 1:</strong> Look at the denominator (q = 3125).<br>
+                <strong>Step 2:</strong> Find the prime factorization of 3125.<br>
+                3125 = 5 &times; 5 &times; 5 &times; 5 &times; 5 = 5&sup5;.<br>
+                <strong>Step 3:</strong> Apply the rule. Since the prime factors of the denominator consist <em>only</em> of the number 5, the fraction will have a <strong>Terminating</strong> decimal expansion.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <span style="width:150px;"></span> <!-- Placeholder to push Next button right -->
+        <a href="topic1_2.html" class="nav-btn">Next: Integers ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. NUMBER LINE LOGIC ---
+        function plotNumber(val, category, label, btn) {
+            let btns = document.getElementById('num-btns').children;
+            for(let i=0; i<btns.length; i++) {
+                btns[i].classList.remove('active');
+            }
+            btn.classList.add('active');
+
+            let xPos = 372 + (val * 70);
+
+            let marker = document.getElementById('plot-marker');
+            marker.style.display = 'block';
+            marker.style.transform = `translateX(${xPos}px)`;
+            
+            document.getElementById('plot-label').textContent = label;
+            document.getElementById('nl-decimal').textContent = val.toString();
+            document.getElementById('nl-category').textContent = category;
+        }
+
+        // --- 2. DECIMAL DETECTIVE LOGIC ---
+        function gcd(a, b) {
+            return b === 0 ? a : gcd(b, a % b);
+        }
+
+        function isTerminating(q) {
+            while (q % 2 === 0) q /= 2;
+            while (q % 5 === 0) q /= 5;
+            return q === 1;
+        }
+
+        function analyzeDecimal() {
+            let p = parseInt(document.getElementById('num-p').value);
+            let q = parseInt(document.getElementById('num-q').value);
+
+            if(q === 0 || isNaN(p) || isNaN(q)) {
+                alert("Denominator cannot be zero or empty!");
+                return;
+            }
+
+            let decimalValue = p / q;
+            let decimalStr = decimalValue.toString();
+            
+            let divisor = gcd(Math.abs(p), Math.abs(q));
+            let simpleQ = Math.abs(q) / divisor;
+
+            let cardType = document.getElementById('dec-card-type');
+            let typeEl = document.getElementById('dec-type');
+            let reasonEl = document.getElementById('dec-reason');
+
+            if(isTerminating(simpleQ)) {
+                cardType.style.borderColor = "#4caf50";
+                cardType.style.background = "#e8f5e9";
+                typeEl.style.color = "#2e7d32";
+                typeEl.textContent = "Terminating";
+                reasonEl.style.color = "#388e3c";
+                reasonEl.textContent = `Denominator (${simpleQ} simplified) only has prime factors 2 and/or 5.`;
+            } else {
+                cardType.style.borderColor = "#ff9800";
+                cardType.style.background = "#fff3e0";
+                typeEl.style.color = "#e65100";
+                typeEl.textContent = "Non-Terminating Repeating";
+                reasonEl.style.color = "#ef6c00";
+                reasonEl.textContent = `Denominator (${simpleQ} simplified) has prime factors other than 2 and 5.`;
+                
+                if(decimalStr.length > 10) {
+                    decimalStr = decimalStr.substring(0, 10) + "...";
+                }
+            }
+
+            document.getElementById('dec-value').textContent = decimalStr;
+        }
+        analyzeDecimal();
+
+        // --- 3. IRRATIONAL IMPOSSIBLE MACHINE LOGIC ---
+        let currentIrrat = 'pi';
+        const irratVals = {
+            'pi': { val: Math.PI, name: "3.14159265..." },
+            'sqrt2': { val: Math.SQRT2, name: "1.41421356..." },
+            'phi': { val: (1 + Math.sqrt(5)) / 2, name: "1.61803398..." }
+        };
+
+        const sIrratQ = document.getElementById('s-irrat-q');
+
+        function setIrrational(type, btn) {
+            let btns = document.querySelectorAll('.btn-irrat');
+            btns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            currentIrrat = type;
+            
+            // Set some fun default denominators depending on the number
+            if(type === 'pi') sIrratQ.value = 7; // Classic 22/7
+            else if (type === 'sqrt2') sIrratQ.value = 5; // 7/5
+            else if (type === 'phi') sIrratQ.value = 8; // Fibonacci ratios
+            
+            updateIrrational();
+        }
+
+        function updateIrrational() {
+            let q = parseInt(sIrratQ.value);
+            document.getElementById('val-irrat-q').textContent = q;
+
+            let target = irratVals[currentIrrat].val;
+            document.getElementById('target-dec').textContent = irratVals[currentIrrat].name;
+
+            // Find the absolute best integer numerator 'p' for this 'q'
+            let p = Math.round(target * q);
+            let approx = p / q;
+            let error = Math.abs(target - approx);
+
+            document.getElementById('best-frac').textContent = p + " / " + q;
+            document.getElementById('best-frac-dec').textContent = "= " + approx.toFixed(8);
+            
+            // Show error
+            document.getElementById('error-val').textContent = error.toFixed(8);
+        }
+
+        sIrratQ.addEventListener('input', updateIrrational);
+        updateIrrational();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer Step-by-Step';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equivalent Versions of Euclid's 5th Postulate - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #1a237e; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #3949ab; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c5cae9; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #3949ab; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #3949ab; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #9fa8da; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8eaf6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #3949ab; }
+        .qa-question { font-weight: bold; color: #1a237e; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #3949ab; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #3949ab; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #283593; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>🛤️ Equivalent Versions of Euclid's 5th Postulate</h1>
+    <p class="subtitle">Simplifying history's most complicated geometric rule!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>Making Sense of the 5th Postulate</h2>
+        <p>Euclid's Fifth Postulate was notoriously long and confusing. For over two thousand years, mathematicians tried to prove it as a theorem, but failed. Instead, they realized it could be rewritten in simpler, logically equivalent ways. If you accept these simpler versions, the complex 5th postulate automatically comes true!</p>
+        <table class="formula-table">
+            <tr>
+                <th>Equivalent Version</th>
+                <th>What it Means</th>
+            </tr>
+            <tr>
+                <td><strong>Playfair's Axiom (1795)</strong></td>
+                <td>For every line L and for every point P not lying on L, there exists a <strong>unique</strong> line M passing through P and parallel to L.</td>
+            </tr>
+            <tr>
+                <td><strong>Intersecting Lines Rule</strong></td>
+                <td>Two distinct intersecting lines cannot both be parallel to the exact same third line.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: PLAYFAIR'S AXIOM -->
+    <div class="section-box">
+        <h2 style="color: #e65100; text-align: center; margin-top: 0;">🎯 1. Playfair's Unique Parallel</h2>
+        <p style="text-align: center; color: #666;">There is a fixed point P floating above line L. Rotate the red line passing through P. You will discover there is <strong>only one specific angle</strong> where the red line will never intersect the blue line!</p>
+
+        <div class="interactive-container" style="background: #fff8e1; border-color: #ffb300;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #d32f2f; background: #ffebee; width: 80%;">
+                    <label style="color: #b71c1c; font-weight: bold;">Rotate Line M passing through Point P: <span id="val-playfair-ang">20</span>°</label>
+                    <input type="range" id="s-playfair-ang" min="-45" max="45" value="20">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
+                <!-- Fixed Line L -->
+                <line x1="0" y1="220" x2="500" y2="220" stroke="#1976d2" stroke-width="6"/>
+                <text x="470" y="210" font-weight="bold" fill="#1976d2" font-size="20px">L</text>
+
+                <!-- Rotating Line M -->
+                <g id="playfair-line" transform="translate(250, 100) rotate(20)">
+                    <line x1="-300" y1="0" x2="300" y2="0" stroke="#d32f2f" stroke-width="4"/>
+                </g>
+
+                <!-- Fixed Point P -->
+                <circle cx="250" cy="100" r="8" fill="#333" stroke="#fff" stroke-width="2"/>
+                <text x="245" y="85" font-weight="bold" fill="#333" font-size="20px">P</text>
+                <text x="470" y="90" font-weight="bold" fill="#d32f2f" font-size="20px">M</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #ff8f00; background: #fff; flex-basis: 100%;">
+                    <span id="playfair-status" class="val-num" style="color: #d32f2f; font-size: 1.8em;">Lines will INTERSECT</span>
+                    <span style="color: #666; font-size: 1em; margin-top: 5px; display: block;">There are infinite lines that intersect L, but only one that doesn't.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: TWO INTERSECTING LINES -->
+    <div class="section-box">
+        <h2 style="color: #00897b; text-align: center; margin-top: 0;">❌ 2. The Intersecting Lines Rule</h2>
+        <p style="text-align: center; color: #666;">Line A and Line B intersect each other at the center. Rotate the purple Line C. Can you make Line C parallel to <strong>both</strong> Line A and Line B at the same time? Give it a try!</p>
+
+        <div class="interactive-container" style="background: #e0f2f1; border-color: #00897b;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #00695c; background: #fff; width: 80%;">
+                    <label style="color: #00695c; font-weight: bold;">Rotate Test Line C: <span id="val-test-ang">0</span>°</label>
+                    <input type="range" id="s-test-ang" min="-60" max="60" value="0">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
+                <!-- Line A (Rotated 30 deg) -->
+                <g transform="translate(250, 150) rotate(30)">
+                    <line x1="-300" y1="0" x2="300" y2="0" stroke="#f57c00" stroke-width="4" stroke-dasharray="10,5"/>
+                    <text x="200" y="-10" font-weight="bold" fill="#f57c00" font-size="18px">Line A</text>
+                </g>
+
+                <!-- Line B (Rotated -30 deg) -->
+                <g transform="translate(250, 150) rotate(-30)">
+                    <line x1="-300" y1="0" x2="300" y2="0" stroke="#1976d2" stroke-width="4" stroke-dasharray="10,5"/>
+                    <text x="200" y="-10" font-weight="bold" fill="#1976d2" font-size="18px">Line B</text>
+                </g>
+
+                <!-- Center Intersection Point -->
+                <circle cx="250" cy="150" r="6" fill="#333"/>
+
+                <!-- Test Line C (Offset to the left) -->
+                <g id="test-line" transform="translate(100, 150) rotate(0)">
+                    <line x1="-150" y1="0" x2="450" y2="0" stroke="#7b1fa2" stroke-width="6"/>
+                    <text x="-50" y="-10" font-weight="bold" fill="#7b1fa2" font-size="18px">Line C</text>
+                </g>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00897b; background: #fff; flex-basis: 100%;">
+                    <span id="test-status" class="val-num" style="color: #00695c; font-size: 1.5em;">Line C intersects BOTH lines.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: BEYOND EUCLID -->
+    <div class="section-box">
+        <h2 style="color: #d81b60; text-align: center; margin-top: 0;">🌍 3. Why is it just a "Postulate"?</h2>
+        <p style="text-align: center; color: #666;">Euclid's 5th Postulate is only true on a <strong>flat surface</strong>! On a sphere (like Earth), straight lines are "Great Circles". Look at two people walking perfectly straight North from the equator. Even though they start parallel, they collide at the North Pole!</p>
+
+        <div class="interactive-container" style="background: #fce4ec; border-color: #d81b60;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #c2185b; background: #f8bbd0; width: 80%;">
+                    <label style="color: #880e4f; font-weight: bold;">Distance between Walkers on Equator</label>
+                    <input type="range" id="s-sphere-dist" min="20" max="120" value="60">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="background: #fff; height: 350px;">
+                <!-- The Sphere -->
+                <circle cx="250" cy="175" r="140" fill="#e1bee7" stroke="#8e24aa" stroke-width="3"/>
+                
+                <!-- Equator Curve -->
+                <path d="M 110 175 Q 250 220 390 175" fill="none" stroke="#8e24aa" stroke-width="2" stroke-dasharray="5,5"/>
+                <text x="250" y="215" font-weight="bold" fill="#8e24aa" font-size="14px" text-anchor="middle">The Equator</text>
+
+                <!-- North Pole -->
+                <circle cx="250" cy="35" r="6" fill="#d32f2f"/>
+                <text x="250" y="20" font-weight="bold" fill="#d32f2f" font-size="16px" text-anchor="middle">North Pole</text>
+
+                <!-- Walker Paths -->
+                <path id="path-left" fill="none" stroke="#1976d2" stroke-width="4"/>
+                <path id="path-right" fill="none" stroke="#1976d2" stroke-width="4"/>
+
+                <!-- Walker Starting Points -->
+                <circle id="dot-left" r="8" fill="#1976d2"/>
+                <circle id="dot-right" r="8" fill="#1976d2"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #d81b60; background: #fff; flex-basis: 100%;">
+                    <span style="color: #c2185b; font-size: 1.5em; font-weight: bold;">Non-Euclidean Geometry</span>
+                    <span style="color: #333; font-size: 1.1em; margin-top: 10px; display: block;">On a curved surface, "parallel" lines eventually cross. This is why Euclid couldn't prove his 5th Postulate using the other four!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: How does Playfair's Axiom simplify Euclid's 5th Postulate?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                Instead of talking about interior angles adding up to 180 degrees and lines extending infinitely to meet on one side, Playfair simply says: <strong>"Through a point outside a line, you can only draw exactly ONE parallel line."</strong> It's much easier to visualize and understand!
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: If two lines intersect, can you draw a third line that is parallel to both of them?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>No.</strong> This is the Intersecting Lines Rule. A line can be parallel to one of the intersecting lines, but it will always end up crossing the other one eventually.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic5_2.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter5.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic5_4.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. PLAYFAIR'S AXIOM LOGIC ---
+        const sPlayfairAng = document.getElementById('s-playfair-ang');
+
+        function updatePlayfair() {
+            let angle = parseInt(sPlayfairAng.value);
+            
+            document.getElementById('val-playfair-ang').textContent = angle;
+            document.getElementById('playfair-line').setAttribute('transform', `translate(250, 100) rotate(${angle})`);
+
+            let status = document.getElementById('playfair-status');
+            if (angle === 0) {
+                status.textContent = "✅ UNIQUE PARALLEL FOUND!";
+                status.style.color = "#2e7d32";
+                document.getElementById('playfair-line').firstElementChild.setAttribute('stroke', '#4caf50');
+            } else {
+                status.textContent = "Lines will eventually INTERSECT";
+                status.style.color = "#d32f2f";
+                document.getElementById('playfair-line').firstElementChild.setAttribute('stroke', '#d32f2f');
+            }
+        }
+
+        sPlayfairAng.addEventListener('input', updatePlayfair);
+        updatePlayfair();
+
+
+        // --- 2. INTERSECTING LINES LOGIC ---
+        const sTestAng = document.getElementById('s-test-ang');
+
+        function updateIntersecting() {
+            let angle = parseInt(sTestAng.value);
+            
+            document.getElementById('val-test-ang').textContent = angle;
+            document.getElementById('test-line').setAttribute('transform', `translate(100, 150) rotate(${angle})`);
+
+            let status = document.getElementById('test-status');
+            if (angle === 30) {
+                status.textContent = "Parallel to Line A... but intersects Line B!";
+                status.style.color = "#f57c00";
+            } else if (angle === -30) {
+                status.textContent = "Parallel to Line B... but intersects Line A!";
+                status.style.color = "#1976d2";
+            } else {
+                status.textContent = "Line C intersects BOTH lines.";
+                status.style.color = "#00695c";
+            }
+        }
+
+        sTestAng.addEventListener('input', updateIntersecting);
+        updateIntersecting();
+
+
+        // --- 3. BEYOND EUCLID (SPHERICAL) LOGIC ---
+        const sSphereDist = document.getElementById('s-sphere-dist');
+
+        function updateSphere() {
+            let dist = parseInt(sSphereDist.value);
+            
+            // Sphere center (250, 175). Pole is at (250, 35)
+            // Equator curve goes roughly through y=190 in the middle
+            
+            let xLeft = 250 - dist;
+            let xRight = 250 + dist;
+            
+            // Calculate starting Y on the drawn equator curve using a simple quadratic estimation
+            // Curve: M 110 175 Q 250 220 390 175
+            // Equation of parabola roughly: y = a*(x-250)^2 + 200
+            // When x=110, y=175. 175 = a*(-140)^2 + 200 => a = -25/19600
+            let a = -25 / 19600;
+            let yLeft = a * Math.pow(xLeft - 250, 2) + 197; // Adjusted visually
+            let yRight = a * Math.pow(xRight - 250, 2) + 197;
+
+            // Draw Paths to North Pole (250, 35) curving along the sphere
+            // Left Path
+            let pathL = `M ${xLeft} ${yLeft} Q ${xLeft + (250-xLeft)*0.2} 100 250 35`;
+            document.getElementById('path-left').setAttribute('d', pathL);
+            
+            // Right Path
+            let pathR = `M ${xRight} ${yRight} Q ${xRight - (xRight-250)*0.2} 100 250 35`;
+            document.getElementById('path-right').setAttribute('d', pathR);
+
+            // Move dots
+            document.getElementById('dot-left').setAttribute('cx', xLeft);
+            document.getElementById('dot-left').setAttribute('cy', yLeft);
+            
+            document.getElementById('dot-right').setAttribute('cx', xRight);
+            document.getElementById('dot-right').setAttribute('cy', yRight);
+        }
+
+        sSphereDist.addEventListener('input', updateSphere);
+        updateSphere();
+
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

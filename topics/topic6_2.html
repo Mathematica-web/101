@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pairs of Angles and Intersecting Lines - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #0d47a1; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #1976d2; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #bbdefb; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #1976d2; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #1976d2; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #64b5f6; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e3f2fd; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #1976d2; }
+        .qa-question { font-weight: bold; color: #0d47a1; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #1976d2; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #1976d2; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #0d47a1; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>✂️ Pairs of Angles and Intersecting Lines</h1>
+    <p class="subtitle">When lines cross, interesting mathematical relationships are born!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>Relationships Between Angles</h2>
+        <p>When you put two angles next to each other, or cross two lines like a pair of scissors, they create special relationships. Recognizing these patterns allows you to instantly solve complex geometric puzzles.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Type of Pair</th>
+                <th>Definition & Properties</th>
+            </tr>
+            <tr>
+                <td><strong>Adjacent Angles</strong></td>
+                <td>Two angles that share a common vertex and a common arm, but do not overlap. They sit right next to each other.</td>
+            </tr>
+            <tr>
+                <td><strong>Linear Pair of Angles</strong></td>
+                <td>A special type of adjacent angles where the non-common arms form a perfectly straight line. Their sum is always exactly <strong>180°</strong>.</td>
+            </tr>
+            <tr>
+                <td><strong>Vertically Opposite Angles</strong></td>
+                <td>The angles opposite each other when two lines intersect. They are always <strong>equal</strong> to one another.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: ADJACENT ANGLES -->
+    <div class="section-box">
+        <h2 style="color: #e65100; text-align: center; margin-top: 0;">🧩 1. The Angle Addition Postulate</h2>
+        <p style="text-align: center; color: #666;">If two angles are adjacent, you can simply add their measurements together to get the total outer angle. Adjust the central common arm to split the total 120° angle into two pieces!</p>
+
+        <div class="interactive-container" style="background: #fff8e1; border-color: #ffb300;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #e65100; background: #ffebee; width: 80%;">
+                    <label style="color: #b71c1c; font-weight: bold; font-size: 1.2em;">Adjust Common Arm (Angle x): <span id="val-adj">45</span>°</label>
+                    <input type="range" id="s-adj" min="10" max="110" value="45">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
+                <!-- Base Arm (Fixed) -->
+                <line x1="250" y1="250" x2="450" y2="250" stroke="#333" stroke-width="5" stroke-linecap="round"/>
+                
+                <!-- Outer Arm (Fixed at 120 deg) -->
+                <line x1="250" y1="250" x2="150" y2="76.8" stroke="#333" stroke-width="5" stroke-linecap="round"/>
+
+                <!-- Common Arm (Moving) -->
+                <line id="adj-common-arm" x1="250" y1="250" x2="350" y2="50" stroke="#e65100" stroke-width="6" stroke-linecap="round"/>
+
+                <!-- Angle Arcs -->
+                <path id="adj-arc-x" fill="none" stroke="#e65100" stroke-width="4"/>
+                <path id="adj-arc-y" fill="none" stroke="#1976d2" stroke-width="4"/>
+
+                <!-- Labels -->
+                <text id="adj-lbl-x" font-weight="bold" fill="#e65100" font-size="18px" text-anchor="middle">x°</text>
+                <text id="adj-lbl-y" font-weight="bold" fill="#1976d2" font-size="18px" text-anchor="middle">y°</text>
+
+                <!-- Vertex -->
+                <circle cx="250" cy="250" r="8" fill="#333"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #ff8f00; background: #fff; flex-basis: 100%;">
+                    <span style="color: #f57c00; font-size: 1.2em; display: block; margin-bottom: 5px;">Angle x + Angle y = Total Angle</span>
+                    <span id="adj-math" class="val-num" style="color: #e65100; font-size: 2.2em;">45° + 75° = 120°</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: LINEAR PAIR -->
+    <div class="section-box">
+        <h2 style="color: #00897b; text-align: center; margin-top: 0;">📏 2. The Linear Pair Axiom</h2>
+        <p style="text-align: center; color: #666;">If a ray stands on a straight line, the sum of the two adjacent angles formed is exactly 180°. Notice how no matter where you position the ray, the balance is perfectly maintained!</p>
+
+        <div class="interactive-container" style="background: #e0f2f1; border-color: #00897b;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #00695c; background: #fff; width: 80%;">
+                    <label style="color: #00695c; font-weight: bold; font-size: 1.2em;">Move the Intersecting Ray</label>
+                    <input type="range" id="s-linear" min="10" max="170" value="60">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
+                <!-- Straight Line -->
+                <line x1="50" y1="250" x2="450" y2="250" stroke="#333" stroke-width="6" stroke-linecap="round"/>
+                
+                <!-- Ray -->
+                <line id="lin-ray" x1="250" y1="250" x2="250" y2="50" stroke="#00897b" stroke-width="6" stroke-linecap="round"/>
+
+                <!-- Angle Arcs -->
+                <path id="lin-arc-1" fill="none" stroke="#00695c" stroke-width="4"/>
+                <path id="lin-arc-2" fill="none" stroke="#d32f2f" stroke-width="4"/>
+
+                <!-- Labels -->
+                <text id="lin-lbl-1" font-weight="bold" fill="#00695c" font-size="18px" text-anchor="middle">Angle 1</text>
+                <text id="lin-lbl-2" font-weight="bold" fill="#d32f2f" font-size="18px" text-anchor="middle">Angle 2</text>
+
+                <!-- Vertex -->
+                <circle cx="250" cy="250" r="8" fill="#333"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00897b; background: #fff; flex-basis: 100%;">
+                    <span style="color: #00695c; font-size: 1.2em; display: block; margin-bottom: 5px;">Angle 1 + Angle 2 = Straight Line</span>
+                    <span id="lin-math" class="val-num" style="color: #00897b; font-size: 2.2em;">60° + 120° = 180°</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: VERTICALLY OPPOSITE ANGLES -->
+    <div class="section-box">
+        <h2 style="color: #7b1fa2; text-align: center; margin-top: 0;">✂️ 3. Vertically Opposite Angles</h2>
+        <p style="text-align: center; color: #666;">When two lines cross, they form four angles. The angles across from each other are "Vertically Opposite". Operate the scissors below to prove that opposite angles are always perfectly equal!</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #9c27b0;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #7b1fa2; background: #fff; width: 80%;">
+                    <label style="color: #4a148c; font-weight: bold; font-size: 1.2em;">Open and Close the Intersecting Lines</label>
+                    <input type="range" id="s-vert" min="15" max="165" value="45">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 400" style="height: 350px; background: #fafafa;">
+                <!-- Fixed Line -->
+                <line x1="50" y1="200" x2="450" y2="200" stroke="#333" stroke-width="6" stroke-linecap="round"/>
+
+                <!-- Moving Line -->
+                <g id="vert-moving-line">
+                    <line x1="50" y1="200" x2="450" y2="200" stroke="#7b1fa2" stroke-width="6" stroke-linecap="round"/>
+                </g>
+
+                <!-- Arcs -->
+                <path id="vert-arc-top" fill="#ce93d8" stroke="#7b1fa2" stroke-width="2" opacity="0.5"/>
+                <path id="vert-arc-bot" fill="#ce93d8" stroke="#7b1fa2" stroke-width="2" opacity="0.5"/>
+                <path id="vert-arc-left" fill="#fff59d" stroke="#f57f17" stroke-width="2" opacity="0.5"/>
+                <path id="vert-arc-right" fill="#fff59d" stroke="#f57f17" stroke-width="2" opacity="0.5"/>
+
+                <!-- Labels -->
+                <text id="vert-lbl-top" font-weight="bold" fill="#4a148c" font-size="20px" text-anchor="middle">Top</text>
+                <text id="vert-lbl-bot" font-weight="bold" fill="#4a148c" font-size="20px" text-anchor="middle">Bot</text>
+                <text id="vert-lbl-left" font-weight="bold" fill="#e65100" font-size="20px" text-anchor="middle">Left</text>
+                <text id="vert-lbl-right" font-weight="bold" fill="#e65100" font-size="20px" text-anchor="middle">Right</text>
+
+                <!-- Vertex -->
+                <circle cx="250" cy="200" r="8" fill="#333"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #9c27b0; background: #fff;">
+                    <span style="color: #7b1fa2; font-size: 1.1em; display: block; margin-bottom: 5px;">Pair 1 (Purple)</span>
+                    <span id="vert-math-1" class="val-num" style="color: #4a148c; font-size: 1.8em;">Top = Bottom = 45°</span>
+                </div>
+                <div class="dash-card" style="border-color: #fbc02d; background: #fff;">
+                    <span style="color: #f57f17; font-size: 1.1em; display: block; margin-bottom: 5px;">Pair 2 (Yellow)</span>
+                    <span id="vert-math-2" class="val-num" style="color: #e65100; font-size: 1.8em;">Left = Right = 135°</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: If two angles form a linear pair and one angle measures 65°, what is the measurement of the other angle?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Step 1:</strong> A linear pair always sums to exactly 180°.<br>
+                <strong>Step 2:</strong> Set up the equation: Angle 1 + Angle 2 = 180°.<br>
+                <strong>Step 3:</strong> 65° + Angle 2 = 180°.<br>
+                <strong>Step 4:</strong> Angle 2 = 180° - 65° = 115°.<br>
+                <strong>Final Answer: 115°</strong>
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: Can two acute angles ever form a linear pair?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>No!</strong><br><br>
+                An acute angle is strictly less than 90°. Even if you take the largest possible acute angles (e.g., 89.9° + 89.9°), they will add up to less than 180°. A linear pair must contain either one obtuse and one acute angle, or two perfect right (90°) angles.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic6_1.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter6.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic6_3.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
+            let angleInRadians = (angleInDegrees) * Math.PI / 180.0;
+            return {
+                x: centerX + (radius * Math.cos(angleInRadians)),
+                y: centerY - (radius * Math.sin(angleInRadians)) // Y is inverted in SVG
+            };
+        }
+
+        function getArcPath(cx, cy, r, startAngle, endAngle) {
+            let start = polarToCartesian(cx, cy, r, startAngle);
+            let end = polarToCartesian(cx, cy, r, endAngle);
+            let largeArcFlag = Math.abs(endAngle - startAngle) > 180 ? "1" : "0";
+            // For standard math orientation (CCW is positive, but SVG Y is inverted)
+            return `M ${start.x} ${start.y} A ${r} ${r} 0 ${largeArcFlag} 0 ${end.x} ${end.y}`;
+        }
+        
+        function getWedgePath(cx, cy, r, startAngle, endAngle) {
+            let start = polarToCartesian(cx, cy, r, startAngle);
+            let end = polarToCartesian(cx, cy, r, endAngle);
+            let largeArcFlag = Math.abs(endAngle - startAngle) > 180 ? "1" : "0";
+            return `M ${cx} ${cy} L ${start.x} ${start.y} A ${r} ${r} 0 ${largeArcFlag} 0 ${end.x} ${end.y} Z`;
+        }
+
+        // --- 1. ADJACENT ANGLES LOGIC ---
+        const sAdj = document.getElementById('s-adj');
+
+        function updateAdjacent() {
+            let angX = parseInt(sAdj.value);
+            let angY = 120 - angX;
+            let cx = 250, cy = 250;
+
+            document.getElementById('val-adj').textContent = angX;
+            
+            let endPos = polarToCartesian(cx, cy, 180, angX);
+            document.getElementById('adj-common-arm').setAttribute('x2', endPos.x);
+            document.getElementById('adj-common-arm').setAttribute('y2', endPos.y);
+
+            document.getElementById('adj-arc-x').setAttribute('d', getArcPath(cx, cy, 60, 0, angX));
+            document.getElementById('adj-arc-y').setAttribute('d', getArcPath(cx, cy, 80, angX, 120));
+
+            let lblXPos = polarToCartesian(cx, cy, 80, angX / 2);
+            document.getElementById('adj-lbl-x').setAttribute('x', lblXPos.x);
+            document.getElementById('adj-lbl-x').setAttribute('y', lblXPos.y + 5);
+            document.getElementById('adj-lbl-x').textContent = `${angX}°`;
+
+            let lblYPos = polarToCartesian(cx, cy, 100, angX + (angY / 2));
+            document.getElementById('adj-lbl-y').setAttribute('x', lblYPos.x);
+            document.getElementById('adj-lbl-y').setAttribute('y', lblYPos.y + 5);
+            document.getElementById('adj-lbl-y').textContent = `${angY}°`;
+
+            document.getElementById('adj-math').textContent = `${angX}° + ${angY}° = 120°`;
+        }
+
+        sAdj.addEventListener('input', updateAdjacent);
+        updateAdjacent();
+
+
+        // --- 2. LINEAR PAIR LOGIC ---
+        const sLinear = document.getElementById('s-linear');
+
+        function updateLinear() {
+            let ang1 = parseInt(sLinear.value);
+            let ang2 = 180 - ang1;
+            let cx = 250, cy = 250;
+
+            let endPos = polarToCartesian(cx, cy, 200, ang1);
+            document.getElementById('lin-ray').setAttribute('x2', endPos.x);
+            document.getElementById('lin-ray').setAttribute('y2', endPos.y);
+
+            document.getElementById('lin-arc-1').setAttribute('d', getArcPath(cx, cy, 60, 0, ang1));
+            document.getElementById('lin-arc-2').setAttribute('d', getArcPath(cx, cy, 80, ang1, 180));
+
+            let lbl1Pos = polarToCartesian(cx, cy, 90, ang1 / 2);
+            document.getElementById('lin-lbl-1').setAttribute('x', lbl1Pos.x);
+            document.getElementById('lin-lbl-1').setAttribute('y', lbl1Pos.y + 5);
+            document.getElementById('lin-lbl-1').textContent = `${ang1}°`;
+
+            let lbl2Pos = polarToCartesian(cx, cy, 110, ang1 + (ang2 / 2));
+            document.getElementById('lin-lbl-2').setAttribute('x', lbl2Pos.x);
+            document.getElementById('lin-lbl-2').setAttribute('y', lbl2Pos.y + 5);
+            document.getElementById('lin-lbl-2').textContent = `${ang2}°`;
+
+            document.getElementById('lin-math').textContent = `${ang1}° + ${ang2}° = 180°`;
+        }
+
+        sLinear.addEventListener('input', updateLinear);
+        updateLinear();
+
+
+        // --- 3. VERTICALLY OPPOSITE ANGLES LOGIC ---
+        const sVert = document.getElementById('s-vert');
+
+        function updateVerticallyOpposite() {
+            let ang = parseInt(sVert.value);
+            let cx = 250, cy = 200;
+
+            document.getElementById('vert-moving-line').setAttribute('transform', `rotate(${-ang} ${cx} ${cy})`);
+
+            let angSup = 180 - ang;
+
+            // Arcs as wedges
+            document.getElementById('vert-arc-right').setAttribute('d', getWedgePath(cx, cy, 50, 0, ang));
+            document.getElementById('vert-arc-top').setAttribute('d', getWedgePath(cx, cy, 50, ang, 180));
+            document.getElementById('vert-arc-left').setAttribute('d', getWedgePath(cx, cy, 50, 180, 180 + ang));
+            document.getElementById('vert-arc-bot').setAttribute('d', getWedgePath(cx, cy, 50, 180 + ang, 360));
+
+            // Labels
+            let pRight = polarToCartesian(cx, cy, 80, ang / 2);
+            document.getElementById('vert-lbl-right').setAttribute('x', pRight.x);
+            document.getElementById('vert-lbl-right').setAttribute('y', pRight.y + 5);
+            document.getElementById('vert-lbl-right').textContent = `${ang}°`;
+
+            let pTop = polarToCartesian(cx, cy, 80, ang + angSup / 2);
+            document.getElementById('vert-lbl-top').setAttribute('x', pTop.x);
+            document.getElementById('vert-lbl-top').setAttribute('y', pTop.y + 5);
+            document.getElementById('vert-lbl-top').textContent = `${angSup}°`;
+
+            let pLeft = polarToCartesian(cx, cy, 80, 180 + ang / 2);
+            document.getElementById('vert-lbl-left').setAttribute('x', pLeft.x);
+            document.getElementById('vert-lbl-left').setAttribute('y', pLeft.y + 5);
+            document.getElementById('vert-lbl-left').textContent = `${ang}°`;
+
+            let pBot = polarToCartesian(cx, cy, 80, 180 + ang + angSup / 2);
+            document.getElementById('vert-lbl-bot').setAttribute('x', pBot.x);
+            document.getElementById('vert-lbl-bot').setAttribute('y', pBot.y + 5);
+            document.getElementById('vert-lbl-bot').textContent = `${angSup}°`;
+
+            document.getElementById('vert-math-1').textContent = `Top = Bottom = ${angSup}°`;
+            document.getElementById('vert-math-2').textContent = `Left = Right = ${ang}°`;
+        }
+
+        sVert.addEventListener('input', updateVerticallyOpposite);
+        updateVerticallyOpposite();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer Step-by-Step';
+                if(id === 'ans2') btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

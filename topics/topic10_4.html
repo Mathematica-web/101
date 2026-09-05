@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area of Parallelograms - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #1a237e; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #3f51b5; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); background: #303f9f; }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c5cae9; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #3f51b5; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #3f51b5; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #9fa8da; font-size: 0.95em; min-width: 140px; flex: 1; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+        
+        .proof-box { background: #e8eaf6; padding: 20px; border-radius: 10px; border-left: 6px solid #3f51b5; margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
+        .proof-box h3 { color: #1a237e; margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8eaf6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #3f51b5; }
+        .qa-question { font-weight: bold; color: #1a237e; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #3f51b5; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); background: #303f9f; }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #3f51b5; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #1a237e; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>🟦 Area of Parallelograms</h1>
+    <p class="subtitle">The master formula for finding the area of a slanted rectangle!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Core Formula</h2>
+        <p>A parallelogram looks like a rectangle that has been pushed over. But does this slanted shape hold less space than a straight rectangle? The answer lies in its perpendicular height.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Component</th>
+                <th>Definition</th>
+            </tr>
+            <tr>
+                <td><strong>Base (b)</strong></td>
+                <td>Any of the flat, parallel sides of the parallelogram.</td>
+            </tr>
+            <tr>
+                <td><strong>Perpendicular Height (h)</strong></td>
+                <td>The straight 90° distance between the base and its opposite parallel side. <em>(Never use the slanted side!)</em></td>
+            </tr>
+            <tr>
+                <td><strong>Area Formula</strong></td>
+                <td><strong>Area = Base * Height</strong></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE DYNAMIC CALCULATOR -->
+    <div class="section-box">
+        <h2 style="color: #e91e63; text-align: center; margin-top: 0;">🧮 1. The Slant Calculator</h2>
+        <p style="text-align: center; color: #666;">Adjust the Base, the strict vertical Height, and the Slant (Skew). Notice how the length of the slanted side changes wildly as you skew it, but the <strong>total area remains perfectly unchanged</strong>!</p>
+
+        <div class="interactive-container" style="background: #fce4ec; border-color: #e91e63;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #3f51b5; background: #e8eaf6;">
+                    <label style="color: #1a237e; font-weight: bold;">Base (b): <span id="val-base">200</span> units</label>
+                    <input type="range" id="s-base" min="100" max="300" value="200">
+                </div>
+                <div class="slider-group" style="border-color: #e91e63; background: #fce4ec;">
+                    <label style="color: #880e4f; font-weight: bold;">Height (h): <span id="val-height">120</span> units</label>
+                    <input type="range" id="s-height" min="50" max="200" value="120">
+                </div>
+                <div class="slider-group" style="border-color: #00bcd4; background: #e0f7fa;">
+                    <label style="color: #006064; font-weight: bold;">Skew (Slant)</label>
+                    <input type="range" id="s-skew" min="-100" max="150" value="50">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
+                <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#eee" stroke-width="1"/>
+                </pattern>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+
+                <polygon id="para-poly" fill="rgba(63, 81, 181, 0.2)" stroke="#3f51b5" stroke-width="4"/>
+                
+                <line id="base-line" stroke="#1a237e" stroke-width="6" stroke-linecap="round"/>
+                <line id="height-line" stroke="#e91e63" stroke-width="4" stroke-dasharray="6,4"/>
+                <path id="h-90-box" fill="none" stroke="#e91e63" stroke-width="2"/>
+
+                <text id="lbl-slant" font-weight="bold" fill="#00bcd4" font-size="14px"></text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #3f51b5; background: #fff; flex-basis: 100%;">
+                    <span style="color: #3f51b5; font-size: 1.2em; display: block; margin-bottom: 5px;">Area Calculation</span>
+                    <span id="area-math" class="val-num" style="color: #1a237e; font-size: 1.8em;">200 * 120 = 24000 sq units</span>
+                </div>
+            </div>
+
+            <div class="proof-box" style="border-left-color: #e91e63; background: #fce4ec;">
+                <h3 style="color: #c2185b;">💡 Why does this work? (The Proof)</h3>
+                <p>The most common mistake is multiplying the base by the slanted side! The slanted side is always longer than the perpendicular height (because it forms the hypotenuse of a right-angled triangle). By locking the perpendicular height and the base, the shape occupies exactly the same space as a rectangle of identical dimensions. The slant just shifts the area horizontally!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE RECTANGLE MORPH -->
+    <div class="section-box">
+        <h2 style="color: #00bcd4; text-align: center; margin-top: 0;">✂️ 2. The Rectangle Morph</h2>
+        <p style="text-align: center; color: #666;">Still not convinced that a slanted parallelogram equals a straight rectangle? Slide the control to slice off the slanted triangle and seamlessly attach it to the other side!</p>
+
+        <div class="interactive-container" style="background: #e0f7fa; border-color: #00bcd4;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #0097a7; background: #fff; width: 80%;">
+                    <label style="color: #006064; font-weight: bold; font-size: 1.2em;">Slice and Move</label>
+                    <input type="range" id="s-morph" min="0" max="100" value="0">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
+                <!-- Fixed Background Outline to show original shape -->
+                <polygon points="100,250 300,250 350,100 150,100" fill="none" stroke="#ccc" stroke-width="3" stroke-dasharray="5,5"/>
+                
+                <!-- Center Rectangle (Static portion) -->
+                <!-- Base is 200. X goes from 150 to 300 (width 150). The remaining 50 is the triangle part -->
+                <polygon points="150,250 300,250 300,100 150,100" fill="rgba(0, 188, 212, 0.4)" stroke="#0097a7" stroke-width="2"/>
+                
+                <!-- Right Triangle (Static portion) -->
+                <polygon points="300,250 350,100 300,100" fill="rgba(0, 188, 212, 0.4)" stroke="#0097a7" stroke-width="2"/>
+
+                <!-- The Sliced Left Triangle (Moving portion) -->
+                <!-- Original points: 100,250 | 150,250 | 150,100 -->
+                <!-- Needs to move +200 in X to reach the right side -->
+                <g id="morph-tri" transform="translate(0, 0)">
+                    <polygon points="100,250 150,250 150,100" fill="rgba(233, 30, 99, 0.7)" stroke="#c2185b" stroke-width="2"/>
+                </g>
+                
+                <text x="225" y="185" font-weight="bold" fill="#006064" font-size="24px" id="morph-text">Parallelogram</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00bcd4; background: #fff; flex-basis: 100%;">
+                    <span id="morph-status" style="color: #0097a7; font-size: 1.5em; font-weight: bold;">Area = Base * Height</span>
+                </div>
+            </div>
+
+            <div class="proof-box" style="border-left-color: #00bcd4; background: #e0f7fa;">
+                <h3 style="color: #006064;">💡 Why does this work? (The Proof)</h3>
+                <p>If you drop a perpendicular line from the top-left corner of a parallelogram, it creates a small right-angled triangle. Because opposite sides of a parallelogram are equal and parallel, this sliced triangle fits perfectly into the empty space on the opposite side. When you move it, the shape magically transforms into a perfect rectangle. The formula for a rectangle's area is Base * Height. Since no area was added or lost during the morph, the area of the parallelogram must also be identically Base * Height!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: A parallelogram has a base of 15 cm, a slanted side of 10 cm, and a perpendicular height of 8 cm. What is its total area?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>120 sq cm.</strong><br><br>
+                The area is Base * Height (15 * 8 = 120). The slanted side (10 cm) is extra information designed to distract you. You never use the slanted side to calculate area!
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: How does the area of a parallelogram compare to a rectangle if both share the exact same base and the exact same height?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>They are exactly the same!</strong><br><br>
+                As demonstrated in the Rectangle Morph simulator, a parallelogram can be physically cut and rearranged into a rectangle of the identical base and height, proving their areas are equal.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic10_3.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter10.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic10_5.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. SLANT CALCULATOR LOGIC ---
+        const sBase = document.getElementById('s-base');
+        const sHeight = document.getElementById('s-height');
+        const sSkew = document.getElementById('s-skew');
+
+        function updatePara() {
+            let b = parseInt(sBase.value);
+            let h = parseInt(sHeight.value);
+            let skew = parseInt(sSkew.value);
+
+            document.getElementById('val-base').textContent = b;
+            document.getElementById('val-height').textContent = h;
+
+            // Anchor bottom-left at (100, 250)
+            let ax = 100, ay = 280;
+            let bx = ax + b, by = 280;
+            
+            // Top vertices
+            let dx = ax + skew, dy = 280 - h;
+            let cx = dx + b, cy = 280 - h;
+
+            document.getElementById('para-poly').setAttribute('points', `${ax},${ay} ${bx},${by} ${cx},${cy} ${dx},${dy}`);
+            
+            // Base Line
+            document.getElementById('base-line').setAttribute('x1', ax);
+            document.getElementById('base-line').setAttribute('y1', ay);
+            document.getElementById('base-line').setAttribute('x2', bx);
+            document.getElementById('base-line').setAttribute('y2', by);
+
+            // Height Line
+            document.getElementById('height-line').setAttribute('x1', dx);
+            document.getElementById('height-line').setAttribute('y1', dy);
+            document.getElementById('height-line').setAttribute('x2', dx);
+            document.getElementById('height-line').setAttribute('y2', ay);
+
+            // 90 Box
+            let boxDir = (skew >= 0) ? -1 : 1; 
+            document.getElementById('h-90-box').setAttribute('d', `M ${dx} ${ay-10} L ${dx + 10*boxDir} ${ay-10} L ${dx + 10*boxDir} ${ay}`);
+
+            // Slanted Side length calculation
+            let slantLength = Math.sqrt(Math.pow(skew, 2) + Math.pow(h, 2)).toFixed(1);
+            let lblX = ax + skew/2 - 20;
+            let lblY = ay - h/2 - 10;
+            
+            document.getElementById('lbl-slant').setAttribute('x', lblX);
+            document.getElementById('lbl-slant').setAttribute('y', lblY);
+            document.getElementById('lbl-slant').textContent = `Slant = ${slantLength}`;
+
+            // Math
+            let area = b * h;
+            document.getElementById('area-math').innerHTML = `${b} * ${h} = <strong>${area}</strong> sq units`;
+        }
+
+        sBase.addEventListener('input', updatePara);
+        sHeight.addEventListener('input', updatePara);
+        sSkew.addEventListener('input', updatePara);
+        updatePara();
+
+        // --- 2. RECTANGLE MORPH LOGIC ---
+        const sMorph = document.getElementById('s-morph');
+
+        function updateMorph() {
+            let val = parseInt(sMorph.value); // 0 to 100
+            
+            // We need to translate the triangle by 200 units on the X axis
+            let moveX = (val / 100) * 200;
+            
+            document.getElementById('morph-tri').setAttribute('transform', `translate(${moveX}, 0)`);
+
+            let status = document.getElementById('morph-status');
+            let morphText = document.getElementById('morph-text');
+            
+            if (val === 100) {
+                status.textContent = "✅ Transformation Complete: It's a Rectangle!";
+                status.style.color = "#c2185b";
+                morphText.textContent = "Rectangle";
+                morphText.setAttribute('fill', '#c2185b');
+            } else if (val === 0) {
+                status.textContent = "Slide to slice the parallelogram.";
+                status.style.color = "#0097a7";
+                morphText.textContent = "Parallelogram";
+                morphText.setAttribute('fill', '#006064');
+            } else {
+                status.textContent = "Moving the triangle piece...";
+                status.style.color = "#1a237e";
+                morphText.textContent = "Morphing...";
+            }
+        }
+
+        sMorph.addEventListener('input', updateMorph);
+        updateMorph();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

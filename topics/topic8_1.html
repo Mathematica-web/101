@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Quadrilaterals - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #4a148c; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #6a1b9a; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #e1bee7; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #6a1b9a; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #6a1b9a; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #ce93d8; font-size: 0.95em; min-width: 140px; flex: 1; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+        select { width: 100%; padding: 8px; margin-top: 10px; border-radius: 5px; border: 2px solid #ce93d8; font-family: inherit; font-weight: bold; color: #4a148c; cursor: pointer; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; text-align: left; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; text-align: center; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #f3e5f5; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #6a1b9a; }
+        .qa-question { font-weight: bold; color: #4a148c; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #6a1b9a; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #6a1b9a; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #4a148c; transform: scale(1.05); }
+        
+        ul.prop-list { margin: 10px 0 0 0; padding-left: 20px; font-weight: normal; color: #333; line-height: 1.5; }
+        ul.prop-list li { margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>⏹️ Introduction to Quadrilaterals</h1>
+    <p class="subtitle">Meet the family of four-sided polygons!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>What is a Quadrilateral?</h2>
+        <p>A polygon formed by joining exactly four distinct points (where no three are collinear) is called a <strong>Quadrilateral</strong> (from Latin: <em>quadri</em> meaning four, and <em>latus</em> meaning side). While any random 4-sided shape is a quadrilateral, mathematicians have categorized them into a special family based on parallel lines, equal sides, and equal angles.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Shape Name</th>
+                <th>Defining Feature</th>
+            </tr>
+            <tr>
+                <td><strong>Trapezium</strong></td>
+                <td>Exactly <em>one</em> pair of opposite sides are parallel.</td>
+            </tr>
+            <tr>
+                <td><strong>Parallelogram</strong></td>
+                <td><em>Both</em> pairs of opposite sides are parallel.</td>
+            </tr>
+            <tr>
+                <td><strong>Rectangle</strong></td>
+                <td>A parallelogram where all four angles are exactly 90°.</td>
+            </tr>
+            <tr>
+                <td><strong>Rhombus</strong></td>
+                <td>A parallelogram where all four sides are exactly equal in length.</td>
+            </tr>
+            <tr>
+                <td><strong>Square</strong></td>
+                <td>The perfect shape: All four sides are equal AND all four angles are 90°.</td>
+            </tr>
+            <tr>
+                <td><strong>Kite</strong></td>
+                <td>Two distinct pairs of adjacent (next to each other) sides are equal.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE SHAPE EXPLORER -->
+    <div class="section-box">
+        <h2 style="color: #6a1b9a; text-align: center; margin-top: 0;">🔍 1. The Shape Explorer</h2>
+        <p style="text-align: center; color: #666;">Use the dropdown to browse through the basic quadrilateral family. Pay close attention to how parallel lines and 90-degree corners transform the basic shape into specialized forms!</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #9c27b0;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #9c27b0; background: #fff; width: 60%;">
+                    <label style="color: #6a1b9a; font-weight: bold; font-size: 1.1em;">Select a Quadrilateral:</label>
+                    <select id="sel-shape">
+                        <option value="general">General Quadrilateral</option>
+                        <option value="trapezium">Trapezium</option>
+                        <option value="parallelogram">Parallelogram</option>
+                        <option value="rectangle">Rectangle</option>
+                        <option value="rhombus">Rhombus</option>
+                        <option value="square">Square</option>
+                        <option value="kite">Kite</option>
+                    </select>
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 320" style="height: 320px; background: #fafafa;">
+                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#eee" stroke-width="1"/>
+                </pattern>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+
+                <polygon id="exp-poly" fill="rgba(106, 27, 154, 0.2)" stroke="#6a1b9a" stroke-width="6" style="transition: all 0.4s ease;"/>
+                
+                <!-- Corner Indicators (for 90 degrees) dynamically updated via JS -->
+                <g id="exp-90-corners" opacity="0" stroke="#d32f2f" stroke-width="3" fill="none" style="transition: opacity 0.4s ease;"></g>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #9c27b0; background: #fff; flex-basis: 100%;">
+                    <span id="exp-title" style="color: #6a1b9a; font-size: 1.5em; font-weight: bold; display: block; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px;">General Quadrilateral</span>
+                    <ul class="prop-list" id="exp-list">
+                        <li>Has 4 sides and 4 angles.</li>
+                        <li>No specific parallel lines.</li>
+                        <li>No specific equal sides.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE PARALLELOGRAM FLEXER -->
+    <div class="section-box">
+        <h2 style="color: #0277bd; text-align: center; margin-top: 0;">📐 2. The Parallelogram Flexer</h2>
+        <p style="text-align: center; color: #666;">A parallelogram is defined by having two pairs of parallel sides. Watch the magic: as you change its lean or height, <strong>different special shapes naturally emerge depending on its side lengths and angles!</strong></p>
+
+        <div class="interactive-container" style="background: #e1f5fe; border-color: #0277bd;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #0288d1; background: #e1f5fe;">
+                    <label style="color: #01579b; font-weight: bold;">Lean (Left/Right)</label>
+                    <!-- Range allows it to easily snap to 100 for 90 degrees, and 250 for equal side lengths -->
+                    <input type="range" id="s-para-x" min="0" max="250" value="150" step="10">
+                </div>
+                <div class="slider-group" style="border-color: #0288d1; background: #e1f5fe;">
+                    <label style="color: #01579b; font-weight: bold;">Height (Up/Down)</label>
+                    <input type="range" id="s-para-y" min="50" max="250" value="120" step="10">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
+                <!-- Parallel Arrows (Visual Indicators) -->
+                <path id="arrow-top" fill="none" stroke="#d32f2f" stroke-width="3"/>
+                <path d="M 220 260 L 230 255 L 220 250" fill="none" stroke="#d32f2f" stroke-width="3"/>
+                
+                <path id="arrow-left1" fill="none" stroke="#1976d2" stroke-width="3"/>
+                <path id="arrow-left2" fill="none" stroke="#1976d2" stroke-width="3"/>
+                <path id="arrow-right1" fill="none" stroke="#1976d2" stroke-width="3"/>
+                <path id="arrow-right2" fill="none" stroke="#1976d2" stroke-width="3"/>
+
+                <polygon id="para-poly" fill="rgba(2, 119, 189, 0.1)" stroke="#0277bd" stroke-width="4"/>
+                
+                <!-- Vertices -->
+                <circle cx="100" cy="260" r="6" fill="#333"/>
+                <text x="80" y="275" font-weight="bold" fill="#333" font-size="18px">A</text>
+
+                <circle cx="350" cy="260" r="6" fill="#333"/>
+                <text x="365" y="275" font-weight="bold" fill="#333" font-size="18px">B</text>
+
+                <circle id="para-dot-c" r="6" fill="#333"/>
+                <text id="para-txt-c" font-weight="bold" fill="#333" font-size="18px">C</text>
+
+                <circle id="para-dot-d" r="6" fill="#333"/>
+                <text id="para-txt-d" font-weight="bold" fill="#333" font-size="18px">D</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #0277bd; background: #fff; flex-basis: 100%;">
+                    <span style="color: #555; font-size: 1.1em; display: block; margin-bottom: 5px;">Currently classified as a:</span>
+                    <span id="para-shape-name" style="color: #0277bd; font-size: 2em; font-weight: bold; border-bottom: 2px dashed #0277bd; padding-bottom: 10px; margin-bottom: 10px; display: block;">Parallelogram</span>
+                </div>
+                <div class="dash-card" style="border-color: #d32f2f; background: #ffebee;">
+                    <span style="color: #b71c1c; font-size: 1.1em; display: block; margin-bottom: 5px; text-align: center;">Opposite Sides</span>
+                    <span id="para-math-sides" class="val-num" style="color: #d32f2f; font-size: 1.3em;">AB = CD = 250 units<br>AD = BC = 130 units</span>
+                </div>
+                <div class="dash-card" style="border-color: #1976d2; background: #e3f2fd;">
+                    <span style="color: #0d47a1; font-size: 1.1em; display: block; margin-bottom: 5px; text-align: center;">Opposite Angles</span>
+                    <span id="para-math-angles" class="val-num" style="color: #1976d2; font-size: 1.3em;">∠A = ∠C = 60°<br>∠B = ∠D = 120°</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: THE DIAGONAL X-RAY -->
+    <div class="section-box">
+        <h2 style="color: #d81b60; text-align: center; margin-top: 0;">✖️ 3. The Diagonal X-Ray</h2>
+        <p style="text-align: center; color: #666;">A lot of a shape's identity is hidden inside its diagonals. Do they bisect each other (cut exactly in half)? Are they perfectly equal in length? Do they cross at a perfect 90° angle? Select a shape to run an X-Ray!</p>
+
+        <div class="interactive-container" style="background: #fce4ec; border-color: #d81b60;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #c2185b; background: #fff; width: 80%;">
+                    <label style="color: #880e4f; font-weight: bold; font-size: 1.1em;">Activate Diagonal X-Ray For:</label>
+                    <select id="sel-diag" style="border-color: #c2185b; color: #880e4f;">
+                        <option value="parallelogram">Parallelogram</option>
+                        <option value="rectangle">Rectangle</option>
+                        <option value="rhombus">Rhombus</option>
+                        <option value="square">Square</option>
+                        <option value="kite">Kite</option>
+                    </select>
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 320" style="height: 320px; background: #333;">
+                <!-- Grid -->
+                <pattern id="grid-dark" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#444" stroke-width="1"/>
+                </pattern>
+                <rect width="100%" height="100%" fill="url(#grid-dark)" />
+
+                <!-- Polygon Outline -->
+                <polygon id="diag-poly" fill="rgba(255,255,255,0.05)" stroke="#fff" stroke-width="2"/>
+                
+                <!-- Diagonals -->
+                <line id="diag-line-1" stroke="#00e5ff" stroke-width="4" stroke-dasharray="6,4"/>
+                <line id="diag-line-2" stroke="#ff4081" stroke-width="4" stroke-dasharray="6,4"/>
+
+                <!-- 90 Degree Indicator -->
+                <path id="diag-90-box" fill="none" stroke="#ffeb3b" stroke-width="3" opacity="0"/>
+
+                <!-- Intersection Dot -->
+                <circle id="diag-dot" r="6" fill="#ffeb3b"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #d81b60; background: #fff; flex-basis: 100%;">
+                    <span id="diag-title" style="color: #c2185b; font-size: 1.4em; font-weight: bold; display: block; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px;">Parallelogram Diagonals</span>
+                    <ul class="prop-list" id="diag-list" style="color: #333;">
+                        <li>They <strong>bisect</strong> each other (cut exactly in half).</li>
+                        <li>They are <strong>NOT</strong> equal in length.</li>
+                        <li>They do <strong>NOT</strong> cross at 90°.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: Is a Square considered a type of Rectangle?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Yes!</strong><br><br>
+                A rectangle is defined strictly as a parallelogram where all four angles are 90°. A square perfectly meets this requirement! A square is simply a specialized rectangle that *also* happens to have all four sides equal. (It is also a specialized rhombus!).
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: If the diagonals of a quadrilateral bisect each other at exactly 90°, what shape could it be?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>It must be a Rhombus or a Square.</strong><br><br>
+                While a Kite's diagonals cross at 90°, only *one* of its diagonals is bisected. Only Rhombuses and Squares feature diagonals that both bisect each other AND intersect at 90° right angles.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="../chapters/chapter8.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic8_2.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. THE SHAPE EXPLORER LOGIC ---
+        const selShape = document.getElementById('sel-shape');
+
+        const explorerData = {
+            'general': {
+                pts: "120,260 420,280 350,60 180,100",
+                title: "General Quadrilateral",
+                props: [
+                    "Has 4 sides and 4 angles.",
+                    "No specific parallel lines required.",
+                    "No specific equal sides required."
+                ],
+                cornersHTML: ""
+            },
+            'trapezium': {
+                pts: "100,260 450,260 350,100 180,100",
+                title: "Trapezium",
+                props: [
+                    "Exactly <strong>one pair</strong> of opposite sides is parallel (top and bottom base).",
+                    "The other two sides are non-parallel."
+                ],
+                cornersHTML: ""
+            },
+            'parallelogram': {
+                pts: "150,260 450,260 380,100 80,100",
+                title: "Parallelogram",
+                props: [
+                    "<strong>Both pairs</strong> of opposite sides are parallel.",
+                    "Opposite sides are exactly equal in length.",
+                    "Opposite angles are perfectly equal."
+                ],
+                cornersHTML: ""
+            },
+            'rectangle': {
+                pts: "120,260 420,260 420,100 120,100",
+                title: "Rectangle",
+                props: [
+                    "A parallelogram where <strong>all four angles are 90°</strong>.",
+                    "Opposite sides are parallel and equal."
+                ],
+                // Inside corners for the rectangle coordinates
+                cornersHTML: `
+                    <path d="M 140 260 L 140 240 L 120 240" />
+                    <path d="M 400 260 L 400 240 L 420 240" />
+                    <path d="M 140 100 L 140 120 L 120 120" />
+                    <path d="M 400 100 L 400 120 L 420 120" />
+                `
+            },
+            'rhombus': {
+                pts: "250,280 400,170 250,60 100,170",
+                title: "Rhombus",
+                props: [
+                    "A parallelogram where <strong>all four sides are equal</strong> in length.",
+                    "Opposite angles are equal."
+                ],
+                cornersHTML: ""
+            },
+            'square': {
+                pts: "170,260 330,260 330,100 170,100",
+                title: "Square",
+                props: [
+                    "The perfect combination: <strong>All 4 sides equal</strong> AND <strong>all 4 angles 90°</strong>.",
+                    "It is both a Rectangle and a Rhombus!"
+                ],
+                // Inside corners for the square coordinates
+                cornersHTML: `
+                    <path d="M 190 260 L 190 240 L 170 240" />
+                    <path d="M 310 260 L 310 240 L 330 240" />
+                    <path d="M 190 100 L 190 120 L 170 120" />
+                    <path d="M 310 100 L 310 120 L 330 120" />
+                `
+            },
+            'kite': {
+                pts: "250,290 350,150 250,40 150,150",
+                title: "Kite",
+                props: [
+                    "Two pairs of <strong>adjacent sides are equal</strong>.",
+                    "Opposite sides are NOT equal.",
+                    "Exactly one pair of opposite angles is equal."
+                ],
+                cornersHTML: ""
+            }
+        };
+
+        function updateExplorer() {
+            let key = selShape.value;
+            let data = explorerData[key];
+            
+            document.getElementById('exp-poly').setAttribute('points', data.pts);
+            
+            let cornersGroup = document.getElementById('exp-90-corners');
+            if (data.cornersHTML !== "") {
+                cornersGroup.innerHTML = data.cornersHTML;
+                cornersGroup.style.opacity = '1';
+            } else {
+                cornersGroup.style.opacity = '0';
+            }
+            
+            document.getElementById('exp-title').textContent = data.title;
+            
+            let ul = document.getElementById('exp-list');
+            ul.innerHTML = "";
+            data.props.forEach(p => {
+                let li = document.createElement('li');
+                li.innerHTML = p;
+                ul.appendChild(li);
+            });
+        }
+
+        selShape.addEventListener('change', updateExplorer);
+        updateExplorer(); // Initial run
+
+
+        // --- 2. THE PARALLELOGRAM FLEXER LOGIC ---
+        const sParaX = document.getElementById('s-para-x');
+        const sParaY = document.getElementById('s-para-y');
+
+        function distance(x1, y1, x2, y2) {
+            return Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2));
+        }
+
+        function getInteriorAngle(dx1, dy1, dx2, dy2) {
+            // Dot product formula to find angle between vectors
+            let dot = dx1*dx2 + dy1*dy2;
+            let mag1 = Math.sqrt(dx1*dx1 + dy1*dy1);
+            let mag2 = Math.sqrt(dx2*dx2 + dy2*dy2);
+            let cosTheta = dot / (mag1 * mag2);
+            cosTheta = Math.max(-1, Math.min(1, cosTheta)); // Clamp
+            return Math.acos(cosTheta) * 180 / Math.PI;
+        }
+
+        function updatePara() {
+            let topX = parseInt(sParaX.value); // x pos of top-left vertex (D)
+            let height = parseInt(sParaY.value); // height from base
+            
+            let ax = 100, ay = 260;
+            let bx = 350, by = 260; // Base length = 250
+            
+            let dy = 260 - height;
+            let dx = topX;
+
+            // Enforce parallel rule: C must be D + base vector (250, 0)
+            let cx = dx + 250;
+            let cy = dy;
+
+            document.getElementById('para-poly').setAttribute('points', `${ax},${ay} ${bx},${by} ${cx},${cy} ${dx},${dy}`);
+            
+            document.getElementById('para-dot-c').setAttribute('cx', cx); document.getElementById('para-dot-c').setAttribute('cy', cy);
+            document.getElementById('para-txt-c').setAttribute('x', cx + 15); document.getElementById('para-txt-c').setAttribute('y', cy + 5);
+
+            document.getElementById('para-dot-d').setAttribute('cx', dx); document.getElementById('para-dot-d').setAttribute('cy', dy);
+            document.getElementById('para-txt-d').setAttribute('x', dx - 15); document.getElementById('para-txt-d').setAttribute('y', dy + 5);
+
+            // Move indicator arrows
+            document.getElementById('arrow-top').setAttribute('d', `M ${dx + 120} ${dy} L ${dx + 130} ${dy - 5} L ${dx + 120} ${dy - 10}`);
+
+            let midLeftX = (ax + dx) / 2; let midLeftY = (ay + dy) / 2;
+            document.getElementById('arrow-left1').setAttribute('d', `M ${midLeftX-5} ${midLeftY} l 10 10`);
+            document.getElementById('arrow-left2').setAttribute('d', `M ${midLeftX-5} ${midLeftY-8} l 10 10`);
+            
+            let midRightX = (bx + cx) / 2; let midRightY = (by + cy) / 2;
+            document.getElementById('arrow-right1').setAttribute('d', `M ${midRightX-5} ${midRightY} l 10 10`);
+            document.getElementById('arrow-right2').setAttribute('d', `M ${midRightX-5} ${midRightY-8} l 10 10`);
+
+            // Math
+            let lenAB = 250;
+            let lenAD = Math.round(distance(ax, ay, dx, dy));
+
+            // Angle A (Vectors AB and AD)
+            let vABx = bx - ax, vABy = by - ay;
+            let vADx = dx - ax, vADy = dy - ay;
+            let angA = Math.round(getInteriorAngle(vABx, vABy, vADx, vADy));
+            let angB = 180 - angA; 
+
+            // Shape Identification Logic
+            let isRightAngle = (angA === 90);
+            let isEquilateral = (lenAD === 250); 
+            let specificShapeName = "Parallelogram";
+            let shapeColor = "#0277bd";
+
+            if (isRightAngle && isEquilateral) {
+                specificShapeName = "Square";
+                shapeColor = "#d81b60"; // Pinkish red for square
+            } else if (isRightAngle) {
+                specificShapeName = "Rectangle";
+                shapeColor = "#4a148c"; // Deep purple for rectangle
+            } else if (isEquilateral) {
+                specificShapeName = "Rhombus";
+                shapeColor = "#00695c"; // Emerald for rhombus
+            }
+
+            // Update UI with identified shape
+            let nameDisplay = document.getElementById('para-shape-name');
+            nameDisplay.textContent = specificShapeName;
+            nameDisplay.style.color = shapeColor;
+            nameDisplay.style.borderBottomColor = shapeColor;
+
+            document.getElementById('para-math-sides').innerHTML = `AB = CD = ${lenAB} units<br>AD = BC = ${lenAD} units`;
+            document.getElementById('para-math-angles').innerHTML = `∠A = ∠C = ${angA}°<br>∠B = ∠D = ${angB}°`;
+        }
+
+        sParaX.addEventListener('input', updatePara);
+        sParaY.addEventListener('input', updatePara);
+        updatePara();
+
+
+        // --- 3. THE DIAGONAL X-RAY LOGIC ---
+        const selDiag = document.getElementById('sel-diag');
+
+        const diagData = {
+            'parallelogram': {
+                pts: "120,260 420,260 380,80 80,80",
+                t: "Parallelogram Diagonals",
+                bisect: true, equal: false, perp: false
+            },
+            'rectangle': {
+                pts: "100,260 400,260 400,100 100,100",
+                t: "Rectangle Diagonals",
+                bisect: true, equal: true, perp: false
+            },
+            'rhombus': {
+                pts: "250,290 400,175 250,60 100,175",
+                t: "Rhombus Diagonals",
+                bisect: true, equal: false, perp: true
+            },
+            'square': {
+                pts: "150,270 350,270 350,70 150,70",
+                t: "Square Diagonals",
+                bisect: true, equal: true, perp: true
+            },
+            'kite': {
+                pts: "250,300 360,140 250,40 140,140",
+                t: "Kite Diagonals",
+                bisect: "one", equal: false, perp: true
+            }
+        };
+
+        function updateDiag() {
+            let key = selDiag.value;
+            let data = diagData[key];
+            
+            document.getElementById('diag-poly').setAttribute('points', data.pts);
+            
+            let coords = data.pts.split(' ');
+            let pA = coords[0].split(',');
+            let pB = coords[1].split(',');
+            let pC = coords[2].split(',');
+            let pD = coords[3].split(',');
+
+            // Diagonals AC and BD
+            document.getElementById('diag-line-1').setAttribute('x1', pA[0]); document.getElementById('diag-line-1').setAttribute('y1', pA[1]);
+            document.getElementById('diag-line-1').setAttribute('x2', pC[0]); document.getElementById('diag-line-1').setAttribute('y2', pC[1]);
+
+            document.getElementById('diag-line-2').setAttribute('x1', pB[0]); document.getElementById('diag-line-2').setAttribute('y1', pB[1]);
+            document.getElementById('diag-line-2').setAttribute('x2', pD[0]); document.getElementById('diag-line-2').setAttribute('y2', pD[1]);
+
+            // Intersection point (Approximate for these specific hardcoded shapes - mostly bounding box center)
+            let ix = (parseFloat(pA[0]) + parseFloat(pC[0])) / 2;
+            let iy = (parseFloat(pA[1]) + parseFloat(pC[1])) / 2;
+            
+            // Kite specific intersection
+            if (key === 'kite') {
+                ix = 250; iy = 140;
+            }
+
+            document.getElementById('diag-dot').setAttribute('cx', ix);
+            document.getElementById('diag-dot').setAttribute('cy', iy);
+
+            // 90 box
+            let box = document.getElementById('diag-90-box');
+            if (data.perp) {
+                box.setAttribute('opacity', '1');
+                box.setAttribute('d', `M ${ix} ${iy-15} L ${ix+15} ${iy-15} L ${ix+15} ${iy}`);
+            } else {
+                box.setAttribute('opacity', '0');
+            }
+
+            // Dashboard
+            document.getElementById('diag-title').textContent = data.t;
+            let ul = document.getElementById('diag-list');
+            ul.innerHTML = "";
+
+            let liBisect = document.createElement('li');
+            if (data.bisect === true) liBisect.innerHTML = "They <strong>bisect each other</strong> exactly in half.";
+            else if (data.bisect === "one") liBisect.innerHTML = "Only <strong>one diagonal is bisected</strong> by the other.";
+            else liBisect.innerHTML = "They do NOT bisect each other.";
+            ul.appendChild(liBisect);
+
+            let liEq = document.createElement('li');
+            if (data.equal) liEq.innerHTML = "They are <strong>equal in length</strong>.";
+            else liEq.innerHTML = "They are <strong>NOT equal</strong> in length.";
+            ul.appendChild(liEq);
+
+            let liPerp = document.createElement('li');
+            if (data.perp) liPerp.innerHTML = "They cross exactly at a <strong>90° right angle</strong>.";
+            else liPerp.innerHTML = "They do <strong>NOT</strong> cross at 90°.";
+            ul.appendChild(liPerp);
+        }
+
+        selDiag.addEventListener('change', updateDiag);
+        updateDiag();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

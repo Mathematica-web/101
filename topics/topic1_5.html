@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laws of Exponents - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #283593; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #3f51b5; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c5cae9; text-align: left; font-size: 1.1em;}
+        .formula-table th { background: #3f51b5; color: white; }
+        .math-font { font-family: 'Times New Roman', serif; font-style: italic; font-weight: bold; font-size: 1.2em; color: #c2185b; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #3f51b5; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 700px; height: 250px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #7986cb; font-size: 1em; }
+        input[type=range] { width: 200px; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; }
+        .val-num { font-size: 1.8em; display: block; margin-top: 5px; }
+
+        /* TOGGLE BUTTONS */
+        .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .toggle-btn { padding: 10px 20px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1em; }
+        .toggle-btn.active { background: #e91e63; color: white; border-color: #e91e63; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8eaf6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #3f51b5; }
+        .qa-question { font-weight: bold; color: #1a237e; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #3f51b5; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #3f51b5; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter1.html" class="back-btn">⬅️ Back to Chapter</a>
+
+    <h1>🚀 Laws of Exponents</h1>
+    <p class="subtitle">Mastering the ultimate shortcut for repeated multiplication!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Golden Rules for Real Numbers</h2>
+        <p>Exponents (or powers) tell you how many times to multiply a <strong>base</strong> by itself. When combining expressions with the same base, follow these universal laws:</p>
+        <table class="formula-table">
+            <tr>
+                <th>Rule Name</th>
+                <th>Mathematical Formula</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td><strong>Multiplication Law</strong></td>
+                <td><span class="math-font">a<sup>m</sup> &middot; a<sup>n</sup> = a<sup>m + n</sup></span></td>
+                <td>2<sup>3</sup> &middot; 2<sup>2</sup> = 2<sup>5</sup> = 32</td>
+            </tr>
+            <tr>
+                <td><strong>Division Law</strong></td>
+                <td><span class="math-font">a<sup>m</sup> / a<sup>n</sup> = a<sup>m - n</sup></span></td>
+                <td>5<sup>4</sup> / 5<sup>2</sup> = 5<sup>2</sup> = 25</td>
+            </tr>
+            <tr>
+                <td><strong>Power of a Power</strong></td>
+                <td><span class="math-font">(a<sup>m</sup>)<sup>n</sup> = a<sup>m &middot; n</sup></span></td>
+                <td>(3<sup>2</sup>)<sup>4</sup> = 3<sup>8</sup></td>
+            </tr>
+            <tr>
+                <td><strong>Power of a Product</strong></td>
+                <td><span class="math-font">(a &middot; b)<sup>m</sup> = a<sup>m</sup> &middot; b<sup>m</sup></span></td>
+                <td>(2 &middot; 3)<sup>2</sup> = 2<sup>2</sup> &middot; 3<sup>2</sup> = 36</td>
+            </tr>
+            <tr>
+                <td><strong>Negative Exponent</strong></td>
+                <td><span class="math-font">a<sup>-n</sup> = 1 / a<sup>n</sup></span></td>
+                <td>4<sup>-2</sup> = 1 / 4<sup>2</sup> = 1/16</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: MULTIPLICATION VS EXPONENTIATION -->
+    <div class="section-box">
+        <h2 style="color: #d84315; text-align: center; margin-top: 0;">📈 1. Repeated Addition vs. Repeated Multiplication</h2>
+        <p style="text-align: center; color: #666;">Why do we need exponents? Compare basic multiplication (adding a number repeatedly) to exponentiation (multiplying a number repeatedly). Watch how fast exponential growth explodes!</p>
+
+        <div class="interactive-container" style="background: #fbe9e7; border-color: #d84315;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #ff7043;">
+                    <label style="color: #bf360c; font-weight: bold;">Base Number: <span id="val-base">2</span></label>
+                    <input type="range" id="s-base" min="2" max="5" value="2">
+                </div>
+                <div class="slider-group" style="border-color: #ff7043;">
+                    <label style="color: #bf360c; font-weight: bold;">Amount (n): <span id="val-n">3</span></label>
+                    <input type="range" id="s-n" min="1" max="5" value="3">
+                </div>
+            </div>
+
+            <svg id="growth-svg" class="svg-canvas" viewBox="0 0 700 250" style="background: #fff; height: 250px;">
+                <!-- Grid Lines -->
+                <line x1="150" y1="50" x2="650" y2="50" stroke="#eee" stroke-width="1"/>
+                <line x1="150" y1="100" x2="650" y2="100" stroke="#eee" stroke-width="1"/>
+                <line x1="150" y1="150" x2="650" y2="150" stroke="#eee" stroke-width="1"/>
+                <line x1="150" y1="200" x2="650" y2="200" stroke="#eee" stroke-width="1"/>
+                <line x1="150" y1="20" x2="150" y2="230" stroke="#333" stroke-width="3"/>
+                <line x1="140" y1="220" x2="650" y2="220" stroke="#333" stroke-width="3"/>
+
+                <!-- Labels -->
+                <text x="140" y="80" text-anchor="end" font-weight="bold" fill="#1976d2">Multiplication</text>
+                <text x="140" y="100" text-anchor="end" fill="#555" font-size="0.9em">(Base &times; n)</text>
+
+                <text x="140" y="170" text-anchor="end" font-weight="bold" fill="#c2185b">Exponentiation</text>
+                <text x="140" y="190" text-anchor="end" fill="#555" font-size="0.9em">(Baseⁿ)</text>
+
+                <!-- Bars -->
+                <rect id="bar-mult" x="150" y="60" width="100" height="40" fill="#2196f3" rx="5"/>
+                <text id="lbl-mult" x="260" y="85" font-weight="bold" fill="#1976d2">6</text>
+
+                <rect id="bar-exp" x="150" y="150" width="100" height="40" fill="#e91e63" rx="5"/>
+                <text id="lbl-exp" x="260" y="175" font-weight="bold" fill="#c2185b">8</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #2196f3; background: #e3f2fd;">
+                    <span style="color: #1565c0;">Repeated Addition</span>
+                    <span id="calc-add" class="val-num" style="color: #1976d2; font-family: monospace;">2 + 2 + 2 = 6</span>
+                </div>
+                <div class="dash-card" style="border-color: #e91e63; background: #fce4ec;">
+                    <span style="color: #ad1457;">Repeated Multiplication</span>
+                    <span id="calc-mult" class="val-num" style="color: #c2185b; font-family: monospace;">2 &times; 2 &times; 2 = 8</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE LAW COMBINER -->
+    <div class="section-box">
+        <h2 style="color: #7b1fa2; text-align: center; margin-top: 0;">🧩 2. The Exponent Law Combiner</h2>
+        <p style="text-align: center; color: #666;">Choose to Multiply or Divide terms with the same base (let's use <strong>x</strong>). Watch how the visual blocks merge (addition) or cancel out (subtraction) to prove the formula!</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #ab47bc;">
+            <div class="face-toggles">
+                <button class="toggle-btn active" onclick="setMode('mult', this)">Multiplication Law</button>
+                <button class="toggle-btn" onclick="setMode('div', this)">Division Law</button>
+            </div>
+
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #8e24aa;">
+                    <label style="color: #6a1b9a; font-weight: bold;">Exponent (m): <span id="val-m">4</span></label>
+                    <input type="range" id="s-m" min="1" max="6" value="4">
+                </div>
+                <div class="slider-group" style="border-color: #8e24aa;">
+                    <label style="color: #6a1b9a; font-weight: bold;">Exponent (n): <span id="val-n-exp">2</span></label>
+                    <input type="range" id="s-n-exp" min="1" max="6" value="2">
+                </div>
+            </div>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #7b1fa2; background: #fff; flex-basis: 100%;">
+                    <span style="color: #4a148c; font-size: 1.2em;">The Expansion Proof</span>
+                    <div id="visual-proof" style="font-size: 1.5em; margin: 15px 0; font-family: monospace; color: #333; letter-spacing: 2px;">
+                        <!-- Generated via JS -->
+                    </div>
+                </div>
+                <div class="dash-card" style="border-color: #8e24aa; background: #e1bee7; flex-basis: 100%;">
+                    <span style="color: #4a148c; font-size: 1.1em;">Final Simplified Law</span>
+                    <span id="calc-law" class="val-num" style="color: #6a1b9a; font-family: monospace;">x<sup>4</sup> &middot; x<sup>2</sup> = x<sup>6</sup></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: What is the value of 100<sup>0</sup>?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans1">
+                <strong>The answer is 1.</strong><br><br>
+                The Zero Exponent Rule states that any non-zero base raised to the power of 0 is always equal to 1. <br>
+                <em>Proof pattern:</em><br>
+                2<sup>3</sup> = 8<br>
+                2<sup>2</sup> = 4 (Divided by 2)<br>
+                2<sup>1</sup> = 2 (Divided by 2)<br>
+                2<sup>0</sup> = 1 (Divided by 2)
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: Evaluate: (2<sup>3</sup>)<sup>2</sup> vs. 2<sup>3<sup>2</sup></sup>. Are they the same?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans2">
+                <strong>No, they are different!</strong><br><br>
+                <strong>Case 1:</strong> (2<sup>3</sup>)<sup>2</sup><br>
+                Apply the <em>Power of a Power</em> rule: multiply the exponents.<br>
+                2<sup>(3 &times; 2)</sup> = 2<sup>6</sup> = 64.<br><br>
+                
+                <strong>Case 2:</strong> 2<sup>3<sup>2</sup></sup><br>
+                Without parentheses, you evaluate the top exponents first. What is 3<sup>2</sup>? It's 9.<br>
+                So, the expression becomes 2<sup>9</sup> = 512.<br><br>
+                <strong>Final Answer: 64 &ne; 512. Placement of parentheses matters!</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic1_4.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter2.html" class="nav-btn">Next Chapter ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. GROWTH VISUALIZER LOGIC ---
+        const sBase = document.getElementById('s-base');
+        const sN = document.getElementById('s-n');
+
+        function updateGrowth() {
+            let base = parseInt(sBase.value);
+            let n = parseInt(sN.value);
+
+            document.getElementById('val-base').textContent = base;
+            document.getElementById('val-n').textContent = n;
+
+            let multResult = base * n;
+            let expResult = Math.pow(base, n);
+
+            // Generate string representations
+            let addStr = Array(n).fill(base).join(" + ");
+            document.getElementById('calc-add').textContent = `${addStr} = ${multResult}`;
+            
+            let multStr = Array(n).fill(base).join(" × ");
+            document.getElementById('calc-mult').textContent = `${multStr} = ${expResult}`;
+
+            // Update SVG Bars dynamically
+            let maxSvgWidth = 480; 
+            let maxPossibleExp = Math.pow(5, 5); // 3125 (Max constraint for visualizer scale)
+            
+            // Logarithmic scale for UI to prevent extreme bar clipping, or just direct mapping if it fits
+            let multWidth = (multResult / 50) * maxSvgWidth; 
+            if(multWidth > maxSvgWidth) multWidth = maxSvgWidth;
+            if(multWidth < 10) multWidth = 10;
+            
+            let expWidth = (expResult / maxPossibleExp) * maxSvgWidth;
+            // Boost small numbers visually so the bar doesn't disappear
+            expWidth = Math.max((expResult / 125) * maxSvgWidth, 10); 
+            if(expWidth > maxSvgWidth) expWidth = maxSvgWidth;
+
+            document.getElementById('bar-mult').setAttribute('width', multWidth);
+            document.getElementById('lbl-mult').setAttribute('x', 150 + multWidth + 10);
+            document.getElementById('lbl-mult').textContent = multResult;
+
+            document.getElementById('bar-exp').setAttribute('width', expWidth);
+            document.getElementById('lbl-exp').setAttribute('x', 150 + expWidth + 10);
+            document.getElementById('lbl-exp').textContent = expResult;
+        }
+
+        sBase.addEventListener('input', updateGrowth);
+        sN.addEventListener('input', updateGrowth);
+        updateGrowth();
+
+        // --- 2. EXPONENT LAW COMBINER LOGIC ---
+        let currentMode = 'mult';
+        const sM = document.getElementById('s-m');
+        const sNexp = document.getElementById('s-n-exp');
+
+        function setMode(mode, btn) {
+            let btns = btn.parentElement.children;
+            for(let i=0; i<btns.length; i++) btns[i].classList.remove('active');
+            btn.classList.add('active');
+            
+            currentMode = mode;
+            updateCombiner();
+        }
+
+        function updateCombiner() {
+            let m = parseInt(sM.value);
+            let n = parseInt(sNexp.value);
+
+            document.getElementById('val-m').textContent = m;
+            document.getElementById('val-n-exp').textContent = n;
+
+            let visualStr = "";
+            let finalLawStr = "";
+
+            if (currentMode === 'mult') {
+                let mArr = Array(m).fill('x').join('&middot;');
+                let nArr = Array(n).fill('x').join('&middot;');
+                
+                visualStr = `(<span style="color:#d32f2f;">${mArr}</span>) &times; (<span style="color:#1976d2;">${nArr}</span>)<br>= ${m+n} total x's multiplied`;
+                finalLawStr = `x<sup>${m}</sup> &middot; x<sup>${n}</sup> = x<sup>${m} + ${n}</sup> = x<sup>${m+n}</sup>`;
+            } else {
+                // Ensure M is always greater or equal to N for simpler visual division in this tool
+                if (n > m) {
+                    n = m;
+                    sNexp.value = n;
+                    document.getElementById('val-n-exp').textContent = n;
+                }
+                
+                let numArr = Array(m).fill('x');
+                let denArr = Array(n).fill('x');
+                
+                // Show cancelling visually using strikethroughs
+                let topHTML = [];
+                for(let i=0; i<m; i++) {
+                    if (i < n) topHTML.push(`<strike style="color:#757575;">x</strike>`);
+                    else topHTML.push(`<span style="color:#2e7d32;">x</span>`);
+                }
+                
+                let botHTML = [];
+                for(let i=0; i<n; i++) {
+                    botHTML.push(`<strike style="color:#757575;">x</strike>`);
+                }
+
+                visualStr = `<div style="display:inline-block; text-align:center;">
+                                <div style="border-bottom: 2px solid #333; padding-bottom: 5px;">${topHTML.join('&middot;')}</div>
+                                <div style="padding-top: 5px;">${botHTML.join('&middot;')}</div>
+                             </div><br>= ${m-n} total x's left over`;
+                
+                let resultExp = m - n;
+                let resultStr = resultExp === 0 ? `1` : `x<sup>${resultExp}</sup>`;
+                finalLawStr = `x<sup>${m}</sup> / x<sup>${n}</sup> = x<sup>${m} - ${n}</sup> = ${resultStr}`;
+            }
+
+            document.getElementById('visual-proof').innerHTML = visualStr;
+            document.getElementById('calc-law').innerHTML = finalLawStr;
+        }
+
+        sM.addEventListener('input', updateCombiner);
+        sNexp.addEventListener('input', updateCombiner);
+        updateCombiner();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer Step-by-Step';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

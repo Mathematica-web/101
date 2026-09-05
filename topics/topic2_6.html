@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Division of Polynomials - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #1b5e20; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #4caf50; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c8e6c9; text-align: left; font-size: 1.1em; }
+        .formula-table th { background: #4caf50; color: white; }
+        
+        .math-eq { font-family: 'Times New Roman', serif; font-style: italic; font-size: 1.3em; color: #1b5e20; font-weight: bold; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #4caf50; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #81c784; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.6em; display: block; margin-top: 5px; font-family: monospace; }
+        
+        /* LONG DIVISION STYLES */
+        .div-bracket-container { display: flex; justify-content: center; align-items: flex-start; font-family: 'Times New Roman', serif; font-size: 1.5em; margin: 20px 0; font-style: italic; }
+        .div-divisor { padding-right: 15px; margin-top: 35px; color: #e65100; font-weight: bold; }
+        .div-work-area { display: flex; flex-direction: column; align-items: flex-start; }
+        .div-quotient { border-bottom: 2px solid #333; width: 100%; text-align: left; padding-bottom: 5px; padding-left: 10px; min-height: 30px; color: #2e7d32; font-weight: bold; }
+        .div-dividend-row { border-left: 2px solid #333; padding-left: 10px; padding-top: 5px; text-align: left; color: #0d47a1; font-weight: bold; }
+        .div-sub-row { padding-left: 10px; text-align: left; color: #d32f2f; border-bottom: 2px solid #ccc; width: 100%; display: none; }
+        .div-remainder-row { padding-left: 10px; text-align: left; color: #8e24aa; font-weight: bold; padding-top: 5px; display: none; }
+        
+        .step-btn { background: #9c27b0; color: white; border: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 1.1em; }
+        .step-btn:hover { background: #7b1fa2; transform: scale(1.05); }
+        .step-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #4caf50; }
+        .qa-question { font-weight: bold; color: #1b5e20; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #4caf50; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter2.html" class="back-btn">⬅️ Back to Chapter Index</a>
+
+    <h1>➗ Division of Polynomials</h1>
+    <p class="subtitle">Slicing big equations into smaller, organized pieces!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Division Algorithm</h2>
+        <p>Just like regular numbers, when you divide one polynomial by another, you get a quotient and sometimes a remainder. The universal rule connecting them all is called the Division Algorithm.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Component</th>
+                <th>Role in the Algorithm</th>
+            </tr>
+            <tr>
+                <td><strong>Dividend (p(x))</strong></td>
+                <td>The massive polynomial being sliced up inside the division bracket.</td>
+            </tr>
+            <tr>
+                <td><strong>Divisor (g(x))</strong></td>
+                <td>The polynomial doing the slicing on the outside.</td>
+            </tr>
+            <tr>
+                <td><strong>The Golden Equation</strong></td>
+                <td><span class="math-eq">Dividend = (Divisor &times; Quotient) + Remainder</span><br><br>p(x) = g(x) &middot; q(x) + r(x)</td>
+            </tr>
+            <tr>
+                <td><strong>The Stopping Rule</strong></td>
+                <td>You must stop dividing the moment the <strong>Degree</strong> of the Remainder becomes <em>less</em> than the <strong>Degree</strong> of the Divisor.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: MONOMIAL DIVISION -->
+    <div class="section-box">
+        <h2 style="color: #1976d2; text-align: center; margin-top: 0;">🔪 1. The Leading Term Slicer</h2>
+        <p style="text-align: center; color: #666;">The most important step in polynomial long division is dividing the <em>leading term</em> of the dividend by the <em>leading term</em> of the divisor. Adjust the coefficients and exponents below to practice this crucial first step!</p>
+
+        <div class="interactive-container" style="background: #e3f2fd; border-color: #1976d2;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #d32f2f; background: #ffebee;">
+                    <label style="color: #b71c1c; font-weight: bold;">Dividend Coef (A): <span id="val-div-a">6</span></label>
+                    <input type="range" id="s-div-a" min="-12" max="12" step="2" value="6">
+                </div>
+                <div class="slider-group" style="border-color: #d32f2f; background: #ffebee;">
+                    <label style="color: #b71c1c; font-weight: bold;">Dividend Exp (M): <span id="val-div-m">4</span></label>
+                    <input type="range" id="s-div-m" min="1" max="6" value="4">
+                </div>
+            </div>
+            
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #1976d2; background: #bbdefb;">
+                    <label style="color: #0d47a1; font-weight: bold;">Divisor Coef (B): <span id="val-div-b">2</span></label>
+                    <input type="range" id="s-div-b" min="-6" max="6" step="1" value="2">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2; background: #bbdefb;">
+                    <label style="color: #0d47a1; font-weight: bold;">Divisor Exp (N): <span id="val-div-n">2</span></label>
+                    <input type="range" id="s-div-n" min="1" max="6" value="2">
+                </div>
+            </div>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #1976d2; background: #fff; flex-basis: 100%;">
+                    <div style="font-family: 'Times New Roman', serif; font-size: 2em; color: #333; margin: 15px 0;">
+                        <span style="color:#c62828;" id="term-dividend">6x⁴</span> 
+                        &nbsp; &divide; &nbsp; 
+                        <span style="color:#1565c0;" id="term-divisor">2x²</span> 
+                        &nbsp; = &nbsp; 
+                        <span style="color:#2e7d32; font-weight: bold;" id="term-result">3x²</span>
+                    </div>
+                    <div id="div-warning" style="color: #d32f2f; font-weight: bold; display: none;">
+                        ⚠️ Stop! You cannot divide because the Divisor's exponent is larger than the Dividend's!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE ALGORITHM BUILDER -->
+    <div class="section-box">
+        <h2 style="color: #f57c00; text-align: center; margin-top: 0;">🏗️ 2. The Division Algorithm Builder</h2>
+        <p style="text-align: center; color: #666;">Let's prove the Golden Equation: <strong>p(x) = g(x)q(x) + r(x)</strong>. Adjust the Divisor, Quotient, and Remainder below. Watch how they instantly multiply and combine to form the giant original Dividend!</p>
+
+        <div class="interactive-container" style="background: #fff3e0; border-color: #f57c00;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #e65100;">
+                    <label style="color: #bf360c; font-weight: bold;">Divisor (x + a): a = <span id="val-alg-a">2</span></label>
+                    <input type="range" id="s-alg-a" min="-5" max="5" value="2">
+                </div>
+                <div class="slider-group" style="border-color: #43a047;">
+                    <label style="color: #1b5e20; font-weight: bold;">Quotient (bx + c): b = <span id="val-alg-b">3</span></label>
+                    <input type="range" id="s-alg-b" min="-3" max="3" value="3">
+                </div>
+                <div class="slider-group" style="border-color: #43a047;">
+                    <label style="color: #1b5e20; font-weight: bold;">Quotient const: c = <span id="val-alg-c">1</span></label>
+                    <input type="range" id="s-alg-c" min="-5" max="5" value="1">
+                </div>
+                <div class="slider-group" style="border-color: #8e24aa;">
+                    <label style="color: #4a148c; font-weight: bold;">Remainder: r = <span id="val-alg-r">5</span></label>
+                    <input type="range" id="s-alg-r" min="-10" max="10" value="5">
+                </div>
+            </div>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #f57c00; background: #fff; flex-basis: 100%;">
+                    <span style="color: #e65100; font-size: 1.1em; margin-bottom: 10px; display: block;">Divisor &times; Quotient + Remainder</span>
+                    <span id="alg-equation" class="val-num" style="color: #333; font-size: 1.4em; font-family: 'Times New Roman', serif; font-style: italic;">
+                        (<span style="color:#e65100;">x + 2</span>) &times; (<span style="color:#2e7d32;">3x + 1</span>) + <span style="color:#8e24aa;">5</span>
+                    </span>
+                </div>
+                
+                <div style="font-size: 2.5em; font-weight: bold; color: #333; display: flex; align-items: center; justify-content: center; width: 100%;">
+                    ⬇️ Equals the Dividend ⬇️
+                </div>
+
+                <div class="dash-card" style="border-color: #1976d2; background: #e3f2fd; flex-basis: 100%;">
+                    <span id="alg-dividend" class="val-num" style="color: #0d47a1; font-size: 2.2em; font-family: 'Times New Roman', serif; font-style: italic;">
+                        3x² + 7x + 7
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: DYNAMIC LONG DIVISION SIMULATOR -->
+    <div class="section-box">
+        <h2 style="color: #9c27b0; text-align: center; margin-top: 0;">📝 3. Step-by-Step Long Division Engine</h2>
+        <p style="text-align: center; color: #666;">Set the degrees and exact coefficients of your own polynomials. Click through the steps to see the long division process unfold dynamically!</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #9c27b0;">
+            
+            <div class="slider-row" style="margin-bottom: 10px;">
+                <div class="slider-group" style="border-color: #0d47a1; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Dividend Degree (Max 4): <span id="val-ld-deg-p">2</span></label>
+                    <input type="range" id="s-ld-deg-p" min="1" max="4" value="2" oninput="buildLDInputs()">
+                </div>
+                <div class="slider-group" style="border-color: #e65100; background: #fff3e0;">
+                    <label style="color: #e65100; font-weight: bold;">Divisor Degree (Max 2): <span id="val-ld-deg-g">1</span></label>
+                    <input type="range" id="s-ld-deg-g" min="1" max="2" value="1" oninput="buildLDInputs()">
+                </div>
+            </div>
+            
+            <div id="ld-p-inputs" class="slider-row" style="gap: 10px; margin-bottom: 10px; align-items: flex-end;"></div>
+            <div id="ld-g-inputs" class="slider-row" style="gap: 10px; margin-bottom: 20px; align-items: flex-end;"></div>
+
+            <div style="margin-bottom: 15px;">
+                <button id="dyn-ld-start-btn" class="step-btn" onclick="startDynamicLD()">Start Division ➡️</button>
+                <button id="dyn-ld-step-btn" class="step-btn" style="background: #4caf50; display:none;" onclick="nextDynamicLDStep()">Next Step ➡️</button>
+            </div>
+
+            <div class="dash-card" style="border-color: #ab47bc; background: #fff; margin-bottom: 15px; font-size: 1.1em; color: #6a1b9a;" id="dyn-ld-explanation">
+                Adjust the degrees and coefficients above, then click Start!
+            </div>
+
+            <div class="div-bracket-container" style="overflow-x: auto; padding: 10px; background: white; border-radius: 10px; border: 1px solid #ddd; min-height: 150px; display: none;" id="dyn-ld-visual-area">
+                <div style="display:inline-block; text-align: right; font-family: 'Times New Roman', serif; font-size: 1.3em;">
+                    <div style="border-bottom: 2px solid #333; padding-bottom: 5px; text-align: left; padding-left: 5px; color: #2e7d32; font-weight: bold; min-height: 30px;" id="dyn-q"></div>
+                    <div style="display: flex;">
+                        <div style="padding-right: 15px; padding-top: 5px; color: #e65100; font-weight: bold; font-style: italic;" id="dyn-div"></div>
+                        <div style="border-left: 2px solid #333; padding-left: 10px; padding-top: 5px; text-align: left; min-width: 200px;" id="dyn-work">
+                            <div style="color: #0d47a1; font-weight: bold; font-style: italic;" id="dyn-dividend"></div>
+                            <div id="dyn-steps-container" style="font-style: italic;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: Can a polynomial be divided by 0?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>No!</strong><br><br>
+                Just like with regular numbers, division by zero is undefined in algebra. The divisor polynomial <em>g(x)</em> can never be equal to 0.
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: When dividing p(x) by a linear polynomial like (x - 3), what is the maximum possible degree of the remainder?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans2">
+                <strong>Step 1:</strong> Remember the stopping rule. The degree of the remainder must always be <em>strictly less</em> than the degree of the divisor.<br>
+                <strong>Step 2:</strong> The divisor (x - 3) is a linear polynomial, which means its degree is 1.<br>
+                <strong>Step 3:</strong> Therefore, the degree of the remainder must be less than 1. The only whole number less than 1 is 0.<br>
+                <strong>Final Answer: The maximum degree is 0. (Meaning the remainder will always just be a constant number!)</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic2_5.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter3.html" class="nav-btn">Next Chapter ➡️</a>
+    </div>
+
+    <script>
+        // --- HELPER FORMATTING FUNCTION ---
+        function formatPolyTerm(coeff, exp, isFirst) {
+            if (coeff === 0) return isFirst ? "0" : "";
+            
+            let str = "";
+            if (coeff < 0) {
+                str += isFirst ? "-" : " - ";
+            } else {
+                str += isFirst ? "" : " + ";
+            }
+
+            let absC = Math.abs(coeff);
+            
+            if (exp === 0) {
+                str += absC;
+            } else {
+                if (absC !== 1) str += absC;
+                str += "x";
+                if (exp > 1) {
+                    let superscripts = ['⁰','¹','²','³','⁴','⁵','⁶'];
+                    str += superscripts[exp] || `^${exp}`;
+                }
+            }
+            return str;
+        }
+
+        // --- 1. MONOMIAL DIVISION LOGIC ---
+        const sDivA = document.getElementById('s-div-a');
+        const sDivM = document.getElementById('s-div-m');
+        const sDivB = document.getElementById('s-div-b');
+        const sDivN = document.getElementById('s-div-n');
+
+        function updateMonomialDiv() {
+            let a = parseInt(sDivA.value);
+            let m = parseInt(sDivM.value);
+            let b = parseInt(sDivB.value);
+            let n = parseInt(sDivN.value);
+
+            if (b === 0) { b = 1; sDivB.value = 1; }
+
+            document.getElementById('val-div-a').textContent = a;
+            document.getElementById('val-div-m').textContent = m;
+            document.getElementById('val-div-b').textContent = b;
+            document.getElementById('val-div-n').textContent = n;
+
+            document.getElementById('term-dividend').textContent = formatPolyTerm(a, m, true);
+            document.getElementById('term-divisor').textContent = formatPolyTerm(b, n, true);
+
+            let warning = document.getElementById('div-warning');
+            let resultSpan = document.getElementById('term-result');
+
+            if (n > m) {
+                warning.style.display = "block";
+                resultSpan.textContent = "???";
+            } else {
+                warning.style.display = "none";
+                let resCoeff = a / b;
+                let resExp = m - n;
+                
+                let coeffStr = "";
+                if (resCoeff % 1 !== 0) {
+                    let gcd = function(x, y) { return y === 0 ? x : gcd(y, x % y); };
+                    let divisor = gcd(Math.abs(a), Math.abs(b));
+                    let num = Math.abs(a)/divisor;
+                    let den = Math.abs(b)/divisor;
+                    let sign = (a*b < 0) ? "-" : "";
+                    coeffStr = `${sign}(${num}/${den})`;
+                } else {
+                    coeffStr = formatPolyTerm(resCoeff, resExp, true);
+                }
+
+                if (resExp > 0 && resCoeff % 1 !== 0) {
+                     resultSpan.textContent = `${coeffStr}x${resExp > 1 ? ['⁰','¹','²','³','⁴','⁵','⁶'][resExp] : ''}`;
+                } else {
+                     resultSpan.textContent = coeffStr;
+                }
+            }
+        }
+
+        sDivA.addEventListener('input', updateMonomialDiv);
+        sDivM.addEventListener('input', updateMonomialDiv);
+        sDivB.addEventListener('input', updateMonomialDiv);
+        sDivN.addEventListener('input', updateMonomialDiv);
+        updateMonomialDiv();
+
+
+        // --- 2. DIVISION ALGORITHM BUILDER LOGIC ---
+        const sAlgA = document.getElementById('s-alg-a');
+        const sAlgB = document.getElementById('s-alg-b');
+        const sAlgC = document.getElementById('s-alg-c');
+        const sAlgR = document.getElementById('s-alg-r');
+
+        function updateAlgorithm() {
+            let a = parseInt(sAlgA.value);
+            let b = parseInt(sAlgB.value);
+            let c = parseInt(sAlgC.value);
+            let r = parseInt(sAlgR.value);
+
+            document.getElementById('val-alg-a').textContent = a;
+            document.getElementById('val-alg-b').textContent = b;
+            document.getElementById('val-alg-c').textContent = c;
+            document.getElementById('val-alg-r').textContent = r;
+
+            let divSign = a < 0 ? "-" : "+";
+            let divAbs = Math.abs(a);
+            let divStr = a === 0 ? `x` : `x ${divSign} ${divAbs}`;
+
+            let qStr = "";
+            if (b !== 0) qStr += (b===1 ? "x" : b===-1 ? "-x" : `${b}x`);
+            if (c !== 0) {
+                if(qStr !== "") qStr += (c < 0 ? ` - ${Math.abs(c)}` : ` + ${c}`);
+                else qStr += c;
+            }
+            if (qStr === "") qStr = "0";
+
+            let rSign = r < 0 ? "-" : "+";
+            let rAbs = Math.abs(r);
+
+            document.getElementById('alg-equation').innerHTML = `
+                (<span style="color:#e65100;">${divStr}</span>) &times; 
+                (<span style="color:#2e7d32;">${qStr}</span>) 
+                <span style="color:#8e24aa;">${r === 0 ? "" : rSign + " " + rAbs}</span>
+            `;
+
+            let x2_coef = b;
+            let x1_coef = c + (a * b);
+            let x0_coef = (a * c) + r;
+
+            let finalPoly = "";
+            if (x2_coef !== 0) finalPoly += formatPolyTerm(x2_coef, 2, finalPoly === "");
+            if (x1_coef !== 0) finalPoly += formatPolyTerm(x1_coef, 1, finalPoly === "");
+            if (x0_coef !== 0) finalPoly += formatPolyTerm(x0_coef, 0, finalPoly === "");
+            
+            if (finalPoly === "") finalPoly = "0";
+
+            document.getElementById('alg-dividend').textContent = finalPoly;
+        }
+
+        sAlgA.addEventListener('input', updateAlgorithm);
+        sAlgB.addEventListener('input', updateAlgorithm);
+        sAlgC.addEventListener('input', updateAlgorithm);
+        sAlgR.addEventListener('input', updateAlgorithm);
+        updateAlgorithm();
+
+        // --- 3. DYNAMIC LONG DIVISION ENGINE LOGIC ---
+        let userP = [7, 7, 2, 0, 0];
+        let userG = [2, 1, 0];
+
+        function getXLabel(i) {
+            if(i===0) return "(const)";
+            if(i===1) return "x";
+            return "x" + ['⁰','¹','²','³','⁴'][i];
+        }
+
+        function buildLDInputs() {
+            let oldDegP = parseInt(document.getElementById('val-ld-deg-p').textContent) || 2;
+            let oldDegG = parseInt(document.getElementById('val-ld-deg-g').textContent) || 1;
+            
+            for(let i=0; i<=oldDegP; i++) { 
+                let el = document.getElementById(`ld-p-${i}`); 
+                if(el) userP[i] = parseFloat(el.value) || 0; 
+            }
+            for(let i=0; i<=oldDegG; i++) { 
+                let el = document.getElementById(`ld-g-${i}`); 
+                if(el) userG[i] = parseFloat(el.value) || 0; 
+            }
+
+            let degP = parseInt(document.getElementById('s-ld-deg-p').value);
+            let degG = parseInt(document.getElementById('s-ld-deg-g').value);
+            
+            // Constrain Divisor Degree <= Dividend Degree visually
+            if (degG > degP) { 
+                degG = degP; 
+                document.getElementById('s-ld-deg-g').value = degG; 
+            }
+            
+            document.getElementById('val-ld-deg-p').textContent = degP;
+            document.getElementById('val-ld-deg-g').textContent = degG;
+
+            let pCont = document.getElementById('ld-p-inputs');
+            let gCont = document.getElementById('ld-g-inputs');
+            pCont.innerHTML = `<span style="color: #0d47a1; font-weight:bold; margin-right: 10px;">Dividend p(x): </span>`;
+            gCont.innerHTML = `<span style="color: #e65100; font-weight:bold; margin-right: 10px;">Divisor g(x): </span>`;
+
+            for(let i=degP; i>=0; i--) {
+                let val = userP[i] !== undefined ? userP[i] : 0;
+                pCont.innerHTML += `<div style="display:inline-block; margin: 0 5px; text-align:center;"><input type="number" id="ld-p-${i}" value="${val}" style="width: 55px; text-align:center; font-weight:bold; color: #0d47a1; border: 2px solid #1976d2; border-radius: 5px;"><br><small style="color:#555;">${getXLabel(i)}</small></div>`;
+            }
+            for(let i=degG; i>=0; i--) {
+                let val = userG[i] !== undefined ? userG[i] : 0;
+                gCont.innerHTML += `<div style="display:inline-block; margin: 0 5px; text-align:center;"><input type="number" id="ld-g-${i}" value="${val}" style="width: 55px; text-align:center; font-weight:bold; color: #e65100; border: 2px solid #f57c00; border-radius: 5px;"><br><small style="color:#555;">${getXLabel(i)}</small></div>`;
+            }
+        }
+
+        buildLDInputs(); // Init dynamic inputs
+
+        let dynSteps = [];
+        let currentDynStep = 0;
+        let subStepIndex = 0;
+
+        function getPolyFromInputs(prefix, deg) {
+            let arr = [];
+            for(let i=0; i<=deg; i++) {
+                arr.push(parseFloat(document.getElementById(`${prefix}-${i}`).value) || 0);
+            }
+            return arr;
+        }
+
+        function formatPolyArrayStr(arr) {
+            let terms = [];
+            for(let i=arr.length-1; i>=0; i--) {
+                let c = arr[i];
+                if (Math.abs(c) < 1e-5) continue;
+                let term = "";
+                let absC = Math.round(Math.abs(c) * 100) / 100;
+                
+                if (terms.length === 0) {
+                    if (c < 0) term += "-";
+                } else {
+                    term += (c < 0) ? " - " : " + ";
+                }
+                
+                if (i === 0) {
+                    term += absC;
+                } else {
+                    if (absC !== 1) term += absC;
+                    term += "x";
+                    if (i > 1) {
+                        let superscripts = ['⁰','¹','²','³','⁴','⁵','⁶'];
+                        term += superscripts[i] || `^${i}`;
+                    }
+                }
+                terms.push(term);
+            }
+            if (terms.length === 0) return "0";
+            return terms.join("");
+        }
+
+        function getDegree(arr) {
+            for(let i=arr.length-1; i>=0; i--) {
+                if (Math.abs(arr[i]) > 1e-5) return i;
+            }
+            return -1;
+        }
+
+        function calculateDivisionSteps(dividend, divisor) {
+            let steps = [];
+            let rem = [...dividend];
+            let degD = getDegree(divisor);
+
+            if (degD === -1) return [];
+
+            while (true) {
+                let degR = getDegree(rem);
+                if (degR < degD || degR === -1) break;
+
+                let qCoef = rem[degR] / divisor[degD];
+                let qDeg = degR - degD;
+
+                let subPoly = [];
+                for(let i=0; i<=degR; i++) subPoly.push(0);
+
+                for(let i=0; i<=degD; i++) {
+                    subPoly[i + qDeg] = divisor[i] * qCoef;
+                }
+
+                let step = {
+                    qTerm: {coef: qCoef, deg: qDeg},
+                    subPoly: [...subPoly],
+                    remBefore: [...rem]
+                };
+
+                for(let i=0; i<=degR; i++) {
+                    rem[i] -= subPoly[i];
+                }
+
+                step.remAfter = [...rem];
+                steps.push(step);
+            }
+            return steps;
+        }
+
+        function startDynamicLD() {
+            let degP = parseInt(document.getElementById('s-ld-deg-p').value);
+            let degG = parseInt(document.getElementById('s-ld-deg-g').value);
+            
+            let pArr = getPolyFromInputs('ld-p', degP);
+            let gArr = getPolyFromInputs('ld-g', degG);
+
+            if (getDegree(gArr) === -1) {
+                alert("Divisor cannot be 0!");
+                return;
+            }
+
+            document.getElementById('dyn-ld-visual-area').style.display = "flex";
+            document.getElementById('dyn-q').innerHTML = "";
+            document.getElementById('dyn-steps-container').innerHTML = "";
+            
+            document.getElementById('dyn-div').textContent = formatPolyArrayStr(gArr);
+            document.getElementById('dyn-dividend').textContent = formatPolyArrayStr(pArr);
+
+            dynSteps = calculateDivisionSteps(pArr, gArr);
+            currentDynStep = 0;
+            subStepIndex = 0;
+
+            document.getElementById('dyn-ld-start-btn').style.display = "none";
+            
+            if (dynSteps.length === 0) {
+                 document.getElementById('dyn-ld-explanation').innerHTML = "The Dividend's degree is already smaller than the Divisor's degree. Division is complete!";
+                 document.getElementById('dyn-ld-step-btn').style.display = "none";
+                 let rstBtn = document.getElementById('dyn-ld-start-btn');
+                 rstBtn.style.display = "inline-block";
+                 rstBtn.textContent = "Restart / Reset";
+            } else {
+                 document.getElementById('dyn-ld-step-btn').style.display = "inline-block";
+                 document.getElementById('dyn-ld-step-btn').textContent = "Next Step ➡️";
+                 document.getElementById('dyn-ld-explanation').innerHTML = "<strong>Step 1:</strong> Compare leading terms to find the first piece of the quotient.";
+            }
+        }
+
+        function nextDynamicLDStep() {
+            let stepData = dynSteps[currentDynStep];
+            let exp = document.getElementById('dyn-ld-explanation');
+            let qContainer = document.getElementById('dyn-q');
+            let stepsContainer = document.getElementById('dyn-steps-container');
+
+            if (subStepIndex === 0) {
+                let qStr = formatPolyArrayStr([stepData.qTerm.coef]);
+                if (stepData.qTerm.deg > 0) {
+                    let superscripts = ['⁰','¹','²','³','⁴','⁵','⁶'];
+                    qStr += (stepData.qTerm.deg === 1) ? "x" : "x" + superscripts[stepData.qTerm.deg];
+                }
+                
+                if (currentDynStep > 0 && stepData.qTerm.coef > 0) qStr = " + " + qStr;
+                else if (currentDynStep > 0 && stepData.qTerm.coef < 0) qStr = " - " + qStr.replace("-","");
+                
+                let span = document.createElement('span');
+                span.innerHTML = qStr;
+                qContainer.appendChild(span);
+
+                let leadR = formatPolyArrayStr([stepData.remBefore[getDegree(stepData.remBefore)]]);
+                if(getDegree(stepData.remBefore) === 1) leadR += "x";
+                else if(getDegree(stepData.remBefore) > 1) leadR += "x" + ['⁰','¹','²','³','⁴','⁵','⁶'][getDegree(stepData.remBefore)];
+
+                exp.innerHTML = `Divide the leading term <span style='color:#0d47a1'>${leadR}</span> by the divisor's leading term to get <span style='color:#2e7d32'>${qStr}</span>. Write this up top!`;
+                subStepIndex++;
+            } 
+            else if (subStepIndex === 1) {
+                let divSub = document.createElement('div');
+                divSub.style.color = '#d32f2f';
+                divSub.style.borderBottom = '2px solid #ccc';
+                divSub.style.paddingLeft = '10px';
+                divSub.style.marginTop = '5px';
+                divSub.innerHTML = `- (${formatPolyArrayStr(stepData.subPoly)})`;
+                stepsContainer.appendChild(divSub);
+
+                exp.innerHTML = `Multiply that <span style='color:#2e7d32'>new quotient term</span> by the full divisor to get <span style='color:#d32f2f'>${formatPolyArrayStr(stepData.subPoly)}</span>, and subtract it.`;
+                subStepIndex++;
+            }
+            else if (subStepIndex === 2) {
+                let divRem = document.createElement('div');
+                divRem.style.color = '#8e24aa';
+                divRem.style.paddingTop = '5px';
+                divRem.style.paddingLeft = '10px';
+                divRem.style.fontWeight = 'bold';
+                
+                let degR = getDegree(stepData.remAfter);
+                let remStr = degR === -1 ? "0" : formatPolyArrayStr(stepData.remAfter);
+                divRem.innerHTML = remStr;
+                stepsContainer.appendChild(divRem);
+
+                exp.innerHTML = `Subtracting reveals the new remainder: <span style='color:#8e24aa'>${remStr}</span>.`;
+                
+                currentDynStep++;
+                subStepIndex = 0;
+
+                if (currentDynStep >= dynSteps.length) {
+                    exp.innerHTML += " The degree is now less than the divisor's degree. <strong>Division Complete! 🎉</strong>";
+                    document.getElementById('dyn-ld-step-btn').style.display = "none";
+                    let btnStart = document.getElementById('dyn-ld-start-btn');
+                    btnStart.style.display = "inline-block";
+                    btnStart.textContent = "Restart / Reset";
+                }
+            }
+        }
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = id === 'ans1' ? 'Show Answer' : 'Show Answer Step-by-Step';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

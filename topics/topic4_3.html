@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equations of Lines Parallel to Axes - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #ede7f6 0%, #d1c4e9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #311b92; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #5e35b1; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #d1c4e9; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #5e35b1; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #5e35b1; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 500px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #b39ddb; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.6em; display: block; margin-top: 5px; font-family: monospace; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #ede7f6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #5e35b1; }
+        .qa-question { font-weight: bold; color: #311b92; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #5e35b1; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #5e35b1; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #4527a0; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>📏 Lines Parallel to the Axes</h1>
+    <p class="subtitle">When one variable goes missing, lines go straight!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>Special Case Linear Equations</h2>
+        <p>Not every linear equation features both x and y visibly. When an equation only contains one variable (like x = 3 or y = -2), it actually represents a straight line that perfectly mimics one of the coordinate axes.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Equation Form</th>
+                <th>Geometric Behavior</th>
+            </tr>
+            <tr>
+                <td><strong>x = a</strong></td>
+                <td>A perfectly <strong>vertical</strong> line parallel to the Y-axis. Every point on this line has an x-coordinate of exactly "a", regardless of its height.</td>
+            </tr>
+            <tr>
+                <td><strong>y = b</strong></td>
+                <td>A perfectly <strong>horizontal</strong> line parallel to the X-axis. Every point on this line has a y-coordinate of exactly "b", regardless of how far left or right it goes.</td>
+            </tr>
+            <tr>
+                <td><strong>x = 0</strong></td>
+                <td>This is the exact equation of the <strong>Y-axis</strong> itself!</td>
+            </tr>
+            <tr>
+                <td><strong>y = 0</strong></td>
+                <td>This is the exact equation of the <strong>X-axis</strong> itself!</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: HORIZONTAL LINES -->
+    <div class="section-box">
+        <h2 style="color: #ff8f00; text-align: center; margin-top: 0;">↔️ 1. The Horizontal Line Generator (y = b)</h2>
+        <p style="text-align: center; color: #666;">Change the value of b below. Notice how the equation y = b locks the height in place, creating a line that runs parallel to the X-axis!</p>
+
+        <div class="interactive-container" style="background: #fff8e1; border-color: #ffb300;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #e65100; background: #ffebee;">
+                    <label style="color: #b71c1c; font-weight: bold;">Constant (b): <span id="val-horiz-b">3</span></label>
+                    <input type="range" id="s-horiz-b" min="-8" max="8" value="3">
+                </div>
+            </div>
+
+            <svg id="horiz-svg" class="svg-canvas" viewBox="-30 -30 560 560">
+                <defs>
+                    <pattern id="grid1" width="25" height="25" patternUnits="userSpaceOnUse">
+                        <rect width="25" height="25" fill="none" stroke="#eee" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                <rect x="0" y="0" width="500" height="500" fill="url(#grid1)" />
+                <line x1="0" y1="250" x2="500" y2="250" stroke="#333" stroke-width="4"/>
+                <text x="515" y="258" font-weight="bold" fill="#333" font-size="20px">X</text>
+                <line x1="250" y1="0" x2="250" y2="500" stroke="#333" stroke-width="4"/>
+                <text x="242" y="-10" font-weight="bold" fill="#333" font-size="20px">Y</text>
+
+                <!-- The Horizontal Line -->
+                <line id="line-horiz" stroke="#e65100" stroke-width="5"/>
+                <text id="lbl-horiz" font-weight="bold" fill="#e65100" font-size="22px"></text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #ff8f00; background: #fff;">
+                    <span style="color: #f57c00; font-size: 1.1em;">Current Equation</span>
+                    <span id="dash-horiz-eq" class="val-num" style="color: #e65100; font-size: 2em; margin-top: 10px;">y = 3</span>
+                </div>
+                <div class="dash-card" style="border-color: #ff8f00; background: #fff;">
+                    <span style="color: #f57c00; font-size: 1.1em;">Geometric Property</span>
+                    <span id="dash-horiz-prop" class="val-num" style="color: #333; font-size: 1.5em; margin-top: 10px;">Parallel to X-Axis</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: VERTICAL LINES -->
+    <div class="section-box">
+        <h2 style="color: #1976d2; text-align: center; margin-top: 0;">↕️ 2. The Vertical Line Generator (x = a)</h2>
+        <p style="text-align: center; color: #666;">Change the value of a below. The equation x = a locks the left-to-right position, creating a wall that runs parallel to the Y-axis!</p>
+
+        <div class="interactive-container" style="background: #e3f2fd; border-color: #1976d2;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #0d47a1; background: #bbdefb;">
+                    <label style="color: #0d47a1; font-weight: bold;">Constant (a): <span id="val-vert-a">-4</span></label>
+                    <input type="range" id="s-vert-a" min="-8" max="8" value="-4">
+                </div>
+            </div>
+
+            <svg id="vert-svg" class="svg-canvas" viewBox="-30 -30 560 560">
+                <rect x="0" y="0" width="500" height="500" fill="url(#grid1)" />
+                <line x1="0" y1="250" x2="500" y2="250" stroke="#333" stroke-width="4"/>
+                <text x="515" y="258" font-weight="bold" fill="#333" font-size="20px">X</text>
+                <line x1="250" y1="0" x2="250" y2="500" stroke="#333" stroke-width="4"/>
+                <text x="242" y="-10" font-weight="bold" fill="#333" font-size="20px">Y</text>
+
+                <!-- The Vertical Line -->
+                <line id="line-vert" stroke="#1976d2" stroke-width="5"/>
+                <text id="lbl-vert" font-weight="bold" fill="#1976d2" font-size="22px"></text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #1976d2; background: #fff;">
+                    <span style="color: #1565c0; font-size: 1.1em;">Current Equation</span>
+                    <span id="dash-vert-eq" class="val-num" style="color: #0d47a1; font-size: 2em; margin-top: 10px;">x = -4</span>
+                </div>
+                <div class="dash-card" style="border-color: #1976d2; background: #fff;">
+                    <span style="color: #1565c0; font-size: 1.1em;">Geometric Property</span>
+                    <span id="dash-vert-prop" class="val-num" style="color: #333; font-size: 1.5em; margin-top: 10px;">Parallel to Y-Axis</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: THE CROSSHAIR INTERSECTION -->
+    <div class="section-box">
+        <h2 style="color: #7b1fa2; text-align: center; margin-top: 0;">➕ 3. The Crosshair Intersection</h2>
+        <p style="text-align: center; color: #666;">What happens when a horizontal line and a vertical line meet? They intersect at exactly one coordinate point! Adjust both lines to build your own crosshair coordinate.</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #9c27b0;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Vertical Line (x = a): <span id="val-cross-a">4</span></label>
+                    <input type="range" id="s-cross-a" min="-8" max="8" value="4">
+                </div>
+                <div class="slider-group" style="border-color: #e65100; background: #fff3e0;">
+                    <label style="color: #e65100; font-weight: bold;">Horizontal Line (y = b): <span id="val-cross-b">5</span></label>
+                    <input type="range" id="s-cross-b" min="-8" max="8" value="5">
+                </div>
+            </div>
+
+            <svg id="cross-svg" class="svg-canvas" viewBox="-30 -30 560 560" style="height: 400px;">
+                <rect x="0" y="0" width="500" height="500" fill="url(#grid1)" />
+                <line x1="0" y1="250" x2="500" y2="250" stroke="#333" stroke-width="4"/>
+                <text x="515" y="258" font-weight="bold" fill="#333" font-size="20px">X</text>
+                <line x1="250" y1="0" x2="250" y2="500" stroke="#333" stroke-width="4"/>
+                <text x="242" y="-10" font-weight="bold" fill="#333" font-size="20px">Y</text>
+
+                <!-- Intersection Lines -->
+                <line id="cross-vert" stroke="#1976d2" stroke-width="4" opacity="0.6"/>
+                <line id="cross-horiz" stroke="#e65100" stroke-width="4" opacity="0.6"/>
+                
+                <!-- The Point -->
+                <circle id="cross-dot" r="8" fill="#7b1fa2" stroke="#fff" stroke-width="2"/>
+                <text id="cross-lbl" font-weight="bold" fill="#7b1fa2" font-size="20px"></text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #9c27b0; background: #fff; flex-basis: 100%;">
+                    <span style="color: #7b1fa2; font-size: 1.2em; display: block; margin-bottom: 5px;">Intersection Point (a, b)</span>
+                    <span id="cross-result" class="val-num" style="color: #4a148c; font-size: 2.5em;">(4, 5)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: Does the line y = 7 ever cross the X-axis?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>No, it never crosses!</strong><br><br>
+                The line y = 7 is perfectly horizontal and parallel to the X-axis. Because parallel lines never intersect, it will remain exactly 7 units above the X-axis for eternity.
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: Can a line be parallel to both the X-axis and the Y-axis at the same time?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>Impossible!</strong><br><br>
+                The X and Y axes are perpendicular to each other (they meet at a perfect 90-degree angle). Therefore, any line that is parallel to the X-axis must automatically be perpendicular to the Y-axis, and vice versa.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic4_2.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter4.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="../chapters/chapter5.html" class="nav-btn">Next Chapter ➡️</a>
+    </div>
+
+    <script>
+        const plotScale = 25; // 1 math unit = 25px
+        function mapX(x) { return 250 + (x * plotScale); }
+        function mapY(y) { return 250 - (y * plotScale); }
+
+        // --- 1. HORIZONTAL LINE LOGIC (y = b) ---
+        const sHorizB = document.getElementById('s-horiz-b');
+
+        function updateHoriz() {
+            let b = parseInt(sHorizB.value);
+            document.getElementById('val-horiz-b').textContent = b;
+
+            let svgY = mapY(b);
+            
+            let line = document.getElementById('line-horiz');
+            line.setAttribute('x1', 0);
+            line.setAttribute('y1', svgY);
+            line.setAttribute('x2', 500);
+            line.setAttribute('y2', svgY);
+
+            let lbl = document.getElementById('lbl-horiz');
+            lbl.setAttribute('x', 30);
+            lbl.setAttribute('y', svgY - 10);
+            lbl.textContent = `y = ${b}`;
+
+            document.getElementById('dash-horiz-eq').textContent = `y = ${b}`;
+            
+            let propText = b === 0 ? "It IS the X-Axis!" : "Parallel to X-Axis";
+            document.getElementById('dash-horiz-prop').textContent = propText;
+            document.getElementById('dash-horiz-prop').style.color = b === 0 ? "#d32f2f" : "#333";
+        }
+
+        sHorizB.addEventListener('input', updateHoriz);
+        updateHoriz();
+
+
+        // --- 2. VERTICAL LINE LOGIC (x = a) ---
+        const sVertA = document.getElementById('s-vert-a');
+
+        function updateVert() {
+            let a = parseInt(sVertA.value);
+            document.getElementById('val-vert-a').textContent = a;
+
+            let svgX = mapX(a);
+            
+            let line = document.getElementById('line-vert');
+            line.setAttribute('x1', svgX);
+            line.setAttribute('y1', 0);
+            line.setAttribute('x2', svgX);
+            line.setAttribute('y2', 500);
+
+            let lbl = document.getElementById('lbl-vert');
+            lbl.setAttribute('x', svgX + 15);
+            lbl.setAttribute('y', 40);
+            lbl.textContent = `x = ${a}`;
+
+            document.getElementById('dash-vert-eq').textContent = `x = ${a}`;
+            
+            let propText = a === 0 ? "It IS the Y-Axis!" : "Parallel to Y-Axis";
+            document.getElementById('dash-vert-prop').textContent = propText;
+            document.getElementById('dash-vert-prop').style.color = a === 0 ? "#d32f2f" : "#333";
+        }
+
+        sVertA.addEventListener('input', updateVert);
+        updateVert();
+
+
+        // --- 3. CROSSHAIR INTERSECTION LOGIC ---
+        const sCrossA = document.getElementById('s-cross-a');
+        const sCrossB = document.getElementById('s-cross-b');
+
+        function updateCrosshair() {
+            let a = parseInt(sCrossA.value);
+            let b = parseInt(sCrossB.value);
+
+            document.getElementById('val-cross-a').textContent = a;
+            document.getElementById('val-cross-b').textContent = b;
+
+            let svgX = mapX(a);
+            let svgY = mapY(b);
+
+            // Vertical Line
+            document.getElementById('cross-vert').setAttribute('x1', svgX);
+            document.getElementById('cross-vert').setAttribute('y1', 0);
+            document.getElementById('cross-vert').setAttribute('x2', svgX);
+            document.getElementById('cross-vert').setAttribute('y2', 500);
+
+            // Horizontal Line
+            document.getElementById('cross-horiz').setAttribute('x1', 0);
+            document.getElementById('cross-horiz').setAttribute('y1', svgY);
+            document.getElementById('cross-horiz').setAttribute('x2', 500);
+            document.getElementById('cross-horiz').setAttribute('y2', svgY);
+
+            // Dot and Label
+            document.getElementById('cross-dot').setAttribute('cx', svgX);
+            document.getElementById('cross-dot').setAttribute('cy', svgY);
+
+            let lbl = document.getElementById('cross-lbl');
+            lbl.setAttribute('x', svgX + 15);
+            lbl.setAttribute('y', svgY - 15);
+            lbl.textContent = `(${a}, ${b})`;
+
+            // Dashboard
+            document.getElementById('cross-result').textContent = `(${a}, ${b})`;
+        }
+
+        sCrossA.addEventListener('input', updateCrosshair);
+        sCrossB.addEventListener('input', updateCrosshair);
+        updateCrosshair();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

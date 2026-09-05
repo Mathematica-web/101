@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conditions for a Parallelogram - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #4a148c; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #6a1b9a; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #e1bee7; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #6a1b9a; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #6a1b9a; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #ce93d8; font-size: 0.95em; min-width: 140px; flex: 1; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+
+        /* EDUCATIONAL PROOF BOX */
+        .proof-box { background: #f3e5f5; padding: 20px; border-radius: 10px; border-left: 6px solid #9c27b0; margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
+        .proof-box h3 { color: #6a1b9a; margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #f3e5f5; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #6a1b9a; }
+        .qa-question { font-weight: bold; color: #4a148c; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #6a1b9a; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #6a1b9a; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #4a148c; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>🏗️ Conditions for a Parallelogram</h1>
+    <p class="subtitle">The four specific rules that force a generic quadrilateral to lock into a parallelogram!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>Proving the Shape</h2>
+        <p>You don't need to measure every single line and angle to prove a shape is a parallelogram. Mathematicians have proven that if a quadrilateral satisfies just <strong>one</strong> of the following four conditions, it automatically guarantees all the others.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Theorem</th>
+                <th>The Condition</th>
+            </tr>
+            <tr>
+                <td><strong>Theorem 8.3</strong></td>
+                <td>If each pair of <strong>opposite sides is equal</strong>, then it is a parallelogram.</td>
+            </tr>
+            <tr>
+                <td><strong>Theorem 8.4</strong></td>
+                <td>If each pair of <strong>opposite angles is equal</strong>, then it is a parallelogram.</td>
+            </tr>
+            <tr>
+                <td><strong>Theorem 8.7</strong></td>
+                <td>If the <strong>diagonals bisect each other</strong> (cut exactly in half), then it is a parallelogram.</td>
+            </tr>
+            <tr>
+                <td><strong>Theorem 8.8</strong></td>
+                <td>If exactly <strong>one pair of opposite sides is BOTH equal and parallel</strong>, it is a parallelogram.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THEOREM 8.3 (SIDES) -->
+    <div class="section-box">
+        <h2 style="color: #6a1b9a; text-align: center; margin-top: 0;">📏 1. Opposite Sides Equal (Thm 8.3)</h2>
+        <p style="text-align: center; color: #666;">Adjust the lengths of the top and right sides. Watch how forcing <strong>Top = Bottom (250)</strong> and <strong>Right = Left (150)</strong> snaps Vertex C into the exact position required to form a perfect parallelogram!</p>
+
+        <div class="interactive-container" style="background: #fce4ec; border-color: #d81b60;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #d81b60; background: #f8bbd0;">
+                    <label style="color: #880e4f; font-weight: bold;">Top Side Length (CD): <span id="val-s1-cd">180</span> units</label>
+                    <input type="range" id="s1-cd" min="150" max="320" value="180">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Right Side Length (BC): <span id="val-s1-bc">180</span> units</label>
+                    <input type="range" id="s1-bc" min="100" max="220" value="180">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
+                <!-- Base Triangle ABD (Fixed) -->
+                <line x1="100" y1="250" x2="350" y2="250" stroke="#333" stroke-width="6" stroke-linecap="round"/>
+                <line x1="100" y1="250" x2="190" y2="130" stroke="#333" stroke-width="6" stroke-linecap="round"/>
+                
+                <text x="225" y="275" font-weight="bold" fill="#333" font-size="16px" text-anchor="middle">Bottom = 250 units</text>
+                <text x="105" y="180" font-weight="bold" fill="#333" font-size="16px" text-anchor="middle" transform="rotate(-53 145 190)">Left = 150 units</text>
+
+                <!-- Construction Arcs -->
+                <circle id="c1-cd" cx="190" cy="130" fill="none" stroke="#d81b60" stroke-width="2" stroke-dasharray="5,5" opacity="0.4"/>
+                <circle id="c1-bc" cx="350" cy="250" fill="none" stroke="#1976d2" stroke-width="2" stroke-dasharray="5,5" opacity="0.4"/>
+
+                <!-- Dynamic Sides -->
+                <line id="s1-line-cd" stroke="#d81b60" stroke-width="6" stroke-linecap="round"/>
+                <line id="s1-line-bc" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
+
+                <!-- Vertices -->
+                <circle cx="100" cy="250" r="6" fill="#333"/>
+                <text x="80" y="260" font-weight="bold" fill="#333" font-size="20px">A</text>
+
+                <circle cx="350" cy="250" r="6" fill="#333"/>
+                <text x="365" y="260" font-weight="bold" fill="#333" font-size="20px">B</text>
+
+                <circle cx="190" cy="130" r="6" fill="#333"/>
+                <text x="170" y="125" font-weight="bold" fill="#333" font-size="20px">D</text>
+
+                <circle id="s1-dot-c" r="8" fill="#6a1b9a" stroke="#fff" stroke-width="2"/>
+                <text id="s1-txt-c" font-weight="bold" fill="#6a1b9a" font-size="20px">C</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #6a1b9a; background: #fff; flex-basis: 100%;">
+                    <span id="s1-status" style="color: #4a148c; font-size: 1.4em; font-weight: bold;">Adjust lengths to match opposite sides.</span>
+                </div>
+            </div>
+
+            <!-- EDUCATIONAL LOGIC BOX -->
+            <div class="proof-box">
+                <h3>💡 Why does this work? (The Proof)</h3>
+                <p>Imagine drawing a diagonal line from A to C. This splits the quadrilateral into two triangles: ΔABC and ΔCDA. Since opposite sides are equal (AB=CD, BC=DA) and they share the diagonal (AC=CA), the triangles are congruent by the <strong>SSS (Side-Side-Side) rule</strong>. Because the triangles are perfectly identical, their alternate interior angles match, which mathematically proves that the opposite sides must be parallel!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THEOREM 8.4 (ANGLES) -->
+    <div class="section-box">
+        <h2 style="color: #00897b; text-align: center; margin-top: 0;">📐 2. Opposite Angles Equal (Thm 8.4)</h2>
+        <p style="text-align: center; color: #666;">In this shape, the top and bottom lines are kept perfectly horizontal. Adjust the top-left and top-right vertices. When you successfully make <strong>Angle A = Angle C</strong>, notice how Angle B instantly matches Angle D to form a Parallelogram!</p>
+
+        <div class="interactive-container" style="background: #e0f2f1; border-color: #00897b;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #00695c; background: #fff;">
+                    <label style="color: #004d40; font-weight: bold;">Shift Vertex D (Controls Angle A)</label>
+                    <input type="range" id="s2-x1" min="100" max="250" value="130">
+                </div>
+                <div class="slider-group" style="border-color: #00695c; background: #fff;">
+                    <label style="color: #004d40; font-weight: bold;">Shift Vertex C (Controls Angle B)</label>
+                    <input type="range" id="s2-x2" min="300" max="450" value="400">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
+                <polygon id="s2-poly" fill="rgba(0, 137, 123, 0.2)" stroke="#00897b" stroke-width="4"/>
+                
+                <text id="s2-lbl-a" font-weight="bold" fill="#d32f2f" font-size="18px" text-anchor="middle"></text>
+                <text id="s2-lbl-b" font-weight="bold" fill="#1976d2" font-size="18px" text-anchor="middle"></text>
+                <text id="s2-lbl-c" font-weight="bold" fill="#d32f2f" font-size="18px" text-anchor="middle"></text>
+                <text id="s2-lbl-d" font-weight="bold" fill="#1976d2" font-size="18px" text-anchor="middle"></text>
+
+                <circle cx="100" cy="250" r="6" fill="#333"/>
+                <circle cx="400" cy="250" r="6" fill="#333"/>
+                <circle id="s2-dot-d" r="6" fill="#333"/>
+                <circle id="s2-dot-c" r="6" fill="#333"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00897b; background: #fff; flex-basis: 100%;">
+                    <span id="s2-status" style="color: #00695c; font-size: 1.4em; font-weight: bold;">Angles are unmatched.</span>
+                </div>
+            </div>
+
+            <!-- EDUCATIONAL LOGIC BOX -->
+            <div class="proof-box" style="border-left-color: #00897b; background: #e0f2f1;">
+                <h3 style="color: #00695c;">💡 Why does this work? (The Proof)</h3>
+                <p>The sum of all angles in a quadrilateral is 360°. If we force opposite angles to be equal (Let A=C and B=D), then A + B + A + B = 360°. This simplifies to 2(A + B) = 360°, which means <strong>A + B = 180°</strong>. When consecutive interior angles add up to exactly 180°, transversal geometry rules (Euclid's 5th Postulate) dictate that the lines forming those angles must be perfectly parallel!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: THEOREM 8.7 (DIAGONALS) -->
+    <div class="section-box">
+        <h2 style="color: #f57c00; text-align: center; margin-top: 0;">✖️ 3. Diagonals Bisect (Thm 8.7)</h2>
+        <p style="text-align: center; color: #666;">Here, the intersection point (M) is fixed. Adjust the sliders to center M precisely in the middle of both diagonals (50%). When both diagonals are bisected, the outer boundary forms a perfect Parallelogram!</p>
+
+        <div class="interactive-container" style="background: #fff3e0; border-color: #f57c00;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #e65100; background: #fff;">
+                    <label style="color: #e65100; font-weight: bold;">Diagonal 1 Midpoint: <span id="val-s3-d1">30</span>%</label>
+                    <input type="range" id="s3-d1" min="20" max="80" value="30">
+                </div>
+                <div class="slider-group" style="border-color: #e65100; background: #fff;">
+                    <label style="color: #e65100; font-weight: bold;">Diagonal 2 Midpoint: <span id="val-s3-d2">70</span>%</label>
+                    <input type="range" id="s3-d2" min="20" max="80" value="70">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
+                <polygon id="s3-poly" fill="rgba(245, 124, 0, 0.1)" stroke="#f57c00" stroke-width="4"/>
+                
+                <line id="s3-line-1" stroke="#333" stroke-width="4" stroke-dasharray="6,4"/>
+                <line id="s3-line-2" stroke="#333" stroke-width="4" stroke-dasharray="6,4"/>
+
+                <circle cx="250" cy="175" r="8" fill="#e65100" stroke="#fff" stroke-width="2"/>
+                <text x="265" y="170" font-weight="bold" fill="#e65100" font-size="18px">Intersection (M)</text>
+
+                <circle id="s3-dot-a" r="6" fill="#333"/><text id="s3-txt-a" font-weight="bold" fill="#333" font-size="18px">A</text>
+                <circle id="s3-dot-b" r="6" fill="#333"/><text id="s3-txt-b" font-weight="bold" fill="#333" font-size="18px">B</text>
+                <circle id="s3-dot-c" r="6" fill="#333"/><text id="s3-txt-c" font-weight="bold" fill="#333" font-size="18px">C</text>
+                <circle id="s3-dot-d" r="6" fill="#333"/><text id="s3-txt-d" font-weight="bold" fill="#333" font-size="18px">D</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #f57c00; background: #fff; flex-basis: 100%;">
+                    <span id="s3-status" style="color: #e65100; font-size: 1.4em; font-weight: bold;">Align both to 50% to bisect.</span>
+                </div>
+            </div>
+
+            <!-- EDUCATIONAL LOGIC BOX -->
+            <div class="proof-box" style="border-left-color: #f57c00; background: #fff3e0;">
+                <h3 style="color: #e65100;">💡 Why does this work? (The Proof)</h3>
+                <p>Look at the crossing diagonals at point M. They create two triangles on opposite sides (e.g., ΔAMB and ΔCMD). Vertically opposite angles at M are equal. If the diagonals bisect each other, the side segments are equal (AM=CM and BM=DM). By the <strong>SAS (Side-Angle-Side) rule</strong>, the opposing triangles are perfectly identical. Since they are identical, their alternate interior angles match, proving the outer lines are parallel!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 4: THEOREM 8.8 (ONE PAIR EQUAL & PARALLEL) -->
+    <div class="section-box">
+        <h2 style="color: #1976d2; text-align: center; margin-top: 0;">📏 4. One Pair Equal & Parallel (Thm 8.8)</h2>
+        <p style="text-align: center; color: #666;">The final shortcut! If you know that the top and bottom sides are <strong>perfectly parallel</strong> (Tilt = 0°) AND <strong>perfectly equal in length</strong> (250 units), the side walls are mathematically forced to close into a Parallelogram!</p>
+
+        <div class="interactive-container" style="background: #e3f2fd; border-color: #1976d2;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #1565c0; background: #fff;">
+                    <label style="color: #0d47a1; font-weight: bold;">Top Line Length: <span id="val-s4-len">180</span> units</label>
+                    <input type="range" id="s4-len" min="150" max="350" value="180">
+                </div>
+                <div class="slider-group" style="border-color: #1565c0; background: #fff;">
+                    <label style="color: #0d47a1; font-weight: bold;">Top Line Tilt: <span id="val-s4-tilt">-15</span>°</label>
+                    <input type="range" id="s4-tilt" min="-30" max="30" value="-15">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
+                <!-- Fixed Base -->
+                <line x1="125" y1="250" x2="375" y2="250" stroke="#333" stroke-width="6" stroke-linecap="round"/>
+                <text x="250" y="280" font-weight="bold" fill="#333" font-size="16px" text-anchor="middle">Base AB (Length: 250 units, Tilt: 0°)</text>
+
+                <!-- Dynamic Connecting Walls -->
+                <polygon id="s4-poly" fill="rgba(25, 118, 210, 0.1)" stroke="none"/>
+                <line id="s4-wall-ad" stroke="#999" stroke-width="4" stroke-dasharray="5,5"/>
+                <line id="s4-wall-bc" stroke="#999" stroke-width="4" stroke-dasharray="5,5"/>
+
+                <!-- Top Line -->
+                <line id="s4-line-cd" stroke="#1976d2" stroke-width="8" stroke-linecap="round"/>
+                
+                <circle cx="125" cy="250" r="6" fill="#333"/>
+                <circle cx="375" cy="250" r="6" fill="#333"/>
+                <circle id="s4-dot-d" cx="175" cy="100" r="6" fill="#1976d2"/>
+                <circle id="s4-dot-c" r="6" fill="#1976d2"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #1976d2; background: #fff; flex-basis: 100%;">
+                    <span id="s4-status" style="color: #0d47a1; font-size: 1.4em; font-weight: bold;">Adjust length to 250 and tilt to 0°.</span>
+                </div>
+            </div>
+
+            <!-- EDUCATIONAL LOGIC BOX -->
+            <div class="proof-box" style="border-left-color: #1976d2; background: #e3f2fd;">
+                <h3 style="color: #0d47a1;">💡 Why does this work? (The Proof)</h3>
+                <p>Imagine a diagonal connecting Vertex A to C. Because the top and bottom lines are parallel, the alternate interior angles they form with the diagonal are identical. Now we have two triangles sharing a diagonal side, an equal interior angle, and we *forced* the top and bottom sides to be equal. By the <strong>SAS rule</strong>, the two triangles are congruent. Therefore, the remaining pair of sides (AD and BC) are forced to be equal and parallel too!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: If a quadrilateral has opposite sides measuring 10 cm and 12 cm, can it be a parallelogram?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>No!</strong><br><br>
+                According to Theorem 8.3, for a quadrilateral to be a parallelogram, <em>each</em> pair of opposite sides must be completely equal in length. Because 10 ≠ 12, it fails the condition and the shape will warp into a generic quadrilateral or trapezium.
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: If the diagonals of a shape measure 14 cm and 20 cm, and they cut each other at 7 cm and 10 cm respectively, is it a parallelogram?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>Yes!</strong><br><br>
+                This satisfies Theorem 8.7. Since 7 is exactly half of 14, and 10 is exactly half of 20, both diagonals perfectly bisect each other. This condition guarantees the shape is a parallelogram.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic8_2.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter8.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic8_4.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. THEOREM 8.3 (SIDES) LOGIC ---
+        function intersectCircles(x1, y1, r1, x2, y2, r2) {
+            let d = Math.hypot(x2 - x1, y2 - y1);
+            if (d > r1 + r2 || d < Math.abs(r1 - r2) || d === 0) return null;
+            let a = (r1 * r1 - r2 * r2 + d * d) / (2 * d);
+            let h = Math.sqrt(r1 * r1 - a * a);
+            let px = x1 + a * (x2 - x1) / d;
+            let py = y1 + a * (y2 - y1) / d;
+            let p3x = px + h * (y2 - y1) / d;
+            let p3y = py - h * (x2 - x1) / d;
+            let p4x = px - h * (y2 - y1) / d;
+            let p4y = py + h * (x2 - x1) / d;
+            // Return top point (lower Y in SVG)
+            return p3y < p4y ? {x: p3x, y: p3y} : {x: p4x, y: p4y};
+        }
+
+        const s1Cd = document.getElementById('s1-cd');
+        const s1Bc = document.getElementById('s1-bc');
+
+        function updateSim1() {
+            let rCD = parseInt(s1Cd.value);
+            let rBC = parseInt(s1Bc.value);
+            
+            document.getElementById('val-s1-cd').textContent = rCD;
+            document.getElementById('val-s1-bc').textContent = rBC;
+
+            let bx = 350, by = 250;
+            let dx = 190, dy = 130; // Target BC/AD is exactly 150. Target CD/AB is exactly 250.
+
+            document.getElementById('c1-cd').setAttribute('r', rCD);
+            document.getElementById('c1-bc').setAttribute('r', rBC);
+
+            let intersect = intersectCircles(dx, dy, rCD, bx, by, rBC);
+            let status = document.getElementById('s1-status');
+
+            if (intersect) {
+                document.getElementById('s1-line-cd').setAttribute('x1', dx);
+                document.getElementById('s1-line-cd').setAttribute('y1', dy);
+                document.getElementById('s1-line-cd').setAttribute('x2', intersect.x);
+                document.getElementById('s1-line-cd').setAttribute('y2', intersect.y);
+                document.getElementById('s1-line-cd').style.display = 'block';
+
+                document.getElementById('s1-line-bc').setAttribute('x1', bx);
+                document.getElementById('s1-line-bc').setAttribute('y1', by);
+                document.getElementById('s1-line-bc').setAttribute('x2', intersect.x);
+                document.getElementById('s1-line-bc').setAttribute('y2', intersect.y);
+                document.getElementById('s1-line-bc').style.display = 'block';
+
+                document.getElementById('s1-dot-c').setAttribute('cx', intersect.x);
+                document.getElementById('s1-dot-c').setAttribute('cy', intersect.y);
+                document.getElementById('s1-dot-c').style.display = 'block';
+                
+                document.getElementById('s1-txt-c').setAttribute('x', intersect.x + 10);
+                document.getElementById('s1-txt-c').setAttribute('y', intersect.y - 10);
+                document.getElementById('s1-txt-c').style.display = 'block';
+
+                if (rCD === 250 && rBC === 150) {
+                    status.textContent = "✅ Opposite sides match! Parallelogram locked.";
+                    status.style.color = "#2e7d32";
+                    document.getElementById('s1-line-cd').setAttribute('stroke', '#388e3c');
+                    document.getElementById('s1-line-bc').setAttribute('stroke', '#388e3c');
+                } else {
+                    status.textContent = "Angles shift, but it is NOT a Parallelogram yet.";
+                    status.style.color = "#d81b60";
+                    document.getElementById('s1-line-cd').setAttribute('stroke', '#d81b60');
+                    document.getElementById('s1-line-bc').setAttribute('stroke', '#1976d2');
+                }
+            } else {
+                document.getElementById('s1-line-cd').style.display = 'none';
+                document.getElementById('s1-line-bc').style.display = 'none';
+                document.getElementById('s1-dot-c').style.display = 'none';
+                document.getElementById('s1-txt-c').style.display = 'none';
+                
+                status.textContent = "❌ Sides are too short to connect!";
+                status.style.color = "#d32f2f";
+            }
+        }
+        s1Cd.addEventListener('input', updateSim1);
+        s1Bc.addEventListener('input', updateSim1);
+        updateSim1();
+
+        // --- 2. THEOREM 8.4 (ANGLES) LOGIC ---
+        const s2X1 = document.getElementById('s2-x1');
+        const s2X2 = document.getElementById('s2-x2');
+
+        function updateSim2() {
+            let dx = parseInt(s2X1.value);
+            let cx = parseInt(s2X2.value);
+            
+            let ax = 100, ay = 250;
+            let bx = 400, by = 250;
+            let topY = 100;
+
+            document.getElementById('s2-poly').setAttribute('points', `${ax},${ay} ${bx},${by} ${cx},${topY} ${dx},${topY}`);
+            document.getElementById('s2-dot-d').setAttribute('cx', dx); document.getElementById('s2-dot-d').setAttribute('cy', topY);
+            document.getElementById('s2-dot-c').setAttribute('cx', cx); document.getElementById('s2-dot-c').setAttribute('cy', topY);
+
+            // Since it's a trapezium (Y is constant), A+D=180 and B+C=180 always.
+            let angA = Math.round(Math.atan2(150, dx - 100) * 180 / Math.PI);
+            let angB = Math.round(Math.atan2(150, 400 - cx) * 180 / Math.PI);
+            let angD = 180 - angA;
+            let angC = 180 - angB;
+
+            let lblA = document.getElementById('s2-lbl-a');
+            lblA.setAttribute('x', ax + 25); lblA.setAttribute('y', ay - 15); lblA.textContent = `${angA}°`;
+            
+            let lblB = document.getElementById('s2-lbl-b');
+            lblB.setAttribute('x', bx - 25); lblB.setAttribute('y', ay - 15); lblB.textContent = `${angB}°`;
+
+            let lblC = document.getElementById('s2-lbl-c');
+            lblC.setAttribute('x', cx - 25); lblC.setAttribute('y', topY + 20); lblC.textContent = `${angC}°`;
+
+            let lblD = document.getElementById('s2-lbl-d');
+            lblD.setAttribute('x', dx + 25); lblD.setAttribute('y', topY + 20); lblD.textContent = `${angD}°`;
+
+            let status = document.getElementById('s2-status');
+            if (angA === angC && angB === angD) {
+                status.textContent = "✅ Opposite angles perfectly match! Parallelogram formed.";
+                status.style.color = "#2e7d32";
+                document.getElementById('s2-poly').setAttribute('fill', 'rgba(46, 125, 50, 0.2)');
+                document.getElementById('s2-poly').setAttribute('stroke', '#2e7d32');
+            } else {
+                status.textContent = `Angles are unmatched (A≠C, B≠D).`;
+                status.style.color = "#d32f2f";
+                document.getElementById('s2-poly').setAttribute('fill', 'rgba(0, 137, 123, 0.1)');
+                document.getElementById('s2-poly').setAttribute('stroke', '#00897b');
+            }
+        }
+        s2X1.addEventListener('input', updateSim2);
+        s2X2.addEventListener('input', updateSim2);
+        updateSim2();
+
+        // --- 3. THEOREM 8.7 (DIAGONALS) LOGIC ---
+        const s3D1 = document.getElementById('s3-d1');
+        const s3D2 = document.getElementById('s3-d2');
+
+        function updateSim3() {
+            let r1 = parseInt(s3D1.value) / 100;
+            let r2 = parseInt(s3D2.value) / 100;
+
+            document.getElementById('val-s3-d1').textContent = Math.round(r1 * 100);
+            document.getElementById('val-s3-d2').textContent = Math.round(r2 * 100);
+
+            let mx = 250, my = 175;
+            let l1 = 300, dir1x = 0.894, dir1y = -0.447; // Vector for AC
+            let l2 = 250, dir2x = -0.8, dir2y = -0.6;    // Vector for BD
+
+            let ax = mx - l1 * r1 * dir1x; let ay = my - l1 * r1 * dir1y;
+            let cx = mx + l1 * (1 - r1) * dir1x; let cy = my + l1 * (1 - r1) * dir1y;
+
+            let bx = mx - l2 * r2 * dir2x; let by = my - l2 * r2 * dir2y;
+            let dx = mx + l2 * (1 - r2) * dir2x; let dy = my + l2 * (1 - r2) * dir2y;
+
+            document.getElementById('s3-line-1').setAttribute('x1', ax); document.getElementById('s3-line-1').setAttribute('y1', ay);
+            document.getElementById('s3-line-1').setAttribute('x2', cx); document.getElementById('s3-line-1').setAttribute('y2', cy);
+
+            document.getElementById('s3-line-2').setAttribute('x1', bx); document.getElementById('s3-line-2').setAttribute('y1', by);
+            document.getElementById('s3-line-2').setAttribute('x2', dx); document.getElementById('s3-line-2').setAttribute('y2', dy);
+
+            document.getElementById('s3-poly').setAttribute('points', `${ax},${ay} ${bx},${by} ${cx},${cy} ${dx},${dy}`);
+
+            document.getElementById('s3-dot-a').setAttribute('cx', ax); document.getElementById('s3-dot-a').setAttribute('cy', ay);
+            document.getElementById('s3-txt-a').setAttribute('x', ax-15); document.getElementById('s3-txt-a').setAttribute('y', ay);
+
+            document.getElementById('s3-dot-c').setAttribute('cx', cx); document.getElementById('s3-dot-c').setAttribute('cy', cy);
+            document.getElementById('s3-txt-c').setAttribute('x', cx+15); document.getElementById('s3-txt-c').setAttribute('y', cy);
+
+            document.getElementById('s3-dot-b').setAttribute('cx', bx); document.getElementById('s3-dot-b').setAttribute('cy', by);
+            document.getElementById('s3-txt-b').setAttribute('x', bx+15); document.getElementById('s3-txt-b').setAttribute('y', by);
+
+            document.getElementById('s3-dot-d').setAttribute('cx', dx); document.getElementById('s3-dot-d').setAttribute('cy', dy);
+            document.getElementById('s3-txt-d').setAttribute('x', dx-15); document.getElementById('s3-txt-d').setAttribute('y', dy);
+
+            let status = document.getElementById('s3-status');
+            if (r1 === 0.5 && r2 === 0.5) {
+                status.textContent = "✅ Both diagonals bisected! Parallelogram confirmed.";
+                status.style.color = "#2e7d32";
+                document.getElementById('s3-poly').setAttribute('fill', 'rgba(46, 125, 50, 0.2)');
+                document.getElementById('s3-poly').setAttribute('stroke', '#388e3c');
+            } else {
+                status.textContent = "Diagonals are uneven. Shape is irregular.";
+                status.style.color = "#e65100";
+                document.getElementById('s3-poly').setAttribute('fill', 'rgba(245, 124, 0, 0.1)');
+                document.getElementById('s3-poly').setAttribute('stroke', '#f57c00');
+            }
+        }
+        s3D1.addEventListener('input', updateSim3);
+        s3D2.addEventListener('input', updateSim3);
+        updateSim3();
+
+        // --- 4. THEOREM 8.8 (ONE PAIR) LOGIC ---
+        const s4Len = document.getElementById('s4-len');
+        const s4Tilt = document.getElementById('s4-tilt');
+
+        function updateSim4() {
+            let len = parseInt(s4Len.value);
+            let tilt = parseInt(s4Tilt.value);
+
+            document.getElementById('val-s4-len').textContent = len;
+            document.getElementById('val-s4-tilt').textContent = tilt;
+
+            let ax = 125, ay = 250;
+            let bx = 375, by = 250; // Base = 250
+            let dx = 175, dy = 100;
+
+            let rad = tilt * Math.PI / 180;
+            let cx = dx + len * Math.cos(rad);
+            let cy = dy + len * Math.sin(rad);
+
+            document.getElementById('s4-line-cd').setAttribute('x1', dx);
+            document.getElementById('s4-line-cd').setAttribute('y1', dy);
+            document.getElementById('s4-line-cd').setAttribute('x2', cx);
+            document.getElementById('s4-line-cd').setAttribute('y2', cy);
+
+            document.getElementById('s4-dot-c').setAttribute('cx', cx);
+            document.getElementById('s4-dot-c').setAttribute('cy', cy);
+
+            document.getElementById('s4-poly').setAttribute('points', `${ax},${ay} ${bx},${by} ${cx},${cy} ${dx},${dy}`);
+            document.getElementById('s4-wall-ad').setAttribute('x1', ax); document.getElementById('s4-wall-ad').setAttribute('y1', ay);
+            document.getElementById('s4-wall-ad').setAttribute('x2', dx); document.getElementById('s4-wall-ad').setAttribute('y2', dy);
+            
+            document.getElementById('s4-wall-bc').setAttribute('x1', bx); document.getElementById('s4-wall-bc').setAttribute('y1', by);
+            document.getElementById('s4-wall-bc').setAttribute('x2', cx); document.getElementById('s4-wall-bc').setAttribute('y2', cy);
+
+            let status = document.getElementById('s4-status');
+            if (len === 250 && tilt === 0) {
+                status.textContent = "✅ Top is Equal AND Parallel. Parallelogram locked!";
+                status.style.color = "#2e7d32";
+                document.getElementById('s4-poly').setAttribute('fill', 'rgba(46, 125, 50, 0.2)');
+                document.getElementById('s4-wall-ad').setAttribute('stroke', '#388e3c');
+                document.getElementById('s4-wall-bc').setAttribute('stroke', '#388e3c');
+                document.getElementById('s4-wall-ad').setAttribute('stroke-dasharray', 'none');
+                document.getElementById('s4-wall-bc').setAttribute('stroke-dasharray', 'none');
+            } else {
+                status.textContent = "Adjust length to exactly 250 and tilt to 0°.";
+                status.style.color = "#0d47a1";
+                document.getElementById('s4-poly').setAttribute('fill', 'rgba(25, 118, 210, 0.1)');
+                document.getElementById('s4-wall-ad').setAttribute('stroke', '#999');
+                document.getElementById('s4-wall-bc').setAttribute('stroke', '#999');
+                document.getElementById('s4-wall-ad').setAttribute('stroke-dasharray', '5,5');
+                document.getElementById('s4-wall-bc').setAttribute('stroke-dasharray', '5,5');
+            }
+        }
+        s4Len.addEventListener('input', updateSim4);
+        s4Tilt.addEventListener('input', updateSim4);
+        updateSim4();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Same Base & Parallels - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #1a237e; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #3f51b5; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); background: #303f9f; }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c5cae9; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #3f51b5; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #3f51b5; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #9fa8da; font-size: 0.95em; min-width: 140px; flex: 1; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+        
+        .proof-box { background: #e8eaf6; padding: 20px; border-radius: 10px; border-left: 6px solid #3f51b5; margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
+        .proof-box h3 { color: #1a237e; margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8eaf6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #3f51b5; }
+        .qa-question { font-weight: bold; color: #1a237e; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #3f51b5; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); background: #303f9f; }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #3f51b5; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #1a237e; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>📏 Same Base & Parallels</h1>
+    <p class="subtitle">How shapes can stretch and warp without changing their total area!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Parallel Corridor</h2>
+        <p>Imagine two perfectly parallel lines acting like a rigid corridor. If you anchor the base of a shape on one line, and touch the top of the shape to the other line, you lock in its height. Because of this, we discover three powerful rules about shapes sharing the same space.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Theorem</th>
+                <th>The Rule</th>
+            </tr>
+            <tr>
+                <td><strong>Theorem 1 (Parallelograms)</strong></td>
+                <td>Parallelograms on the <strong>same base</strong> and between the <strong>same parallels</strong> are exactly equal in area.</td>
+            </tr>
+            <tr>
+                <td><strong>Theorem 2 (Triangles)</strong></td>
+                <td>Two triangles on the <strong>same base</strong> and between the <strong>same parallels</strong> are exactly equal in area.</td>
+            </tr>
+            <tr>
+                <td><strong>Theorem 3 (Mixed Shapes)</strong></td>
+                <td>If a triangle and a parallelogram share the same base and parallels, the triangle's area is exactly <strong>half</strong> of the parallelogram's area.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: PARALLELOGRAM STRETCHER -->
+    <div class="section-box">
+        <h2 style="color: #e91e63; text-align: center; margin-top: 0;">🟧 1. The Parallelogram Stretcher</h2>
+        <p style="text-align: center; color: #666;">Drag the top edge of the parallelogram left and right. Although the shape skews wildly and its side lengths change, the total 2D space inside remains mathematically locked!</p>
+
+        <div class="interactive-container" style="background: #fce4ec; border-color: #e91e63;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #c2185b; background: #fff; width: 80%;">
+                    <label style="color: #880e4f; font-weight: bold;">Slide Top Edge Horizontally</label>
+                    <input type="range" id="s-para-x" min="0" max="300" value="150">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
+                <!-- Parallel Lines -->
+                <line x1="20" y1="100" x2="480" y2="100" stroke="#ccc" stroke-width="4" stroke-dasharray="8,4"/>
+                <line x1="20" y1="250" x2="480" y2="250" stroke="#ccc" stroke-width="4" stroke-dasharray="8,4"/>
+                <text x="35" y="90" font-weight="bold" fill="#999">Top Parallel</text>
+                <text x="35" y="270" font-weight="bold" fill="#999">Bottom Parallel</text>
+
+                <!-- Fixed Base Highlight -->
+                <line x1="150" y1="250" x2="350" y2="250" stroke="#e91e63" stroke-width="8" stroke-linecap="round"/>
+                
+                <!-- Dynamic Parallelogram -->
+                <polygon id="para-poly" fill="rgba(233, 30, 99, 0.2)" stroke="#e91e63" stroke-width="4"/>
+                
+                <circle cx="150" cy="250" r="6" fill="#880e4f"/>
+                <circle cx="350" cy="250" r="6" fill="#880e4f"/>
+
+                <!-- Height Indicator -->
+                <line id="para-height" x1="150" y1="250" x2="150" y2="100" stroke="#333" stroke-width="2" stroke-dasharray="4,4"/>
+                <path d="M 150 240 L 160 240 L 160 250" fill="none" stroke="#333" stroke-width="2"/>
+                <text x="110" y="180" font-weight="bold" fill="#333">h = 150</text>
+                <text x="250" y="275" font-weight="bold" fill="#880e4f" text-anchor="middle">Base (b) = 200</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #e91e63; background: #fff; flex-basis: 100%;">
+                    <span style="color: #c2185b; font-size: 1.2em; display: block; margin-bottom: 5px;">Area of Parallelogram</span>
+                    <span class="val-num" style="color: #880e4f; font-size: 1.8em;">Base &times; Height = 30000 sq units</span>
+                </div>
+            </div>
+
+            <div class="proof-box" style="border-left-color: #e91e63; background: #fce4ec;">
+                <h3 style="color: #c2185b;">💡 Why does this work? (The Proof)</h3>
+                <p>The area of any parallelogram is calculated strictly as <strong>Base &times; Perpendicular Height</strong>. Because the shape is trapped between two parallel lines, its perpendicular height can never change. Because we anchored the base, its width can never change. Therefore, regardless of how far you skew the top, the Area remains identically Base &times; Height.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: TRIANGLE SLIDER -->
+    <div class="section-box">
+        <h2 style="color: #00bcd4; text-align: center; margin-top: 0;">🔺 2. The Triangle Slider</h2>
+        <p style="text-align: center; color: #666;">The same rule applies to triangles! Slide the top vertex of the triangle anywhere along the top parallel line. The area will always be exactly half of the parallelogram from above.</p>
+
+        <div class="interactive-container" style="background: #e0f7fa; border-color: #00bcd4;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #0097a7; background: #fff; width: 80%;">
+                    <label style="color: #006064; font-weight: bold;">Slide Top Vertex</label>
+                    <input type="range" id="s-tri-x" min="50" max="450" value="250">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
+                <!-- Parallel Lines -->
+                <line x1="20" y1="100" x2="480" y2="100" stroke="#ccc" stroke-width="4" stroke-dasharray="8,4"/>
+                <line x1="20" y1="250" x2="480" y2="250" stroke="#ccc" stroke-width="4" stroke-dasharray="8,4"/>
+                
+                <!-- Fixed Base Highlight -->
+                <line x1="150" y1="250" x2="350" y2="250" stroke="#00bcd4" stroke-width="8" stroke-linecap="round"/>
+                
+                <!-- Dynamic Triangle -->
+                <polygon id="tri-poly" fill="rgba(0, 188, 212, 0.2)" stroke="#00bcd4" stroke-width="4"/>
+                
+                <!-- Moving Top Dot -->
+                <circle id="tri-dot-top" r="8" fill="#006064" stroke="#fff" stroke-width="2"/>
+                
+                <circle cx="150" cy="250" r="6" fill="#006064"/>
+                <circle cx="350" cy="250" r="6" fill="#006064"/>
+
+                <!-- Height Indicator -->
+                <line id="tri-height" stroke="#333" stroke-width="2" stroke-dasharray="4,4"/>
+                <path id="tri-90" fill="none" stroke="#333" stroke-width="2"/>
+                <text x="250" y="275" font-weight="bold" fill="#0097a7" text-anchor="middle">Base (b) = 200</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00bcd4; background: #fff; flex-basis: 100%;">
+                    <span style="color: #0097a7; font-size: 1.2em; display: block; margin-bottom: 5px;">Area of Triangle</span>
+                    <span class="val-num" style="color: #006064; font-size: 1.8em;">1/2 &times; Base &times; Height = 15000 sq units</span>
+                </div>
+            </div>
+
+            <div class="proof-box" style="border-left-color: #00bcd4; background: #e0f7fa;">
+                <h3 style="color: #006064;">💡 Why does this work? (The Proof)</h3>
+                <p>A triangle's area formula is <strong>1/2 * Base * Height</strong>. Just like the parallelogram, the distance between the two parallel lines represents the constant height of the triangle. Since both the base and the height are physically locked, moving the top point changes the triangle's shape (its perimeter and angles) but its area cannot mathematically change!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: TRIANGLE VS PARALLELOGRAM -->
+    <div class="section-box">
+        <h2 style="color: #ff9800; text-align: center; margin-top: 0;">⚖️ 3. The 1:2 Ratio Showdown</h2>
+        <p style="text-align: center; color: #666;">When a triangle and a parallelogram share the <strong>exact same base</strong> and the <strong>exact same height</strong>, the triangle will ALWAYS consume exactly 50% of the parallelogram's area. Move the triangle's vertex to see this in action!</p>
+
+        <div class="interactive-container" style="background: #fff3e0; border-color: #ff9800;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #f57c00; background: #fff; width: 80%;">
+                    <label style="color: #e65100; font-weight: bold;">Slide Triangle Top Vertex</label>
+                    <input type="range" id="s-combo-x" min="50" max="450" value="250">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
+                <line x1="20" y1="100" x2="480" y2="100" stroke="#ccc" stroke-width="4" stroke-dasharray="8,4"/>
+                <line x1="20" y1="250" x2="480" y2="250" stroke="#ccc" stroke-width="4" stroke-dasharray="8,4"/>
+
+                <!-- Fixed Parallelogram Outline -->
+                <!-- Base: 150 to 350. Top: 250 to 450 -->
+                <polygon points="150,250 350,250 450,100 250,100" fill="rgba(255, 152, 0, 0.1)" stroke="#f57c00" stroke-width="3" stroke-dasharray="5,5"/>
+                
+                <!-- Dynamic Triangle -->
+                <polygon id="combo-tri" fill="rgba(25, 118, 210, 0.4)" stroke="#1976d2" stroke-width="4"/>
+                
+                <line x1="150" y1="250" x2="350" y2="250" stroke="#333" stroke-width="6" stroke-linecap="round"/>
+                <text x="250" y="275" font-weight="bold" fill="#333" text-anchor="middle">Shared Base</text>
+
+                <circle id="combo-dot" r="8" fill="#1976d2" stroke="#fff" stroke-width="2"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #f57c00; background: #fff;">
+                    <span style="color: #e65100; font-size: 1.1em; display: block; margin-bottom: 5px;">Parallelogram Area</span>
+                    <span class="val-num" style="color: #f57c00; font-size: 1.4em;">30000 units</span>
+                </div>
+                <div class="dash-card" style="border-color: #1976d2; background: #fff;">
+                    <span style="color: #0d47a1; font-size: 1.1em; display: block; margin-bottom: 5px;">Triangle Area</span>
+                    <span class="val-num" style="color: #1976d2; font-size: 1.4em;">15000 units</span>
+                </div>
+            </div>
+
+            <div class="proof-box" style="border-left-color: #ff9800; background: #fff3e0;">
+                <h3 style="color: #e65100;">💡 Why does this work? (The Proof)</h3>
+                <p>This is a direct comparison of their foundational formulas! The Parallelogram's area is <strong>(Base * Height)</strong>. The Triangle's area is <strong>(1/2 * Base * Height)</strong>. Because both shapes are placed on the exact same base and trapped between the exact same parallel lines, their "Base" and "Height" variables are identical. Therefore, the triangle's formula dictates it must be exactly half the size of the parallelogram!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: Two different parallelograms are drawn on a base of 10 cm between parallel lines that are 8 cm apart. What is the difference in their areas?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Zero!</strong><br><br>
+                Because they share the same base (10 cm) and the same height (8 cm), Theorem 1 guarantees their areas are perfectly identical (80 sq cm each). The difference is 0.
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: A triangle and a rectangle sit on the same base of 5 units and fit between the same parallel lines. If the rectangle has an area of 40 sq units, what is the triangle's area?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>20 sq units.</strong><br><br>
+                A rectangle is just a special type of parallelogram. According to Theorem 3, any triangle on the same base and between the same parallels as a parallelogram will have exactly half the area. 40 / 2 = 20.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic10_2.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter10.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic10_4.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. PARALLELOGRAM STRETCHER LOGIC ---
+        const sParaX = document.getElementById('s-para-x');
+
+        function updatePara() {
+            let offset = parseInt(sParaX.value);
+            let topX1 = offset;
+            let topX2 = offset + 200; // Base is 200 units wide
+
+            // Base coordinates: (150, 250) to (350, 250)
+            document.getElementById('para-poly').setAttribute('points', `150,250 350,250 ${topX2},100 ${topX1},100`);
+        }
+        sParaX.addEventListener('input', updatePara);
+        updatePara();
+
+
+        // --- 2. TRIANGLE SLIDER LOGIC ---
+        const sTriX = document.getElementById('s-tri-x');
+
+        function updateTri() {
+            let topX = parseInt(sTriX.value);
+            let ax = 150, ay = 250;
+            let bx = 350, by = 250;
+            let cy = 100;
+
+            document.getElementById('tri-poly').setAttribute('points', `${ax},${ay} ${bx},${by} ${topX},${cy}`);
+            
+            document.getElementById('tri-dot-top').setAttribute('cx', topX);
+            document.getElementById('tri-dot-top').setAttribute('cy', cy);
+
+            document.getElementById('tri-height').setAttribute('x1', topX); document.getElementById('tri-height').setAttribute('y1', cy);
+            document.getElementById('tri-height').setAttribute('x2', topX); document.getElementById('tri-height').setAttribute('y2', ay);
+
+            let boxDir = (topX > ax + 100) ? -1 : 1;
+            document.getElementById('tri-90').setAttribute('d', `M ${topX} ${ay-10} L ${topX + 10*boxDir} ${ay-10} L ${topX + 10*boxDir} ${ay}`);
+        }
+        sTriX.addEventListener('input', updateTri);
+        updateTri();
+
+
+        // --- 3. COMBO SLIDER LOGIC ---
+        const sComboX = document.getElementById('s-combo-x');
+
+        function updateCombo() {
+            let topX = parseInt(sComboX.value);
+            document.getElementById('combo-tri').setAttribute('points', `150,250 350,250 ${topX},100`);
+            document.getElementById('combo-dot').setAttribute('cx', topX);
+            document.getElementById('combo-dot').setAttribute('cy', 100);
+        }
+        sComboX.addEventListener('input', updateCombo);
+        updateCombo();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

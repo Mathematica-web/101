@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Equations in Two Variables - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #ede7f6 0%, #d1c4e9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #311b92; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #5e35b1; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #d1c4e9; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #5e35b1; color: white; }
+        
+        .math-eq { font-family: 'Times New Roman', serif; font-style: italic; font-size: 1.2em; color: #311b92; font-weight: bold; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #5e35b1; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #b39ddb; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.6em; display: block; margin-top: 5px; font-family: monospace; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #ede7f6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #5e35b1; }
+        .qa-question { font-weight: bold; color: #311b92; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #5e35b1; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #5e35b1; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #4527a0; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>⚖️ Linear Equations in Two Variables</h1>
+    <p class="subtitle">When one unknown just isn't enough to solve the puzzle!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Standard Form</h2>
+        <p>In previous chapters, we solved equations with just one missing piece (like 2x + 5 = 9). But real life is rarely that simple. Often, two different quantities depend on each other. To describe these relationships, we use <strong>Linear Equations in Two Variables</strong>.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Component</th>
+                <th>Definition & Role</th>
+            </tr>
+            <tr>
+                <td><strong>The Standard Form</strong></td>
+                <td><span class="math-eq">ax + by + c = 0</span><br>This is the universally accepted format for writing these equations.</td>
+            </tr>
+            <tr>
+                <td><strong>The Variables (x, y)</strong></td>
+                <td>The two unknown quantities that can change.</td>
+            </tr>
+            <tr>
+                <td><strong>The Coefficients (a, b)</strong></td>
+                <td>Real numbers multiplying the variables. The only rule is that <strong>a and b cannot both be zero at the same time</strong>.</td>
+            </tr>
+            <tr>
+                <td><strong>The Constant (c)</strong></td>
+                <td>A fixed real number without any variable attached to it.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE EQUATION BALANCER -->
+    <div class="section-box">
+        <h2 style="color: #ff8f00; text-align: center; margin-top: 0;">⚖️ 1. The Solution Balancer</h2>
+        <p style="text-align: center; color: #666;">A "solution" to a two-variable equation is simply a pair of values (x, y) that makes the Left Hand Side exactly equal to the Right Hand Side. Define your own equation by setting the coefficients <strong>a</strong>, <strong>b</strong>, and constant <strong>c</strong>, then slide the <strong>x</strong> and <strong>y</strong> values to balance it!</p>
+
+        <div class="interactive-container" style="background: #fff8e1; border-color: #ffb300;">
+            
+            <div style="font-size: 1.8em; font-weight: bold; color: #e65100; margin-bottom: 20px; font-family: 'Times New Roman', serif; font-style: italic;">
+                <span id="bal-eq-display">2x + 3y = 12</span>
+            </div>
+
+            <!-- Coefficient Sliders -->
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #d32f2f; background: #ffebee;">
+                    <label style="color: #b71c1c; font-weight: bold;">Coef (a): <span id="val-bal-a">2</span></label>
+                    <input type="range" id="s-bal-a" min="-10" max="10" value="2">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Coef (b): <span id="val-bal-b">3</span></label>
+                    <input type="range" id="s-bal-b" min="-10" max="10" value="3">
+                </div>
+                <div class="slider-group" style="border-color: #f57c00; background: #fff3e0;">
+                    <label style="color: #e65100; font-weight: bold;">Constant (c): <span id="val-bal-c">12</span></label>
+                    <input type="range" id="s-bal-c" min="-20" max="20" value="12">
+                </div>
+            </div>
+
+            <!-- Variable Sliders -->
+            <div class="slider-row" style="margin-top: 20px; border-top: 2px dashed #ffcc80; padding-top: 20px;">
+                <div class="slider-group" style="border-color: #8e24aa; background: #f3e5f5;">
+                    <label style="color: #4a148c; font-weight: bold;">Test Value (x): <span id="val-bal-x">0</span></label>
+                    <input type="range" id="s-bal-x" min="-15" max="15" value="0">
+                </div>
+                <div class="slider-group" style="border-color: #8e24aa; background: #f3e5f5;">
+                    <label style="color: #4a148c; font-weight: bold;">Test Value (y): <span id="val-bal-y">0</span></label>
+                    <input type="range" id="s-bal-y" min="-15" max="15" value="0">
+                </div>
+            </div>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #ff8f00; background: #fff;">
+                    <span style="color: #f57c00; font-size: 1.1em;">Left Hand Side (LHS)</span>
+                    <span id="bal-lhs-form" style="color: #555; font-size: 1em; font-family: monospace; display: block; margin-top: 5px;">2(x) + 3(y)</span>
+                    <span id="bal-lhs-steps" style="color: #888; font-size: 0.9em; font-family: monospace;">2(0) + 3(0)</span>
+                    <span id="bal-lhs" class="val-num" style="color: #e65100; font-size: 2.5em; margin-top: 10px;">0</span>
+                </div>
+                
+                <div style="font-size: 2.5em; font-weight: bold; color: #333; display: flex; align-items: center; justify-content: center; width: 50px;">
+                    <span id="bal-operator">≠</span>
+                </div>
+
+                <div class="dash-card" style="border-color: #ff8f00; background: #fff;">
+                    <span style="color: #f57c00; font-size: 1.1em;">Right Hand Side (RHS)</span>
+                    <span style="color: #555; font-size: 1em; font-family: monospace; display: block; margin-top: 5px;">Constant (c)</span>
+                    <span style="color: #888; font-size: 0.9em; font-family: monospace;">--</span>
+                    <span id="bal-rhs-val" class="val-num" style="color: #333; font-size: 2.5em; margin-top: 10px;">12</span>
+                </div>
+            </div>
+
+            <div id="bal-status" style="margin-top: 20px; font-size: 1.5em; font-weight: bold; color: #d32f2f; background: #ffebee; padding: 15px; border-radius: 10px; transition: 0.3s;">
+                ⚠️ Unbalanced! Keep trying.
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: INFINITE SOLUTIONS GENERATOR -->
+    <div class="section-box">
+        <h2 style="color: #43a047; text-align: center; margin-top: 0;">♾️ 2. The Infinite Solutions Generator</h2>
+        <p style="text-align: center; color: #666;">Unlike an equation with one variable (which usually has exactly one solution), a linear equation in two variables has <strong>infinitely many solutions</strong>! Pick any random number for x, and the math will magically calculate the perfect y to balance it.</p>
+
+        <div class="interactive-container" style="background: #e8f5e9; border-color: #4caf50;">
+            
+            <div style="font-size: 1.8em; font-weight: bold; color: #1b5e20; margin-bottom: 20px; font-family: 'Times New Roman', serif; font-style: italic;">
+                Equation: x + 2y = 6
+            </div>
+
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #43a047; background: #fff; width: 80%;">
+                    <label style="color: #2e7d32; font-weight: bold; font-size: 1.2em;">Choose ANY value for x: <span id="val-inf-x">0</span></label>
+                    <input type="range" id="s-inf-x" min="-10" max="10" value="0">
+                </div>
+            </div>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #4caf50; background: #fff; flex-basis: 100%;">
+                    <span style="color: #2e7d32; font-size: 1.2em; display: block; margin-bottom: 10px;">Rearrange to solve for y:</span>
+                    <span class="val-num" style="color: #555; font-size: 1.3em;">2y = 6 - x  &nbsp;&nbsp;➡️&nbsp;&nbsp;  y = (6 - x) / 2</span>
+                    
+                    <div style="margin: 20px 0; border-top: 2px dashed #ccc; padding-top: 20px;">
+                        <span style="color: #1b5e20; font-size: 1.1em; display: block;">Step-by-Step Calculation:</span>
+                        <span id="inf-calc" class="val-num" style="color: #388e3c; font-size: 1.5em; margin: 10px 0;">y = (6 - 0) / 2 = 6 / 2</span>
+                        <span id="inf-result" class="val-num" style="color: #1b5e20; font-size: 2.2em; font-weight: bold;">y = 3</span>
+                    </div>
+
+                    <div style="background: #e8f5e9; padding: 15px; border-radius: 10px; border: 2px solid #81c784;">
+                        <span style="color: #2e7d32; font-size: 1.2em;">Valid Solution Pair:</span>
+                        <span id="inf-pair" class="val-num" style="color: #1b5e20; font-size: 2em; margin-top: 5px;">(0, 3)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: Can we express a one-variable equation like x = 5 as a two-variable equation?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Yes, absolutely!</strong><br><br>
+                <strong>Step 1:</strong> Start with x = 5.<br>
+                <strong>Step 2:</strong> Move everything to one side to approach standard form: x - 5 = 0.<br>
+                <strong>Step 3:</strong> We are missing a "y". But we know that zero times anything is zero. So we can add 0y.<br>
+                <strong>Final Answer: 1x + 0y - 5 = 0</strong>
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: Identify the coefficients a, b, and constant c for the equation: 2x = y.</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans2">
+                <strong>Step 1:</strong> The equation must first be written in standard form: ax + by + c = 0.<br>
+                <strong>Step 2:</strong> Move 'y' to the left side: 2x - y = 0.<br>
+                <strong>Step 3:</strong> Now match it to the standard format. There is no constant number visible, which means c = 0.<br>
+                <strong>Final Answer: a = 2, b = -1, and c = 0.</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="../chapters/chapter4.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic4_2.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. EQUATION BALANCER LOGIC ---
+        const sBalA = document.getElementById('s-bal-a');
+        const sBalB = document.getElementById('s-bal-b');
+        const sBalC = document.getElementById('s-bal-c');
+        const sBalX = document.getElementById('s-bal-x');
+        const sBalY = document.getElementById('s-bal-y');
+
+        function wrapNeg(val) { return val < 0 ? `(${val})` : val; }
+
+        function updateBalancer() {
+            let a = parseInt(sBalA.value);
+            let b = parseInt(sBalB.value);
+            let c = parseInt(sBalC.value);
+            let x = parseInt(sBalX.value);
+            let y = parseInt(sBalY.value);
+
+            // Update label values
+            document.getElementById('val-bal-a').textContent = a;
+            document.getElementById('val-bal-b').textContent = b;
+            document.getElementById('val-bal-c').textContent = c;
+            document.getElementById('val-bal-x').textContent = x;
+            document.getElementById('val-bal-y').textContent = y;
+
+            // Generate Equation String (ax + by = c format)
+            let eqStr = "";
+            if (a !== 0) eqStr += (a === 1 ? "x" : a === -1 ? "-x" : a + "x");
+            
+            if (b !== 0) {
+                if (eqStr !== "") {
+                    eqStr += (b > 0 ? ` + ${b === 1 ? '' : b}y` : ` - ${b === -1 ? '' : Math.abs(b)}y`);
+                } else {
+                    eqStr += (b === 1 ? "y" : b === -1 ? "-y" : b + "y");
+                }
+            }
+            if (eqStr === "") eqStr = "0";
+            
+            document.getElementById('bal-eq-display').textContent = `${eqStr} = ${c}`;
+
+            // Math Calculation
+            let lhs = (a * x) + (b * y);
+
+            document.getElementById('bal-lhs-form').textContent = `${a}(x) + ${b}(y)`;
+            document.getElementById('bal-lhs-steps').textContent = `${a}${wrapNeg(x)} + ${b}${wrapNeg(y)} = ${(a*x)} + ${(b*y)}`;
+            document.getElementById('bal-lhs').textContent = lhs;
+            document.getElementById('bal-rhs-val').textContent = c;
+
+            // UI Feedback
+            let statusBox = document.getElementById('bal-status');
+            let op = document.getElementById('bal-operator');
+
+            if (lhs === c) {
+                statusBox.textContent = "🎉 Perfectly Balanced! (" + x + ", " + y + ") is a solution!";
+                statusBox.style.background = "#e8f5e9";
+                statusBox.style.color = "#2e7d32";
+                op.textContent = "=";
+                op.style.color = "#2e7d32";
+                document.getElementById('bal-lhs').style.color = "#2e7d32";
+            } else {
+                statusBox.textContent = lhs > c ? `⚠️ Too Heavy! LHS is greater than ${c}.` : `⚠️ Too Light! LHS is less than ${c}.`;
+                statusBox.style.background = "#ffebee";
+                statusBox.style.color = "#d32f2f";
+                op.textContent = "≠";
+                op.style.color = "#333";
+                document.getElementById('bal-lhs').style.color = "#e65100";
+            }
+        }
+
+        sBalA.addEventListener('input', updateBalancer);
+        sBalB.addEventListener('input', updateBalancer);
+        sBalC.addEventListener('input', updateBalancer);
+        sBalX.addEventListener('input', updateBalancer);
+        sBalY.addEventListener('input', updateBalancer);
+        updateBalancer();
+
+
+        // --- 2. INFINITE SOLUTIONS GENERATOR LOGIC (x + 2y = 6) ---
+        const sInfX = document.getElementById('s-inf-x');
+
+        function updateInfinite() {
+            let x = parseInt(sInfX.value);
+            document.getElementById('val-inf-x').textContent = x;
+
+            let num = 6 - x;
+            let y = num / 2;
+            let yStr = Number.isInteger(y) ? y : y.toFixed(1);
+
+            document.getElementById('inf-calc').textContent = `y = (6 - ${wrapNeg(x)}) / 2 = ${num} / 2`;
+            document.getElementById('inf-result').textContent = `y = ${yStr}`;
+            document.getElementById('inf-pair').textContent = `(${x}, ${yStr})`;
+        }
+
+        sInfX.addEventListener('input', updateInfinite);
+        updateInfinite();
+
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer Step-by-Step';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

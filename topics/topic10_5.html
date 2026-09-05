@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-World Applications - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES (ROYAL BLUE THEME) */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #1a237e; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #3f51b5; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); background: #303f9f; }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c5cae9; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #3f51b5; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #3f51b5; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #9fa8da; font-size: 0.95em; min-width: 140px; flex: 1; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+        
+        .proof-box { background: #e8eaf6; padding: 20px; border-radius: 10px; border-left: 6px solid #3f51b5; margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
+        .proof-box h3 { color: #1a237e; margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8eaf6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #3f51b5; }
+        .qa-question { font-weight: bold; color: #1a237e; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #3f51b5; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); background: #303f9f; }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #3f51b5; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #1a237e; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>🌍 Real-World Applications</h1>
+    <p class="subtitle">Applying area formulas to fields, fabrics, and everyday problems!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>From Paper to Practice</h2>
+        <p>In the real world, objects are rarely perfect squares or simple triangles. We must break down complex irregular shapes into fundamental pieces to calculate their total area.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Scenario</th>
+                <th>The Strategy</th>
+            </tr>
+            <tr>
+                <td><strong>Dividing Irregular Fields</strong></td>
+                <td>If a farmer has a 4-sided field, we draw a single <strong>diagonal line</strong> from corner to corner. This perfectly splits the field into two distinct triangles, allowing us to use Heron's formula twice!</td>
+            </tr>
+            <tr>
+                <td><strong>Repeating Patterns (Fabrics/Kites)</strong></td>
+                <td>Objects like umbrellas or floral floors are stitched from multiple identical triangles. We calculate the area of exactly <strong>one piece</strong>, and multiply it by the total number of pieces.</td>
+            </tr>
+            <tr>
+                <td><strong>Tiling Pathways</strong></td>
+                <td>When covering a large area (like a parallelogram floor) with small tiles, calculate the <strong>Total Area</strong> and divide it by the <strong>Area of One Tile</strong> to get the quantity needed.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE FARMER'S FIELD -->
+    <div class="section-box">
+        <h2 style="color: #f57c00; text-align: center; margin-top: 0;">🚜 1. Dividing the Farmer's Field</h2>
+        <p style="text-align: center; color: #666;">This quadrilateral field has four known sides. Slide the control to walk across the field and measure the diagonal. Once the diagonal is measured, the engine automatically splits the field into two triangles and solves the total area!</p>
+
+        <div class="interactive-container" style="background: #fff3e0; border-color: #f57c00;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #ef6c00; background: #fff; width: 80%;">
+                    <label style="color: #e65100; font-weight: bold; font-size: 1.1em;">Draw the Diagonal Measuring Line</label>
+                    <input type="range" id="s-field-diag" min="0" max="100" value="0">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
+                <!-- Dirt Texture Pattern -->
+                <pattern id="dirt" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <circle cx="10" cy="10" r="1.5" fill="#d7ccc8"/>
+                    <circle cx="30" cy="25" r="1" fill="#d7ccc8"/>
+                    <circle cx="20" cy="5" r="2" fill="#d7ccc8"/>
+                </pattern>
+                
+                <polygon points="100,280 380,280 420,80 150,120" fill="url(#dirt)" stroke="#8d6e63" stroke-width="4"/>
+                
+                <text x="240" y="305" font-weight="bold" fill="#5d4037">Side = 28 m</text>
+                <text x="430" y="190" font-weight="bold" fill="#5d4037">Side = 20 m</text>
+                <text x="280" y="80" font-weight="bold" fill="#5d4037">Side = 27 m</text>
+                <text x="60" y="200" font-weight="bold" fill="#5d4037">Side = 17 m</text>
+
+                <polygon id="field-t1" points="100,280 380,280 150,120" fill="rgba(255, 152, 0, 0.4)" opacity="0"/>
+                <polygon id="field-t2" points="380,280 420,80 150,120" fill="rgba(33, 150, 243, 0.4)" opacity="0"/>
+
+                <line id="field-diag-line" x1="100" y1="280" x2="100" y2="280" stroke="#d32f2f" stroke-width="5" stroke-dasharray="8,4"/>
+                <text id="field-diag-lbl" x="200" y="220" font-weight="bold" fill="#d32f2f" opacity="0">Diag = 32 m</text>
+
+                <circle cx="100" cy="280" r="5" fill="#3e2723"/><text x="80" y="295" font-weight="bold" fill="#333">A</text>
+                <circle cx="380" cy="280" r="5" fill="#3e2723"/><text x="395" y="295" font-weight="bold" fill="#333">B</text>
+                <circle cx="420" cy="80" r="5" fill="#3e2723"/><text x="435" y="75" font-weight="bold" fill="#333">C</text>
+                <circle cx="150" cy="120" r="5" fill="#3e2723"/><text x="130" y="115" font-weight="bold" fill="#333">D</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #ff9800; background: #fff;">
+                    <span style="color: #e65100; font-size: 1.1em; display: block; margin-bottom: 5px;">Area 1 (Bottom Tri)</span>
+                    <span id="f-area-1" class="val-num" style="color: #f57c00; font-size: 1.4em;">Waiting...</span>
+                </div>
+                <div class="dash-card" style="border-color: #2196f3; background: #fff;">
+                    <span style="color: #1565c0; font-size: 1.1em; display: block; margin-bottom: 5px;">Area 2 (Top Tri)</span>
+                    <span id="f-area-2" class="val-num" style="color: #2196f3; font-size: 1.4em;">Waiting...</span>
+                </div>
+                <div class="dash-card" style="border-color: #1a237e; background: #fff; flex-basis: 100%;">
+                    <span style="color: #3f51b5; font-size: 1.1em; display: block; margin-bottom: 5px;">Total Field Area</span>
+                    <span id="f-area-tot" class="val-num" style="color: #1a237e; font-size: 1.8em;">Waiting for Diagonal...</span>
+                </div>
+            </div>
+
+            <div class="proof-box" style="border-left-color: #f57c00; background: #fff3e0;">
+                <h3 style="color: #e65100;">💡 Why does this work? (The Strategy)</h3>
+                <p>A quadrilateral alone does not have a simple Heron's-style formula because the shape can warp and bend. But triangles are perfectly rigid structures! By measuring just one diagonal straight across the field, we mathematically lock the entire field into two rigid triangles. We then simply calculate the Area of Triangle 1 and add it to the Area of Triangle 2 to get the total farm size!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE UMBRELLA STITCHER -->
+    <div class="section-box">
+        <h2 style="color: #9c27b0; text-align: center; margin-top: 0;">☂️ 2. The Umbrella Stitcher</h2>
+        <p style="text-align: center; color: #666;">An umbrella is stitched together from 8 identical triangular pieces of cloth, alternating in 2 different colors. Adjust the size of the umbrella to see how much of <strong>each color</strong> of cloth is required!</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #9c27b0;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #7b1fa2; background: #fff; width: 80%;">
+                    <label style="color: #4a148c; font-weight: bold; font-size: 1.2em;">Umbrella Triangles Base Size: <span id="val-umb">50</span> cm</label>
+                    <input type="range" id="s-umb" min="30" max="80" value="50">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
+                <g id="umbrella-group" transform="translate(250, 175)">
+                    <!-- 8 Wedges will be drawn dynamically -->
+                </g>
+                <circle cx="250" cy="175" r="8" fill="#333" stroke="#fff" stroke-width="2"/>
+                
+                <line id="umb-dim-h" stroke="#333" stroke-width="3" stroke-dasharray="4,4"/>
+                <line id="umb-dim-b" stroke="#333" stroke-width="3"/>
+                <text id="umb-lbl-h" font-weight="bold" fill="#333">Side = 60 cm</text>
+                <text id="umb-lbl-b" font-weight="bold" fill="#333">Base</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #e91e63; background: #fff;">
+                    <span style="color: #c2185b; font-size: 1.1em; display: block; margin-bottom: 5px;">Pink Cloth (4 Pieces)</span>
+                    <span id="umb-pink" class="val-num" style="color: #e91e63; font-size: 1.4em;"></span>
+                </div>
+                <div class="dash-card" style="border-color: #00bcd4; background: #fff;">
+                    <span style="color: #0097a7; font-size: 1.1em; display: block; margin-bottom: 5px;">Blue Cloth (4 Pieces)</span>
+                    <span id="umb-blue" class="val-num" style="color: #00bcd4; font-size: 1.4em;"></span>
+                </div>
+            </div>
+
+            <div class="proof-box" style="border-left-color: #9c27b0; background: #f3e5f5;">
+                <h3 style="color: #7b1fa2;">💡 Why does this work? (The Strategy)</h3>
+                <p>When dealing with repeating patterns, you do not need to calculate the massive, complex total shape. Because all 8 triangles are identical isosceles triangles (sides measuring 60cm, 60cm, and the Base), you simply use Heron's formula or the standard Base * Height formula to find the area of <strong>ONE single piece</strong>. Then, multiply that answer by 4 to get the total amount of Pink cloth needed, and by 4 again for the Blue cloth!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: PARALLELOGRAM PATHWAY TILING -->
+    <div class="section-box">
+        <h2 style="color: #00796b; text-align: center; margin-top: 0;">🧱 3. Parallelogram Pathway Tiling</h2>
+        <p style="text-align: center; color: #666;">A slanted garden pathway needs to be paved. Adjust the perpendicular height of the pathway to see how it affects the total area, and the total number of tiles required!</p>
+
+        <div class="interactive-container" style="background: #e0f2f1; border-color: #00796b;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #004d40; background: #fff; width: 80%;">
+                    <label style="color: #004d40; font-weight: bold; font-size: 1.2em;">Pathway Perpendicular Height: <span id="val-path">100</span> m</label>
+                    <input type="range" id="s-path" min="60" max="150" value="100">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
+                <pattern id="tile-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <rect width="20" height="20" fill="#b2dfdb" stroke="#00796b" stroke-width="1"/>
+                </pattern>
+                
+                <!-- Dynamic Parallelogram Pathway -->
+                <polygon id="path-poly" fill="url(#tile-pattern)" stroke="#004d40" stroke-width="4"/>
+                
+                <!-- Dimension Indicators -->
+                <line x1="100" y1="280" x2="300" y2="280" stroke="#d32f2f" stroke-width="4"/>
+                <text x="200" y="305" font-weight="bold" fill="#d32f2f" text-anchor="middle">Base = 200 m</text>
+
+                <line id="path-height-line" stroke="#1976d2" stroke-width="3" stroke-dasharray="5,5"/>
+                <path id="path-90-box" fill="none" stroke="#1976d2" stroke-width="2"/>
+                <text id="path-lbl-h" font-weight="bold" fill="#1976d2" text-anchor="start">Height</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00796b; background: #fff;">
+                    <span style="color: #004d40; font-size: 1.1em; display: block; margin-bottom: 5px;">Total Pathway Area</span>
+                    <span id="path-area-tot" class="val-num" style="color: #00796b; font-size: 1.4em;"></span>
+                </div>
+                <div class="dash-card" style="border-color: #f57c00; background: #fff;">
+                    <span style="color: #e65100; font-size: 1.1em; display: block; margin-bottom: 5px;">Tiles Needed (1 m² each)</span>
+                    <span id="path-tiles" class="val-num" style="color: #f57c00; font-size: 1.4em;"></span>
+                </div>
+            </div>
+
+            <div class="proof-box" style="border-left-color: #00796b; background: #e0f2f1;">
+                <h3 style="color: #004d40;">💡 Why does this work? (The Strategy)</h3>
+                <p>To find out how many tiles you need, you first calculate the total area of the floor. Because it is a slanted parallelogram, you MUST use the perpendicular height (Base * Height), not the slanted length. Once you have the Total Area, you simply divide it by the Area of a Single Tile. If the Total Area is 20000 m² and each tile is exactly 1 m², you need exactly 20,000 tiles to cover the space!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: A rhombus-shaped field has a perimeter of 400 m and one of its diagonals is 160 m. How do we find its area?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Step 1:</strong> A rhombus has 4 equal sides. Perimeter 400 m means each side is exactly 100 m.<br>
+                <strong>Step 2:</strong> The diagonal (160 m) splits the rhombus into two identical triangles.<br>
+                <strong>Step 3:</strong> Use Heron's formula on one triangle with sides 100, 100, and 160. Then multiply the answer by 2 for the total field area!
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: A kite is made of two different triangles attached at a central base of 10 cm. The top triangle has a height of 6 cm, and the bottom has a height of 8 cm. What is the total area?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>70 sq cm.</strong><br><br>
+                Area of Top Triangle = ½ * 10 * 6 = 30 sq cm.<br>
+                Area of Bottom Triangle = ½ * 10 * 8 = 40 sq cm.<br>
+                Total Area = 30 + 40 = 70 sq cm.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic10_4.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter10.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="../chapters/chapter11.html" class="nav-btn">Next Chapter ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. FARMER'S FIELD LOGIC ---
+        const sFieldDiag = document.getElementById('s-field-diag');
+
+        function updateField() {
+            let offset = parseInt(sFieldDiag.value); // 0 to 100
+            
+            // A(100,280), C(420,80)
+            let ax = 100, ay = 280;
+            let cx = 420, cy = 80;
+            
+            let currentX = ax + (cx - ax) * (offset / 100);
+            let currentY = ay + (cy - ay) * (offset / 100);
+
+            document.getElementById('field-diag-line').setAttribute('x2', currentX);
+            document.getElementById('field-diag-line').setAttribute('y2', currentY);
+
+            if (offset === 100) {
+                document.getElementById('field-diag-lbl').setAttribute('opacity', '1');
+                document.getElementById('field-t1').setAttribute('opacity', '1');
+                document.getElementById('field-t2').setAttribute('opacity', '1');
+
+                document.getElementById('f-area-1').innerHTML = "238 m² <br><span style='font-size: 0.7em; color:#888;'>Heron(28, 17, 32)</span>";
+                document.getElementById('f-area-2').innerHTML = "266 m² <br><span style='font-size: 0.7em; color:#888;'>Heron(20, 27, 32)</span>";
+                document.getElementById('f-area-tot').textContent = "238 + 266 = 504 m²";
+            } else {
+                document.getElementById('field-diag-lbl').setAttribute('opacity', '0');
+                document.getElementById('field-t1').setAttribute('opacity', '0');
+                document.getElementById('field-t2').setAttribute('opacity', '0');
+                
+                document.getElementById('f-area-1').textContent = "Waiting...";
+                document.getElementById('f-area-2').textContent = "Waiting...";
+                document.getElementById('f-area-tot').textContent = "Waiting for Diagonal...";
+            }
+        }
+        sFieldDiag.addEventListener('input', updateField);
+        updateField();
+
+
+        // --- 2. UMBRELLA STITCHER LOGIC ---
+        const sUmb = document.getElementById('s-umb');
+
+        function updateUmbrella() {
+            let baseSize = parseInt(sUmb.value); // 30 to 80
+            document.getElementById('val-umb').textContent = baseSize;
+
+            let group = document.getElementById('umbrella-group');
+            group.innerHTML = ''; // Clear existing wedges
+
+            let visualSide = 140; 
+            let realSide = 60;
+            let realBase = baseSize;
+
+            let numSlices = 8;
+            let angleStep = 360 / numSlices;
+
+            for (let i = 0; i < numSlices; i++) {
+                let startAngle = i * angleStep * Math.PI / 180;
+                let endAngle = (i + 1) * angleStep * Math.PI / 180;
+
+                let p1 = {x: 0, y: 0};
+                let color = (i % 2 === 0) ? "rgba(233, 30, 99, 0.8)" : "rgba(0, 188, 212, 0.8)";
+                let strokeColor = (i % 2 === 0) ? "#c2185b" : "#0097a7";
+
+                let scaleRadius = visualSide * (baseSize / 50);
+
+                let p2 = {x: scaleRadius * Math.cos(startAngle), y: scaleRadius * Math.sin(startAngle)};
+                let p3 = {x: scaleRadius * Math.cos(endAngle), y: scaleRadius * Math.sin(endAngle)};
+
+                let poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+                poly.setAttribute('points', `${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y}`);
+                poly.setAttribute('fill', color);
+                poly.setAttribute('stroke', strokeColor);
+                poly.setAttribute('stroke-width', '2');
+                group.appendChild(poly);
+
+                if (i === 0) {
+                    document.getElementById('umb-dim-h').setAttribute('x1', 250);
+                    document.getElementById('umb-dim-h').setAttribute('y1', 175);
+                    document.getElementById('umb-dim-h').setAttribute('x2', 250 + p2.x);
+                    document.getElementById('umb-dim-h').setAttribute('y2', 175 + p2.y);
+                    
+                    document.getElementById('umb-dim-b').setAttribute('x1', 250 + p2.x);
+                    document.getElementById('umb-dim-b').setAttribute('y1', 175 + p2.y);
+                    document.getElementById('umb-dim-b').setAttribute('x2', 250 + p3.x);
+                    document.getElementById('umb-dim-b').setAttribute('y2', 175 + p3.y);
+
+                    document.getElementById('umb-lbl-h').setAttribute('x', 250 + p2.x/2 - 20);
+                    document.getElementById('umb-lbl-h').setAttribute('y', 175 + p2.y/2 - 10);
+
+                    document.getElementById('umb-lbl-b').setAttribute('x', 250 + p2.x + 20);
+                    document.getElementById('umb-lbl-b').setAttribute('y', 175 + p2.y + 40);
+                    document.getElementById('umb-lbl-b').textContent = `Base = ${realBase} cm`;
+                }
+            }
+
+            let a = realSide;
+            let b = realSide;
+            let c = realBase;
+            
+            let s = (a + b + c) / 2;
+            let areaOne = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+            let areaFour = Math.round(areaOne * 4);
+
+            document.getElementById('umb-pink').innerHTML = `1 Tri = ${Math.round(areaOne)} cm²<br>Total = <strong>${areaFour}</strong> cm²`;
+            document.getElementById('umb-blue').innerHTML = `1 Tri = ${Math.round(areaOne)} cm²<br>Total = <strong>${areaFour}</strong> cm²`;
+        }
+        sUmb.addEventListener('input', updateUmbrella);
+        updateUmbrella();
+
+        // --- 3. PARALLELOGRAM TILING LOGIC ---
+        const sPath = document.getElementById('s-path');
+
+        function updatePathway() {
+            let h = parseInt(sPath.value);
+            document.getElementById('val-path').textContent = h;
+
+            let b = 200;
+            let skew = 80;
+
+            let ax = 100, ay = 280;
+            let bx = ax + b, by = 280;
+            
+            let dx = ax + skew, dy = 280 - h;
+            let cx = dx + b, cy = 280 - h;
+
+            document.getElementById('path-poly').setAttribute('points', `${ax},${ay} ${bx},${by} ${cx},${cy} ${dx},${dy}`);
+
+            document.getElementById('path-height-line').setAttribute('x1', dx);
+            document.getElementById('path-height-line').setAttribute('y1', dy);
+            document.getElementById('path-height-line').setAttribute('x2', dx);
+            document.getElementById('path-height-line').setAttribute('y2', ay);
+
+            document.getElementById('path-90-box').setAttribute('d', `M ${dx} ${ay-10} L ${dx + 10} ${ay-10} L ${dx + 10} ${ay}`);
+            
+            document.getElementById('path-lbl-h').setAttribute('x', dx + 15);
+            document.getElementById('path-lbl-h').setAttribute('y', dy + h/2 + 5);
+            document.getElementById('path-lbl-h').textContent = `h = ${h} m`;
+
+            let area = b * h;
+            document.getElementById('path-area-tot').innerHTML = `${b} * ${h} = <strong>${area}</strong> m²`;
+            document.getElementById('path-tiles').innerHTML = `<strong>${area}</strong> Tiles`;
+        }
+        sPath.addEventListener('input', updatePathway);
+        updatePathway();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

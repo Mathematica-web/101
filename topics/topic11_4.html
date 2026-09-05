@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sphere & Hemisphere - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; }
+        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #4ecdc4; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 900px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; }
+        .formula-table th { background: #00838f; color: white; font-size: 1.1em; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fff3e0; border: 3px dashed #ff9800; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 450px; height: 350px; background: white; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #ffcc80; }
+        input[type=range] { width: 120px; cursor: pointer; display: block; margin-top: 5px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; }
+
+        /* TOGGLE BUTTONS */
+        .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .toggle-btn { padding: 10px 15px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        
+        .toggle-btn.btn-shape.active { background: #2196f3; color: white; border-color: #2196f3; }
+        .toggle-btn.btn-hollow.active { background: #ff9800; color: white; border-color: #ff9800; }
+        .toggle-btn.btn-solid.active { background: #9c27b0; color: white; border-color: #9c27b0; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #4caf50; }
+        .qa-question { font-weight: bold; color: #2e7d32; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; }
+        .show-answer-btn { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #4ecdc4; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+        .chapter-btn { background: #ff6b6b; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter11.html" class="back-btn">⬅️ Back to Chapter</a>
+
+    <h1>⚽ Sphere & Hemisphere</h1>
+    <p class="subtitle">Calculations for perfect bubbles and bowls!</p>
+
+    <!-- FORMULAS SECTION -->
+    <div class="section-box">
+        <h2>The Core Formulas</h2>
+        <table class="formula-table">
+            <tr>
+                <th>Shape</th>
+                <th>Volume (V)</th>
+                <th>Curved Surface Area (CSA)</th>
+                <th>Total Surface Area (TSA)</th>
+            </tr>
+            <tr>
+                <td><strong>Sphere</strong> (Radius <em>r</em>)</td>
+                <td>(4/3)&pi;r&sup3;</td>
+                <td>4&pi;r&sup2;</td>
+                <td>4&pi;r&sup2; <em>(Same as CSA)</em></td>
+            </tr>
+            <tr>
+                <td><strong>Hemisphere (Solid)</strong></td>
+                <td>(2/3)&pi;r&sup3;</td>
+                <td>2&pi;r&sup2;</td>
+                <td>3&pi;r&sup2; <em>(Outer Curve + Flat Top)</em></td>
+            </tr>
+            <tr>
+                <td><strong>Hemisphere (Hollow Shell)</strong></td>
+                <td>(2/3)&pi;r&sup3; <em>(Capacity)</em></td>
+                <td>2&pi;r&sup2; <em>(Just the outside)</em></td>
+                <td>4&pi;r&sup2; <em>(Outer Curve + Inner Curve)</em></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: SPHERE RESIZER -->
+    <div class="section-box">
+        <h2 style="color: #ef6c00; text-align: center; margin-top: 0;">🎮 The Bubble Resizer</h2>
+        <p style="text-align: center; color: #666;">Choose your shape and adjust the radius to see how drastically 3D volume scales compared to 2D surface area.</p>
+
+        <div class="interactive-container">
+            <div class="face-toggles">
+                <button class="toggle-btn btn-shape active" id="btn-sphere" onclick="setShapeMode('sphere', this)">Full Sphere</button>
+                <button class="toggle-btn btn-shape" id="btn-hemi" onclick="setShapeMode('hemisphere', this)">Hemisphere (Half)</button>
+            </div>
+
+            <div class="slider-row">
+                <div class="slider-group">
+                    <label style="color: #1565c0; font-weight: bold;">Radius (r): <span id="val-r1">8</span></label>
+                    <input type="range" id="sr1" min="3" max="15" value="8">
+                </div>
+            </div>
+
+            <svg id="shape-svg" class="svg-canvas" viewBox="0 0 450 350">
+                <defs>
+                    <radialGradient id="sphere-grad" cx="30%" cy="30%" r="70%">
+                        <stop offset="0%" stop-color="#90caf9" />
+                        <stop offset="100%" stop-color="#1565c0" />
+                    </radialGradient>
+                    <radialGradient id="hemi-grad" cx="50%" cy="80%" r="70%">
+                        <stop offset="0%" stop-color="#90caf9" />
+                        <stop offset="100%" stop-color="#1565c0" />
+                    </radialGradient>
+                </defs>
+                
+                <!-- Dynamic Elements -->
+                <circle id="svg-sphere" cx="225" cy="175" r="80" fill="url(#sphere-grad)" stroke="#0d47a1" stroke-width="3"/>
+                
+                <g id="svg-hemisphere" style="display: none;">
+                    <path id="svg-hemi-bowl" d="M 145,175 A 80,80 0 0,0 305,175 Z" fill="url(#hemi-grad)" stroke="#0d47a1" stroke-width="3"/>
+                    <ellipse id="svg-hemi-top" cx="225" cy="175" rx="80" ry="25" fill="#bbdefb" stroke="#0d47a1" stroke-width="3"/>
+                </g>
+
+                <!-- Labels -->
+                <line id="r-line1" x1="225" y1="175" x2="305" y2="175" stroke="#e91e63" stroke-width="3" stroke-dasharray="4,4"/>
+                <circle id="center-dot1" cx="225" cy="175" r="4" fill="#e91e63"/>
+                <text id="r-txt1" x="260" y="165" font-weight="bold" fill="#e91e63" font-size="1.2em">r</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #2196f3;">
+                    <span style="color: #1565c0;">Volume</span>
+                    <span id="calc-v1" class="val-num" style="color: #2196f3;">2144.7</span>
+                </div>
+                <div class="dash-card" style="border-color: #4caf50;">
+                    <span style="color: #2e7d32;">Outer Curved Surface</span>
+                    <span id="calc-csa1" class="val-num" style="color: #4caf50;">804.2</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: HOLLOW VS SOLID HEMISPHERE -->
+    <div class="section-box">
+        <h2 style="color: #9c27b0; text-align: center; margin-top: 0;">🥣 Hollow vs. Solid Hemisphere</h2>
+        <p style="text-align: center; color: #666;">A <strong>hollow hemisphere</strong> (like an empty bowl) exposes both an inner and outer curved surface. A <strong>solid hemisphere</strong> (like a paperweight) has one outer curved surface and a solid flat lid!</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #9c27b0;">
+            <div class="face-toggles">
+                <button class="toggle-btn btn-hollow active" id="btn-hollow" onclick="setHemiType('hollow', this)">Hollow Shell (Open Top)</button>
+                <button class="toggle-btn btn-solid" id="btn-solid" onclick="setHemiType('solid', this)">Solid (Closed Top)</button>
+            </div>
+            
+            <div class="slider-row">
+                <div class="slider-group">
+                    <label style="color: #7b1fa2; font-weight: bold;">Radius (r): <span id="val-r2">8</span></label>
+                    <input type="range" id="sr2" min="3" max="15" value="8">
+                </div>
+            </div>
+
+            <!-- DYNAMIC BOWL SVG -->
+            <svg class="svg-canvas" viewBox="0 0 450 350" style="background: #f8f9fa;">
+                <defs>
+                    <radialGradient id="bowl-grad" cx="50%" cy="80%" r="70%">
+                        <stop offset="0%" stop-color="#ffcc80" />
+                        <stop offset="100%" stop-color="#ef6c00" />
+                    </radialGradient>
+                    <radialGradient id="solid-grad" cx="50%" cy="80%" r="70%">
+                        <stop offset="0%" stop-color="#e1bee7" />
+                        <stop offset="100%" stop-color="#8e24aa" />
+                    </radialGradient>
+                </defs>
+
+                <path id="svg-type-dome" d="M 145,175 A 80,80 0 0,0 305,175 Z" fill="url(#bowl-grad)" stroke="#e65100" stroke-width="3"/>
+                <ellipse id="svg-type-top" cx="225" cy="175" rx="80" ry="25" fill="rgba(0,0,0,0.05)" stroke="#e65100" stroke-width="2" stroke-dasharray="5,5"/>
+                
+                <text id="hollow-text" x="225" y="180" font-weight="bold" fill="#e65100" text-anchor="middle" opacity="0.6">Inner Surface Visible!</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #ff9800;">
+                    <span id="type-csa-label" style="color: #ef6c00;">Outer CSA (2&pi;r&sup2;)</span>
+                    <span id="type-csa" class="val-num" style="color: #ff9800;">402.1</span>
+                </div>
+                <div class="dash-card" id="card-flat" style="border-color: #ff9800;">
+                    <span style="color: #ef6c00;" id="label-flat">Inner CSA (2&pi;r&sup2;)</span>
+                    <span id="type-flat" class="val-num" style="color: #ff9800;">402.1</span>
+                </div>
+                <div class="dash-card" style="border-color: #9c27b0; flex-basis: 100%; background: #e1bee7;">
+                    <span style="color: #4a148c;" id="type-tsa-label">Total Surface Area (4&pi;r&sup2;)</span>
+                    <span id="type-tsa" class="val-num" style="color: #7b1fa2; font-size: 1.8em;">804.2</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: A perfectly hollow, thin-shelled hemispherical bowl needs to be painted inside and out. If the radius is 'r', what is the total area to be painted?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>4πr²</strong><br><br>
+                Because the bowl is completely hollow, you must paint the outer curve (2πr²) AND the inner curve (2πr²). The total painted surface is 4πr²—the exact same surface area as a full sphere!
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: Why is the Total Surface Area (TSA) of a solid hemisphere 3πr²?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>Because of the flat lid!</strong><br><br>
+                When you cut a solid sphere in half, you expose a brand new flat, circular surface. The curved dome part is half of a sphere (4πr² ÷ 2 = 2πr²). The new flat circular top has an area of πr². <br>
+                Total = 2πr² (curved) + πr² (flat) = 3πr².
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic11_3.html" class="nav-btn chapter-btn">← Prev Topic</a>
+        <a href="topic11_5.html" class="nav-btn">Next: Conversion ➡️</a>
+    </div>
+
+    <script>
+        const pi = Math.PI;
+
+        // --- INTERACTIVE 1: SPHERE RESIZER LOGIC ---
+        const sr1 = document.getElementById('sr1');
+        let currentR1 = 8;
+        let activeShape = 'sphere';
+
+        function setShapeMode(shape, btnElement) {
+            document.getElementById('btn-sphere').classList.remove('active');
+            document.getElementById('btn-hemi').classList.remove('active');
+            btnElement.classList.add('active');
+            activeShape = shape;
+            
+            if(shape === 'sphere') {
+                document.getElementById('svg-sphere').style.display = 'block';
+                document.getElementById('svg-hemisphere').style.display = 'none';
+            } else {
+                document.getElementById('svg-sphere').style.display = 'none';
+                document.getElementById('svg-hemisphere').style.display = 'block';
+            }
+            updateResizer();
+        }
+
+        function updateResizer() {
+            currentR1 = parseInt(sr1.value);
+            document.getElementById('val-r1').innerText = currentR1; 
+            
+            let v, csa;
+            if(activeShape === 'sphere') {
+                v = (4/3) * pi * Math.pow(currentR1, 3);
+                csa = 4 * pi * Math.pow(currentR1, 2);
+            } else {
+                v = (2/3) * pi * Math.pow(currentR1, 3);
+                csa = 2 * pi * Math.pow(currentR1, 2);
+            }
+
+            document.getElementById('calc-v1').innerText = v.toFixed(1);
+            document.getElementById('calc-csa1').innerText = csa.toFixed(1);
+
+            let scaleR = 10;
+            let px = currentR1 * scaleR;
+            let cx = 225, cy = 175;
+
+            document.getElementById('svg-sphere').setAttribute('r', px);
+            
+            document.getElementById('svg-hemi-bowl').setAttribute('d', `M ${cx - px},${cy} A ${px},${px} 0 0,0 ${cx + px},${cy} Z`);
+            document.getElementById('svg-hemi-top').setAttribute('rx', px);
+            document.getElementById('svg-hemi-top').setAttribute('ry', px * 0.3);
+
+            document.getElementById('r-line1').setAttribute('x1', cx);
+            document.getElementById('r-line1').setAttribute('y1', cy);
+            document.getElementById('r-line1').setAttribute('x2', cx + px);
+            document.getElementById('r-line1').setAttribute('y2', cy);
+            
+            document.getElementById('r-txt1').setAttribute('x', cx + (px/2) - 5);
+            document.getElementById('r-txt1').setAttribute('y', cy - 10);
+        }
+
+        // --- INTERACTIVE 2: HOLLOW VS SOLID LOGIC ---
+        const sr2 = document.getElementById('sr2');
+        let currentR2 = 8;
+        let hemiType = 'hollow';
+
+        function setHemiType(type, btnElement) {
+            document.getElementById('btn-hollow').classList.remove('active');
+            document.getElementById('btn-solid').classList.remove('active');
+            btnElement.classList.add('active');
+            hemiType = type;
+            updateHemiType();
+        }
+
+        function updateHemiType() {
+            currentR2 = parseInt(sr2.value);
+            document.getElementById('val-r2').innerText = currentR2;
+
+            let csa = 2 * pi * Math.pow(currentR2, 2);
+            let flatArea = pi * Math.pow(currentR2, 2);
+            
+            let scaleR = 10;
+            let px = currentR2 * scaleR;
+            let cx = 225, cy = 175;
+
+            let svgDome = document.getElementById('svg-type-dome');
+            let svgTop = document.getElementById('svg-type-top');
+            let txtHollow = document.getElementById('hollow-text');
+
+            svgDome.setAttribute('d', `M ${cx - px},${cy} A ${px},${px} 0 0,0 ${cx + px},${cy} Z`);
+            svgTop.setAttribute('rx', px);
+            svgTop.setAttribute('ry', px * 0.3);
+
+            if(hemiType === 'hollow') {
+                svgDome.setAttribute('fill', 'url(#bowl-grad)');
+                svgDome.setAttribute('stroke', '#e65100');
+                svgTop.setAttribute('fill', 'rgba(0,0,0,0.05)');
+                svgTop.setAttribute('stroke', '#e65100');
+                svgTop.setAttribute('stroke-dasharray', '5,5');
+                txtHollow.style.display = 'block';
+
+                document.getElementById('type-csa-label').innerText = "Outer CSA (2\u03C0r\u00B2)";
+                document.getElementById('type-csa').innerText = csa.toFixed(1);
+                document.getElementById('type-csa').style.color = '#ff9800';
+                
+                document.getElementById('card-flat').style.borderColor = '#ffcc80';
+                document.getElementById('label-flat').innerText = "Inner CSA (2\u03C0r\u00B2)";
+                document.getElementById('label-flat').style.color = '#ef6c00';
+                document.getElementById('type-flat').innerText = csa.toFixed(1);
+                document.getElementById('type-flat').style.color = '#ff9800';
+
+                document.getElementById('type-tsa-label').innerText = "Total Surface Area (4\u03C0r\u00B2)";
+                document.getElementById('type-tsa').innerText = (csa * 2).toFixed(1);
+                
+            } else {
+                svgDome.setAttribute('fill', 'url(#solid-grad)');
+                svgDome.setAttribute('stroke', '#8e24aa');
+                svgTop.setAttribute('fill', '#ce93d8');
+                svgTop.setAttribute('stroke', '#8e24aa');
+                svgTop.setAttribute('stroke-dasharray', 'none');
+                txtHollow.style.display = 'none';
+
+                document.getElementById('type-csa-label').innerText = "Outer Curved Area (2\u03C0r\u00B2)";
+                document.getElementById('type-csa').innerText = csa.toFixed(1);
+                document.getElementById('type-csa').style.color = '#ff9800';
+                
+                document.getElementById('card-flat').style.borderColor = '#2196f3';
+                document.getElementById('label-flat').innerText = "Solid Flat Lid Area (\u03C0r\u00B2)";
+                document.getElementById('label-flat').style.color = '#1565c0';
+                document.getElementById('type-flat').innerText = flatArea.toFixed(1);
+                document.getElementById('type-flat').style.color = '#2196f3';
+
+                document.getElementById('type-tsa-label').innerText = "Total Surface Area (3\u03C0r\u00B2)";
+                document.getElementById('type-tsa').innerText = (csa + flatArea).toFixed(1);
+            }
+        }
+
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+
+        sr1.addEventListener('input', updateResizer);
+        updateResizer();
+
+        sr2.addEventListener('input', updateHemiType);
+        updateHemiType();
+    </script>
+</body>
+</html>

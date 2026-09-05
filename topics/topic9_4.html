@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyclic Quadrilaterals - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #00838f; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #00838f; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #00838f; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #80deea; font-size: 0.95em; min-width: 140px; flex: 1; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+        
+        .proof-box { background: #e0f7fa; padding: 20px; border-radius: 10px; border-left: 6px solid #00838f; margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
+        .proof-box h3 { color: #006064; margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e0f7fa; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00838f; }
+        .qa-question { font-weight: bold; color: #006064; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #00838f; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #00838f; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #006064; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>🔄 Cyclic Quadrilaterals</h1>
+    <p class="subtitle">When four vertices perfectly align on a single circle!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Concyclic Rule</h2>
+        <p>A quadrilateral is called <strong>cyclic</strong> if all four of its vertices lie exactly on the circumference of a circle. These vertices are said to be <em>concyclic</em>. Because the points are trapped on the circle, their angles are governed by strict supplementary laws.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Theorem</th>
+                <th>The Rule</th>
+            </tr>
+            <tr>
+                <td><strong>Theorem 9.10</strong></td>
+                <td>The sum of either pair of opposite angles of a cyclic quadrilateral is exactly <strong>180°</strong> (they are supplementary).</td>
+            </tr>
+            <tr>
+                <td><strong>Theorem 9.11 (Converse)</strong></td>
+                <td>If the sum of a pair of opposite angles of a quadrilateral is 180°, the quadrilateral is cyclic.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: CYCLIC QUADRILATERAL ANGLES -->
+    <div class="section-box">
+        <h2 style="color: #00838f; text-align: center; margin-top: 0;">📐 1. The 180° Balance</h2>
+        <p style="text-align: center; color: #666;">Drag points C and D around the circle's circumference. Notice how the opposing pairs of angles independently shift in size, but their totals perfectly mathematically balance out to 180°!</p>
+
+        <div class="interactive-container" style="background: #e0f7fa; border-color: #00838f;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #00acc1; background: #fff;">
+                    <label style="color: #006064; font-weight: bold;">Slide Point C (Top Right)</label>
+                    <input type="range" id="s-cyc-c" min="280" max="350" value="315">
+                </div>
+                <div class="slider-group" style="border-color: #00acc1; background: #fff;">
+                    <label style="color: #006064; font-weight: bold;">Slide Point D (Top Left)</label>
+                    <input type="range" id="s-cyc-d" min="190" max="260" value="225">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
+                <circle cx="250" cy="175" r="120" fill="rgba(0, 131, 143, 0.05)" stroke="#00838f" stroke-width="4"/>
+                
+                <polygon id="cyc-poly" fill="rgba(0, 131, 143, 0.2)" stroke="#006064" stroke-width="3"/>
+
+                <path id="wedge-a" fill="rgba(211, 47, 47, 0.3)"/>
+                <path id="wedge-b" fill="rgba(25, 118, 210, 0.3)"/>
+                <path id="wedge-c" fill="rgba(211, 47, 47, 0.3)"/>
+                <path id="wedge-d" fill="rgba(25, 118, 210, 0.3)"/>
+
+                <text id="lbl-a" font-weight="bold" fill="#d32f2f" text-anchor="middle"></text>
+                <text id="lbl-b" font-weight="bold" fill="#1976d2" text-anchor="middle"></text>
+                <text id="lbl-c" font-weight="bold" fill="#d32f2f" text-anchor="middle"></text>
+                <text id="lbl-d" font-weight="bold" fill="#1976d2" text-anchor="middle"></text>
+
+                <!-- Vertices -->
+                <circle id="dot-a" r="6" fill="#333"/><text id="txt-a" font-weight="bold" fill="#333" font-size="18px">A</text>
+                <circle id="dot-b" r="6" fill="#333"/><text id="txt-b" font-weight="bold" fill="#333" font-size="18px">B</text>
+                <circle id="dot-c" r="8" fill="#00838f" stroke="#fff" stroke-width="2"/><text id="txt-c" font-weight="bold" fill="#00838f" font-size="18px">C</text>
+                <circle id="dot-d" r="8" fill="#00838f" stroke="#fff" stroke-width="2"/><text id="txt-d" font-weight="bold" fill="#00838f" font-size="18px">D</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #d32f2f; background: #fff;">
+                    <span style="color: #b71c1c; font-size: 1.1em; display: block; margin-bottom: 5px;">Opposite Pair 1</span>
+                    <span id="cyc-math-1" class="val-num" style="color: #d32f2f; font-size: 1.5em;">∠A + ∠C = 180°</span>
+                </div>
+                <div class="dash-card" style="border-color: #1976d2; background: #fff;">
+                    <span style="color: #0d47a1; font-size: 1.1em; display: block; margin-bottom: 5px;">Opposite Pair 2</span>
+                    <span id="cyc-math-2" class="val-num" style="color: #1976d2; font-size: 1.5em;">∠B + ∠D = 180°</span>
+                </div>
+            </div>
+
+            <!-- EDUCATIONAL LOGIC BOX -->
+            <div class="proof-box">
+                <h3>💡 Why does this work? (The Proof)</h3>
+                <p>Imagine drawing lines from the center of the circle to points B and D. This creates a central angle for arc BCD, and a reflex central angle for arc DAB. By the <strong>Double Angle Theorem</strong>, the angle at the circumference (∠A) is exactly half the central angle of arc BCD. Similarly, ∠C is exactly half the reflex central angle of arc DAB. Since the two central angles combine to form a full circle (360°), the sum of their halves (∠A + ∠C) must perfectly equal half of 360°, which is <strong>180°</strong>!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: In a cyclic quadrilateral ABCD, if ∠A is 110°, what is the measurement of ∠C?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>70°.</strong><br><br>
+                Opposite angles in a cyclic quadrilateral are supplementary (they add up to 180°). Therefore, 180° - 110° = 70°.
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: Can a standard rhombus be a cyclic quadrilateral?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>Only if it is a square.</strong><br><br>
+                A cyclic quadrilateral requires opposite angles to sum to 180°. In a standard rhombus, opposite angles are equal but not necessarily 90°, meaning they won't sum to 180° unless all four angles are exactly 90°.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic9_3.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter9.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic9_5.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        function polarToCartesian(cx, cy, r, angleInDegrees) {
+            let angleInRadians = (angleInDegrees) * Math.PI / 180.0;
+            return {
+                x: cx + r * Math.cos(angleInRadians),
+                y: cy - r * Math.sin(angleInRadians) // SVG Y is inverted
+            };
+        }
+
+        function getInteriorAngle(pPrev, pCurr, pNext) {
+            let a1 = Math.atan2(pPrev.y - pCurr.y, pPrev.x - pCurr.x);
+            let a2 = Math.atan2(pNext.y - pCurr.y, pNext.x - pCurr.x);
+            let ang = (a1 - a2) * 180 / Math.PI;
+            if (ang < 0) ang += 360;
+            if (ang > 180) ang = 360 - ang;
+            return ang;
+        }
+
+        function createWedge(cx, cy, r, startAng, endAng) {
+            let rad1 = startAng * Math.PI / 180;
+            let rad2 = endAng * Math.PI / 180;
+            let p1 = { x: cx + r * Math.cos(rad1), y: cy + r * Math.sin(rad1) };
+            let p2 = { x: cx + r * Math.cos(rad2), y: cy + r * Math.sin(rad2) };
+            let largeArc = Math.abs(endAng - startAng) > 180 ? 1 : 0;
+            return `M ${cx} ${cy} L ${p1.x} ${p1.y} A ${r} ${r} 0 ${largeArc} 1 ${p2.x} ${p2.y} Z`;
+        }
+
+        const sCycC = document.getElementById('s-cyc-c');
+        const sCycD = document.getElementById('s-cyc-d');
+
+        function updateCyclic() {
+            let cx = 250, cy = 175, r = 120;
+            let degA = 135; 
+            let degB = 45;  
+            let degC = parseInt(sCycC.value); 
+            let degD = parseInt(sCycD.value);
+
+            let pA = polarToCartesian(cx, cy, r, degA);
+            let pB = polarToCartesian(cx, cy, r, degB);
+            let pC = polarToCartesian(cx, cy, r, degC);
+            let pD = polarToCartesian(cx, cy, r, degD);
+
+            document.getElementById('cyc-poly').setAttribute('points', `${pA.x},${pA.y} ${pB.x},${pB.y} ${pC.x},${pC.y} ${pD.x},${pD.y}`);
+
+            document.getElementById('dot-a').setAttribute('cx', pA.x); document.getElementById('dot-a').setAttribute('cy', pA.y);
+            document.getElementById('txt-a').setAttribute('x', pA.x - 20); document.getElementById('txt-a').setAttribute('y', pA.y + 20);
+            
+            document.getElementById('dot-b').setAttribute('cx', pB.x); document.getElementById('dot-b').setAttribute('cy', pB.y);
+            document.getElementById('txt-b').setAttribute('x', pB.x + 10); document.getElementById('txt-b').setAttribute('y', pB.y + 20);
+            
+            document.getElementById('dot-c').setAttribute('cx', pC.x); document.getElementById('dot-c').setAttribute('cy', pC.y);
+            document.getElementById('txt-c').setAttribute('x', pC.x + 10); document.getElementById('txt-c').setAttribute('y', pC.y - 10);
+            
+            document.getElementById('dot-d').setAttribute('cx', pD.x); document.getElementById('dot-d').setAttribute('cy', pD.y);
+            document.getElementById('txt-d').setAttribute('x', pD.x - 20); document.getElementById('txt-d').setAttribute('y', pD.y - 10);
+
+            // Calculate precise interior angles
+            let angA = getInteriorAngle(pD, pA, pB);
+            let angB = getInteriorAngle(pA, pB, pC);
+            
+            // Force pairing constraints for display clarity rounding issues
+            let angC = 180 - angA;
+            let angD = 180 - angB;
+
+            // Draw Wedges manually based on vertex angles
+            let angAB = Math.atan2(pB.y - pA.y, pB.x - pA.x) * 180/Math.PI;
+            let angAD = Math.atan2(pD.y - pA.y, pD.x - pA.x) * 180/Math.PI;
+            document.getElementById('wedge-a').setAttribute('d', createWedge(pA.x, pA.y, 35, angAD, angAB));
+
+            let angBA = Math.atan2(pA.y - pB.y, pA.x - pB.x) * 180/Math.PI;
+            let angBC = Math.atan2(pC.y - pB.y, pC.x - pB.x) * 180/Math.PI;
+            document.getElementById('wedge-b').setAttribute('d', createWedge(pB.x, pB.y, 35, angBA, angBC));
+
+            let angCB = Math.atan2(pB.y - pC.y, pB.x - pC.x) * 180/Math.PI;
+            let angCD = Math.atan2(pD.y - pC.y, pD.x - pC.x) * 180/Math.PI;
+            document.getElementById('wedge-c').setAttribute('d', createWedge(pC.x, pC.y, 35, angCB, angCD));
+
+            let angDC = Math.atan2(pC.y - pD.y, pC.x - pD.x) * 180/Math.PI;
+            let angDA = Math.atan2(pA.y - pD.y, pA.x - pD.x) * 180/Math.PI;
+            document.getElementById('wedge-d').setAttribute('d', createWedge(pD.x, pD.y, 35, angDC, angDA));
+
+            // Labels
+            function posLbl(cx, cy, angStart, angEnd) {
+                if(angEnd < angStart) angEnd += 360;
+                let mid = angStart + (angEnd - angStart)/2;
+                return { x: cx + 55 * Math.cos(mid*Math.PI/180), y: cy + 55 * Math.sin(mid*Math.PI/180) + 5 };
+            }
+            
+            let lA = posLbl(pA.x, pA.y, angAD, angAB);
+            document.getElementById('lbl-a').setAttribute('x', lA.x); document.getElementById('lbl-a').setAttribute('y', lA.y);
+            document.getElementById('lbl-a').textContent = `${Math.round(angA)}°`;
+
+            let lB = posLbl(pB.x, pB.y, angBA, angBC);
+            document.getElementById('lbl-b').setAttribute('x', lB.x); document.getElementById('lbl-b').setAttribute('y', lB.y);
+            document.getElementById('lbl-b').textContent = `${Math.round(angB)}°`;
+
+            let lC = posLbl(pC.x, pC.y, angCB, angCD);
+            document.getElementById('lbl-c').setAttribute('x', lC.x); document.getElementById('lbl-c').setAttribute('y', lC.y);
+            document.getElementById('lbl-c').textContent = `${Math.round(angC)}°`;
+
+            let lD = posLbl(pD.x, pD.y, angDC, angDA);
+            document.getElementById('lbl-d').setAttribute('x', lD.x); document.getElementById('lbl-d').setAttribute('y', lD.y);
+            document.getElementById('lbl-d').textContent = `${Math.round(angD)}°`;
+
+            document.getElementById('cyc-math-1').textContent = `${Math.round(angA)}° + ${Math.round(angC)}° = 180°`;
+            document.getElementById('cyc-math-2').textContent = `${Math.round(angB)}° + ${Math.round(angD)}° = 180°`;
+        }
+
+        sCycC.addEventListener('input', updateCyclic);
+        sCycD.addEventListener('input', updateCyclic);
+        updateCyclic();
+
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

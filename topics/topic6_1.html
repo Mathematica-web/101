@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Terms and Definitions - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #0d47a1; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #1976d2; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #bbdefb; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #1976d2; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #1976d2; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #64b5f6; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+
+        /* TOGGLE BUTTONS */
+        .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .toggle-btn { padding: 10px 20px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1em; }
+        .toggle-btn.active { background: #ff9800; color: white; border-color: #ff9800; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e3f2fd; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #1976d2; }
+        .qa-question { font-weight: bold; color: #0d47a1; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #1976d2; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #1976d2; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #0d47a1; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>📏 Basic Terms and Definitions</h1>
+    <p class="subtitle">The vocabulary you need to speak the language of Geometry!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Foundation of Shapes</h2>
+        <p>Before we can build complex geometric proofs, we need to agree on exactly what certain words mean. A single dot, a straight path, and the corner where they meet all have very specific mathematical definitions.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Geometric Term</th>
+                <th>Definition</th>
+            </tr>
+            <tr>
+                <td><strong>Line Segment</strong></td>
+                <td>A part of a line with <strong>two endpoints</strong>. It has a fixed length.</td>
+            </tr>
+            <tr>
+                <td><strong>Ray</strong></td>
+                <td>A part of a line with <strong>one endpoint</strong>. It travels infinitely in one direction.</td>
+            </tr>
+            <tr>
+                <td><strong>Collinear Points</strong></td>
+                <td>Three or more points that lie perfectly on the exact same line. Mathematically, they form a "triangle" with an Area of 0.</td>
+            </tr>
+            <tr>
+                <td><strong>Angle</strong></td>
+                <td>Formed when two rays originate from the same endpoint. The rays are called <em>arms</em>, and the endpoint is the <em>vertex</em>.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: LINE, RAY, SEGMENT -->
+    <div class="section-box">
+        <h2 style="color: #e65100; text-align: center; margin-top: 0;">↔️ 1. The Geometry Toolkit</h2>
+        <p style="text-align: center; color: #666;">What is the difference between a Segment, a Ray, and a Line? Click the buttons below to visually construct each one!</p>
+
+        <div class="interactive-container" style="background: #fff8e1; border-color: #ffb300;">
+            <div class="face-toggles">
+                <button class="toggle-btn active" id="btn-seg" onclick="setLineType('segment')">Line Segment</button>
+                <button class="toggle-btn" id="btn-ray" onclick="setLineType('ray')">Ray</button>
+                <button class="toggle-btn" id="btn-line" onclick="setLineType('line')">Line</button>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 200" style="height: 200px; background: #fafafa;">
+                <!-- Main Line Path -->
+                <line id="tool-line" x1="100" y1="100" x2="400" y2="100" stroke="#e65100" stroke-width="6"/>
+                
+                <!-- Endpoints (Dots) -->
+                <circle id="dot-left" cx="100" cy="100" r="10" fill="#d32f2f"/>
+                <circle id="dot-right" cx="400" cy="100" r="10" fill="#d32f2f"/>
+
+                <!-- Infinite Arrows (Hidden by default) -->
+                <polygon id="arrow-left" points="100,100 120,85 120,115" fill="#e65100" style="display: none;"/>
+                <polygon id="arrow-right" points="400,100 380,85 380,115" fill="#e65100" style="display: none;"/>
+
+                <!-- Labels -->
+                <text x="100" y="70" font-weight="bold" fill="#333" font-size="20px" text-anchor="middle">A</text>
+                <text x="400" y="70" font-weight="bold" fill="#333" font-size="20px" text-anchor="middle">B</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #ff8f00; background: #fff; flex-basis: 100%;">
+                    <span id="tool-title" style="color: #e65100; font-size: 1.5em; font-weight: bold;">Line Segment AB</span>
+                    <span id="tool-desc" style="color: #666; font-size: 1.1em; margin-top: 10px; display: block;">It has two fixed endpoints. It cannot be extended.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE ANGLE EXPLORER -->
+    <div class="section-box">
+        <h2 style="color: #00897b; text-align: center; margin-top: 0;">📐 2. The Angle Explorer</h2>
+        <p style="text-align: center; color: #666;">Angles are classified strictly by their measurement in degrees. Slide the arm around the vertex to discover all the different types of angles!</p>
+
+        <div class="interactive-container" style="background: #e0f2f1; border-color: #00897b;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #00695c; background: #fff; width: 80%;">
+                    <label style="color: #00695c; font-weight: bold; font-size: 1.2em;">Angle Measurement: <span id="val-angle">45</span>°</label>
+                    <input type="range" id="s-angle" min="0" max="360" value="45">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
+                <!-- Base Arm (Fixed) -->
+                <line x1="250" y1="200" x2="450" y2="200" stroke="#333" stroke-width="6" stroke-linecap="round"/>
+                
+                <!-- Angle Arc -->
+                <path id="angle-arc" fill="none" stroke="#00897b" stroke-width="4"/>
+
+                <!-- Moving Arm -->
+                <line id="moving-arm" x1="250" y1="200" x2="391.4" y2="58.6" stroke="#00897b" stroke-width="6" stroke-linecap="round"/>
+
+                <!-- Vertex -->
+                <circle cx="250" cy="200" r="8" fill="#d32f2f"/>
+                <text x="230" y="225" font-weight="bold" fill="#d32f2f" font-size="18px">Vertex</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00897b; background: #fff; flex-basis: 100%;">
+                    <span id="angle-name" style="color: #00695c; font-size: 1.8em; font-weight: bold;">Acute Angle</span>
+                    <span id="angle-rule" style="color: #555; font-size: 1.1em; margin-top: 5px; display: block;">Greater than 0° but less than 90°</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: COLLINEARITY TESTER (WITH MATH PROOF) -->
+    <div class="section-box">
+        <h2 style="color: #7b1fa2; text-align: center; margin-top: 0;">📏 3. The Collinear Mathematical Proof</h2>
+        <p style="text-align: center; color: #666;">Points are called <strong>Collinear</strong> if a single straight line can pass perfectly through all of them. Move point C vertically to test its collinearity. Notice how mathematically, collinear points form a "triangle" with exactly <strong>zero area</strong>!</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #9c27b0;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #7b1fa2; background: #fff; width: 80%;">
+                    <label style="color: #4a148c; font-weight: bold; font-size: 1.2em;">Move Point C (Adjusting Height): Y = <span id="val-c-y">4</span></label>
+                    <input type="range" id="s-collinear" min="-6" max="6" value="4">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 280" style="height: 280px; background: #fafafa;">
+                <!-- Axis/Target Line -->
+                <line x1="50" y1="140" x2="450" y2="140" stroke="#ccc" stroke-width="4" stroke-dasharray="10,5"/>
+
+                <!-- Triangle Area Polygon -->
+                <polygon id="collinear-poly" points="150,140 350,140 250,40" fill="#e1bee7" stroke="#ab47bc" stroke-width="2" opacity="0.6"/>
+
+                <!-- Height Dashed Line -->
+                <line id="collinear-height" x1="250" y1="140" x2="250" y2="40" stroke="#7b1fa2" stroke-width="2" stroke-dasharray="5,5"/>
+
+                <!-- Fixed Points A and B -->
+                <circle cx="150" cy="140" r="8" fill="#333"/>
+                <text x="145" y="165" font-weight="bold" fill="#333" font-size="16px">A(-4, 0)</text>
+
+                <circle cx="350" cy="140" r="8" fill="#333"/>
+                <text x="345" y="165" font-weight="bold" fill="#333" font-size="16px">B(4, 0)</text>
+
+                <!-- Moving Point C -->
+                <circle id="dot-c" cx="250" cy="40" r="10" fill="#7b1fa2" stroke="#fff" stroke-width="3"/>
+                <text id="lbl-c" x="245" y="25" font-weight="bold" fill="#7b1fa2" font-size="16px">C(0, 4)</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #9c27b0; background: #fff; flex-basis: 100%;">
+                    <span id="collinear-status" style="color: #d32f2f; font-size: 1.8em; font-weight: bold;">Non-Collinear Points</span>
+                    <div style="margin-top: 15px; border-top: 2px dashed #e1bee7; padding-top: 15px;">
+                        <span style="color: #7b1fa2; font-size: 1.1em; display: block; margin-bottom: 5px;">Mathematical Proof (Area of Triangle ABC)</span>
+                        <span id="collinear-math" class="val-num" style="color: #4a148c; font-size: 1.3em;">Area = &frac12; &times; Base(8) &times; Height(4) = 16</span>
+                        <span id="collinear-conclusion" style="color: #d32f2f; font-size: 1.2em; font-weight: bold; display: block; margin-top: 8px;">Area is > 0, so a triangle forms!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: If an angle measures exactly 180°, what type of angle is it?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>A Straight Angle!</strong><br><br>
+                When an angle opens up exactly to 180°, the two arms of the angle point in perfectly opposite directions, forming a completely flat, straight line.
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: How many endpoints does a Line have compared to a Ray?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                A <strong>Line</strong> has exactly <strong>0 endpoints</strong> (it extends infinitely in both directions). A <strong>Ray</strong> has exactly <strong>1 endpoint</strong> (it starts at a specific point and extends infinitely in the other direction).
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="../chapters/chapter6.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic6_2.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. GEOMETRY TOOLKIT LOGIC ---
+        function setLineType(type) {
+            document.getElementById('btn-seg').classList.remove('active');
+            document.getElementById('btn-ray').classList.remove('active');
+            document.getElementById('btn-line').classList.remove('active');
+
+            let dotL = document.getElementById('dot-left');
+            let dotR = document.getElementById('dot-right');
+            let arrowL = document.getElementById('arrow-left');
+            let arrowR = document.getElementById('arrow-right');
+            let line = document.getElementById('tool-line');
+            
+            let title = document.getElementById('tool-title');
+            let desc = document.getElementById('tool-desc');
+
+            if (type === 'segment') {
+                document.getElementById('btn-seg').classList.add('active');
+                
+                line.setAttribute('x1', '100'); line.setAttribute('x2', '400');
+                dotL.style.display = "block"; dotR.style.display = "block";
+                arrowL.style.display = "none"; arrowR.style.display = "none";
+
+                title.textContent = "Line Segment AB";
+                desc.textContent = "It has two fixed endpoints. It cannot be extended.";
+                title.style.color = "#e65100";
+                
+            } else if (type === 'ray') {
+                document.getElementById('btn-ray').classList.add('active');
+                
+                line.setAttribute('x1', '100'); line.setAttribute('x2', '480');
+                dotL.style.display = "block"; dotR.style.display = "none";
+                arrowL.style.display = "none"; arrowR.style.display = "block";
+                arrowR.setAttribute('points', '480,100 460,85 460,115');
+
+                title.textContent = "Ray AB";
+                desc.textContent = "It has one fixed endpoint (A) and extends infinitely in the other direction.";
+                title.style.color = "#1976d2";
+                
+            } else if (type === 'line') {
+                document.getElementById('btn-line').classList.add('active');
+                
+                line.setAttribute('x1', '20'); line.setAttribute('x2', '480');
+                dotL.style.display = "none"; dotR.style.display = "none";
+                arrowL.style.display = "block"; arrowR.style.display = "block";
+                arrowL.setAttribute('points', '20,100 40,85 40,115');
+                arrowR.setAttribute('points', '480,100 460,85 460,115');
+
+                title.textContent = "Line AB";
+                desc.textContent = "It has no endpoints! It extends infinitely in both directions.";
+                title.style.color = "#d32f2f";
+            }
+        }
+
+
+        // --- 2. ANGLE EXPLORER LOGIC ---
+        const sAngle = document.getElementById('s-angle');
+
+        function updateAngle() {
+            let ang = parseInt(sAngle.value);
+            document.getElementById('val-angle').textContent = ang;
+
+            let rad = ang * Math.PI / 180;
+            let armLength = 160;
+            
+            let endX = 250 + armLength * Math.cos(-rad);
+            let endY = 200 + armLength * Math.sin(-rad);
+
+            document.getElementById('moving-arm').setAttribute('x2', endX);
+            document.getElementById('moving-arm').setAttribute('y2', endY);
+
+            let arc = document.getElementById('angle-arc');
+            let arcR = 40;
+            
+            if (ang === 0) {
+                arc.setAttribute('d', "");
+            } else if (ang === 360) {
+                arc.setAttribute('d', `M ${250 + arcR} 200 A ${arcR} ${arcR} 0 1 0 ${250 - arcR} 200 A ${arcR} ${arcR} 0 1 0 ${250 + arcR} 200`);
+            } else {
+                let arcStartX = 250 + arcR;
+                let arcStartY = 200;
+                let arcEndX = 250 + arcR * Math.cos(-rad);
+                let arcEndY = 200 + arcR * Math.sin(-rad);
+                
+                let largeArcFlag = ang > 180 ? 1 : 0;
+                arc.setAttribute('d', `M ${arcStartX} ${arcStartY} A ${arcR} ${arcR} 0 ${largeArcFlag} 0 ${arcEndX} ${arcEndY}`);
+            }
+
+            let name = "";
+            let rule = "";
+            let color = "";
+
+            if (ang === 0) {
+                name = "Zero Angle"; rule = "Exactly 0°"; color = "#333";
+            } else if (ang < 90) {
+                name = "Acute Angle"; rule = "Greater than 0° but less than 90°"; color = "#00695c";
+            } else if (ang === 90) {
+                name = "Right Angle"; rule = "Exactly 90°"; color = "#d32f2f";
+            } else if (ang < 180) {
+                name = "Obtuse Angle"; rule = "Greater than 90° but less than 180°"; color = "#f57c00";
+            } else if (ang === 180) {
+                name = "Straight Angle"; rule = "Exactly 180°"; color = "#1976d2";
+            } else if (ang < 360) {
+                name = "Reflex Angle"; rule = "Greater than 180° but less than 360°"; color = "#7b1fa2";
+            } else if (ang === 360) {
+                name = "Complete / Full Angle"; rule = "Exactly 360°"; color = "#c2185b";
+            }
+
+            document.getElementById('angle-name').textContent = name;
+            document.getElementById('angle-name').style.color = color;
+            document.getElementById('angle-rule').textContent = rule;
+            document.getElementById('moving-arm').setAttribute('stroke', color);
+            arc.setAttribute('stroke', color);
+        }
+
+        sAngle.addEventListener('input', updateAngle);
+        updateAngle();
+
+
+        // --- 3. COLLINEAR TESTER WITH MATH LOGIC ---
+        const sCollinear = document.getElementById('s-collinear');
+
+        function updateCollinear() {
+            let yVal = parseInt(sCollinear.value);
+            document.getElementById('val-c-y').textContent = yVal;
+            
+            // Map Y from [-6, 6] to visual canvas coordinates. 
+            // Scale is 25px per unit. Base Y is 140.
+            let cy = 140 - (yVal * 25);
+            
+            document.getElementById('dot-c').setAttribute('cy', cy);
+            
+            let lbl = document.getElementById('lbl-c');
+            lbl.setAttribute('y', yVal >= 0 ? cy - 15 : cy + 25);
+            lbl.textContent = `C(0, ${yVal})`;
+
+            // Draw Triangle Polygon
+            document.getElementById('collinear-poly').setAttribute('points', `150,140 350,140 250,${cy}`);
+            
+            // Draw Height Dashed Line
+            document.getElementById('collinear-height').setAttribute('y2', cy);
+
+            let status = document.getElementById('collinear-status');
+            let mathEl = document.getElementById('collinear-math');
+            let concEl = document.getElementById('collinear-conclusion');
+            
+            let heightAbs = Math.abs(yVal);
+            let area = 0.5 * 8 * heightAbs;
+
+            mathEl.innerHTML = `Area = &frac12; &times; Base(8) &times; Height(${heightAbs}) = ${area}`;
+
+            if (yVal === 0) {
+                status.textContent = "✅ Collinear Points!";
+                status.style.color = "#2e7d32";
+                document.getElementById('dot-c').setAttribute('fill', '#4caf50');
+                lbl.setAttribute('fill', '#4caf50');
+                
+                concEl.textContent = "Area = 0. The triangle has completely flattened!";
+                concEl.style.color = "#2e7d32";
+            } else {
+                status.textContent = "Non-Collinear Points";
+                status.style.color = "#d32f2f";
+                document.getElementById('dot-c').setAttribute('fill', '#7b1fa2');
+                lbl.setAttribute('fill', '#7b1fa2');
+                
+                concEl.textContent = "Area > 0, so a spatial triangle forms!";
+                concEl.style.color = "#d32f2f";
+            }
+        }
+
+        sCollinear.addEventListener('input', updateCollinear);
+        updateCollinear();
+
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

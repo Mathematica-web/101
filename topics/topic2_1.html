@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intro to Polynomials - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #1b5e20; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #4caf50; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c8e6c9; text-align: left; font-size: 1.05em; }
+        .formula-table th { background: #4caf50; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #4caf50; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #81c784; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; }
+        .val-num { font-size: 1.8em; display: block; margin-top: 5px; }
+
+        /* TERM ANATOMY STYLES */
+        .term-anatomy { display: flex; justify-content: center; align-items: center; font-size: 4em; font-family: 'Times New Roman', serif; font-style: italic; margin: 20px 0; }
+        .coeff-part { color: #d32f2f; font-weight: bold; transition: 0.3s; }
+        .var-part { color: #1976d2; transition: 0.3s; }
+        .exp-part { color: #f57c00; font-size: 0.6em; vertical-align: super; transition: 0.3s; }
+        
+        .label-box { display: inline-block; padding: 5px 10px; border-radius: 8px; color: white; font-size: 0.8em; font-family: 'Verdana', sans-serif; font-style: normal; margin: 0 5px; }
+        .gen-formula { font-family: 'Times New Roman', serif; font-style: italic; font-weight: bold; font-size: 1.4em; color: #e65100; background: #fff3e0; padding: 15px; border-radius: 10px; display: inline-block; margin-bottom: 20px; border: 2px solid #ffb300; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #4caf50; }
+        .qa-question { font-weight: bold; color: #1b5e20; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #4caf50; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter2.html" class="back-btn">⬅️ Back to Chapter Index</a>
+
+    <h1>🧩 Introduction to Polynomials</h1>
+    <p class="subtitle">Building algebraic chains using constants and variables!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Vocabulary of Algebra</h2>
+        <p>A polynomial is an algebraic expression made up of <strong>terms</strong> that are added or subtracted together. To master polynomials, you first need to learn the language!</p>
+        <table class="formula-table">
+            <tr>
+                <th>Term</th>
+                <th>Definition</th>
+            </tr>
+            <tr>
+                <td><strong>Variable</strong></td>
+                <td>A letter (usually <em>x</em>, <em>y</em>, or <em>z</em>) that represents an unknown or changing value.</td>
+            </tr>
+            <tr>
+                <td><strong>Coefficient</strong></td>
+                <td>The regular number multiplied directly in front of a variable. (If there is no number, the coefficient is 1!)</td>
+            </tr>
+            <tr>
+                <td><strong>Constant</strong></td>
+                <td>A fixed number standing alone with no variables attached (e.g., the + 7 in <em>2x + 7</em>).</td>
+            </tr>
+            <tr>
+                <td><strong>Degree</strong></td>
+                <td>The <strong>highest exponent</strong> of the variable in the entire polynomial. This single number decides the polynomial's name and behavior.</td>
+            </tr>
+            <tr>
+                <td><strong>Strict Rule</strong></td>
+                <td>For an expression to be a true polynomial, the exponents of the variables must be <strong>Whole Numbers</strong>. (No negative exponents, no fractions, no square roots of variables!)</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: ANATOMY OF A TERM -->
+    <div class="section-box">
+        <h2 style="color: #1976d2; text-align: center; margin-top: 0;">🔬 1. The Term Inspector</h2>
+        <p style="text-align: center; color: #666;">A single algebraic term is built from three distinct pieces. Adjust the sliders below to see how the Coefficient, Variable, and Exponent assemble into a complete term.</p>
+
+        <div class="interactive-container" style="background: #e3f2fd; border-color: #1976d2;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #d32f2f;">
+                    <label style="color: #b71c1c; font-weight: bold;">Coefficient: <span id="val-coeff">5</span></label>
+                    <input type="range" id="s-coeff" min="-5" max="5" value="5">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2;">
+                    <label style="color: #0d47a1; font-weight: bold;">Variable: <span id="val-var">x</span></label>
+                    <input type="range" id="s-var" min="0" max="2" value="0">
+                </div>
+                <div class="slider-group" style="border-color: #f57c00;">
+                    <label style="color: #e65100; font-weight: bold;">Exponent: <span id="val-exp">3</span></label>
+                    <input type="range" id="s-exp" min="0" max="5" value="3">
+                </div>
+            </div>
+
+            <div class="term-anatomy" id="term-display">
+                <span class="coeff-part" id="disp-coeff">5</span><span class="var-part" id="disp-var">x</span><span class="exp-part" id="disp-exp">3</span>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <span class="label-box" style="background: #d32f2f;">Coefficient</span>
+                <span class="label-box" style="background: #1976d2;">Variable</span>
+                <span class="label-box" style="background: #f57c00;">Exponent</span>
+            </div>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #1976d2; background: #fff; flex-basis: 100%;">
+                    <span style="color: #0d47a1; font-size: 1.1em;" id="term-desc">This means you have <strong>5</strong> groups of <strong>x cubed</strong>.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE GENERAL POLYNOMIAL CONSTRUCTOR -->
+    <div class="section-box">
+        <h2 style="color: #e65100; text-align: center; margin-top: 0;">🏗️ 2. The General Polynomial Constructor</h2>
+        <p style="text-align: center; color: #666;">A polynomial is formally written using the general equation below. Choose the maximum degree (<strong>n</strong>) you want to build, then adjust the individual coefficients (<strong>a</strong>) to shape your unique polynomial!</p>
+
+        <div class="interactive-container" style="background: #fff3e0; border-color: #f57c00;">
+            
+            <div class="gen-formula">p(x) = a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> + ... + a<sub>1</sub>x + a<sub>0</sub></div>
+
+            <div class="slider-row" style="margin-bottom: 30px;">
+                <div class="slider-group" style="border-color: #333; background: #eee;">
+                    <label style="color: #333; font-weight: bold; font-size: 1.2em;">Select Degree (n): <span id="val-n-deg" style="color: #e65100;">2</span></label>
+                    <input type="range" id="s-degree" min="0" max="5" value="2">
+                </div>
+            </div>
+
+            <!-- Dynamic sliders will be injected here -->
+            <div id="coeff-sliders-container" class="slider-row"></div>
+
+            <div class="live-dashboard" style="margin-bottom: 20px;">
+                <div class="dash-card" style="border-color: #e65100; background: #fff; flex-basis: 100%; padding: 25px;">
+                    <span style="color: #bf360c; font-size: 1.2em;">Your Polynomial: p(x) =</span>
+                    <span id="final-poly" class="val-num" style="color: #333; font-family: 'Times New Roman', serif; font-style: italic; font-size: 2.5em; margin-top: 15px;">2x² - 3x + 1</span>
+                </div>
+            </div>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #43a047; background: #e8f5e9;">
+                    <span style="color: #1b5e20;">Actual Degree</span>
+                    <span id="poly-deg" class="val-num" style="color: #2e7d32;">2</span>
+                </div>
+                <div class="dash-card" style="border-color: #1e88e5; background: #e3f2fd;">
+                    <span style="color: #0d47a1;">Classification Name</span>
+                    <span id="poly-name" class="val-num" style="color: #1565c0;">Quadratic Polynomial</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: Which of the following expressions is NOT a polynomial? <br>A) 3x² + 2x <br>B) 5x³ - 4/x <br>C) 7x - 9</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Expression B is NOT a polynomial!</strong><br><br>
+                Look closely at the term <strong>-4/x</strong>. <br>
+                When a variable is in the denominator, it represents a negative exponent (in this case, -4x⁻¹).<br>
+                Polynomial rules strictly state that all exponents must be whole numbers (0, 1, 2, 3...). Negative exponents are not allowed!
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: What is the degree of the polynomial: p(y) = 4 - 5y² + y⁴?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans2">
+                <strong>Step 1:</strong> Identify all the terms and their exponents. <br>
+                The terms are 4 (exponent 0), -5y² (exponent 2), and y⁴ (exponent 4).<br>
+                <strong>Step 2:</strong> Find the highest exponent present.<br>
+                The highest exponent is 4.<br>
+                <strong>Final Answer: The degree is 4 (Quartic Polynomial).</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <span style="width: 150px;"></span>
+        <a href="topic2_2.html" class="nav-btn">Next: Zeroes of a Polynomial ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. TERM INSPECTOR LOGIC ---
+        const sCoeff = document.getElementById('s-coeff');
+        const sVar = document.getElementById('s-var');
+        const sExp = document.getElementById('s-exp');
+        const varList = ['x', 'y', 'z'];
+
+        function updateTerm() {
+            let c = parseInt(sCoeff.value);
+            let vIndex = parseInt(sVar.value);
+            let e = parseInt(sExp.value);
+            let v = varList[vIndex];
+
+            document.getElementById('val-coeff').textContent = c;
+            document.getElementById('val-var').textContent = v;
+            document.getElementById('val-exp').textContent = e;
+
+            let dispCoeff = c.toString();
+            let dispVar = v;
+            let dispExp = e.toString();
+            let desc = "";
+
+            if (e === 0) {
+                dispVar = "";
+                dispExp = "";
+                desc = `Any variable to the power of 0 is 1. This term is just a constant number: <strong>${c}</strong>.`;
+            } else {
+                if (c === 1) dispCoeff = "";
+                if (c === -1) dispCoeff = "-";
+                if (e === 1) dispExp = "";
+
+                if (c === 0) {
+                    dispCoeff = "0"; dispVar = ""; dispExp = "";
+                    desc = `Multiplying by 0 wipes out the term entirely! The term is just <strong>0</strong>.`;
+                } else {
+                    let powName = e === 1 ? "to the first power" : e === 2 ? "squared" : e === 3 ? "cubed" : `to the power of ${e}`;
+                    let absC = Math.abs(c) === 1 ? "1" : Math.abs(c);
+                    let signWord = c < 0 ? "negative " : "";
+                    desc = `This means you have <strong>${signWord}${absC}</strong> groups of <strong>${v} ${powName}</strong>.`;
+                }
+            }
+
+            document.getElementById('disp-coeff').textContent = dispCoeff;
+            document.getElementById('disp-var').textContent = dispVar;
+            document.getElementById('disp-exp').textContent = dispExp;
+            document.getElementById('term-desc').innerHTML = desc;
+        }
+
+        sCoeff.addEventListener('input', updateTerm);
+        sVar.addEventListener('input', updateTerm);
+        sExp.addEventListener('input', updateTerm);
+        updateTerm();
+
+        // --- 2. GENERAL POLYNOMIAL CONSTRUCTOR LOGIC ---
+        const nSlider = document.getElementById('s-degree');
+        const coeffContainer = document.getElementById('coeff-sliders-container');
+
+        // Persist coefficient states when switching degrees
+        let coeffs = {0: 1, 1: -3, 2: 2, 3: 0, 4: 0, 5: 0};
+        const colors = ['#8e24aa', '#1e88e5', '#43a047', '#fbc02d', '#f57c00', '#d32f2f']; // Colors for index 0 to 5
+
+        function initSliders() {
+            let n = parseInt(nSlider.value);
+            document.getElementById('val-n-deg').textContent = n;
+            coeffContainer.innerHTML = '';
+
+            for(let i = n; i >= 0; i--) {
+                let color = colors[i];
+                let div = document.createElement('div');
+                div.className = 'slider-group';
+                div.style.borderColor = color;
+                
+                let superscript = ['⁰','¹','²','³','⁴','⁵'][i];
+                let varLabel = i === 0 ? "(Constant)" : `(x${superscript})`;
+
+                div.innerHTML = `
+                    <label style="color: ${color}; font-weight: bold;">
+                        a<sub>${i}</sub> ${varLabel}: <span id="val-a${i}">${coeffs[i]}</span>
+                    </label>
+                    <input type="range" id="s-a${i}" min="-5" max="5" value="${coeffs[i]}">
+                `;
+                coeffContainer.appendChild(div);
+
+                document.getElementById(`s-a${i}`).addEventListener('input', (e) => {
+                    coeffs[i] = parseInt(e.target.value);
+                    document.getElementById(`val-a${i}`).textContent = coeffs[i];
+                    buildPolynomial();
+                });
+            }
+            buildPolynomial();
+        }
+
+        function formatGeneralTerm(coeff, power, isFirst) {
+            if (coeff === 0) return "";
+            let str = "";
+            if (coeff < 0) {
+                str += isFirst ? "-" : " - ";
+            } else {
+                str += isFirst ? "" : " + ";
+            }
+
+            let absC = Math.abs(coeff);
+            if (power === 0) {
+                str += absC;
+            } else {
+                if (absC !== 1) str += absC;
+                str += "x";
+                if (power > 1) {
+                    let superscripts = ['⁰','¹','²','³','⁴','⁵'];
+                    str += superscripts[power];
+                }
+            }
+            return str;
+        }
+
+        function buildPolynomial() {
+            let n = parseInt(nSlider.value);
+            let terms = [];
+            let actualDegree = -1;
+
+            // Build polynomial string starting from highest degree down to 0
+            for(let i = n; i >= 0; i--) {
+                let c = coeffs[i];
+                if (c !== 0) {
+                    terms.push(formatGeneralTerm(c, i, terms.length === 0));
+                    if (actualDegree === -1) actualDegree = i; // First non-zero term sets the actual degree
+                }
+            }
+
+            let polyString = terms.join("");
+            let name = "";
+
+            if (polyString === "") {
+                polyString = "0";
+                actualDegree = "Undefined";
+                name = "Zero Polynomial";
+            } else {
+                if (actualDegree === 5) name = "Quintic Polynomial";
+                else if (actualDegree === 4) name = "Quartic Polynomial";
+                else if (actualDegree === 3) name = "Cubic Polynomial";
+                else if (actualDegree === 2) name = "Quadratic Polynomial";
+                else if (actualDegree === 1) name = "Linear Polynomial";
+                else if (actualDegree === 0) name = "Constant Polynomial";
+            }
+
+            document.getElementById('final-poly').textContent = polyString;
+            document.getElementById('poly-deg').textContent = actualDegree;
+            document.getElementById('poly-name').textContent = name;
+        }
+
+        nSlider.addEventListener('input', initSliders);
+        initSliders(); // Run on boot
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer Step-by-Step';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

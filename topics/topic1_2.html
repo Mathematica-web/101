@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integers - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #0d47a1; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #1976d2; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #bbdefb; text-align: left; }
+        .formula-table th { background: #1976d2; color: white; font-size: 1.1em; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #1976d2; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 700px; height: 200px; background: #f5f5f5; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #90caf9; font-size: 0.95em; }
+        input[type=range] { width: 150px; cursor: pointer; display: block; margin-top: 5px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; }
+        .val-num { font-size: 1.8em; display: block; margin-top: 5px; }
+
+        /* TOGGLE BUTTONS */
+        .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .toggle-btn { padding: 10px 20px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.2em; }
+        
+        .toggle-btn.btn-pos.active { background: #4caf50; color: white; border-color: #4caf50; }
+        .toggle-btn.btn-neg.active { background: #f44336; color: white; border-color: #f44336; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e3f2fd; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #1976d2; }
+        .qa-question { font-weight: bold; color: #0d47a1; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; }
+        .show-answer-btn { background: #1976d2; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #1976d2; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter1.html" class="back-btn">⬅️ Back to Chapter</a>
+
+    <h1>➕ Integers ➖</h1>
+    <p class="subtitle">Navigating the world of positives, negatives, and zero!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Rules of Integer Operations</h2>
+        <p>Integers represent directions. Positive numbers move you forward, while negative numbers move you backward. Memorize these golden rules for working with signs:</p>
+        <table class="formula-table">
+            <tr>
+                <th>Operation</th>
+                <th>Rule</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td><strong>Addition (Same Signs)</strong></td>
+                <td>Add the numbers and keep the same sign.</td>
+                <td>-3 + (-4) = -7</td>
+            </tr>
+            <tr>
+                <td><strong>Addition (Different Signs)</strong></td>
+                <td>Subtract the smaller number from the larger. Keep the sign of the larger number.</td>
+                <td>-8 + 5 = -3</td>
+            </tr>
+            <tr>
+                <td><strong>Multiplication / Division</strong></td>
+                <td><strong>Same signs</strong> = Positive (+)<br><strong>Different signs</strong> = Negative (-)</td>
+                <td>(-4) &times; (-2) = +8<br>(-4) &times; (2) = -8</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE NUMBER LINE WALKER -->
+    <div class="section-box">
+        <h2 style="color: #ff9800; text-align: center; margin-top: 0;">🚶 1. The Number Line Walker (Addition)</h2>
+        <p style="text-align: center; color: #666;">Set your starting number (A) and the number you are adding (B). Watch how a positive 'B' forces you to walk right, and a negative 'B' forces you to walk backward to the left!</p>
+
+        <div class="interactive-container" style="background: #fff3e0; border-color: #ffb300;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #f57c00;">
+                    <label style="color: #e65100; font-weight: bold;">Start Position (A): <span id="val-a">0</span></label>
+                    <input type="range" id="slider-a" min="-25" max="25" value="0">
+                </div>
+                <div class="slider-group" style="border-color: #00acc1;">
+                    <label style="color: #00838f; font-weight: bold;">Amount to Add (B): <span id="val-b">10</span></label>
+                    <input type="range" id="slider-b" min="-25" max="25" value="10">
+                </div>
+            </div>
+
+            <svg id="walk-svg" class="svg-canvas" viewBox="0 0 700 200">
+                <!-- Base Line -50 to 50 to accommodate -25 + (-25) and 25 + 25 -->
+                <line x1="50" y1="140" x2="650" y2="140" stroke="#333" stroke-width="4"/>
+                <polygon points="50,140 60,135 60,145" fill="#333"/>
+                <polygon points="650,140 640,135 640,145" fill="#333"/>
+                
+                <!-- Tick Marks -->
+                <g id="walk-ticks" fill="#555" font-size="12px" text-anchor="middle">
+                    <!-- Populated via JS for exact spacing -->
+                </g>
+
+                <!-- Arcs -->
+                <path id="arc-a" d="" fill="none" stroke="#f57c00" stroke-width="4" stroke-dasharray="5,5" marker-end="url(#arrow-orange)"/>
+                <path id="arc-b" d="" fill="none" stroke="#00acc1" stroke-width="4" marker-end="url(#arrow-teal)"/>
+
+                <defs>
+                    <marker id="arrow-orange" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                        <path d="M0,0 L6,3 L0,6 Z" fill="#f57c00"/>
+                    </marker>
+                    <marker id="arrow-teal" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                        <path d="M0,0 L6,3 L0,6 Z" fill="#00acc1"/>
+                    </marker>
+                </defs>
+
+                <!-- Result Dot -->
+                <circle id="walk-dot" cx="350" cy="140" r="6" fill="#d32f2f" stroke="#fff" stroke-width="2"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #d32f2f; background: #ffebee; flex-basis: 100%;">
+                    <span style="color: #b71c1c; font-size: 1.1em;">Math Equation: A + B = Result</span>
+                    <span id="calc-walk" class="val-num" style="color: #d32f2f; font-family: monospace;">0 + 10 = 10</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE SIGN TRANSFORMER -->
+    <div class="section-box">
+        <h2 style="color: #9c27b0; text-align: center; margin-top: 0;">⚡ 2. The Sign Transformer (Multiplication)</h2>
+        <p style="text-align: center; color: #666;">Multiplication is simply repeated addition. Multiplying by a negative flips your direction completely! Toggle the signs below to see the resulting sign of your product.</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #9c27b0;">
+            <div class="face-toggles" style="align-items: center;">
+                <div style="text-align: center;">
+                    <span style="display: block; font-weight: bold; color: #8e24aa; margin-bottom: 5px;">Sign 1</span>
+                    <button class="toggle-btn btn-pos active" id="btn-s1-pos" onclick="setSign(1, 'pos')">Positive (+)</button>
+                    <button class="toggle-btn btn-neg" id="btn-s1-neg" onclick="setSign(1, 'neg')">Negative (-)</button>
+                </div>
+                
+                <span style="font-size: 2em; font-weight: bold; color: #333; margin: 0 15px; margin-top: 20px;">&times;</span>
+
+                <div style="text-align: center;">
+                    <span style="display: block; font-weight: bold; color: #8e24aa; margin-bottom: 5px;">Sign 2</span>
+                    <button class="toggle-btn btn-pos active" id="btn-s2-pos" onclick="setSign(2, 'pos')">Positive (+)</button>
+                    <button class="toggle-btn btn-neg" id="btn-s2-neg" onclick="setSign(2, 'neg')">Negative (-)</button>
+                </div>
+            </div>
+
+            <div class="live-dashboard">
+                <div class="dash-card" id="card-sign-result" style="border-color: #4caf50; background: #e8f5e9; flex-basis: 100%;">
+                    <span id="lbl-sign-result" style="color: #1b5e20; font-size: 1.2em;">Resulting Product Sign</span>
+                    <span id="calc-sign-result" class="val-num" style="color: #2e7d32; font-size: 2.5em;">POSITIVE (+)</span>
+                    <span id="desc-sign-result" style="color: #388e3c; font-weight: normal;">(Same signs always equal a Positive.)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: ABSOLUTE VALUE -->
+    <div class="section-box">
+        <h2 style="color: #1976d2; text-align: center; margin-top: 0;">🏠 3. Absolute Value (Distance from Zero)</h2>
+        <p style="text-align: center; color: #666;">Absolute value, written as <strong>|x|</strong>, measures pure distance from zero, regardless of direction. You can walk 15 steps backward, but you still walked 15 steps! Distance is never negative.</p>
+
+        <div class="interactive-container" style="background: #e3f2fd; border-color: #1976d2;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #0d47a1;">
+                    <label style="color: #0d47a1; font-weight: bold;">Position (x): <span id="val-abs">-15</span></label>
+                    <input type="range" id="slider-abs" min="-25" max="25" value="-15">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 700 150" style="height: 120px;">
+                <!-- Base Line -->
+                <line x1="50" y1="100" x2="650" y2="100" stroke="#333" stroke-width="4"/>
+                <line x1="350" y1="90" x2="350" y2="110" stroke="#d32f2f" stroke-width="4"/>
+                <text x="350" y="80" font-size="24px" text-anchor="middle">🏠 0</text>
+                
+                <!-- Person -->
+                <text id="abs-person" x="170" y="85" font-size="24px" text-anchor="middle">🚶</text>
+                
+                <!-- Distance Line -->
+                <line id="abs-dist-line" x1="170" y1="120" x2="350" y2="120" stroke="#1976d2" stroke-width="4"/>
+                <line id="abs-dist-left" x1="170" y1="115" x2="170" y2="125" stroke="#1976d2" stroke-width="4"/>
+                <line id="abs-dist-right" x1="350" y1="115" x2="350" y2="125" stroke="#1976d2" stroke-width="4"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #1565c0; background: #bbdefb; flex-basis: 100%;">
+                    <span style="color: #0d47a1; font-size: 1.1em;">Absolute Value Distance: |x|</span>
+                    <span id="calc-abs" class="val-num" style="color: #0d47a1; font-size: 2em; font-family: monospace;">|-15| = 15</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: What is the result of -15 - (-8)?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Step 1:</strong> Identify the double negative. Subtracting a negative is exactly the same as adding a positive.<br>
+                <strong>Step 2:</strong> Rewrite the equation: -15 + 8.<br>
+                <strong>Step 3:</strong> The signs are different, so subtract the smaller from the larger (15 - 8 = 7) and keep the sign of the larger (-).<br>
+                <strong>Final Answer: -7</strong>
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: Evaluate: |-10| + |5| &times; |-2|.</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans2">
+                <strong>Step 1:</strong> Convert all absolute values into standard positive numbers. <br>
+                |-10| becomes 10. |5| remains 5. |-2| becomes 2.<br>
+                <strong>Step 2:</strong> Rewrite equation: 10 + 5 &times; 2.<br>
+                <strong>Step 3:</strong> Apply Order of Operations (BODMAS). Multiply first: 5 &times; 2 = 10.<br>
+                <strong>Step 4:</strong> Add: 10 + 10.<br>
+                <strong>Final Answer: 20</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic1_1.html" class="nav-btn">← Prev Topic</a>
+        <a href="topic1_3.html" class="nav-btn">Next: Rational Numbers ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. NUMBER LINE WALKER LOGIC ---
+        const sliderA = document.getElementById('slider-a');
+        const sliderB = document.getElementById('slider-b');
+        const ticksGroup = document.getElementById('walk-ticks');
+
+        // Number line spanning -50 to 50
+        const spacingWalker = 6; // (650 - 50) / 100 units = 6px per unit
+        
+        function initTicks() {
+            for(let i = -50; i <= 50; i++) {
+                let x = 350 + (i * spacingWalker);
+                let isMajor = (i % 10 === 0);
+                
+                let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", x);
+                line.setAttribute("y1", 135);
+                line.setAttribute("x2", x);
+                line.setAttribute("y2", isMajor ? 145 : 142);
+                line.setAttribute("stroke", i === 0 ? "#d32f2f" : "#333");
+                line.setAttribute("stroke-width", isMajor ? "2" : "1");
+                ticksGroup.appendChild(line);
+
+                if(isMajor) {
+                    let text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                    text.setAttribute("x", x);
+                    text.setAttribute("y", 160);
+                    text.setAttribute("fill", i === 0 ? "#d32f2f" : "#555");
+                    text.setAttribute("font-weight", i === 0 ? "bold" : "normal");
+                    text.textContent = i;
+                    ticksGroup.appendChild(text);
+                }
+            }
+        }
+        initTicks();
+
+        function updateWalker() {
+            let a = parseInt(sliderA.value);
+            let b = parseInt(sliderB.value);
+            let result = a + b;
+
+            document.getElementById('val-a').textContent = a;
+            document.getElementById('val-b').textContent = b;
+
+            let signB = b < 0 ? `(${b})` : b;
+            document.getElementById('calc-walk').textContent = `${a} + ${signB} = ${result}`;
+
+            let xZero = 350;
+            let xA = xZero + (a * spacingWalker);
+            let xResult = xZero + (result * spacingWalker);
+
+            // Draw Arc 1 (0 to A)
+            if(a !== 0) {
+                let heightA = Math.abs(a) * 1.5; // Visual scaling for 50-unit arcs
+                let sweepA = a > 0 ? 1 : 0;
+                document.getElementById('arc-a').setAttribute('d', `M ${xZero},130 A ${Math.abs((xA-xZero)/2)},${heightA} 0 0,${sweepA} ${xA},130`);
+            } else {
+                document.getElementById('arc-a').setAttribute('d', '');
+            }
+
+            // Draw Arc 2 (A to Result)
+            if(b !== 0) {
+                let heightB = Math.abs(b) * 1.5;
+                let sweepB = b > 0 ? 1 : 0;
+                document.getElementById('arc-b').setAttribute('d', `M ${xA},130 A ${Math.abs((xResult-xA)/2)},${heightB} 0 0,${sweepB} ${xResult},130`);
+            } else {
+                document.getElementById('arc-b').setAttribute('d', '');
+            }
+
+            document.getElementById('walk-dot').setAttribute('cx', xResult);
+        }
+
+        sliderA.addEventListener('input', updateWalker);
+        sliderB.addEventListener('input', updateWalker);
+        updateWalker();
+
+        // --- 2. SIGN TRANSFORMER LOGIC ---
+        let sign1 = 'pos';
+        let sign2 = 'pos';
+
+        function setSign(target, val) {
+            if(target === 1) {
+                document.getElementById('btn-s1-pos').classList.remove('active');
+                document.getElementById('btn-s1-neg').classList.remove('active');
+                document.getElementById(`btn-s1-${val}`).classList.add('active');
+                sign1 = val;
+            } else {
+                document.getElementById('btn-s2-pos').classList.remove('active');
+                document.getElementById('btn-s2-neg').classList.remove('active');
+                document.getElementById(`btn-s2-${val}`).classList.add('active');
+                sign2 = val;
+            }
+            updateSignResult();
+        }
+
+        function updateSignResult() {
+            let card = document.getElementById('card-sign-result');
+            let lbl = document.getElementById('lbl-sign-result');
+            let calc = document.getElementById('calc-sign-result');
+            let desc = document.getElementById('desc-sign-result');
+
+            if(sign1 === sign2) {
+                card.style.borderColor = "#4caf50";
+                card.style.background = "#e8f5e9";
+                lbl.style.color = "#1b5e20";
+                calc.style.color = "#2e7d32";
+                calc.textContent = "POSITIVE (+)";
+                desc.style.color = "#388e3c";
+                desc.textContent = sign1 === 'pos' ? "(Positive × Positive = Forward!)" : "(Negative × Negative = Flipping a flip is forward!)";
+            } else {
+                card.style.borderColor = "#f44336";
+                card.style.background = "#ffebee";
+                lbl.style.color = "#b71c1c";
+                calc.style.color = "#d32f2f";
+                calc.textContent = "NEGATIVE (-)";
+                desc.style.color = "#c62828";
+                desc.textContent = "(Opposite signs always result in a Negative.)";
+            }
+        }
+
+
+        // --- 3. ABSOLUTE VALUE LOGIC ---
+        const sliderAbs = document.getElementById('slider-abs');
+        const spacingAbs = 12; // Adjusted spacing for the shorter -25 to 25 slider
+        
+        function updateAbs() {
+            let x = parseInt(sliderAbs.value);
+            let absX = Math.abs(x);
+            document.getElementById('val-abs').textContent = x;
+
+            document.getElementById('calc-abs').textContent = `|${x}| = ${absX}`;
+
+            let xZero = 350;
+            let xPos = xZero + (x * spacingAbs);
+
+            document.getElementById('abs-person').setAttribute('x', xPos);
+
+            let lineDist = document.getElementById('abs-dist-line');
+            if(x < 0) {
+                lineDist.setAttribute('x1', xPos);
+                lineDist.setAttribute('x2', xZero);
+            } else {
+                lineDist.setAttribute('x1', xZero);
+                lineDist.setAttribute('x2', xPos);
+            }
+            document.getElementById('abs-dist-left').setAttribute('x1', x < 0 ? xPos : xZero);
+            document.getElementById('abs-dist-left').setAttribute('x2', x < 0 ? xPos : xZero);
+            document.getElementById('abs-dist-right').setAttribute('x1', x > 0 ? xPos : xZero);
+            document.getElementById('abs-dist-right').setAttribute('x2', x > 0 ? xPos : xZero);
+        }
+
+        sliderAbs.addEventListener('input', updateAbs);
+        updateAbs();
+
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer Step-by-Step';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

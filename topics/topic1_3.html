@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rational Numbers - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #0d47a1; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #1976d2; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #bbdefb; text-align: left; }
+        .formula-table th { background: #1976d2; color: white; font-size: 1.1em; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #1976d2; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 700px; height: 180px; background: #f5f5f5; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #90caf9; font-size: 1em; }
+        input[type=range] { width: 200px; cursor: pointer; display: block; margin-top: 10px; }
+        input[type=number] { width: 80px; padding: 5px; font-size: 1.1em; text-align: center; border: 2px solid #ce93d8; border-radius: 5px; font-weight: bold; color: #8e24aa;}
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; }
+        .val-num { font-size: 1.8em; display: block; margin-top: 5px; }
+
+        /* PROOF BOX (Decoder) */
+        .proof-box { background: #fff; border: 2px solid #ce93d8; border-radius: 10px; padding: 20px; text-align: left; font-family: monospace; font-size: 1.2em; color: #4a148c; line-height: 1.6; margin-top: 15px; box-shadow: inset 0 3px 5px rgba(0,0,0,0.05); }
+
+        /* TOGGLE BUTTONS */
+        .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .toggle-btn { padding: 10px 20px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1em; }
+        .toggle-btn.active { background: #ff9800; color: white; border-color: #ff9800; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e3f2fd; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #1976d2; }
+        .qa-question { font-weight: bold; color: #0d47a1; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; }
+        .show-answer-btn { background: #1976d2; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #1976d2; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter1.html" class="back-btn">⬅️ Back to Chapter</a>
+
+    <h1>🍕 Rational Numbers</h1>
+    <p class="subtitle">Exploring fractions, divisions, and the infinite space in between!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Anatomy of a Rational Number</h2>
+        <p>A rational number is any number that can be expressed as a simple fraction. Here are the core rules you must remember:</p>
+        <table class="formula-table">
+            <tr>
+                <th>Concept</th>
+                <th>Definition & Rule</th>
+            </tr>
+            <tr>
+                <td><strong>The Core Formula</strong></td>
+                <td>Can be written as <strong>p / q</strong>, where <strong>p</strong> and <strong>q</strong> are integers.<br><em>Crucial Rule:</em> <strong>q cannot be zero!</strong> (Division by zero is undefined).</td>
+            </tr>
+            <tr>
+                <td><strong>Equivalent Fractions</strong></td>
+                <td>Different numbers can represent the exact same amount! Multiplying the top and bottom by the same number just cuts the pieces smaller, but doesn't change the size of the whole.</td>
+            </tr>
+            <tr>
+                <td><strong>Density Property</strong></td>
+                <td>Between any two rational numbers, there is an <strong>infinite</strong> amount of other numbers. You can zoom in forever!</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE PIZZA SPLITTER (EQUIVALENT FRACTIONS) -->
+    <div class="section-box">
+        <h2 style="color: #ff9800; text-align: center; margin-top: 0;">🍕 1. The Pizza Splitter</h2>
+        <p style="text-align: center; color: #666;">Choose a base fraction. Then use the slider to subdivide the pizza slices into even smaller pieces. Notice how the <strong>actual amount of pizza you get</strong> never changes—only the number of slices changes!</p>
+
+        <div class="interactive-container" style="background: #fff3e0; border-color: #ffb300;">
+            <div class="face-toggles">
+                <button class="toggle-btn active" onclick="setBaseFraction(1, 2, this)">Base: 1/2</button>
+                <button class="toggle-btn" onclick="setBaseFraction(1, 3, this)">Base: 1/3</button>
+                <button class="toggle-btn" onclick="setBaseFraction(3, 4, this)">Base: 3/4</button>
+            </div>
+
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #d84315; background: #fbe9e7;">
+                    <label style="color: #bf360c; font-weight: bold;">Cut every slice into: <span id="val-cuts">1</span> pieces</label>
+                    <input type="range" id="s-cuts" min="1" max="5" value="1">
+                </div>
+            </div>
+
+            <svg id="pizza-svg" class="svg-canvas" viewBox="0 0 600 200" style="background: #fff; height: 200px;">
+                <!-- Filled via JS -->
+                <g id="pizza-grid"></g>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #f57c00; background: #ffe0b2;">
+                    <span style="color: #e65100;">The Math Rule</span>
+                    <span id="calc-equiv" class="val-num" style="color: #d84315; font-family: monospace;">(1 × 1) / (2 × 1) = 1/2</span>
+                    <span style="color: #e65100; font-size: 0.9em; font-weight: normal; display: block; margin-top: 5px;">Multiply top and bottom by the same number!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE INFINITE MAGNIFYING GLASS -->
+    <div class="section-box">
+        <h2 style="color: #00897b; text-align: center; margin-top: 0;">🔎 2. The Infinite Magnifying Glass</h2>
+        <p style="text-align: center; color: #666;">Is it possible to run out of numbers? Let's prove the <strong>Density Property</strong>. Drag the slider to zoom in perfectly halfway between 0 and your current fraction. You will see there is ALWAYS another number hiding in the middle!</p>
+
+        <div class="interactive-container" style="background: #e0f2f1; border-color: #009688;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #00796b;">
+                    <label style="color: #004d40; font-weight: bold;">Zoom Level: <span id="val-zoom">1x</span></label>
+                    <input type="range" id="s-zoom" min="1" max="6" value="1">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 600 150" style="height: 150px; background: white;">
+                <!-- Magnifying Glass Effect Background -->
+                <rect x="50" y="20" width="500" height="110" fill="#e0f2f1" rx="10"/>
+                
+                <!-- Base Line -->
+                <line x1="80" y1="80" x2="520" y2="80" stroke="#004d40" stroke-width="4"/>
+                
+                <!-- Left Bound (Always 0) -->
+                <line x1="100" y1="65" x2="100" y2="95" stroke="#d32f2f" stroke-width="4"/>
+                <text x="100" y="55" font-size="22px" font-weight="bold" fill="#d32f2f" text-anchor="middle">0</text>
+                
+                <!-- Right Bound -->
+                <line x1="500" y1="65" x2="500" y2="95" stroke="#1976d2" stroke-width="4"/>
+                <text id="zoom-right" x="500" y="55" font-size="22px" font-weight="bold" fill="#1976d2" text-anchor="middle">1</text>
+
+                <!-- Dynamic Midpoint -->
+                <line x1="300" y1="60" x2="300" y2="100" stroke="#ff9800" stroke-width="5"/>
+                <text id="zoom-mid" x="300" y="50" font-size="26px" font-weight="bold" fill="#ff9800" text-anchor="middle">1 / 2</text>
+                
+                <text x="300" y="125" font-size="14px" fill="#004d40" text-anchor="middle" font-weight="bold">↓ The new midpoint! ↓</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00796b; background: #b2dfdb; flex-basis: 100%;">
+                    <span style="color: #004d40; font-size: 1.1em;" id="zoom-msg">At 1x Zoom, the number exactly between 0 and 1 is 1/2.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: REPEATING DECIMAL DECODER -->
+    <div class="section-box">
+        <h2 style="color: #9c27b0; text-align: center; margin-top: 0;">🔁 3. The Repeating Decimal Decoder</h2>
+        <p style="text-align: center; color: #666;">Rational numbers don't always end cleanly—sometimes their decimals repeat forever! But because they repeat in a pattern, we can use algebra to convert them back into a fraction (p/q). Type in a repeating pattern below to see the magic algebraic trick!</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #ab47bc;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #8e24aa; background: #e1bee7; display: flex; align-items: center; gap: 10px;">
+                    <label style="color: #4a148c; font-weight: bold;">Repeating Digits: 0.</label>
+                    <input type="number" id="num-repeat" value="3" min="1" max="999" oninput="updateDecoder()">
+                    <span style="color: #4a148c; font-weight: bold; border-top: 2px solid #4a148c; padding-top: 2px;">(bar)</span>
+                </div>
+            </div>
+
+            <div class="proof-box" id="decoder-proof">
+                <!-- Filled via JS -->
+            </div>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #8e24aa; background: #f3e5f5; flex-basis: 100%;">
+                    <span style="color: #6a1b9a; font-size: 1.1em;">Final Simplified Fraction</span>
+                    <span id="calc-dec-frac" class="val-num" style="color: #4a148c; font-size: 2.2em;">1 / 3</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: Are all Integers also considered Rational Numbers?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Yes, absolutely!</strong><br><br>
+                A rational number just needs to be written as p/q. You can turn <em>any</em> integer into a fraction simply by putting a 1 underneath it!<br>
+                For example: -7 is the same as -7 / 1. It fits the rule perfectly!
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: If you cut a pizza into 3 slices and eat 1 slice, is that the exact same amount of pizza as cutting it into 6 slices and eating 2?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>Yes! That is an Equivalent Fraction.</strong><br><br>
+                If you take 1/3 and multiply both the top and bottom by 2, you get 2/6. The math proves that the physical amount of food you ate remains exactly the same; only the size of the individual slices changed.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic1_2.html" class="nav-btn">← Prev Topic</a>
+        <a href="topic1_4.html" class="nav-btn">Next: Irrational Numbers ➡️</a>
+    </div>
+
+    <script>
+        // --- HELPER FUNCTION ---
+        function gcd(a, b) {
+            return b === 0 ? a : gcd(b, a % b);
+        }
+
+        // --- 1. PIZZA (EQUIVALENT FRACTIONS) LOGIC ---
+        let baseNum = 1;
+        let baseDen = 2;
+        const sCuts = document.getElementById('s-cuts');
+        const pizzaGrid = document.getElementById('pizza-grid');
+
+        function setBaseFraction(n, d, btnElement) {
+            let btns = btnElement.parentElement.children;
+            for(let i=0; i<btns.length; i++) btns[i].classList.remove('active');
+            btnElement.classList.add('active');
+            
+            baseNum = n;
+            baseDen = d;
+            sCuts.value = 1; 
+            updatePizza();
+        }
+
+        function updatePizza() {
+            let k = parseInt(sCuts.value); 
+            document.getElementById('val-cuts').textContent = k;
+
+            let eqN = baseNum * k;
+            let eqD = baseDen * k;
+
+            document.getElementById('calc-equiv').textContent = `(${baseNum} × ${k}) / (${baseDen} × ${k}) = ${eqN}/${eqD}`;
+
+            pizzaGrid.innerHTML = ''; 
+            
+            let cx = 300;
+            let cy = 100;
+            let r = 85;
+
+            let pan = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            pan.setAttribute("cx", cx);
+            pan.setAttribute("cy", cy);
+            pan.setAttribute("r", r);
+            pan.setAttribute("fill", "#fff3e0"); 
+            pan.setAttribute("stroke", "#ffcc80");
+            pan.setAttribute("stroke-width", "2");
+            pizzaGrid.appendChild(pan);
+
+            let percent = baseNum / baseDen;
+            if (percent === 1) {
+                let full = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                full.setAttribute("cx", cx); full.setAttribute("cy", cy); full.setAttribute("r", r);
+                full.setAttribute("fill", "#ffb74d"); 
+                pizzaGrid.appendChild(full);
+            } else {
+                let angle = percent * 360;
+                let rad = (angle - 90) * Math.PI / 180;
+                let endX = cx + r * Math.cos(rad);
+                let endY = cy + r * Math.sin(rad);
+                let largeArc = angle > 180 ? 1 : 0;
+
+                let pathData = `M ${cx},${cy} L ${cx},${cy - r} A ${r},${r} 0 ${largeArc},1 ${endX},${endY} Z`;
+                let wedge = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                wedge.setAttribute("d", pathData);
+                wedge.setAttribute("fill", "#ffb74d");
+                pizzaGrid.appendChild(wedge);
+            }
+
+            let totalSlices = baseDen * k;
+            for (let i = 0; i < totalSlices; i++) {
+                let sliceAngle = (i * 360 / totalSlices) - 90;
+                let sliceRad = sliceAngle * Math.PI / 180;
+                let x2 = cx + r * Math.cos(sliceRad);
+                let y2 = cy + r * Math.sin(sliceRad);
+
+                let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", cx); line.setAttribute("y1", cy);
+                line.setAttribute("x2", x2); line.setAttribute("y2", y2);
+
+                if (i % k === 0) {
+                    line.setAttribute("stroke", "#d84315");
+                    line.setAttribute("stroke-width", "3");
+                } else {
+                    line.setAttribute("stroke", "#e65100");
+                    line.setAttribute("stroke-width", "2");
+                    line.setAttribute("stroke-dasharray", "5,3");
+                }
+                pizzaGrid.appendChild(line);
+            }
+
+            let crust = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            crust.setAttribute("cx", cx); crust.setAttribute("cy", cy); crust.setAttribute("r", r);
+            crust.setAttribute("fill", "none"); crust.setAttribute("stroke", "#d84315"); crust.setAttribute("stroke-width", "4");
+            pizzaGrid.appendChild(crust);
+        }
+
+        sCuts.addEventListener('input', updatePizza);
+        updatePizza();
+
+        // --- 2. INFINITE MAGNIFYING GLASS LOGIC ---
+        const sZoom = document.getElementById('s-zoom');
+        
+        function updateZoom() {
+            let zoom = parseInt(sZoom.value);
+            document.getElementById('val-zoom').textContent = zoom + "x";
+
+            let rightDenom = Math.pow(2, zoom - 1);
+            let midDenom = Math.pow(2, zoom);
+
+            let rightText = rightDenom === 1 ? "1" : `1 / ${rightDenom}`;
+            document.getElementById('zoom-right').textContent = rightText;
+            
+            document.getElementById('zoom-mid').textContent = `1 / ${midDenom}`;
+
+            document.getElementById('zoom-msg').textContent = `At ${zoom}x Zoom, the number exactly between 0 and ${rightText} is 1/${midDenom}.`;
+        }
+
+        sZoom.addEventListener('input', updateZoom);
+        updateZoom();
+
+        // --- 3. REPEATING DECIMAL DECODER LOGIC ---
+        function updateDecoder() {
+            let inputVal = document.getElementById('num-repeat').value;
+            // Fallback for empty or negative
+            if(!inputVal || parseInt(inputVal) < 0) {
+                inputVal = '3';
+            }
+            // Limit length visually to prevent math overflow, max 6 digits
+            if(inputVal.length > 6) {
+                inputVal = inputVal.substring(0, 6);
+                document.getElementById('num-repeat').value = inputVal;
+            }
+
+            let repeatStr = inputVal;
+            let nDigits = repeatStr.length;
+            let multiplier = Math.pow(10, nDigits);
+            let numerator = parseInt(repeatStr);
+            let denominator = multiplier - 1;
+            
+            // Build the visual string of repeating digits (e.g., 333333 or 454545)
+            let repVisual = repeatStr.repeat(Math.ceil(6 / nDigits)).substring(0, 6) + "...";
+
+            // Step 1: Let x
+            let line1 = `Let x = 0.${repVisual}`;
+            // Step 2: Multiply
+            let line2 = `Multiply both sides by ${multiplier} (since there are ${nDigits} repeating digits):<br>`;
+            line2 += `&nbsp;&nbsp;&nbsp;&nbsp;${multiplier}x = ${numerator}.${repVisual}`;
+            // Step 3: Subtract
+            let line3 = `Subtract x from both sides:<br>`;
+            line3 += `&nbsp;&nbsp;&nbsp;&nbsp;${multiplier}x - x = ${numerator}.${repVisual} - 0.${repVisual}<br>`;
+            line3 += `&nbsp;&nbsp;&nbsp;&nbsp;${denominator}x = ${numerator}`;
+            // Step 4: Isolate x
+            let line4 = `Isolate x:<br>`;
+            line4 += `&nbsp;&nbsp;&nbsp;&nbsp;x = ${numerator} / ${denominator}`;
+
+            document.getElementById('decoder-proof').innerHTML = `${line1}<br><br>${line2}<br><br>${line3}<br><br>${line4}`;
+
+            // Simplify
+            let divisor = gcd(numerator, denominator);
+            let simpNum = numerator / divisor;
+            let simpDen = denominator / divisor;
+
+            document.getElementById('calc-dec-frac').textContent = `${simpNum} / ${simpDen}`;
+        }
+        
+        // Initial call
+        updateDecoder();
+
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

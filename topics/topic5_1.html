@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Euclid's Geometry - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #1a237e; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #3949ab; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c5cae9; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #3949ab; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #3949ab; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 400px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #9fa8da; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8eaf6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #3949ab; }
+        .qa-question { font-weight: bold; color: #1a237e; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #3949ab; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #3949ab; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #283593; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>🏛️ Introduction to Euclid's Geometry</h1>
+    <p class="subtitle">The ancient blueprints that built the mathematical world!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Building Blocks of Logic</h2>
+        <p>Around 300 BC, a Greek mathematician named Euclid collected all known mathematical knowledge and organized it into an epic 13-volume book called <em>Elements</em>. He realized that to prove complex math, you first have to agree on simple, undeniable truths.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Term</th>
+                <th>Euclid's Definition</th>
+            </tr>
+            <tr>
+                <td><strong>Axioms</strong></td>
+                <td>General mathematical truths that are so obvious they don't need proof (e.g., "Things which are equal to the same thing are equal to one another").</td>
+            </tr>
+            <tr>
+                <td><strong>Postulates</strong></td>
+                <td>Self-evident truths that apply <em>specifically</em> to geometry. Euclid built his entire system on just 5 of these!</td>
+            </tr>
+            <tr>
+                <td><strong>Theorems</strong></td>
+                <td>Complex statements that must be proven using a logical chain of Axioms, Postulates, and previous Theorems.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: POSTULATES 1 & 2 -->
+    <div class="section-box">
+        <h2 style="color: #e65100; text-align: center; margin-top: 0;">📏 1. Points, Segments, and Lines</h2>
+        <p style="text-align: center; color: #666;"><strong>Postulate 1:</strong> A straight line may be drawn from any point to any other point.<br><strong>Postulate 2:</strong> A terminated line (line segment) can be produced indefinitely.<br>Use the sliders to create a line segment, then extend it into infinity!</p>
+
+        <div class="interactive-container" style="background: #fff8e1; border-color: #ffb300;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #d32f2f; background: #ffebee;">
+                    <label style="color: #b71c1c; font-weight: bold;">Point A (x, y)</label>
+                    <input type="range" id="s-p1-x" min="-8" max="0" value="-4">
+                    <input type="range" id="s-p1-y" min="-5" max="5" value="-2">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Point B (x, y)</label>
+                    <input type="range" id="s-p2-x" min="0" max="8" value="4">
+                    <input type="range" id="s-p2-y" min="-5" max="5" value="3">
+                </div>
+            </div>
+            
+            <div class="slider-row" style="margin-top: 20px; border-top: 2px dashed #ffcc80; padding-top: 20px;">
+                <div class="slider-group" style="border-color: #e65100; background: #fff3e0; width: 80%;">
+                    <label style="color: #e65100; font-weight: bold; font-size: 1.2em;">Extend Segment into an Infinite Line</label>
+                    <input type="range" id="s-extend" min="0" max="20" value="0">
+                </div>
+            </div>
+
+            <svg id="line-svg" class="svg-canvas" viewBox="-30 -30 560 460">
+                <defs>
+                    <pattern id="grid1" width="25" height="25" patternUnits="userSpaceOnUse">
+                        <rect width="25" height="25" fill="none" stroke="#eee" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                <rect x="0" y="0" width="500" height="400" fill="url(#grid1)" />
+
+                <!-- The Extended Line (Postulate 2) -->
+                <line id="geom-line-ext" stroke="#ffb300" stroke-width="6" stroke-dasharray="10,10" opacity="0.6"/>
+                <!-- The Base Segment (Postulate 1) -->
+                <line id="geom-line-base" stroke="#e65100" stroke-width="6"/>
+
+                <circle id="geom-dot-a" r="8" fill="#d32f2f" stroke="#fff" stroke-width="2"/>
+                <text id="geom-lbl-a" font-weight="bold" fill="#d32f2f" font-size="18px">A</text>
+                
+                <circle id="geom-dot-b" r="8" fill="#1976d2" stroke="#fff" stroke-width="2"/>
+                <text id="geom-lbl-b" font-weight="bold" fill="#1976d2" font-size="18px">B</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #ff8f00; background: #fff; flex-basis: 100%;">
+                    <span id="p12-status" style="color: #e65100; font-size: 1.5em;">Showing Postulate 1: The Segment AB</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: POSTULATE 3 -->
+    <div class="section-box">
+        <h2 style="color: #00897b; text-align: center; margin-top: 0;">⭕ 2. The Universal Circle</h2>
+        <p style="text-align: center; color: #666;"><strong>Postulate 3:</strong> A circle can be drawn with any center and any radius.<br>Before Euclid, people weren't sure if circles could exist infinitely large or in any location. Euclid declared that space is uniform, so circles can go anywhere!</p>
+
+        <div class="interactive-container" style="background: #e0f2f1; border-color: #00897b;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #00695c; background: #fff;">
+                    <label style="color: #00695c; font-weight: bold;">Center X: <span id="val-circ-x">0</span></label>
+                    <input type="range" id="s-circ-x" min="-6" max="6" value="0">
+                    <label style="color: #00695c; font-weight: bold; margin-top: 10px; display: block;">Center Y: <span id="val-circ-y">0</span></label>
+                    <input type="range" id="s-circ-y" min="-4" max="4" value="0">
+                </div>
+                <div class="slider-group" style="border-color: #004d40; background: #b2dfdb;">
+                    <label style="color: #004d40; font-weight: bold;">Radius (r): <span id="val-circ-r">4</span></label>
+                    <input type="range" id="s-circ-r" min="1" max="8" value="4">
+                </div>
+            </div>
+
+            <svg id="circ-svg" class="svg-canvas" viewBox="-30 -30 560 460">
+                <rect x="0" y="0" width="500" height="400" fill="url(#grid1)" />
+                
+                <!-- The Circle -->
+                <circle id="geom-circle" cx="250" cy="200" r="100" fill="#80cbc4" opacity="0.3" stroke="#00897b" stroke-width="4"/>
+                
+                <!-- Radius Line -->
+                <line id="geom-circ-rad" stroke="#004d40" stroke-width="3" stroke-dasharray="5,5"/>
+                <text id="geom-lbl-r" font-weight="bold" fill="#004d40" font-size="16px">r</text>
+
+                <!-- Center Point -->
+                <circle id="geom-circ-center" r="6" fill="#004d40"/>
+                <text id="geom-lbl-center" font-weight="bold" fill="#004d40" font-size="16px">Center</text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: POSTULATE 4 -->
+    <div class="section-box">
+        <h2 style="color: #5e35b1; text-align: center; margin-top: 0;">📐 3. The Perfection of Right Angles</h2>
+        <p style="text-align: center; color: #666;"><strong>Postulate 4:</strong> All right angles are equal to one another.<br>It sounds obvious to us, but Euclid needed to prove that a 90-degree angle on Earth is exactly the same shape as a 90-degree angle on the Moon. Slide to superimpose the red angle onto the blue angle!</p>
+
+        <div class="interactive-container" style="background: #ede7f6; border-color: #5e35b1;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #5e35b1; background: #fff; width: 80%;">
+                    <label style="color: #311b92; font-weight: bold; font-size: 1.2em;">Superimpose Angles (Translation & Rotation)</label>
+                    <input type="range" id="s-angle-t" min="0" max="100" value="0">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
+                <!-- Target Blue Angle (Fixed) -->
+                <g transform="translate(150, 200)">
+                    <path d="M 0 0 L 80 0 M 0 0 L 0 -80" fill="none" stroke="#1976d2" stroke-width="8" stroke-linecap="round"/>
+                    <rect x="0" y="-20" width="20" height="20" fill="none" stroke="#1976d2" stroke-width="3"/>
+                    <text x="-20" y="20" font-weight="bold" fill="#1976d2" font-size="18px">A</text>
+                </g>
+
+                <!-- Moving Red Angle -->
+                <g id="moving-angle">
+                    <path d="M 0 0 L 80 0 M 0 0 L 0 -80" fill="none" stroke="#d32f2f" stroke-width="8" stroke-linecap="round" opacity="0.8"/>
+                    <rect x="0" y="-20" width="20" height="20" fill="none" stroke="#d32f2f" stroke-width="3" opacity="0.8"/>
+                    <text x="15" y="-15" font-weight="bold" fill="#d32f2f" font-size="18px">B</text>
+                </g>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #5e35b1; background: #fff; flex-basis: 100%;">
+                    <span id="angle-status" style="color: #311b92; font-size: 1.5em;">Angles are in different places and orientations.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 4: POSTULATE 5 -->
+    <div class="section-box">
+        <h2 style="color: #d81b60; text-align: center; margin-top: 0;">🛤️ 4. The Famous Parallel Postulate</h2>
+        <p style="text-align: center; color: #666;"><strong>Postulate 5:</strong> If a straight line falling on two straight lines makes the interior angles on the same side less than two right angles (180°), the two straight lines, if produced indefinitely, meet on that side.<br>Adjust the interior angles on the right side of the transversal to see if they meet!</p>
+
+        <div class="interactive-container" style="background: #fce4ec; border-color: #d81b60;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #c2185b; background: #f8bbd0;">
+                    <label style="color: #880e4f; font-weight: bold;">Top Interior Angle: <span id="val-ang1">80</span>°</label>
+                    <input type="range" id="s-ang1" min="50" max="130" value="80">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Bottom Interior Angle: <span id="val-ang2">80</span>°</label>
+                    <input type="range" id="s-ang2" min="50" max="130" value="80">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 600 400" style="background: #fff; height: 350px; max-width: 600px;">
+                <!-- Transversal -->
+                <line x1="200" y1="50" x2="200" y2="350" stroke="#333" stroke-width="4" stroke-dasharray="10,5"/>
+                
+                <!-- Rotating Lines -->
+                <line id="geom-line-top" stroke="#c2185b" stroke-width="6"/>
+                <line id="geom-line-bottom" stroke="#1976d2" stroke-width="6"/>
+
+                <!-- Angle Arcs -->
+                <path id="arc-top" fill="none" stroke="#c2185b" stroke-width="3"/>
+                <path id="arc-bottom" fill="none" stroke="#1976d2" stroke-width="3"/>
+
+                <!-- Dynamic Labels -->
+                <text id="lbl-ang1" font-weight="bold" fill="#c2185b" font-size="16px" text-anchor="middle" alignment-baseline="middle"></text>
+                <text id="lbl-ang2" font-weight="bold" fill="#1976d2" font-size="16px" text-anchor="middle" alignment-baseline="middle"></text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #d81b60; background: #fff; flex-basis: 100%;">
+                    <span style="color: #c2185b; font-size: 1.2em; display: block; margin-bottom: 5px;">Sum of Interior Angles</span>
+                    <span id="post5-sum" class="val-num" style="color: #880e4f; font-size: 2.2em;">160°</span>
+                    <span id="post5-status" style="color: #d32f2f; font-weight: bold; font-size: 1.2em; margin-top: 10px; display: block;">Sum < 180° : Lines intersect on the right!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: What is the main difference between an Axiom and a Postulate in Euclid's geometry?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Scope of application!</strong><br><br>
+                <strong>Axioms</strong> are universal mathematical truths that apply to numbers, logic, and all fields of math (e.g., "If A = B and B = C, then A = C").<br>
+                <strong>Postulates</strong> are specifically assumptions made about spatial geometry (e.g., "You can draw a circle anywhere").
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: Why is Postulate 5 so famous?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>It sparked modern geometry!</strong><br><br>
+                The Parallel Postulate is much longer and more complex than the first four. Mathematicians spent 2,000 years trying to prove it using just the first four postulates. When they finally realized it couldn't be proven, they invented entirely new "non-Euclidean" geometries by changing it!
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="../chapters/chapter5.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic5_2.html" class="nav-btn">Next: Euclid's Axioms ➡️</a>
+    </div>
+
+    <script>
+        const plotScale = 25; 
+        function mapX(x) { return 250 + (x * plotScale); }
+        function mapY(y) { return 200 - (y * plotScale); } 
+
+        // --- 1. POSTULATE 1 & 2 LOGIC ---
+        const sP1X = document.getElementById('s-p1-x');
+        const sP1Y = document.getElementById('s-p1-y');
+        const sP2X = document.getElementById('s-p2-x');
+        const sP2Y = document.getElementById('s-p2-y');
+        const sExtend = document.getElementById('s-extend');
+
+        function updateLines() {
+            let x1 = parseInt(sP1X.value);
+            let y1 = parseInt(sP1Y.value);
+            let x2 = parseInt(sP2X.value);
+            let y2 = parseInt(sP2Y.value);
+            let ext = parseInt(sExtend.value);
+
+            let ax = mapX(x1); let ay = mapY(y1);
+            let bx = mapX(x2); let by = mapY(y2);
+
+            document.getElementById('geom-dot-a').setAttribute('cx', ax);
+            document.getElementById('geom-dot-a').setAttribute('cy', ay);
+            document.getElementById('geom-dot-b').setAttribute('cx', bx);
+            document.getElementById('geom-dot-b').setAttribute('cy', by);
+
+            document.getElementById('geom-lbl-a').setAttribute('x', ax - 20);
+            document.getElementById('geom-lbl-a').setAttribute('y', ay - 10);
+            document.getElementById('geom-lbl-b').setAttribute('x', bx + 10);
+            document.getElementById('geom-lbl-b').setAttribute('y', by - 10);
+
+            let baseLine = document.getElementById('geom-line-base');
+            baseLine.setAttribute('x1', ax); baseLine.setAttribute('y1', ay);
+            baseLine.setAttribute('x2', bx); baseLine.setAttribute('y2', by);
+
+            let dx = bx - ax;
+            let dy = by - ay;
+            let length = Math.sqrt(dx*dx + dy*dy);
+            
+            if (length > 0) {
+                let extPixels = ext * 10; 
+                let ex1 = ax - (dx/length) * extPixels;
+                let ey1 = ay - (dy/length) * extPixels;
+                let ex2 = bx + (dx/length) * extPixels;
+                let ey2 = by + (dy/length) * extPixels;
+
+                let extLine = document.getElementById('geom-line-ext');
+                extLine.setAttribute('x1', ex1); extLine.setAttribute('y1', ey1);
+                extLine.setAttribute('x2', ex2); extLine.setAttribute('y2', ey2);
+            }
+
+            let status = document.getElementById('p12-status');
+            if (ext === 0) {
+                status.textContent = "Showing Postulate 1: A finite segment AB";
+                status.style.color = "#e65100";
+            } else {
+                status.textContent = "Showing Postulate 2: Segment produced into an infinite line";
+                status.style.color = "#f57f17";
+            }
+        }
+
+        sP1X.addEventListener('input', updateLines);
+        sP1Y.addEventListener('input', updateLines);
+        sP2X.addEventListener('input', updateLines);
+        sP2Y.addEventListener('input', updateLines);
+        sExtend.addEventListener('input', updateLines);
+        updateLines();
+
+        // --- 2. POSTULATE 3 (CIRCLE) LOGIC ---
+        const sCircX = document.getElementById('s-circ-x');
+        const sCircY = document.getElementById('s-circ-y');
+        const sCircR = document.getElementById('s-circ-r');
+
+        function updateCircle() {
+            let cx = parseInt(sCircX.value);
+            let cy = parseInt(sCircY.value);
+            let r = parseInt(sCircR.value);
+
+            document.getElementById('val-circ-x').textContent = cx;
+            document.getElementById('val-circ-y').textContent = cy;
+            document.getElementById('val-circ-r').textContent = r;
+
+            let svgCx = mapX(cx);
+            let svgCy = mapY(cy);
+            let svgR = r * plotScale;
+
+            document.getElementById('geom-circle').setAttribute('cx', svgCx);
+            document.getElementById('geom-circle').setAttribute('cy', svgCy);
+            document.getElementById('geom-circle').setAttribute('r', svgR);
+
+            document.getElementById('geom-circ-center').setAttribute('cx', svgCx);
+            document.getElementById('geom-circ-center').setAttribute('cy', svgCy);
+
+            document.getElementById('geom-lbl-center').setAttribute('x', svgCx - 25);
+            document.getElementById('geom-lbl-center').setAttribute('y', svgCy + 25);
+
+            document.getElementById('geom-circ-rad').setAttribute('x1', svgCx);
+            document.getElementById('geom-circ-rad').setAttribute('y1', svgCy);
+            document.getElementById('geom-circ-rad').setAttribute('x2', svgCx + svgR);
+            document.getElementById('geom-circ-rad').setAttribute('y2', svgCy);
+
+            document.getElementById('geom-lbl-r').setAttribute('x', svgCx + svgR/2 - 5);
+            document.getElementById('geom-lbl-r').setAttribute('y', svgCy - 10);
+        }
+
+        sCircX.addEventListener('input', updateCircle);
+        sCircY.addEventListener('input', updateCircle);
+        sCircR.addEventListener('input', updateCircle);
+        updateCircle();
+
+        // --- 3. POSTULATE 4 (ANGLES) LOGIC ---
+        const sAngleT = document.getElementById('s-angle-t');
+
+        function updateAngles() {
+            let t = parseInt(sAngleT.value) / 100; 
+
+            let currX = 350 + (150 - 350) * t;
+            let currY = 100 + (200 - 100) * t;
+            let currRot = 75 + (0 - 75) * t;
+
+            let movingGrp = document.getElementById('moving-angle');
+            movingGrp.setAttribute('transform', `translate(${currX}, ${currY}) rotate(${currRot})`);
+
+            let status = document.getElementById('angle-status');
+            if (t === 1) {
+                status.textContent = "Perfect Superposition! The right angles are completely equal.";
+                status.style.color = "#4caf50";
+            } else if (t === 0) {
+                status.textContent = "Angles are in different places and orientations.";
+                status.style.color = "#d32f2f";
+            } else {
+                status.textContent = "Translating and Rotating to verify equality...";
+                status.style.color = "#311b92";
+            }
+        }
+
+        sAngleT.addEventListener('input', updateAngles);
+        updateAngles();
+
+        // --- 4. POSTULATE 5 (PARALLEL) LOGIC ---
+        const sAng1 = document.getElementById('s-ang1');
+        const sAng2 = document.getElementById('s-ang2');
+
+        function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
+            let angleInRadians = angleInDegrees * Math.PI / 180.0;
+            return {
+                x: centerX + (radius * Math.cos(angleInRadians)),
+                y: centerY + (radius * Math.sin(angleInRadians))
+            };
+        }
+
+        function getArcPath(cx, cy, r, startAngle, endAngle) {
+            let start = polarToCartesian(cx, cy, r, startAngle);
+            let end = polarToCartesian(cx, cy, r, endAngle);
+            let largeArcFlag = Math.abs(endAngle - startAngle) <= 180 ? "0" : "1";
+            let sweepFlag = endAngle > startAngle ? "1" : "0";
+            return `M ${start.x} ${start.y} A ${r} ${r} 0 ${largeArcFlag} ${sweepFlag} ${end.x} ${end.y}`;
+        }
+
+        function updateParallel() {
+            let ang1 = parseInt(sAng1.value); // Top interior 
+            let ang2 = parseInt(sAng2.value); // Bottom interior 
+            
+            document.getElementById('val-ang1').textContent = ang1;
+            document.getElementById('val-ang2').textContent = ang2;
+
+            let cx1 = 200, cy1 = 120; // Top intersection
+            let cx2 = 200, cy2 = 280; // Bottom intersection
+            let lineLength = 400;
+
+            // Transversal goes from top to bottom (angle 90° for top, angle -90° for bottom)
+            let topAngle = 90 - ang1;
+            let botAngle = -90 + ang2;
+
+            let topP1 = polarToCartesian(cx1, cy1, lineLength, topAngle);
+            let topP2 = polarToCartesian(cx1, cy1, lineLength, topAngle + 180);
+
+            let botP1 = polarToCartesian(cx2, cy2, lineLength, botAngle);
+            let botP2 = polarToCartesian(cx2, cy2, lineLength, botAngle + 180);
+
+            document.getElementById('geom-line-top').setAttribute('x1', topP2.x);
+            document.getElementById('geom-line-top').setAttribute('y1', topP2.y);
+            document.getElementById('geom-line-top').setAttribute('x2', topP1.x);
+            document.getElementById('geom-line-top').setAttribute('y2', topP1.y);
+
+            document.getElementById('geom-line-bottom').setAttribute('x1', botP2.x);
+            document.getElementById('geom-line-bottom').setAttribute('y1', botP2.y);
+            document.getElementById('geom-line-bottom').setAttribute('x2', botP1.x);
+            document.getElementById('geom-line-bottom').setAttribute('y2', botP1.y);
+
+            // Draw explicit SVG arcs
+            document.getElementById('arc-top').setAttribute('d', getArcPath(cx1, cy1, 40, topAngle, 90));
+            document.getElementById('arc-bottom').setAttribute('d', getArcPath(cx2, cy2, 40, -90, botAngle));
+
+            // Position and align labels dynamically
+            let posT = polarToCartesian(cx1, cy1, 65, 90 - ang1/2);
+            document.getElementById('lbl-ang1').setAttribute('x', posT.x);
+            document.getElementById('lbl-ang1').setAttribute('y', posT.y);
+            document.getElementById('lbl-ang1').textContent = ang1 + "°";
+
+            let posB = polarToCartesian(cx2, cy2, 65, -90 + ang2/2);
+            document.getElementById('lbl-ang2').setAttribute('x', posB.x);
+            document.getElementById('lbl-ang2').setAttribute('y', posB.y);
+            document.getElementById('lbl-ang2').textContent = ang2 + "°";
+
+            // Status Dashboard
+            let sum = ang1 + ang2;
+            document.getElementById('post5-sum').textContent = sum + "°";
+            
+            let status = document.getElementById('post5-status');
+            if (sum < 180) {
+                status.textContent = "Sum < 180° : Lines eventually intersect on the right!";
+                status.style.color = "#d32f2f";
+            } else if (sum === 180) {
+                status.textContent = "Sum = 180° : Lines are perfectly parallel!";
+                status.style.color = "#2e7d32";
+            } else {
+                status.textContent = "Sum > 180° : Lines diverge on the right (they intersect on the left).";
+                status.style.color = "#f57f17";
+            }
+        }
+
+        sAng1.addEventListener('input', updateParallel);
+        sAng2.addEventListener('input', updateParallel);
+        updateParallel();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

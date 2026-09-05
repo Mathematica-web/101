@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area of a Triangle - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #1a237e; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #3f51b5; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); background: #303f9f; }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c5cae9; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #3f51b5; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #3f51b5; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #9fa8da; font-size: 0.95em; min-width: 140px; flex: 1; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+        
+        .proof-box { background: #e8eaf6; padding: 20px; border-radius: 10px; border-left: 6px solid #3f51b5; margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
+        .proof-box h3 { color: #1a237e; margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8eaf6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #3f51b5; }
+        .qa-question { font-weight: bold; color: #1a237e; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #3f51b5; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); background: #303f9f; }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #3f51b5; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #1a237e; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>📐 Area of a Triangle</h1>
+    <p class="subtitle">Calculate 2D space using base and perpendicular height!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Master Formula</h2>
+        <p>The area of a triangle measures the total 2D space enclosed within its three sides. No matter how wildly a triangle is slanted or skewed, calculating its area relies on only two fundamental measurements: the <strong>Base</strong> and the strict <strong>Perpendicular Height</strong>.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Component</th>
+                <th>Definition</th>
+            </tr>
+            <tr>
+                <td><strong>Base (b)</strong></td>
+                <td>Any one of the three sides of the triangle chosen as the bottom anchor.</td>
+            </tr>
+            <tr>
+                <td><strong>Perpendicular Height (h)</strong></td>
+                <td>The straight 90° line dropped from the opposite vertex directly down to the base (or extended base).</td>
+            </tr>
+            <tr>
+                <td><strong>Area Formula</strong></td>
+                <td><strong>Area = &frac12; &times; Base &times; Height</strong></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: DYNAMIC AREA CALCULATOR -->
+    <div class="section-box">
+        <h2 style="color: #e91e63; text-align: center; margin-top: 0;">🧮 1. The Dynamic Area Calculator</h2>
+        <p style="text-align: center; color: #666;">Adjust the Base and Height sliders to see the Area calculate in real-time. Then, move the top vertex left or right. Notice how the shape slants drastically, but <strong>the Area remains completely unchanged</strong> as long as the base and perpendicular height stay constant!</p>
+
+        <div class="interactive-container" style="background: #fce4ec; border-color: #e91e63;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #3f51b5; background: #e8eaf6;">
+                    <label style="color: #1a237e; font-weight: bold;">Base (b): <span id="val-base">200</span> units</label>
+                    <input type="range" id="s-base" min="100" max="350" value="200">
+                </div>
+                <div class="slider-group" style="border-color: #e91e63; background: #fce4ec;">
+                    <label style="color: #880e4f; font-weight: bold;">Height (h): <span id="val-height">150</span> units</label>
+                    <input type="range" id="s-height" min="50" max="200" value="150">
+                </div>
+                <div class="slider-group" style="border-color: #00bcd4; background: #e0f7fa;">
+                    <label style="color: #006064; font-weight: bold;">Skew Top Vertex</label>
+                    <input type="range" id="s-skew" min="-50" max="350" value="100">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
+                <!-- Grid -->
+                <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#eee" stroke-width="1"/>
+                </pattern>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+
+                <!-- Extended Base Line for Obtuse Angles -->
+                <line id="ext-base-l" stroke="#ccc" stroke-width="3" stroke-dasharray="5,5"/>
+                <line id="ext-base-r" stroke="#ccc" stroke-width="3" stroke-dasharray="5,5"/>
+
+                <!-- Main Triangle -->
+                <polygon id="dyn-tri" fill="rgba(63, 81, 181, 0.2)" stroke="#3f51b5" stroke-width="4"/>
+
+                <!-- Base Line Highlight -->
+                <line id="base-line" stroke="#1a237e" stroke-width="6" stroke-linecap="round"/>
+
+                <!-- Height Line -->
+                <line id="height-line" stroke="#e91e63" stroke-width="4" stroke-dasharray="6,4"/>
+                
+                <!-- 90 Degree Box -->
+                <path id="h-90-box" fill="none" stroke="#e91e63" stroke-width="2"/>
+
+                <!-- Vertex Dots -->
+                <circle id="dot-a" r="6" fill="#3f51b5"/>
+                <circle id="dot-b" r="6" fill="#3f51b5"/>
+                <circle id="dot-c" r="8" fill="#00bcd4" stroke="#fff" stroke-width="2"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #3f51b5; background: #fff; flex-basis: 100%;">
+                    <span style="color: #3f51b5; font-size: 1.2em; display: block; margin-bottom: 5px;">Area Calculation</span>
+                    <span id="area-math" class="val-num" style="color: #1a237e; font-size: 1.8em;">&frac12; &times; 200 &times; 150 = 15000 sq units</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE VISUAL PROOF -->
+    <div class="section-box">
+        <h2 style="color: #00bcd4; text-align: center; margin-top: 0;">✨ 2. The Rectangle Half-Proof</h2>
+        <p style="text-align: center; color: #666;">Why is the formula exactly <strong>half</strong> of Base &times; Height? Slide the control to visually clone and unfold the two halves of the triangle. They will magically lock together to form a perfect bounding rectangle!</p>
+
+        <div class="interactive-container" style="background: #e0f7fa; border-color: #00bcd4;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #0097a7; background: #fff; width: 80%;">
+                    <label style="color: #006064; font-weight: bold; font-size: 1.2em;">Unfold Triangle into a Rectangle</label>
+                    <input type="range" id="s-proof" min="0" max="180" value="0">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
+                <!-- Fixed Original Triangle Elements -->
+                <!-- Base: 100,250 to 400,250. Height vertex: 200,100 -->
+                <polygon points="100,250 400,250 200,100" fill="none" stroke="#ccc" stroke-width="3" stroke-dasharray="5,5"/>
+                <line x1="200" y1="100" x2="200" y2="250" stroke="#999" stroke-width="2" stroke-dasharray="4,4"/>
+
+                <!-- Original Left Tri -->
+                <polygon points="100,250 200,250 200,100" fill="rgba(63, 81, 181, 0.4)" stroke="#3f51b5" stroke-width="2"/>
+                <!-- Original Right Tri -->
+                <polygon points="200,250 400,250 200,100" fill="rgba(233, 30, 99, 0.4)" stroke="#e91e63" stroke-width="2"/>
+
+                <!-- Duplicated Left Tri (Rotates around midpoint 150, 175) -->
+                <g id="proof-t1" transform="rotate(0 150 175)">
+                    <polygon points="100,250 200,250 200,100" fill="rgba(63, 81, 181, 0.8)" stroke="#3f51b5" stroke-width="2"/>
+                </g>
+
+                <!-- Duplicated Right Tri (Rotates around midpoint 300, 175) -->
+                <g id="proof-t2" transform="rotate(0 300 175)">
+                    <polygon points="200,250 400,250 200,100" fill="rgba(233, 30, 99, 0.8)" stroke="#e91e63" stroke-width="2"/>
+                </g>
+
+                <!-- Labels -->
+                <text x="250" y="270" font-weight="bold" fill="#1a237e" text-anchor="middle">Base (b)</text>
+                <text x="180" y="180" font-weight="bold" fill="#880e4f" text-anchor="end" transform="rotate(-90 180 180)">Height (h)</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00bcd4; background: #fff; flex-basis: 100%;">
+                    <span id="proof-status" style="color: #0097a7; font-size: 1.5em; font-weight: bold;">Slide to reveal the hidden rectangle!</span>
+                </div>
+            </div>
+
+            <!-- EDUCATIONAL LOGIC BOX -->
+            <div class="proof-box" style="border-left-color: #00bcd4; background: #e0f7fa;">
+                <h3 style="color: #006064;">💡 Why does this work? (The Proof)</h3>
+                <p>By dropping a perpendicular height, we slice the main triangle into two smaller right-angled triangles. If we perfectly duplicate and rotate these two smaller triangles around their hypotenuses, they fill in the empty space above to create a perfect bounding rectangle! The area of a rectangle is simply <strong>Base &times; Height</strong>. Since our original triangle makes up exactly half of the blocks forming this rectangle, its area must strictly be <strong>&frac12; &times; Base &times; Height</strong>!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: A triangle has a base of 15 cm and a perpendicular height of 10 cm. What is its total area?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>75 cm².</strong><br><br>
+                Using the formula: Area = &frac12; &times; base &times; height. <br>
+                Area = &frac12; &times; 15 &times; 10 = 75 cm².
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: If you pull the top vertex of a triangle far to the right, heavily slanting its sides but keeping the base and perpendicular height exactly the same, does the area increase?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>No, the area remains exactly the same!</strong><br><br>
+                As demonstrated in the first simulator, the area formula relies strictly on the horizontal base and the vertical perpendicular height. The steepness or slant of the bounding perimeter does not alter the total amount of 2D space enclosed inside!
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="../chapters/chapter9.html" class="nav-btn">← Previous Chapter</a>
+        <a href="../chapters/chapter10.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic10_2.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. DYNAMIC AREA CALCULATOR LOGIC ---
+        const sBase = document.getElementById('s-base');
+        const sHeight = document.getElementById('s-height');
+        const sSkew = document.getElementById('s-skew');
+
+        function updateArea() {
+            let b = parseInt(sBase.value);
+            let h = parseInt(sHeight.value);
+            let vx = parseInt(sSkew.value);
+
+            document.getElementById('val-base').textContent = b;
+            document.getElementById('val-height').textContent = h;
+
+            let ax = 50, ay = 250;
+            let bx = ax + b, by = 250;
+            let cx = ax + vx, cy = 250 - h;
+
+            // Main Triangle
+            document.getElementById('dyn-tri').setAttribute('points', `${ax},${ay} ${bx},${by} ${cx},${cy}`);
+            
+            // Base Line
+            document.getElementById('base-line').setAttribute('x1', ax);
+            document.getElementById('base-line').setAttribute('y1', ay);
+            document.getElementById('base-line').setAttribute('x2', bx);
+            document.getElementById('base-line').setAttribute('y2', by);
+
+            // Extended base lines for obtuse display
+            let extL = document.getElementById('ext-base-l');
+            let extR = document.getElementById('ext-base-r');
+            extL.style.display = 'none';
+            extR.style.display = 'none';
+
+            if (cx < ax) {
+                extL.setAttribute('x1', cx); extL.setAttribute('y1', ay);
+                extL.setAttribute('x2', ax); extL.setAttribute('y2', ay);
+                extL.style.display = 'block';
+            } else if (cx > bx) {
+                extR.setAttribute('x1', bx); extR.setAttribute('y1', ay);
+                extR.setAttribute('x2', cx); extR.setAttribute('y2', ay);
+                extR.style.display = 'block';
+            }
+
+            // Height Line
+            document.getElementById('height-line').setAttribute('x1', cx);
+            document.getElementById('height-line').setAttribute('y1', cy);
+            document.getElementById('height-line').setAttribute('x2', cx);
+            document.getElementById('height-line').setAttribute('y2', ay);
+
+            // 90 Box
+            let boxDir = (cx > (ax+b/2)) ? -1 : 1; 
+            document.getElementById('h-90-box').setAttribute('d', `M ${cx} ${ay-10} L ${cx + 10*boxDir} ${ay-10} L ${cx + 10*boxDir} ${ay}`);
+
+            // Dots
+            document.getElementById('dot-a').setAttribute('cx', ax); document.getElementById('dot-a').setAttribute('cy', ay);
+            document.getElementById('dot-b').setAttribute('cx', bx); document.getElementById('dot-b').setAttribute('cy', by);
+            document.getElementById('dot-c').setAttribute('cx', cx); document.getElementById('dot-c').setAttribute('cy', cy);
+
+            // Math
+            let area = (0.5 * b * h).toFixed(0);
+            document.getElementById('area-math').innerHTML = `&frac12; &times; ${b} &times; ${h} = <strong>${area}</strong> sq units`;
+        }
+
+        sBase.addEventListener('input', updateArea);
+        sHeight.addEventListener('input', updateArea);
+        sSkew.addEventListener('input', updateArea);
+        updateArea();
+
+
+        // --- 2. RECTANGLE PROOF LOGIC ---
+        const sProof = document.getElementById('s-proof');
+
+        function updateProof() {
+            let angle = parseInt(sProof.value);
+            
+            // Midpoints for rotation: Left = (150, 175), Right = (300, 175)
+            document.getElementById('proof-t1').setAttribute('transform', `rotate(${angle} 150 175)`);
+            document.getElementById('proof-t2').setAttribute('transform', `rotate(${angle} 300 175)`);
+
+            let status = document.getElementById('proof-status');
+            if (angle === 180) {
+                status.innerHTML = "✅ Perfect Rectangle! Triangle Area = <strong>&frac12; of Rectangle</strong>.";
+                status.style.color = "#00838f";
+            } else if (angle === 0) {
+                status.textContent = "Slide to reveal the hidden rectangle!";
+                status.style.color = "#0097a7";
+            } else {
+                status.textContent = "Unfolding and duplicating halves...";
+                status.style.color = "#e91e63";
+            }
+        }
+
+        sProof.addEventListener('input', updateProof);
+        updateProof();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

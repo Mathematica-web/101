@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Converse of Mid-point Theorem - Mathematics 101</title>
+    <style>
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; }
+        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #4ecdc4; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 900px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .axiom-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 20px 0; border-left: 6px solid #4caf50; }
+        .axiom-title { font-size: 1.2em; font-weight: bold; color: #2e7d32; margin-bottom: 10px; }
+        
+        .diagram-container { background: white; border: 3px dashed #4caf50; border-radius: 15px; padding: 20px; margin: 25px auto; max-width: 600px; text-align: center; }
+        .diagram-svg { width: 100%; max-width: 500px; height: auto; display: block; margin: 0 auto; }
+
+        .application-box { background: #f3e5f5; padding: 25px; border-radius: 15px; margin: 30px 0; border-left: 6px solid #9c27b0; }
+        .application-title { font-size: 1.3em; font-weight: bold; color: #7b1fa2; margin-bottom: 15px; text-align: center; }
+
+        .proof-table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
+        .proof-table th, .proof-table td { padding: 12px; border: 2px solid #e1bee7; text-align: left; font-size: 0.95em; }
+        .proof-table th { background: #ce93d8; color: white; font-size: 1.05em; }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #4ecdc4; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: transform 0.3s; }
+        .nav-btn:hover { transform: scale(1.05); }
+        .chapter-btn { background: #ff6b6b; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter8.html" class="back-btn">⬅️ Back to Chapter</a>
+
+    <h1>🛠️ Converse of the Mid-point Theorem</h1>
+    <p class="subtitle">Reversing the logic to solve complex geometry!</p>
+
+    <!-- THEOREM 8.10 -->
+    <div class="section-box">
+        <div class="axiom-box">
+            <div class="axiom-title">Theorem 8.10 (Converse)</div>
+            <p style="font-size: 1.1em;"><strong>The line drawn through the mid-point of one side of a triangle, parallel to another side, bisects the third side.</strong></p>
+        </div>
+
+        <div class="diagram-container">
+            <svg class="diagram-svg" viewBox="0 0 500 250">
+                <polygon points="250,50 100,200 400,200" fill="#f8f9fa" stroke="#333" stroke-width="2"/>
+                
+                <!-- Known Midpoint D -->
+                <circle cx="175" cy="125" r="6" fill="#f44336"/>
+                <text x="155" y="125" font-weight="bold" fill="#f44336" font-size="18">D</text>
+                
+                <!-- Tick marks showing D is midpoint -->
+                <line x1="160" y1="87" x2="175" y2="87" stroke="#f44336" stroke-width="3" transform="rotate(-63.4 167 87)"/>
+                <line x1="125" y1="162" x2="140" y2="162" stroke="#f44336" stroke-width="3" transform="rotate(-63.4 132 162)"/>
+
+                <!-- Parallel Ray DE -->
+                <defs><marker id="arrow-par" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2196f3"/></marker></defs>
+                <line x1="175" y1="125" x2="350" y2="125" stroke="#2196f3" stroke-width="3" stroke-dasharray="6,4" marker-end="url(#arrow-par)"/>
+                
+                <!-- Parallel Base BC -->
+                <line x1="100" y1="200" x2="400" y2="200" stroke="#2196f3" stroke-width="3" marker-end="url(#arrow-par)"/>
+                
+                <text x="250" y="35" font-weight="bold" font-size="18">A</text>
+                <text x="80" y="215" font-weight="bold" font-size="18">B</text>
+                <text x="415" y="215" font-weight="bold" font-size="18">C</text>
+                
+                <!-- Conclusion E -->
+                <circle cx="325" cy="125" r="6" fill="#4caf50"/>
+                <text x="340" y="120" font-weight="bold" fill="#4caf50" font-size="16">E (Must be midpoint!)</text>
+            </svg>
+            <p style="font-size: 1.1em;">If D is the mid-point of AB, and we draw DE || BC, then E <strong>will automatically be</strong> the mid-point of AC.</p>
+        </div>
+    </div>
+
+    <!-- APPLICATION: VARIGNON'S THEOREM -->
+    <div class="section-box">
+        <div class="application-box">
+            <div class="application-title">🌟 Application: Quadrilaterals inside Quadrilaterals!</div>
+            <p style="text-align: center; font-size: 1.1em;">If you join the mid-points of adjacent sides of ANY quadrilateral, the figure formed inside is <strong>ALWAYS a parallelogram!</strong> This beautiful rule is known as Varignon's Theorem.</p>
+
+            <div class="diagram-container" style="border-color: #9c27b0; background: white;">
+                <svg class="diagram-svg" viewBox="0 0 500 300">
+                    <!-- Outer Quadrilateral ABCD -->
+                    <polygon points="50,150 150,250 450,200 350,50" fill="#f8f9fa" stroke="#333" stroke-width="2"/>
+                    
+                    <!-- Inner Parallelogram PQRS -->
+                    <!-- Midpoints: P(100, 200), Q(300, 225), R(400, 125), S(200, 100) -->
+                    <polygon points="100,200 300,225 400,125 200,100" fill="#f3e5f5" stroke="#9c27b0" stroke-width="3"/>
+                    
+                    <!-- Diagonal AC -->
+                    <line x1="50" y1="150" x2="450" y2="200" stroke="#ff9800" stroke-width="2" stroke-dasharray="5,5"/>
+                    
+                    <!-- Points -->
+                    <circle cx="50" cy="150" r="4" fill="#333"/><text x="25" y="155" font-weight="bold">A</text>
+                    <circle cx="150" cy="250" r="4" fill="#333"/><text x="140" y="270" font-weight="bold">B</text>
+                    <circle cx="450" cy="200" r="4" fill="#333"/><text x="465" y="205" font-weight="bold">C</text>
+                    <circle cx="350" cy="50" r="4" fill="#333"/><text x="350" y="35" font-weight="bold">D</text>
+
+                    <!-- Midpoints -->
+                    <circle cx="100" cy="200" r="5" fill="#9c27b0"/><text x="75" y="215" font-weight="bold" fill="#9c27b0">P</text>
+                    <circle cx="300" cy="225" r="5" fill="#9c27b0"/><text x="300" y="245" font-weight="bold" fill="#9c27b0">Q</text>
+                    <circle cx="400" cy="125" r="5" fill="#9c27b0"/><text x="415" y="120" font-weight="bold" fill="#9c27b0">R</text>
+                    <circle cx="200" cy="100" r="5" fill="#9c27b0"/><text x="185" y="90" font-weight="bold" fill="#9c27b0">S</text>
+
+                    <text x="250" y="170" font-weight="bold" fill="#7b1fa2" font-size="16">PQRS is a Parallelogram!</text>
+                </svg>
+            </div>
+
+            <h3 style="color: #7b1fa2;">📝 Mathematical Proof</h3>
+            <p><strong>Given:</strong> Quadrilateral ABCD. P, Q, R, and S are mid-points of sides AB, BC, CD, and DA respectively.</p>
+            <p><strong>To prove:</strong> PQRS is a parallelogram.</p>
+
+            <table class="proof-table">
+                <tr><th>Statement</th><th>Reason</th></tr>
+                <tr><td>Draw the diagonal AC.</td><td>Construction</td></tr>
+                <tr><td>In ΔABC, P and Q are mid-points of sides AB and BC.</td><td>Given</td></tr>
+                <tr><td><strong>PQ || AC</strong> and <strong>PQ = ½ AC</strong></td><td>Mid-point Theorem applied to ΔABC</td></tr>
+                <tr><td>In ΔADC, S and R are mid-points of sides AD and CD.</td><td>Given</td></tr>
+                <tr><td><strong>SR || AC</strong> and <strong>SR = ½ AC</strong></td><td>Mid-point Theorem applied to ΔADC</td></tr>
+                <tr><td>PQ || SR</td><td>Since both are parallel to AC (Lines parallel to same line are parallel to each other)</td></tr>
+                <tr><td>PQ = SR</td><td>Since both are equal to ½ AC (Things equal to same thing are equal)</td></tr>
+                <tr><td>In quadrilateral PQRS, one pair of opposite sides (PQ and SR) is equal and parallel.</td><td>Proven in the steps above</td></tr>
+                <tr><td><strong>∴ PQRS is a parallelogram. ✅</strong></td><td>Condition for a parallelogram (Theorem 8.8)</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="../topics/topic8_4.html" class="nav-btn chapter-btn">← Prev Topic</a>
+        <a href="../chapters/chapter9.html" class="nav-btn">Next Chapter ➡️</a>
+    </div>
+</body>
+</html>

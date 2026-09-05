@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction & Terms - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #00838f; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #00838f; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #00838f; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #80deea; font-size: 0.95em; min-width: 140px; flex: 1; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+        select { width: 100%; padding: 8px; margin-top: 10px; border-radius: 5px; border: 2px solid #80deea; font-family: inherit; font-weight: bold; color: #006064; cursor: pointer; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+        
+        .proof-box { background: #e0f7fa; padding: 20px; border-radius: 10px; border-left: 6px solid #00838f; margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
+        .proof-box h3 { color: #006064; margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e0f7fa; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00838f; }
+        .qa-question { font-weight: bold; color: #006064; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #00838f; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #00838f; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #006064; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>⭕ Introduction to Circles & Terms</h1>
+    <p class="subtitle">Understanding the anatomy of the perfect curve!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Parts of a Circle</h2>
+        <p>A circle is a collection of all points in a plane which are at a constant distance (radius) from a fixed point (center). Let's learn the vocabulary required to describe its different sections.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Term</th>
+                <th>Definition</th>
+            </tr>
+            <tr>
+                <td><strong>Radius</strong></td>
+                <td>A line segment connecting the center to any point on the circle.</td>
+            </tr>
+            <tr>
+                <td><strong>Chord</strong></td>
+                <td>A line segment connecting any two distinct points on the circle.</td>
+            </tr>
+            <tr>
+                <td><strong>Diameter</strong></td>
+                <td>The longest possible chord. It passes directly through the center and is exactly twice the length of the radius.</td>
+            </tr>
+            <tr>
+                <td><strong>Arc</strong></td>
+                <td>A continuous piece of the circle's outer edge (circumference).</td>
+            </tr>
+            <tr>
+                <td><strong>Sector & Segment</strong></td>
+                <td>A <strong>Sector</strong> is a slice bounded by two radii (like a pizza slice). A <strong>Segment</strong> is a region bounded by a chord and an arc.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE ANATOMY EXPLORER -->
+    <div class="section-box">
+        <h2 style="color: #00838f; text-align: center; margin-top: 0;">🔍 1. The Anatomy Explorer</h2>
+        <p style="text-align: center; color: #666;">Select a term from the dropdown to highlight that specific part of the circle's anatomy!</p>
+
+        <div class="interactive-container" style="background: #e0f7fa; border-color: #00838f;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #00acc1; background: #fff; width: 60%;">
+                    <label style="color: #006064; font-weight: bold; font-size: 1.1em;">Highlight Circle Part:</label>
+                    <select id="sel-part">
+                        <option value="none">-- Select a Part --</option>
+                        <option value="radius">Radius</option>
+                        <option value="chord">Chord</option>
+                        <option value="diameter">Diameter</option>
+                        <option value="arc">Arc</option>
+                        <option value="sector">Sector</option>
+                        <option value="segment">Segment</option>
+                    </select>
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 320" style="height: 320px; background: #fafafa;">
+                <!-- Base Circle -->
+                <circle cx="250" cy="160" r="120" fill="#f5f5f5" stroke="#ccc" stroke-width="4"/>
+                <circle cx="250" cy="160" r="5" fill="#333"/>
+                <text x="245" y="180" font-weight="bold" fill="#333">Center</text>
+
+                <!-- Dynamic Highlights -->
+                <path id="hl-sector" d="M 250 160 L 370 160 A 120 120 0 0 1 250 280 Z" fill="rgba(255, 143, 0, 0.4)" opacity="0"/>
+                <path id="hl-segment" d="M 165.1 75.1 A 120 120 0 0 1 334.9 75.1 Z" fill="rgba(211, 47, 47, 0.4)" opacity="0"/>
+                
+                <path id="hl-arc" d="M 370 160 A 120 120 0 0 1 250 280" fill="none" stroke="#d32f2f" stroke-width="8" opacity="0"/>
+                
+                <line id="hl-radius" x1="250" y1="160" x2="370" y2="160" stroke="#1976d2" stroke-width="6" stroke-linecap="round" opacity="0"/>
+                <line id="hl-diameter" x1="130" y1="160" x2="370" y2="160" stroke="#388e3c" stroke-width="6" stroke-linecap="round" opacity="0"/>
+                <line id="hl-chord" x1="165.1" y1="75.1" x2="334.9" y2="75.1" stroke="#e65100" stroke-width="6" stroke-linecap="round" opacity="0"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00838f; background: #fff; flex-basis: 100%;">
+                    <span id="part-desc" style="color: #006064; font-size: 1.2em; font-weight: bold;">Select a part to see its definition.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: CHORD TO DIAMETER -->
+    <div class="section-box">
+        <h2 style="color: #d81b60; text-align: center; margin-top: 0;">📏 2. The Longest Chord</h2>
+        <p style="text-align: center; color: #666;">Move the chord up and down. Notice how it gets longer as it approaches the center. The moment it passes exactly through the center, it becomes the <strong>Diameter</strong>—the longest possible chord in any circle!</p>
+
+        <div class="interactive-container" style="background: #fce4ec; border-color: #d81b60;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #c2185b; background: #fff; width: 80%;">
+                    <label style="color: #880e4f; font-weight: bold; font-size: 1.1em;">Slide Chord Vertically</label>
+                    <input type="range" id="s-chord-y" min="-120" max="120" value="-80">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
+                <circle cx="250" cy="150" r="120" fill="rgba(216, 27, 96, 0.05)" stroke="#d81b60" stroke-width="4"/>
+                <circle cx="250" cy="150" r="5" fill="#333"/>
+                <line x1="100" y1="150" x2="400" y2="150" stroke="#ccc" stroke-width="2" stroke-dasharray="5,5"/>
+
+                <line id="dyn-chord" stroke="#d81b60" stroke-width="6" stroke-linecap="round"/>
+                
+                <circle id="dyn-dot1" r="5" fill="#880e4f"/>
+                <circle id="dyn-dot2" r="5" fill="#880e4f"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #d81b60; background: #fff; flex-basis: 100%;">
+                    <span id="chord-status" style="color: #880e4f; font-size: 1.4em; font-weight: bold;">Chord Length: 178.8 units</span>
+                </div>
+            </div>
+            
+            <!-- EDUCATIONAL LOGIC BOX -->
+            <div class="proof-box" style="border-left-color: #d81b60; background: #fce4ec;">
+                <h3 style="color: #ad1457;">💡 Why does this work? (The Proof)</h3>
+                <p>If you connect the center to the two endpoints of any chord, you form a triangle with two sides equal to the radius (r). The Triangle Inequality Theorem dictates that the length of the third side (the chord) must be strictly less than or equal to the sum of the other two sides (r + r = 2r). The only way the chord reaches its absolute maximum length of 2r is when the "triangle" perfectly flattens out, meaning the chord passes straight through the center. A chord passing through the center is exactly what we call a diameter!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: If the radius of a circle is 8.5 cm, what is the length of its longest chord?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>17 cm.</strong><br><br>
+                The longest chord of a circle is its diameter, which is exactly twice the length of the radius (8.5 × 2 = 17).
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: What is the difference between a sector and a segment?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                A <strong>sector</strong> is bounded by two radii and an arc (like a slice of pizza). A <strong>segment</strong> is bounded by a single chord and an arc.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a style="visibility: hidden;" class="nav-btn">← Prev Topic</a> <!-- Placeholder to keep center alignment -->
+        <a href="../chapters/chapter9.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic9_2.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. ANATOMY EXPLORER LOGIC ---
+        const selPart = document.getElementById('sel-part');
+        const parts = ['radius', 'chord', 'diameter', 'arc', 'sector', 'segment'];
+
+        const partDescs = {
+            'none': "Select a part to see its definition.",
+            'radius': "Radius: The distance from the center to the edge. (Length = R)",
+            'chord': "Chord: A straight line connecting two points on the circle's edge.",
+            'diameter': "Diameter: A chord that passes perfectly through the center. (Length = 2R)",
+            'arc': "Arc: A curved portion of the circle's circumference.",
+            'sector': "Sector: The area enclosed by two radii and an arc (like a pizza slice).",
+            'segment': "Segment: The area enclosed by a single chord and an arc."
+        };
+
+        function updateAnatomy() {
+            let val = selPart.value;
+            parts.forEach(p => document.getElementById(`hl-${p}`).setAttribute('opacity', '0'));
+            
+            if (val !== 'none') {
+                document.getElementById(`hl-${val}`).setAttribute('opacity', '1');
+            }
+            document.getElementById('part-desc').textContent = partDescs[val];
+        }
+
+        selPart.addEventListener('change', updateAnatomy);
+
+        // --- 2. CHORD TO DIAMETER LOGIC ---
+        const sChordY = document.getElementById('s-chord-y');
+
+        function updateChord() {
+            let offset = parseInt(sChordY.value);
+            let cy = 150;
+            let cx = 250;
+            let r = 120;
+            
+            let y = cy + offset;
+            let xDist = Math.sqrt(r*r - offset*offset);
+            
+            let x1 = cx - xDist;
+            let x2 = cx + xDist;
+            
+            document.getElementById('dyn-chord').setAttribute('x1', x1);
+            document.getElementById('dyn-chord').setAttribute('y1', y);
+            document.getElementById('dyn-chord').setAttribute('x2', x2);
+            document.getElementById('dyn-chord').setAttribute('y2', y);
+            
+            document.getElementById('dyn-dot1').setAttribute('cx', x1);
+            document.getElementById('dyn-dot1').setAttribute('cy', y);
+            document.getElementById('dyn-dot2').setAttribute('cx', x2);
+            document.getElementById('dyn-dot2').setAttribute('cy', y);
+
+            let length = (2 * xDist).toFixed(1);
+            let status = document.getElementById('chord-status');
+            
+            if (offset === 0) {
+                status.textContent = `Length: ${length} units. It's a Diameter!`;
+                status.style.color = "#2e7d32";
+                document.getElementById('dyn-chord').setAttribute('stroke', '#388e3c');
+            } else {
+                status.textContent = `Chord Length: ${length} units`;
+                status.style.color = "#880e4f";
+                document.getElementById('dyn-chord').setAttribute('stroke', '#d81b60');
+            }
+        }
+
+        sChordY.addEventListener('input', updateChord);
+        updateChord();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

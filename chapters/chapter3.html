@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordinate Geometry - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body {
+            font-family: 'Comic Sans MS', 'Verdana', sans-serif;
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .back-btn {
+            display: inline-block;
+            background: #4ecdc4;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        .back-btn:hover { transform: translateX(-5px); }
+
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+
+        /* 📚 CHAPTER CONTENT BOX */
+        .chapter-box {
+            max-width: 900px;
+            margin: 30px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 📋 TOPIC LIST */
+        .topic-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .topic-card {
+            background: linear-gradient(135deg, #f3f4f6 0%, #ffffff 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 6px solid #4ecdc4;
+            text-align: left;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: bounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        /* Staggered animation delays */
+        .topic-card:nth-child(1) { animation-delay: 0.2s; }
+        .topic-card:nth-child(2) { animation-delay: 0.4s; }
+        .topic-card:nth-child(3) { animation-delay: 0.6s; }
+        .topic-card:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            70% { transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .topic-card:hover {
+            transform: scale(1.02) !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .topic-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #006064;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .topic-icon {
+            font-size: 1.3em;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .topic-desc {
+            color: #666;
+            font-size: 1em;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        /* 🔄 NAVIGATION */
+        .nav-buttons {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 900px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .nav-btn {
+            background: #4ecdc4;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            min-width: 150px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .chapter-btn { 
+            background: #ff6b6b; 
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ⬅️ BACK TO INDEX -->
+    <a href="../index.html" class="back-btn">⬅️ Back to Course Home</a>
+
+    <!-- 🌟 HEADER -->
+    <h1>📍 Coordinate Geometry</h1>
+    <p class="subtitle">Locate points and shapes on a plane!</p>
+
+    <!-- 📖 CHAPTER CONTENT -->
+    <div class="chapter-box">
+        <div class="topic-list">
+            <!-- Topic 3.1 -->
+            <a href="../topics/topic3_1.html" class="topic-card">
+                <div class="topic-title">
+                    <span class="topic-icon">📍</span>
+                    Introduction to Coordinates
+                </div>
+                <p class="topic-desc">Learn about the x-axis, y-axis, quadrants, and how to plot points.</p>
+            </a>
+
+            <!-- Topic 3.2 -->
+            <a href="../topics/topic3_2.html" class="topic-card">
+                <div class="topic-title">
+                    <span class="topic-icon">📏</span>
+                    Distance Formula
+                </div>
+                <p class="topic-desc">Calculate the distance between any two points on a plane.</p>
+            </a>
+
+            <!-- Topic 3.3 -->
+            <a href="../topics/topic3_3.html" class="topic-card">
+                <div class="topic-title">
+                    <span class="topic-icon">➗</span>
+                    Section Formula
+                </div>
+                <p class="topic-desc">Find the coordinates of a point that divides a line segment in a given ratio.</p>
+            </a>
+
+            <!-- Topic 3.4 -->
+            <a href="../topics/topic3_4.html" class="topic-card">
+                <div class="topic-title">
+                    <span class="topic-icon">🔺</span>
+                    Area of Triangle
+                </div>
+                <p class="topic-desc">Calculate the area of a triangle formed by three points using coordinates.</p>
+            </a>
+        </div>
+    </div>
+
+    <!-- 🔄 NAVIGATION -->
+    <div class="nav-buttons">
+        <a href="../chapters/chapter2.html" class="nav-btn chapter-btn">← Prev Chapter</a>
+        <a href="../index.html" class="nav-btn">Course Index</a>
+        <a href="../chapters/chapter4.html" class="nav-btn">Next Chapter →</a>
+    </div>
+
+</body>
+</html>

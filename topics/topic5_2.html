@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Euclid's Axioms - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #1a237e; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #3949ab; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c5cae9; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #3949ab; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #3949ab; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #9fa8da; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8eaf6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #3949ab; }
+        .qa-question { font-weight: bold; color: #1a237e; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #3949ab; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #3949ab; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #283593; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>🏛️ Euclid's Universal Axioms</h1>
+    <p class="subtitle">The indisputable rules that govern all of mathematics!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The 7 Axioms</h2>
+        <p>While Postulates only apply to shapes and geometry, <strong>Axioms</strong> are universal truths. They apply to numbers, algebra, physics, and everyday logic. Euclid listed seven fundamental axioms that form the bedrock of all mathematical equations.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Axiom #</th>
+                <th>Statement</th>
+                <th>Simple Meaning</th>
+            </tr>
+            <tr>
+                <td><strong>1</strong></td>
+                <td>Things which are equal to the same thing are equal to one another.</td>
+                <td>If A = C and B = C, then A = B.</td>
+            </tr>
+            <tr>
+                <td><strong>2</strong></td>
+                <td>If equals are added to equals, the wholes are equal.</td>
+                <td>If A = B, then A + C = B + C.</td>
+            </tr>
+            <tr>
+                <td><strong>3</strong></td>
+                <td>If equals are subtracted from equals, the remainders are equal.</td>
+                <td>If A = B, then A - C = B - C.</td>
+            </tr>
+            <tr>
+                <td><strong>4</strong></td>
+                <td>Things which coincide with one another are equal to one another.</td>
+                <td>If two shapes fit perfectly over each other, they are identical.</td>
+            </tr>
+            <tr>
+                <td><strong>5</strong></td>
+                <td>The whole is greater than the part.</td>
+                <td>A full pizza is always bigger than a single slice.</td>
+            </tr>
+            <tr>
+                <td><strong>6 & 7</strong></td>
+                <td>Things which are double (or halves) of the same things are equal to one another.</td>
+                <td>If A = B, then 2A = 2B and A/2 = B/2.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: AXIOMS 1, 2, 3 -->
+    <div class="section-box">
+        <h2 style="color: #e65100; text-align: center; margin-top: 0;">⚖️ 1. The Algebraic Balance (Axioms 1, 2, 3)</h2>
+        <p style="text-align: center; color: #666;">This simulator demonstrates that as long as you treat both sides of an equation equally, balance is maintained. Add or subtract block <strong>C</strong> to the identical starting blocks <strong>A</strong> and <strong>B</strong>!</p>
+
+        <div class="interactive-container" style="background: #fff8e1; border-color: #ffb300;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #d32f2f; background: #ffebee;">
+                    <label style="color: #b71c1c; font-weight: bold;">Starting Value (A = B): <span id="val-ax-ab">4</span></label>
+                    <input type="range" id="s-ax-ab" min="1" max="6" value="4">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Modify Value (C): <span id="val-ax-c">+2</span></label>
+                    <input type="range" id="s-ax-c" min="-3" max="3" value="2">
+                </div>
+            </div>
+
+            <svg id="bal-svg" class="svg-canvas" viewBox="0 0 500 300" style="height: 300px;">
+                <!-- Ground -->
+                <line x1="50" y1="250" x2="450" y2="250" stroke="#333" stroke-width="4"/>
+                
+                <!-- Pillar A -->
+                <rect id="rect-a" x="125" y="150" width="80" height="100" fill="#d32f2f" stroke="#b71c1c" stroke-width="2"/>
+                <text id="lbl-a" x="165" y="210" font-weight="bold" fill="#fff" font-size="24px" text-anchor="middle">A</text>
+                
+                <rect id="rect-ca" x="125" y="100" width="80" height="50" fill="#1976d2" stroke="#0d47a1" stroke-width="2"/>
+                <text id="lbl-ca" x="165" y="135" font-weight="bold" fill="#fff" font-size="20px" text-anchor="middle">+C</text>
+
+                <!-- Pillar B -->
+                <rect id="rect-b" x="295" y="150" width="80" height="100" fill="#d32f2f" stroke="#b71c1c" stroke-width="2"/>
+                <text id="lbl-b" x="335" y="210" font-weight="bold" fill="#fff" font-size="24px" text-anchor="middle">B</text>
+                
+                <rect id="rect-cb" x="295" y="100" width="80" height="50" fill="#1976d2" stroke="#0d47a1" stroke-width="2"/>
+                <text id="lbl-cb" x="335" y="135" font-weight="bold" fill="#fff" font-size="20px" text-anchor="middle">+C</text>
+
+                <text x="250" y="200" font-weight="bold" fill="#333" font-size="40px" text-anchor="middle">=</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #ff8f00; background: #fff; flex-basis: 100%;">
+                    <span id="ax123-status" style="color: #e65100; font-size: 1.5em;">If A = B, then A + C = B + C (Axiom 2)</span>
+                    <span id="ax123-math" class="val-num" style="color: #333; font-size: 1.8em; margin-top: 10px;">4 + 2 = 4 + 2</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: AXIOM 4 -->
+    <div class="section-box">
+        <h2 style="color: #00897b; text-align: center; margin-top: 0;">🧩 2. The Coincidence Slider (Axiom 4)</h2>
+        <p style="text-align: center; color: #666;">"Things which coincide with one another are equal to one another." Slide Polygon 2 over Polygon 1. When they perfectly overlap, mathematics declares them geometrically equal!</p>
+
+        <div class="interactive-container" style="background: #e0f2f1; border-color: #00897b;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #00695c; background: #fff; width: 80%;">
+                    <label style="color: #00695c; font-weight: bold; font-size: 1.2em;">Slide to Coincide</label>
+                    <input type="range" id="s-coincide" min="0" max="100" value="0">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 250" style="height: 250px; background: #fafafa;">
+                <!-- Fixed Polygon 1 -->
+                <polygon points="100,50 150,150 50,200" fill="none" stroke="#004d40" stroke-width="6"/>
+                <text x="75" y="140" font-weight="bold" fill="#004d40" font-size="20px">1</text>
+
+                <!-- Moving Polygon 2 -->
+                <g id="moving-poly">
+                    <polygon points="350,50 400,150 300,200" fill="#80cbc4" stroke="#00897b" stroke-width="4" opacity="0.8"/>
+                    <text x="325" y="140" font-weight="bold" fill="#00695c" font-size="20px">2</text>
+                </g>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00897b; background: #fff; flex-basis: 100%;">
+                    <span id="ax4-status" style="color: #00695c; font-size: 1.5em;">Polygons are separate.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: AXIOM 5 -->
+    <div class="section-box">
+        <h2 style="color: #d81b60; text-align: center; margin-top: 0;">🍕 3. The Whole vs. Part (Axiom 5)</h2>
+        <p style="text-align: center; color: #666;">"The whole is greater than the part." It seems incredibly obvious, but Euclid knew it had to be stated officially. Slide to extract a piece of the pie and mathematically prove it is smaller than the original!</p>
+
+        <div class="interactive-container" style="background: #fce4ec; border-color: #d81b60;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #c2185b; background: #f8bbd0; width: 80%;">
+                    <label style="color: #880e4f; font-weight: bold; font-size: 1.2em;">Extract a Part (Angle of Slice): <span id="val-pie">60</span>°</label>
+                    <input type="range" id="s-pie" min="1" max="359" value="60">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="background: #fff; height: 350px;">
+                <!-- Full Circle (The Whole) -->
+                <circle cx="150" cy="175" r="100" fill="#f8bbd0" stroke="#c2185b" stroke-width="4"/>
+                <text x="150" y="310" font-weight="bold" fill="#880e4f" font-size="20px" text-anchor="middle">The Whole (360°)</text>
+                
+                <!-- The Extracted Part -->
+                <path id="pie-slice" fill="#d81b60" stroke="#880e4f" stroke-width="3" transform="translate(350, 175)"/>
+                
+                <!-- Utilizing tspan to ensure the text stays within the SVG Canvas -->
+                <text x="350" y="310" font-weight="bold" fill="#880e4f" font-size="20px" text-anchor="middle">The Part (<tspan id="txt-part">60</tspan>°)</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #d81b60; background: #fff; flex-basis: 100%;">
+                    <span id="ax5-status" class="val-num" style="color: #c2185b; font-size: 2.2em;">360° > 60°</span>
+                    <span style="color: #880e4f; font-weight: bold; font-size: 1.2em; margin-top: 10px; display: block;">The Whole is strictly greater than the Part!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: Which Axiom allows us to solve the equation x + 5 = 12 by subtracting 5 from both sides?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Axiom 3!</strong><br><br>
+                "If equals are subtracted from equals, the remainders are equal." By subtracting 5 from the left side (x + 5) and 5 from the right side (12), we guarantee that the new equation (x = 7) remains perfectly true and balanced.
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: If line segment PQ is placed exactly on top of line segment RS and they match end-to-end, what does Axiom 4 tell us?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>They are mathematically equal!</strong><br><br>
+                Axiom 4 ("Things which coincide with one another are equal") proves that length PQ = length RS without even needing a ruler to measure them!
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic5_1.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter5.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic5_3.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. AXIOMS 1, 2, 3 (BALANCE) LOGIC ---
+        const sAxAb = document.getElementById('s-ax-ab');
+        const sAxC = document.getElementById('s-ax-c');
+
+        function updateBalance() {
+            let ab = parseInt(sAxAb.value);
+            let c = parseInt(sAxC.value);
+
+            document.getElementById('val-ax-ab').textContent = ab;
+            document.getElementById('val-ax-c').textContent = c >= 0 ? "+" + c : c;
+
+            // Base scale 25px per unit
+            let scale = 25;
+            let baseH = ab * scale;
+            let cH = Math.abs(c) * scale;
+
+            // Pillar A
+            let rectA = document.getElementById('rect-a');
+            rectA.setAttribute('y', 250 - baseH);
+            rectA.setAttribute('height', baseH);
+            document.getElementById('lbl-a').setAttribute('y', 250 - baseH/2 + 8);
+
+            // Addition C on A
+            let rectCa = document.getElementById('rect-ca');
+            let lblCa = document.getElementById('lbl-ca');
+            if (c === 0) {
+                rectCa.style.display = "none";
+                lblCa.style.display = "none";
+            } else if (c > 0) {
+                rectCa.style.display = "block"; lblCa.style.display = "block";
+                rectCa.setAttribute('y', 250 - baseH - cH);
+                rectCa.setAttribute('height', cH);
+                rectCa.setAttribute('fill', '#1976d2'); // Blue for add
+                lblCa.setAttribute('y', 250 - baseH - cH/2 + 6);
+                lblCa.textContent = `+${c}`;
+            } else {
+                // Subtraction (hides part of base)
+                rectCa.style.display = "block"; lblCa.style.display = "block";
+                rectCa.setAttribute('y', 250 - baseH);
+                rectCa.setAttribute('height', cH);
+                rectCa.setAttribute('fill', 'rgba(255,255,255,0.7)'); // Ghost out top part
+                lblCa.setAttribute('y', 250 - baseH + cH/2 + 6);
+                lblCa.textContent = `${c}`;
+            }
+
+            // Pillar B
+            let rectB = document.getElementById('rect-b');
+            rectB.setAttribute('y', 250 - baseH);
+            rectB.setAttribute('height', baseH);
+            document.getElementById('lbl-b').setAttribute('y', 250 - baseH/2 + 8);
+
+            // Addition C on B
+            let rectCb = document.getElementById('rect-cb');
+            let lblCb = document.getElementById('lbl-cb');
+            if (c === 0) {
+                rectCb.style.display = "none";
+                lblCb.style.display = "none";
+            } else if (c > 0) {
+                rectCb.style.display = "block"; lblCb.style.display = "block";
+                rectCb.setAttribute('y', 250 - baseH - cH);
+                rectCb.setAttribute('height', cH);
+                rectCb.setAttribute('fill', '#1976d2'); 
+                lblCb.setAttribute('y', 250 - baseH - cH/2 + 6);
+                lblCb.textContent = `+${c}`;
+            } else {
+                rectCb.style.display = "block"; lblCb.style.display = "block";
+                rectCb.setAttribute('y', 250 - baseH);
+                rectCb.setAttribute('height', cH);
+                rectCb.setAttribute('fill', 'rgba(255,255,255,0.7)'); 
+                lblCb.setAttribute('y', 250 - baseH + cH/2 + 6);
+                lblCb.textContent = `${c}`;
+            }
+
+            // Dashboard
+            let status = document.getElementById('ax123-status');
+            let mathStr = document.getElementById('ax123-math');
+            let total = ab + c;
+
+            if (c > 0) {
+                status.textContent = "If A = B, then A + C = B + C (Axiom 2)";
+                mathStr.textContent = `${ab} + ${c} = ${ab} + ${c}  ➡️  ${total} = ${total}`;
+            } else if (c < 0) {
+                status.textContent = "If A = B, then A - C = B - C (Axiom 3)";
+                mathStr.textContent = `${ab} - ${Math.abs(c)} = ${ab} - ${Math.abs(c)}  ➡️  ${total} = ${total}`;
+            } else {
+                status.textContent = "Things which are equal to the same thing are equal. (Axiom 1)";
+                mathStr.textContent = `${ab} = ${ab}`;
+            }
+        }
+
+        sAxAb.addEventListener('input', updateBalance);
+        sAxC.addEventListener('input', updateBalance);
+        updateBalance();
+
+
+        // --- 2. AXIOM 4 (COINCIDENCE) LOGIC ---
+        const sCoincide = document.getElementById('s-coincide');
+
+        function updateCoincide() {
+            let t = parseInt(sCoincide.value) / 100; // 0 to 1
+
+            // Polygon 2 starts at x=350, needs to move to x=100 (a distance of -250)
+            // By translating -250*t, the polygon smoothly moves leftwards.
+            let currX = 250 * t;
+            
+            let movingPoly = document.getElementById('moving-poly');
+            movingPoly.setAttribute('transform', `translate(-${currX}, 0)`);
+
+            let status = document.getElementById('ax4-status');
+            if (t === 1) {
+                status.textContent = "Perfect Coincidence! Shape 1 is equal to Shape 2.";
+                status.style.color = "#2e7d32";
+            } else {
+                status.textContent = "Polygons are separate.";
+                status.style.color = "#00695c";
+            }
+        }
+
+        sCoincide.addEventListener('input', updateCoincide);
+        updateCoincide();
+
+
+        // --- 3. AXIOM 5 (WHOLE VS PART) LOGIC ---
+        const sPie = document.getElementById('s-pie');
+
+        function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
+            let angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;
+            return {
+                x: centerX + (radius * Math.cos(angleInRadians)),
+                y: centerY + (radius * Math.sin(angleInRadians))
+            };
+        }
+
+        function describePieSlice(radius, angle) {
+            let start = polarToCartesian(0, 0, radius, 0);
+            let end = polarToCartesian(0, 0, radius, angle);
+            let largeArcFlag = angle > 180 ? "1" : "0";
+            return [
+                "M", 0, 0,
+                "L", start.x, start.y, 
+                "A", radius, radius, 0, largeArcFlag, 1, end.x, end.y,
+                "Z"
+            ].join(" ");
+        }
+
+        function updatePie() {
+            let angle = parseInt(sPie.value);
+            
+            document.getElementById('val-pie').textContent = angle;
+            document.getElementById('txt-part').textContent = angle;
+
+            let pathStr = describePieSlice(100, angle);
+            document.getElementById('pie-slice').setAttribute('d', pathStr);
+
+            document.getElementById('ax5-status').textContent = `360° > ${angle}°`;
+        }
+
+        sPie.addEventListener('input', updatePie);
+        updatePie();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inequalities in a Triangle - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #004d40; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #00695c; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2dfdb; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #00695c; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #00695c; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #4db6ac; font-size: 0.95em; min-width: 140px; flex: 1; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e0f2f1; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00695c; }
+        .qa-question { font-weight: bold; color: #004d40; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #00695c; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #00695c; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #004d40; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>📏 Inequalities in a Triangle</h1>
+    <p class="subtitle">Not all sides and angles are created equal!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>Unequal Triangles</h2>
+        <p>So far, we have looked at congruent (perfectly equal) triangles and symmetric shapes like isosceles triangles. But what happens in an ordinary, unequal triangle? Nature forces a strict set of inequalities to maintain the triangle's shape.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Inequality Theorem</th>
+                <th>The Rule</th>
+            </tr>
+            <tr>
+                <td><strong>Longer Side = Larger Angle</strong></td>
+                <td>In any triangle, the angle strictly opposite to the longest side is always the largest angle. Conversely, the side opposite the largest angle is always the longest side.</td>
+            </tr>
+            <tr>
+                <td><strong>Triangle Inequality Theorem</strong></td>
+                <td>The sum of the lengths of any two sides of a triangle must be strictly greater than the length of the third side.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: SIDE-ANGLE RELATIONSHIP -->
+    <div class="section-box">
+        <h2 style="color: #e65100; text-align: center; margin-top: 0;">🔍 1. The Side-Angle Scale</h2>
+        <p style="text-align: center; color: #666;">Move Vertex C to reshape the triangle. Notice how the largest angle (highlighted in red) always stays strictly opposite the longest side (also highlighted in red). They are mathematically bound to each other!</p>
+
+        <div class="interactive-container" style="background: #fff8e1; border-color: #ffb300;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #e65100; background: #ffebee;">
+                    <label style="color: #b71c1c; font-weight: bold;">Move Vertex C (Left/Right)</label>
+                    <input type="range" id="s-cx" min="50" max="450" value="150">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Move Vertex C (Up/Down)</label>
+                    <input type="range" id="s-cy" min="30" max="220" value="80">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
+                <!-- Triangle Sides -->
+                <line id="side-ab" stroke="#ccc" stroke-width="6" stroke-linecap="round"/>
+                <line id="side-bc" stroke="#ccc" stroke-width="6" stroke-linecap="round"/>
+                <line id="side-ca" stroke="#ccc" stroke-width="6" stroke-linecap="round"/>
+
+                <!-- Angle Wedges -->
+                <path id="arc-a" fill="rgba(0,0,0,0.1)" stroke="#999" stroke-width="2"/>
+                <path id="arc-b" fill="rgba(0,0,0,0.1)" stroke="#999" stroke-width="2"/>
+                <path id="arc-c" fill="rgba(0,0,0,0.1)" stroke="#999" stroke-width="2"/>
+
+                <!-- Angle Labels -->
+                <text id="lbl-ang-a" font-weight="bold" fill="#555" font-size="16px" text-anchor="middle" alignment-baseline="middle"></text>
+                <text id="lbl-ang-b" font-weight="bold" fill="#555" font-size="16px" text-anchor="middle" alignment-baseline="middle"></text>
+                <text id="lbl-ang-c" font-weight="bold" fill="#555" font-size="16px" text-anchor="middle" alignment-baseline="middle"></text>
+
+                <!-- Vertices -->
+                <circle id="dot-c" r="8" fill="#333" stroke="#fff" stroke-width="2"/>
+                <text id="txt-c" font-weight="bold" fill="#333" font-size="20px" text-anchor="middle">C</text>
+
+                <circle cx="100" cy="260" r="8" fill="#333" stroke="#fff" stroke-width="2"/>
+                <text x="80" y="280" font-weight="bold" fill="#333" font-size="20px" text-anchor="middle">A</text>
+
+                <circle cx="400" cy="260" r="8" fill="#333" stroke="#fff" stroke-width="2"/>
+                <text x="420" y="280" font-weight="bold" fill="#333" font-size="20px" text-anchor="middle">B</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #d32f2f; background: #ffebee;">
+                    <span style="color: #b71c1c; font-size: 1.1em; display: block; margin-bottom: 5px;">Longest Side</span>
+                    <span id="stat-max-side" class="val-num" style="color: #d32f2f; font-size: 1.6em;">AB = 300 units</span>
+                </div>
+                <div class="dash-card" style="border-color: #d32f2f; background: #ffebee;">
+                    <span style="color: #b71c1c; font-size: 1.1em; display: block; margin-bottom: 5px;">Largest Angle</span>
+                    <span id="stat-max-ang" class="val-num" style="color: #d32f2f; font-size: 1.6em;">Angle C = 105°</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: TRIANGLE INEQUALITY THEOREM -->
+    <div class="section-box">
+        <h2 style="color: #00897b; text-align: center; margin-top: 0;">🌉 2. The Bridge Builder</h2>
+        <p style="text-align: center; color: #666;">The Triangle Inequality Theorem states that <strong>Side A + Side B > Base</strong>. Adjust the lengths of the left and right arms. If their combined length is shorter than the base, they act like a broken bridge and simply cannot connect to form a triangle!</p>
+
+        <div class="interactive-container" style="background: #e0f2f1; border-color: #00897b;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #d32f2f; background: #ffebee;">
+                    <label style="color: #b71c1c; font-weight: bold;">Left Arm Length: <span id="val-arm-l">100</span> units</label>
+                    <input type="range" id="s-arm-l" min="50" max="250" value="100">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Right Arm Length: <span id="val-arm-r">120</span> units</label>
+                    <input type="range" id="s-arm-r" min="50" max="250" value="120">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 320" style="height: 320px; background: #fafafa;">
+                <!-- Fixed Base (250 units) -->
+                <line x1="125" y1="280" x2="375" y2="280" stroke="#388e3c" stroke-width="8" stroke-linecap="round"/>
+                <text x="250" y="310" font-weight="bold" fill="#388e3c" font-size="16px" text-anchor="middle">Base = 250 units</text>
+
+                <!-- Left Arm -->
+                <line id="bridge-arm-l" x1="125" y1="280" stroke="#d32f2f" stroke-width="6" stroke-linecap="round"/>
+                
+                <!-- Right Arm -->
+                <line id="bridge-arm-r" x1="375" y1="280" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
+
+                <!-- Vertex Points -->
+                <circle cx="125" cy="280" r="6" fill="#333"/>
+                <circle cx="375" cy="280" r="6" fill="#333"/>
+
+                <circle id="bridge-dot-l" r="6" fill="#d32f2f" stroke="#fff" stroke-width="2"/>
+                <circle id="bridge-dot-r" r="6" fill="#1976d2" stroke="#fff" stroke-width="2"/>
+                
+                <text id="bridge-lbl-gap" x="250" y="270" font-weight="bold" fill="#e65100" font-size="18px" text-anchor="middle"></text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00897b; background: #fff; flex-basis: 100%;">
+                    <span id="bridge-sum" class="val-num" style="color: #00695c; font-size: 1.5em; font-weight: bold;">100 + 120 = 220 units</span>
+                    <span id="bridge-status" style="color: #d32f2f; font-size: 1.2em; display: block; margin-top: 5px; font-weight: bold;">220 ≤ 250 : The bridge collapses! No triangle forms.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: Is it possible to construct a triangle with sides measuring 3 units, 4 units, and 8 units?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>No!</strong><br><br>
+                According to the Triangle Inequality Theorem, the sum of any two sides must be strictly greater than the third side. Here, if we add the two shorter sides (3 + 4 = 7), the sum is less than the longest side (8). The sides will never meet!
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: In triangle PQR, if Angle P is 80°, Angle Q is 60°, and Angle R is 40°, which side is the longest?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>Side QR.</strong><br><br>
+                The longest side is always strictly opposite the largest angle. Since Angle P (80°) is the largest angle, the side facing it (which connects vertices Q and R) must be the longest side in the triangle.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic7_3.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter7.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic7_5.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        // Mathematical Helpers
+        function normalizeRad(rad) {
+            if (rad < 0) rad += 2 * Math.PI;
+            return rad;
+        }
+
+        function polarToCartesian(cx, cy, r, angleInRads) {
+            return {
+                x: cx + r * Math.cos(angleInRads),
+                y: cy + r * Math.sin(angleInRads) // Standard Y for math computations
+            };
+        }
+
+        function createWedge(cx, cy, r, startRad, endRad) {
+            if (endRad < startRad) endRad += 2 * Math.PI;
+            let start = polarToCartesian(cx, cy, r, startRad);
+            let end = polarToCartesian(cx, cy, r, endRad);
+            
+            // Sweep flag 1 draws positive direction
+            return `M ${cx} ${cy} L ${start.x} ${start.y} A ${r} ${r} 0 0 1 ${end.x} ${end.y} Z`;
+        }
+
+        function getMidAngle(startRad, endRad) {
+            if (endRad < startRad) endRad += 2 * Math.PI;
+            return startRad + (endRad - startRad) / 2;
+        }
+
+        function dist(x1, y1, x2, y2) {
+            return Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2));
+        }
+
+        // --- 1. SIDE-ANGLE RELATIONSHIP LOGIC ---
+        const sCx = document.getElementById('s-cx');
+        const sCy = document.getElementById('s-cy');
+
+        function updateSideAngle() {
+            let cx = parseInt(sCx.value);
+            let cy = parseInt(sCy.value);
+            
+            let ax = 100, ay = 260;
+            let bx = 400, by = 260;
+
+            document.getElementById('side-ab').setAttribute('x1', ax);
+            document.getElementById('side-ab').setAttribute('y1', ay);
+            document.getElementById('side-ab').setAttribute('x2', bx);
+            document.getElementById('side-ab').setAttribute('y2', by);
+
+            document.getElementById('side-bc').setAttribute('x1', bx);
+            document.getElementById('side-bc').setAttribute('y1', by);
+            document.getElementById('side-bc').setAttribute('x2', cx);
+            document.getElementById('side-bc').setAttribute('y2', cy);
+
+            document.getElementById('side-ca').setAttribute('x1', cx);
+            document.getElementById('side-ca').setAttribute('y1', cy);
+            document.getElementById('side-ca').setAttribute('x2', ax);
+            document.getElementById('side-ca').setAttribute('y2', ay);
+
+            document.getElementById('dot-c').setAttribute('cx', cx);
+            document.getElementById('dot-c').setAttribute('cy', cy);
+            document.getElementById('txt-c').setAttribute('x', cx);
+            document.getElementById('txt-c').setAttribute('y', cy - 15);
+
+            // Side lengths
+            let lenAB = Math.round(dist(ax, ay, bx, by)); // 300
+            let lenBC = Math.round(dist(bx, by, cx, cy));
+            let lenCA = Math.round(dist(cx, cy, ax, ay));
+
+            // Radians Calculation
+            let radAB = normalizeRad(Math.atan2(by - ay, bx - ax)); // 0 rad
+            let radAC = normalizeRad(Math.atan2(cy - ay, cx - ax));
+            
+            let radBA = normalizeRad(Math.atan2(ay - by, ax - bx)); // PI rad
+            let radBC = normalizeRad(Math.atan2(cy - by, cx - bx));
+            
+            let radCA = normalizeRad(Math.atan2(ay - cy, ax - cx));
+            let radCB = normalizeRad(Math.atan2(by - cy, bx - cx));
+
+            // Wedges
+            document.getElementById('arc-a').setAttribute('d', createWedge(ax, ay, 40, radAC, radAB));
+            document.getElementById('arc-b').setAttribute('d', createWedge(bx, by, 40, radBA, radBC));
+            document.getElementById('arc-c').setAttribute('d', createWedge(cx, cy, 40, radCB, radCA));
+
+            // Degrees Calculation
+            let degA = Math.round((radAB < radAC ? radAB + 2*Math.PI - radAC : radAB - radAC) * 180 / Math.PI);
+            let degB = Math.round((radBC < radBA ? radBC + 2*Math.PI - radBA : radBC - radBA) * 180 / Math.PI);
+            let degC = 180 - degA - degB; 
+
+            // Highlight logic
+            let maxLen = Math.max(lenAB, lenBC, lenCA);
+            let maxDeg = Math.max(degA, degB, degC);
+
+            // Reset styling
+            document.getElementById('side-ab').setAttribute('stroke', '#ccc');
+            document.getElementById('side-bc').setAttribute('stroke', '#ccc');
+            document.getElementById('side-ca').setAttribute('stroke', '#ccc');
+
+            document.getElementById('arc-a').setAttribute('fill', 'rgba(0,0,0,0.1)');
+            document.getElementById('arc-b').setAttribute('fill', 'rgba(0,0,0,0.1)');
+            document.getElementById('arc-c').setAttribute('fill', 'rgba(0,0,0,0.1)');
+            document.getElementById('arc-a').setAttribute('stroke', '#999');
+            document.getElementById('arc-b').setAttribute('stroke', '#999');
+            document.getElementById('arc-c').setAttribute('stroke', '#999');
+            
+            document.getElementById('lbl-ang-a').setAttribute('fill', '#555');
+            document.getElementById('lbl-ang-b').setAttribute('fill', '#555');
+            document.getElementById('lbl-ang-c').setAttribute('fill', '#555');
+
+            let longestName = "";
+            let largestName = "";
+
+            if (maxLen === lenAB) { 
+                longestName = "AB"; 
+                document.getElementById('side-ab').setAttribute('stroke', '#d32f2f'); 
+                document.getElementById('arc-c').setAttribute('fill', 'rgba(211, 47, 47, 0.3)');
+                document.getElementById('arc-c').setAttribute('stroke', '#d32f2f');
+                document.getElementById('lbl-ang-c').setAttribute('fill', '#d32f2f');
+            } else if (maxLen === lenBC) { 
+                longestName = "BC"; 
+                document.getElementById('side-bc').setAttribute('stroke', '#d32f2f'); 
+                document.getElementById('arc-a').setAttribute('fill', 'rgba(211, 47, 47, 0.3)');
+                document.getElementById('arc-a').setAttribute('stroke', '#d32f2f');
+                document.getElementById('lbl-ang-a').setAttribute('fill', '#d32f2f');
+            } else if (maxLen === lenCA) { 
+                longestName = "CA"; 
+                document.getElementById('side-ca').setAttribute('stroke', '#d32f2f'); 
+                document.getElementById('arc-b').setAttribute('fill', 'rgba(211, 47, 47, 0.3)');
+                document.getElementById('arc-b').setAttribute('stroke', '#d32f2f');
+                document.getElementById('lbl-ang-b').setAttribute('fill', '#d32f2f');
+            }
+
+            if (maxDeg === degA) { largestName = "A"; }
+            else if (maxDeg === degB) { largestName = "B"; }
+            else if (maxDeg === degC) { largestName = "C"; }
+
+            // Position Labels
+            let pA = polarToCartesian(ax, ay, 65, getMidAngle(radAC, radAB));
+            document.getElementById('lbl-ang-a').setAttribute('x', pA.x);
+            document.getElementById('lbl-ang-a').setAttribute('y', pA.y);
+            document.getElementById('lbl-ang-a').textContent = `${degA}°`;
+
+            let pB = polarToCartesian(bx, by, 65, getMidAngle(radBA, radBC));
+            document.getElementById('lbl-ang-b').setAttribute('x', pB.x);
+            document.getElementById('lbl-ang-b').setAttribute('y', pB.y);
+            document.getElementById('lbl-ang-b').textContent = `${degB}°`;
+
+            let pC = polarToCartesian(cx, cy, 65, getMidAngle(radCB, radCA));
+            document.getElementById('lbl-ang-c').setAttribute('x', pC.x);
+            document.getElementById('lbl-ang-c').setAttribute('y', pC.y);
+            document.getElementById('lbl-ang-c').textContent = `${degC}°`;
+
+            // Dashboard
+            document.getElementById('stat-max-side').textContent = `Side ${longestName} = ${maxLen} units`;
+            document.getElementById('stat-max-ang').textContent = `Angle ${largestName} = ${maxDeg}°`;
+        }
+
+        sCx.addEventListener('input', updateSideAngle);
+        sCy.addEventListener('input', updateSideAngle);
+        updateSideAngle();
+
+
+        // --- 2. THE BRIDGE BUILDER LOGIC ---
+        const sArmL = document.getElementById('s-arm-l');
+        const sArmR = document.getElementById('s-arm-r');
+
+        function updateInequality() {
+            let armL = parseInt(sArmL.value); // b
+            let armR = parseInt(sArmR.value); // a
+            
+            document.getElementById('val-arm-l').textContent = armL;
+            document.getElementById('val-arm-r').textContent = armR;
+
+            let baseLen = 250; // c
+            let ax = 125, ay = 280;
+            let bx = 375, by = 280;
+
+            let lineL = document.getElementById('bridge-arm-l');
+            let lineR = document.getElementById('bridge-arm-r');
+            let dotL = document.getElementById('bridge-dot-l');
+            let dotR = document.getElementById('bridge-dot-r');
+            let lblGap = document.getElementById('bridge-lbl-gap');
+            let status = document.getElementById('bridge-status');
+
+            document.getElementById('bridge-sum').textContent = `${armL} + ${armR} = ${armL + armR} units`;
+
+            if (armL + armR > baseLen) {
+                // Triangle forms! Calculate intersection point.
+                let x = (armL*armL - armR*armR + baseLen*baseLen) / (2 * baseLen);
+                let y = Math.sqrt(armL*armL - x*x);
+
+                let cx = ax + x;
+                let cy = ay - y; // Y inverted
+
+                lineL.setAttribute('x2', cx);
+                lineL.setAttribute('y2', cy);
+                lineR.setAttribute('x2', cx);
+                lineR.setAttribute('y2', cy);
+
+                dotL.setAttribute('cx', cx); dotL.setAttribute('cy', cy);
+                dotR.setAttribute('cx', cx); dotR.setAttribute('cy', cy);
+                dotR.style.display = 'none'; // Overlaps perfectly
+                lblGap.textContent = "";
+
+                status.textContent = `${armL + armR} > ${baseLen} : Triangle successfully forms!`;
+                status.style.color = "#2e7d32";
+            } else {
+                // Arms fall flat
+                lineL.setAttribute('x2', ax + armL);
+                lineL.setAttribute('y2', ay);
+                lineR.setAttribute('x2', bx - armR);
+                lineR.setAttribute('y2', by);
+
+                dotL.setAttribute('cx', ax + armL); dotL.setAttribute('cy', ay);
+                dotR.setAttribute('cx', bx - armR); dotR.setAttribute('cy', by);
+                dotR.style.display = 'block';
+
+                let gap = baseLen - (armL + armR);
+                if (gap === 0) {
+                    lblGap.textContent = "Perfectly Flat";
+                    status.textContent = `${armL + armR} = ${baseLen} : Arms lie perfectly flat. No area!`;
+                } else {
+                    lblGap.textContent = `Gap: ${gap}u`;
+                    status.textContent = `${armL + armR} < ${baseLen} : The bridge collapses! No triangle forms.`;
+                }
+                status.style.color = "#d32f2f";
+            }
+        }
+
+        sArmL.addEventListener('input', updateInequality);
+        sArmR.addEventListener('input', updateInequality);
+        updateInequality();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

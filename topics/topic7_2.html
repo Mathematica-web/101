@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criteria for Congruence - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #004d40; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #00695c; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2dfdb; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #00695c; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #00695c; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #4db6ac; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+
+        /* TOGGLE BUTTONS */
+        .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .toggle-btn { padding: 10px 20px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1em; }
+        .toggle-btn.active { background: #9c27b0; color: white; border-color: #9c27b0; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e0f2f1; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00695c; }
+        .qa-question { font-weight: bold; color: #004d40; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #00695c; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #00695c; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #004d40; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>📏 Criteria for Congruence of Triangles</h1>
+    <p class="subtitle">You don't need to check all 6 parts to prove triangles are identical!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Minimum Requirements</h2>
+        <p>A triangle has 6 main parts (3 sides and 3 angles). To prove two triangles are perfectly congruent, mathematicians discovered you only need to match <strong>3 specific parts</strong> in the correct order. If those 3 parts match, the remaining 3 parts are magically forced to match as well!</p>
+        <table class="formula-table">
+            <tr>
+                <th>Congruence Rule</th>
+                <th>What it Means</th>
+            </tr>
+            <tr>
+                <td><strong>SAS (Side-Angle-Side)</strong></td>
+                <td>Two triangles are congruent if two sides and the <em>included angle</em> of one triangle are equal to two sides and the included angle of the other.</td>
+            </tr>
+            <tr>
+                <td><strong>ASA (Angle-Side-Angle)</strong></td>
+                <td>Two triangles are congruent if two angles and the <em>included side</em> of one triangle are equal to two angles and the included side of the other.</td>
+            </tr>
+            <tr>
+                <td><strong>AAS (Angle-Angle-Side)</strong></td>
+                <td>A variation of ASA: If any two angles and a non-included side match, the triangles are congruent (because the third angle must also match).</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: SAS -->
+    <div class="section-box">
+        <h2 style="color: #e65100; text-align: center; margin-top: 0;">🔒 1. The SAS Locker</h2>
+        <p style="text-align: center; color: #666;">In SAS, the angle <strong>must</strong> be "included" (sandwiched directly between the two known sides). Notice how fixing Side c, Side b, and Angle A leaves only <em>one possible line</em> to form the third side. The triangle is completely locked!</p>
+
+        <div class="interactive-container" style="background: #fff8e1; border-color: #ffb300;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #e65100; background: #ffebee; width: 80%;">
+                    <label style="color: #b71c1c; font-weight: bold; font-size: 1.2em;">Adjust the Included Angle (A): <span id="val-sas-a">60</span>°</label>
+                    <input type="range" id="s-sas-a" min="30" max="150" value="60">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
+                <!-- Fixed Side c (AB) -->
+                <line x1="100" y1="220" x2="350" y2="220" stroke="#d32f2f" stroke-width="6" stroke-linecap="round"/>
+                <text x="225" y="245" font-weight="bold" fill="#d32f2f" font-size="18px" text-anchor="middle">Side c (Fixed)</text>
+
+                <!-- Included Angle Arc -->
+                <path id="sas-arc" fill="rgba(25, 118, 210, 0.3)" stroke="#1976d2" stroke-width="2"/>
+                <text id="sas-lbl-ang" font-weight="bold" fill="#1976d2" font-size="18px" text-anchor="middle">60°</text>
+
+                <!-- Fixed Side b (AC) pivoting -->
+                <line id="sas-side-b" stroke="#388e3c" stroke-width="6" stroke-linecap="round"/>
+                
+                <!-- The forced 3rd Side a (BC) -->
+                <line id="sas-side-a" stroke="#333" stroke-width="4" stroke-dasharray="10, 5" stroke-linecap="round"/>
+
+                <!-- Vertices -->
+                <circle cx="100" cy="220" r="6" fill="#333"/>
+                <text x="80" y="240" font-weight="bold" fill="#333" font-size="20px">A</text>
+
+                <circle cx="350" cy="220" r="6" fill="#333"/>
+                <text x="365" y="240" font-weight="bold" fill="#333" font-size="20px">B</text>
+
+                <circle id="sas-dot-c" r="6" fill="#333"/>
+                <text id="sas-txt-c" font-weight="bold" fill="#333" font-size="20px">C</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #ff8f00; background: #fff; flex-basis: 100%;">
+                    <span style="color: #e65100; font-size: 1.2em; display: block; margin-bottom: 5px;">Required 3rd Side Length</span>
+                    <span id="sas-math" class="val-num" style="color: #333; font-size: 2em;">Forced length = 218px</span>
+                    <span style="color: #666; font-size: 1em; display: block; margin-top: 5px;">Because two sides and the included angle are fixed, it is mathematically impossible to draw Side a any other way!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: ASA -->
+    <div class="section-box">
+        <h2 style="color: #00897b; text-align: center; margin-top: 0;">📐 2. The ASA Intersection</h2>
+        <p style="text-align: center; color: #666;">In ASA, the side is "included" (sandwiched between two known angles). Watch how setting the base Side c and fixing the trajectory of Angle A and Angle B forces their rays to intersect at exactly one point (Vertex C).</p>
+
+        <div class="interactive-container" style="background: #e0f2f1; border-color: #00897b;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #d32f2f; background: #ffebee;">
+                    <label style="color: #b71c1c; font-weight: bold;">Angle A: <span id="val-asa-a">50</span>°</label>
+                    <input type="range" id="s-asa-a" min="20" max="80" value="50">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Angle B: <span id="val-asa-b">60</span>°</label>
+                    <input type="range" id="s-asa-b" min="20" max="80" value="60">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 320" style="height: 320px; background: #fafafa;">
+                <!-- Included Side (Fixed Base) -->
+                <line x1="100" y1="260" x2="400" y2="260" stroke="#388e3c" stroke-width="8" stroke-linecap="round"/>
+                <text x="250" y="290" font-weight="bold" fill="#388e3c" font-size="18px" text-anchor="middle">Included Side (Fixed)</text>
+
+                <!-- Angle Arcs -->
+                <path id="asa-arc-a" fill="rgba(211, 47, 47, 0.3)" stroke="#d32f2f" stroke-width="2"/>
+                <path id="asa-arc-b" fill="rgba(25, 118, 210, 0.3)" stroke="#1976d2" stroke-width="2"/>
+
+                <!-- Extending Rays -->
+                <line id="asa-ray-a" stroke="#d32f2f" stroke-width="4" stroke-dasharray="8,4" stroke-linecap="round"/>
+                <line id="asa-ray-b" stroke="#1976d2" stroke-width="4" stroke-dasharray="8,4" stroke-linecap="round"/>
+
+                <!-- Intersection Point C -->
+                <circle id="asa-dot-c" r="8" fill="#7b1fa2" stroke="#fff" stroke-width="2"/>
+                <text id="asa-txt-c" font-weight="bold" fill="#7b1fa2" font-size="20px" text-anchor="middle">C (Intersection)</text>
+
+                <!-- Vertices A & B -->
+                <circle cx="100" cy="260" r="6" fill="#333"/>
+                <text x="80" y="270" font-weight="bold" fill="#333" font-size="20px">A</text>
+
+                <circle cx="400" cy="260" r="6" fill="#333"/>
+                <text x="415" y="270" font-weight="bold" fill="#333" font-size="20px">B</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00897b; background: #fff; flex-basis: 100%;">
+                    <span id="asa-status" style="color: #00695c; font-size: 1.5em; font-weight: bold;">Rays intersect perfectly to form a unique triangle.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: THE SSA AMBIGUITY TRAP (SIMPLIFIED) -->
+    <div class="section-box">
+        <h2 style="color: #7b1fa2; text-align: center; margin-top: 0;">⚠️ 3. The SSA Ambiguity Trap</h2>
+        <p style="text-align: center; color: #666;">Why isn't Side-Side-Angle (SSA) a valid rule? Because if the angle is <strong>not included</strong> between the two sides, the third side can snap into <strong>two different places</strong>. Toggle between the two triangles to see the ambiguity!</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #9c27b0;">
+            <div class="face-toggles">
+                <button class="toggle-btn active" id="btn-ssa-1" onclick="setSsa(1)">Show Triangle 1</button>
+                <button class="toggle-btn" id="btn-ssa-2" onclick="setSsa(2)">Show Triangle 2</button>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 280" style="height: 280px; background: #fafafa;">
+                <!-- Dotted base line extending infinitely -->
+                <line x1="20" y1="240" x2="480" y2="240" stroke="#ccc" stroke-width="4" stroke-dasharray="10,5"/>
+
+                <!-- Angle A Arc (30 degrees) -->
+                <path d="M 100 240 A 50 50 0 0 0 93.3 215" fill="rgba(123, 31, 162, 0.2)" stroke="#7b1fa2" stroke-width="2"/>
+                <text x="120" y="235" font-weight="bold" fill="#7b1fa2" font-size="16px">30°</text>
+
+                <!-- Triangle Polygon -->
+                <polygon id="ssa-poly" points="50,240 240.5,130 309.8,240" fill="rgba(211, 47, 47, 0.2)" stroke="none"/>
+
+                <!-- Fixed Side AB (220px) -->
+                <line x1="50" y1="240" x2="240.5" y2="130" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
+                <text x="110" y="175" font-weight="bold" fill="#1976d2" font-size="16px">Side c (Fixed)</text>
+
+                <!-- Compass Arc showing the two valid points -->
+                <path d="M 171.2 240 A 130 130 0 0 0 309.8 240" fill="none" stroke="#d32f2f" stroke-width="2" stroke-dasharray="5,5"/>
+
+                <!-- The Ambiguous Side BC (130px) -->
+                <line id="ssa-side-a" x1="240.5" y1="130" x2="309.8" y2="240" stroke="#d32f2f" stroke-width="6" stroke-linecap="round"/>
+                <text id="ssa-lbl-a" x="285" y="175" font-weight="bold" fill="#d32f2f" font-size="16px">Side a (Fixed)</text>
+
+                <!-- Target Indicators (Where it hits the base) -->
+                <circle cx="309.8" cy="240" r="5" fill="#ccc" stroke="#999" stroke-width="2"/>
+                <circle cx="171.2" cy="240" r="5" fill="#ccc" stroke="#999" stroke-width="2"/>
+
+                <!-- Vertices -->
+                <circle cx="50" cy="240" r="6" fill="#333"/>
+                <text x="35" y="255" font-weight="bold" fill="#333" font-size="18px">A</text>
+
+                <circle cx="240.5" cy="130" r="6" fill="#333"/>
+                <text x="240" y="115" font-weight="bold" fill="#333" font-size="18px">B</text>
+
+                <!-- Moving Vertex C -->
+                <circle id="ssa-dot-c" cx="309.8" cy="240" r="8" fill="#d32f2f" stroke="#fff" stroke-width="2"/>
+                <text id="ssa-txt-c" x="320" y="255" font-weight="bold" fill="#d32f2f" font-size="18px">C1</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #9c27b0; background: #fff; flex-basis: 100%;">
+                    <span id="ssa-status" style="color: #7b1fa2; font-size: 1.5em; font-weight: bold;">Triangle 1 (Obtuse Base)</span>
+                    <span style="color: #666; font-size: 1em; display: block; margin-top: 5px;">Both triangles have the exact same Angle A, Side c, and Side a. Yet they are completely different shapes! This is why SSA is invalid.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: Can AAA (Angle-Angle-Angle) be used to prove two triangles are congruent?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>No!</strong><br><br>
+                AAA proves that triangles are <em>similar</em> (having the same shape), but they could be completely different sizes! Think of an equilateral triangle—it always has 60° angles, but it could be the size of a coin or the size of a pyramid. You need at least one Side (S) to lock in the scale.
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: Why is AAS a valid rule, but not SSA?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>AAS is just ASA in disguise.</strong> Because the angles of a triangle always sum to 180°, if you know two angles, you automatically know the third! So AAS instantly turns into ASA, which we know works perfectly to lock a triangle. SSA, however, creates an ambiguous swinging side that can make two completely different shapes.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic7_1.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter7.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic7_3.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        // Mathematical Helpers
+        function polarToCartesian(cx, cy, r, angleInDegrees) {
+            let angleInRadians = (angleInDegrees) * Math.PI / 180.0;
+            return {
+                x: cx + r * Math.cos(angleInRadians),
+                y: cy - r * Math.sin(angleInRadians) // SVG Y is inverted
+            };
+        }
+
+        function createWedge(cx, cy, r, startAngle, endAngle) {
+            let start = polarToCartesian(cx, cy, r, startAngle);
+            let end = polarToCartesian(cx, cy, r, endAngle);
+            let largeArcFlag = Math.abs(endAngle - startAngle) > 180 ? "1" : "0";
+            return `M ${cx} ${cy} L ${start.x} ${start.y} A ${r} ${r} 0 ${largeArcFlag} 0 ${end.x} ${end.y} Z`;
+        }
+
+        // --- 1. SAS LOCKER LOGIC ---
+        const sSasA = document.getElementById('s-sas-a');
+
+        function updateSas() {
+            let angle = parseInt(sSasA.value);
+            document.getElementById('val-sas-a').textContent = angle;
+
+            let cx = 100, cy = 220; // Vertex A
+            let sideC = 250; // Length of AB
+            let sideB = 180; // Fixed length of AC
+            
+            let posC = polarToCartesian(cx, cy, sideB, angle);
+
+            // Draw Arc
+            document.getElementById('sas-arc').setAttribute('d', createWedge(cx, cy, 50, 0, angle));
+            
+            let pLabel = polarToCartesian(cx, cy, 70, angle/2);
+            document.getElementById('sas-lbl-ang').setAttribute('x', pLabel.x);
+            document.getElementById('sas-lbl-ang').setAttribute('y', pLabel.y + 5);
+            document.getElementById('sas-lbl-ang').textContent = `${angle}°`;
+
+            // Draw Side b
+            document.getElementById('sas-side-b').setAttribute('x1', cx);
+            document.getElementById('sas-side-b').setAttribute('y1', cy);
+            document.getElementById('sas-side-b').setAttribute('x2', posC.x);
+            document.getElementById('sas-side-b').setAttribute('y2', posC.y);
+
+            // Draw Forced Side a (BC)
+            let bx = cx + sideC;
+            document.getElementById('sas-side-a').setAttribute('x1', bx);
+            document.getElementById('sas-side-a').setAttribute('y1', cy);
+            document.getElementById('sas-side-a').setAttribute('x2', posC.x);
+            document.getElementById('sas-side-a').setAttribute('y2', posC.y);
+
+            // Move Vertex C
+            document.getElementById('sas-dot-c').setAttribute('cx', posC.x);
+            document.getElementById('sas-dot-c').setAttribute('cy', posC.y);
+            document.getElementById('sas-txt-c').setAttribute('x', posC.x - 10);
+            document.getElementById('sas-txt-c').setAttribute('y', posC.y - 15);
+
+            // Calculate length using Law of Cosines: a^2 = b^2 + c^2 - 2bc*cos(A)
+            let radA = angle * Math.PI / 180;
+            let lenA = Math.sqrt(sideB*sideB + sideC*sideC - 2*sideB*sideC*Math.cos(radA));
+            
+            document.getElementById('sas-math').textContent = `Forced Length of Side BC = ${Math.round(lenA)}units`;
+        }
+
+        sSasA.addEventListener('input', updateSas);
+        updateSas();
+
+
+        // --- 2. ASA INTERSECTION LOGIC ---
+        const sAsaA = document.getElementById('s-asa-a');
+        const sAsaB = document.getElementById('s-asa-b');
+
+        function updateAsa() {
+            let angA = parseInt(sAsaA.value);
+            let angB = parseInt(sAsaB.value);
+            
+            document.getElementById('val-asa-a').textContent = angA;
+            document.getElementById('val-asa-b').textContent = angB;
+
+            let ax = 100, ay = 260;
+            let bx = 400, by = 260;
+            let baseLen = 300;
+
+            // Arcs
+            document.getElementById('asa-arc-a').setAttribute('d', createWedge(ax, ay, 40, 0, angA));
+            document.getElementById('asa-arc-b').setAttribute('d', createWedge(bx, by, 40, 180 - angB, 180));
+
+            // Mathematics of Intersection
+            let radA = angA * Math.PI / 180;
+            let radB = angB * Math.PI / 180;
+
+            let tanA = Math.tan(radA);
+            let tanB = Math.tan(radB);
+            
+            let xOffset = (baseLen * tanB) / (tanA + tanB);
+            let h = xOffset * tanA;
+
+            let cx = ax + xOffset;
+            let cy = ay - h; // SVG Y inverted
+
+            // Draw Rays to intersection (overshoot slightly to look like rays)
+            let rayAx = ax + (cx - ax) * 1.1;
+            let rayAy = ay - (ay - cy) * 1.1;
+            document.getElementById('asa-ray-a').setAttribute('x1', ax);
+            document.getElementById('asa-ray-a').setAttribute('y1', ay);
+            document.getElementById('asa-ray-a').setAttribute('x2', rayAx);
+            document.getElementById('asa-ray-a').setAttribute('y2', rayAy);
+
+            let rayBx = bx + (cx - bx) * 1.1;
+            let rayBy = by - (by - cy) * 1.1;
+            document.getElementById('asa-ray-b').setAttribute('x1', bx);
+            document.getElementById('asa-ray-b').setAttribute('y1', by);
+            document.getElementById('asa-ray-b').setAttribute('x2', rayBx);
+            document.getElementById('asa-ray-b').setAttribute('y2', rayBy);
+
+            // Move Vertex C
+            document.getElementById('asa-dot-c').setAttribute('cx', cx);
+            document.getElementById('asa-dot-c').setAttribute('cy', cy);
+            document.getElementById('asa-txt-c').setAttribute('x', cx);
+            document.getElementById('asa-txt-c').setAttribute('y', cy - 15);
+        }
+
+        sAsaA.addEventListener('input', updateAsa);
+        sAsaB.addEventListener('input', updateAsa);
+        updateAsa();
+
+
+        // --- 3. THE SSA AMBIGUITY TRAP (SIMPLIFIED TOGGLE) ---
+        function setSsa(state) {
+            document.getElementById('btn-ssa-1').classList.remove('active');
+            document.getElementById('btn-ssa-2').classList.remove('active');
+            
+            let poly = document.getElementById('ssa-poly');
+            let sideA = document.getElementById('ssa-side-a');
+            let lblA = document.getElementById('ssa-lbl-a');
+            let dotC = document.getElementById('ssa-dot-c');
+            let txtC = document.getElementById('ssa-txt-c');
+            let status = document.getElementById('ssa-status');
+
+            // Fixed coordinates: A(50, 240), B(240.5, 130)
+            // Valid C points: C1(309.8, 240), C2(171.2, 240)
+
+            if (state === 1) {
+                document.getElementById('btn-ssa-1').classList.add('active');
+                
+                poly.setAttribute('points', '50,240 240.5,130 309.8,240');
+                
+                sideA.setAttribute('x2', '309.8');
+                lblA.setAttribute('x', '285');
+                lblA.setAttribute('y', '175');
+                
+                dotC.setAttribute('cx', '309.8');
+                txtC.setAttribute('x', '320');
+                txtC.textContent = 'C1';
+
+                status.textContent = 'Triangle 1 (Acute Triangle)';
+            } else {
+                document.getElementById('btn-ssa-2').classList.add('active');
+                
+                poly.setAttribute('points', '50,240 240.5,130 171.2,240');
+                
+                sideA.setAttribute('x2', '171.2');
+                lblA.setAttribute('x', '155');
+                lblA.setAttribute('y', '175');
+                
+                dotC.setAttribute('cx', '171.2');
+                txtC.setAttribute('x', '150');
+                txtC.textContent = 'C2';
+
+                status.textContent = 'Triangle 2 (Obtuse Triangle)';
+            }
+        }
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

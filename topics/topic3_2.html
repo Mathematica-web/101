@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distance Formula - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #00838f; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; font-size: 1.05em; }
+        .formula-table th { background: #00838f; color: white; }
+        
+        .math-eq { font-family: 'Times New Roman', serif; font-style: italic; font-size: 1.2em; color: #006064; font-weight: bold; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #00838f; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 550px; height: 550px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #4dd0e1; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.6em; display: block; margin-top: 5px; font-family: monospace; }
+        
+        /* Q&A SECTION */
+        .qa-box { background: #e0f7fa; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00838f; }
+        .qa-question { font-weight: bold; color: #006064; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #00838f; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #00838f; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter3.html" class="back-btn">⬅️ Back to Chapter Index</a>
+
+    <h1>📏 The Distance Formula</h1>
+    <p class="subtitle">Using Pythagoras to measure the distance between any two points!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>Unlocking the Grid</h2>
+        <p>How do we find the exact distance between two points on the Cartesian Plane? We draw a right-angled triangle between them and use the magic of <strong>Pythagoras' Theorem</strong> ($a^2 + b^2 = c^2$).</p>
+        <table class="formula-table">
+            <tr>
+                <th>Component</th>
+                <th>Definition</th>
+            </tr>
+            <tr>
+                <td><strong>Horizontal Distance (dx)</strong></td>
+                <td>The difference between the x-coordinates: <span class="math-eq">x₂ - x₁</span></td>
+            </tr>
+            <tr>
+                <td><strong>Vertical Distance (dy)</strong></td>
+                <td>The difference between the y-coordinates: <span class="math-eq">y₂ - y₁</span></td>
+            </tr>
+            <tr>
+                <td><strong>The Distance Formula (d)</strong></td>
+                <td><span class="math-eq">d = &radic;[ (x₂ - x₁)² + (y₂ - y₁)² ]</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE PYTHAGOREAN DISTANCE TRACKER -->
+    <div class="section-box">
+        <h2 style="color: #00838f; text-align: center; margin-top: 0;">📐 1. The Pythagorean Distance Tracker</h2>
+        <p style="text-align: center; color: #666;">Move Point A and Point B anywhere on the grid. Notice how they always form a hidden right-angled triangle ending at intersection C. The distance is just the hypotenuse!</p>
+
+        <div class="interactive-container" style="background: #e0f7fa; border-color: #00838f;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #d32f2f; background: #ffebee;">
+                    <label style="color: #b71c1c; font-weight: bold;">Point A (x₁): <span id="val-p1-x">-3</span></label>
+                    <input type="range" id="s-p1-x" min="-7" max="7" value="-3">
+                    <label style="color: #b71c1c; font-weight: bold; margin-top: 10px; display: block;">Point A (y₁): <span id="val-p1-y">-2</span></label>
+                    <input type="range" id="s-p1-y" min="-7" max="7" value="-2">
+                </div>
+                
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Point B (x₂): <span id="val-p2-x">5</span></label>
+                    <input type="range" id="s-p2-x" min="-7" max="7" value="5">
+                    <label style="color: #0d47a1; font-weight: bold; margin-top: 10px; display: block;">Point B (y₂): <span id="val-p2-y">4</span></label>
+                    <input type="range" id="s-p2-y" min="-7" max="7" value="4">
+                </div>
+            </div>
+
+            <svg id="dist-svg" class="svg-canvas" viewBox="-40 -40 580 580">
+                <!-- Smart Grid Definition -->
+                <defs>
+                    <pattern id="grid" width="25" height="25" patternUnits="userSpaceOnUse">
+                        <rect width="25" height="25" fill="none" stroke="#eee" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                <rect x="0" y="0" width="500" height="500" fill="url(#grid)" />
+
+                <!-- Axes -->
+                <line x1="0" y1="250" x2="500" y2="250" stroke="#333" stroke-width="3"/>
+                <text x="515" y="258" font-weight="bold" fill="#333" font-size="20px">X</text>
+                
+                <line x1="250" y1="0" x2="250" y2="500" stroke="#333" stroke-width="3"/>
+                <text x="242" y="-10" font-weight="bold" fill="#333" font-size="20px">Y</text>
+
+                <!-- The Triangle Lines -->
+                <line id="line-base" stroke="#e65100" stroke-width="4" stroke-dasharray="6,4"/>
+                <line id="line-height" stroke="#2e7d32" stroke-width="4" stroke-dasharray="6,4"/>
+                <line id="line-hyp" stroke="#8e24aa" stroke-width="5"/>
+                
+                <!-- Right Angle Symbol -->
+                <polyline id="right-angle" fill="none" stroke="#333" stroke-width="2"/>
+
+                <!-- Triangle Edge Labels -->
+                <text id="lbl-base" font-weight="bold" fill="#e65100" font-size="16px" text-anchor="middle">dx = x₂ - x₁</text>
+                <text id="lbl-height" font-weight="bold" fill="#2e7d32" font-size="16px" text-anchor="middle">dy = y₂ - y₁</text>
+                <text id="lbl-hyp" font-weight="bold" fill="#8e24aa" font-size="20px" text-anchor="middle">d</text>
+
+                <!-- Points and Coordinates -->
+                <circle id="dot-c" r="6" fill="#333" stroke="#fff" stroke-width="2"/>
+                <text id="lbl-c" font-weight="bold" fill="#333" font-size="14px">C</text>
+
+                <circle id="dot-a" r="8" fill="#d32f2f" stroke="#fff" stroke-width="2"/>
+                <text id="lbl-a" font-weight="bold" fill="#d32f2f" font-size="15px">A</text>
+                
+                <circle id="dot-b" r="8" fill="#1976d2" stroke="#fff" stroke-width="2"/>
+                <text id="lbl-b" font-weight="bold" fill="#1976d2" font-size="15px">B</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #e65100; background: #fff3e0;">
+                    <span style="color: #bf360c; font-size: 1.1em;">Horizontal (dx)</span>
+                    <span id="calc-dx" class="val-num" style="color: #e65100;">8</span>
+                    <span id="calc-dx-steps" style="color: #d84315; font-size: 0.95em; font-family: monospace;">dx = x₂ - x₁ = (5 - -3)</span>
+                </div>
+                <div class="dash-card" style="border-color: #4caf50; background: #e8f5e9;">
+                    <span style="color: #1b5e20; font-size: 1.1em;">Vertical (dy)</span>
+                    <span id="calc-dy" class="val-num" style="color: #2e7d32;">6</span>
+                    <span id="calc-dy-steps" style="color: #388e3c; font-size: 0.95em; font-family: monospace;">dy = y₂ - y₁ = (4 - -2)</span>
+                </div>
+                <div class="dash-card" style="border-color: #9c27b0; background: #f3e5f5; flex-basis: 100%;">
+                    <span style="color: #7b1fa2; font-size: 1.1em;">Distance Formula: d = &radic;(dx² + dy²)</span>
+                    <span id="calc-dist-steps" class="val-num" style="color: #6a1b9a; font-size: 1.2em; margin: 10px 0;">d = &radic;(8² + 6²) = &radic;(64 + 36) = &radic;100</span>
+                    <span id="calc-dist" class="val-num" style="color: #8e24aa; font-size: 2.2em; border-top: 2px solid #ce93d8; padding-top: 10px;">10</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: Find the distance between the origin (0,0) and the point (3,4).</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Step 1:</strong> Identify the coordinates: (x₁, y₁) = (0,0) and (x₂, y₂) = (3,4).<br>
+                <strong>Step 2:</strong> Calculate the differences.<br>
+                dx = x₂ - x₁ = 3 - 0 = 3<br>
+                dy = y₂ - y₁ = 4 - 0 = 4<br>
+                <strong>Step 3:</strong> Plug them into the formula.<br>
+                d = &radic;(3² + 4²) = &radic;(9 + 16) = &radic;25<br>
+                <strong>Final Answer: The distance is 5 units.</strong>
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: Can the distance between two points ever be a negative number?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>No, never!</strong><br><br>
+                Because we square the horizontal and vertical differences (dx² and dy²), any negative numbers become positive. Since we are adding two positive numbers and taking the principal square root, distance is always a positive length (or 0 if the points are in the exact same spot).
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic3_1.html" class="nav-btn">← Prev Topic</a>
+        <a href="topic3_3.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        const sP1X = document.getElementById('s-p1-x');
+        const sP1Y = document.getElementById('s-p1-y');
+        const sP2X = document.getElementById('s-p2-x');
+        const sP2Y = document.getElementById('s-p2-y');
+        const plotScale = 25; // 1 math unit = 25px
+
+        function mapX(x) { return 250 + (x * plotScale); }
+        function mapY(y) { return 250 - (y * plotScale); }
+
+        function wrapNeg(val) { return val < 0 ? `(${val})` : val; }
+
+        function updateDistance() {
+            let x1 = parseInt(sP1X.value);
+            let y1 = parseInt(sP1Y.value);
+            let x2 = parseInt(sP2X.value);
+            let y2 = parseInt(sP2Y.value);
+
+            document.getElementById('val-p1-x').textContent = x1;
+            document.getElementById('val-p1-y').textContent = y1;
+            document.getElementById('val-p2-x').textContent = x2;
+            document.getElementById('val-p2-y').textContent = y2;
+
+            let svgX1 = mapX(x1);
+            let svgY1 = mapY(y1);
+            let svgX2 = mapX(x2);
+            let svgY2 = mapY(y2);
+
+            let svgX3 = svgX2;
+            let svgY3 = svgY1;
+
+            // Draw Lines
+            document.getElementById('line-base').setAttribute('x1', svgX1);
+            document.getElementById('line-base').setAttribute('y1', svgY1);
+            document.getElementById('line-base').setAttribute('x2', svgX3);
+            document.getElementById('line-base').setAttribute('y2', svgY3);
+
+            document.getElementById('line-height').setAttribute('x1', svgX3);
+            document.getElementById('line-height').setAttribute('y1', svgY3);
+            document.getElementById('line-height').setAttribute('x2', svgX2);
+            document.getElementById('line-height').setAttribute('y2', svgY2);
+
+            document.getElementById('line-hyp').setAttribute('x1', svgX1);
+            document.getElementById('line-hyp').setAttribute('y1', svgY1);
+            document.getElementById('line-hyp').setAttribute('x2', svgX2);
+            document.getElementById('line-hyp').setAttribute('y2', svgY2);
+
+            // Draw Right Angle Box
+            let dirX = x1 < x2 ? -1 : 1;
+            let dirY = y2 < y1 ? 1 : -1;
+            
+            let px1 = svgX3 + 15 * dirX;
+            let py1 = svgY3;
+            let px2 = svgX3 + 15 * dirX;
+            let py2 = svgY3 + 15 * dirY;
+            let px3 = svgX3;
+            let py3 = svgY3 + 15 * dirY;
+            
+            document.getElementById('right-angle').setAttribute('points', `${px1},${py1} ${px2},${py2} ${px3},${py3}`);
+
+            // Draw Dots
+            document.getElementById('dot-a').setAttribute('cx', svgX1);
+            document.getElementById('dot-a').setAttribute('cy', svgY1);
+            document.getElementById('dot-b').setAttribute('cx', svgX2);
+            document.getElementById('dot-b').setAttribute('cy', svgY2);
+            document.getElementById('dot-c').setAttribute('cx', svgX3);
+            document.getElementById('dot-c').setAttribute('cy', svgY3);
+
+            // Position Labels and Text
+            let lblA = document.getElementById('lbl-a');
+            lblA.setAttribute('x', svgX1 + (x1 < x2 ? -10 : 10));
+            lblA.setAttribute('y', svgY1 + (y1 < y2 ? -15 : 20));
+            lblA.setAttribute('text-anchor', x1 < x2 ? 'end' : 'start');
+            lblA.textContent = `A(${x1}, ${y1})`;
+
+            let lblB = document.getElementById('lbl-b');
+            lblB.setAttribute('x', svgX2 + (x2 < x1 ? -10 : 10));
+            lblB.setAttribute('y', svgY2 + (y2 < y1 ? -15 : 20));
+            lblB.setAttribute('text-anchor', x2 < x1 ? 'end' : 'start');
+            lblB.textContent = `B(${x2}, ${y2})`;
+
+            let lblC = document.getElementById('lbl-c');
+            lblC.setAttribute('x', svgX3 + (x2 < x1 ? -15 : 15));
+            lblC.setAttribute('y', svgY3 + (y1 < y2 ? 20 : -15));
+            lblC.setAttribute('text-anchor', x2 < x1 ? 'end' : 'start');
+            lblC.textContent = `C(${x2}, ${y1})`;
+
+            // Edge Length Labels
+            let lblBase = document.getElementById('lbl-base');
+            lblBase.setAttribute('x', (svgX1 + svgX3) / 2);
+            lblBase.setAttribute('y', svgY3 + (y2 < y1 ? -10 : 25));
+            lblBase.textContent = `dx = ${Math.abs(x2 - x1)}`;
+            
+            let lblHeight = document.getElementById('lbl-height');
+            lblHeight.setAttribute('x', svgX3 + (x1 < x2 ? 40 : -40));
+            lblHeight.setAttribute('y', (svgY1 + svgY2) / 2 + 5);
+            lblHeight.textContent = `dy = ${Math.abs(y2 - y1)}`;
+
+            document.getElementById('lbl-hyp').setAttribute('x', (svgX1 + svgX2) / 2 - 20);
+            document.getElementById('lbl-hyp').setAttribute('y', (svgY1 + svgY2) / 2 - 15);
+
+            // Math Logic
+            let dx = x2 - x1;
+            let dy = y2 - y1;
+            let distSq = (dx * dx) + (dy * dy);
+            let dist = Math.sqrt(distSq);
+
+            document.getElementById('calc-dx').textContent = Math.abs(dx);
+            document.getElementById('calc-dx-steps').textContent = `dx = x₂ - x₁ = (${x2} - ${wrapNeg(x1)})`;
+            
+            document.getElementById('calc-dy').textContent = Math.abs(dy);
+            document.getElementById('calc-dy-steps').textContent = `dy = y₂ - y₁ = (${y2} - ${wrapNeg(y1)})`;
+
+            document.getElementById('calc-dist-steps').innerHTML = `d = &radic;(${wrapNeg(dx)}² + ${wrapNeg(dy)}²) = &radic;(${dx*dx} + ${dy*dy}) = &radic;${distSq}`;
+            document.getElementById('calc-dist').textContent = dist % 1 === 0 ? dist : dist.toFixed(2);
+
+            // Hide base/height lines and Point C if points align to prevent ugly rendering
+            if (x1 === x2 && y1 === y2) {
+                document.getElementById('line-base').style.display = 'none';
+                document.getElementById('line-height').style.display = 'none';
+                document.getElementById('right-angle').style.display = 'none';
+                document.getElementById('dot-c').style.display = 'none';
+                lblBase.style.display = 'none';
+                lblHeight.style.display = 'none';
+                lblC.style.display = 'none';
+            } else if (x1 === x2 || y1 === y2) {
+                document.getElementById('line-base').style.display = x1 === x2 ? 'none' : 'block';
+                document.getElementById('line-height').style.display = y1 === y2 ? 'none' : 'block';
+                document.getElementById('right-angle').style.display = 'none';
+                document.getElementById('dot-c').style.display = 'none';
+                lblBase.style.display = x1 === x2 ? 'none' : 'block';
+                lblHeight.style.display = y1 === y2 ? 'none' : 'block';
+                lblC.style.display = 'none';
+            } else {
+                document.getElementById('line-base').style.display = 'block';
+                document.getElementById('line-height').style.display = 'block';
+                document.getElementById('right-angle').style.display = 'block';
+                document.getElementById('dot-c').style.display = 'block';
+                lblBase.style.display = 'block';
+                lblHeight.style.display = 'block';
+                lblC.style.display = 'block';
+            }
+        }
+
+        sP1X.addEventListener('input', updateDistance);
+        sP1Y.addEventListener('input', updateDistance);
+        sP2X.addEventListener('input', updateDistance);
+        sP2Y.addEventListener('input', updateDistance);
+        updateDistance();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = id === 'ans2' ? 'Show Answer' : 'Show Answer Step-by-Step';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

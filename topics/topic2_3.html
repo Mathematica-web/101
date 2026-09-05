@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remainder Theorem - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #1b5e20; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #4caf50; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c8e6c9; text-align: left; font-size: 1.05em; }
+        .formula-table th { background: #4caf50; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #4caf50; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 600px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #81c784; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.8em; display: block; margin-top: 5px; font-family: monospace; }
+        
+        .math-eq { font-family: 'Times New Roman', serif; font-style: italic; font-size: 1.2em; color: #1b5e20; font-weight: bold; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #4caf50; }
+        .qa-question { font-weight: bold; color: #1b5e20; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #4caf50; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter2.html" class="back-btn">⬅️ Back to Chapter Index</a>
+
+    <h1>🪄 Remainder & Factor Theorems</h1>
+    <p class="subtitle">The ultimate algebraic shortcuts to bypass long division!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Magic Shortcuts</h2>
+        <p>Dividing polynomials using traditional long division takes forever. Mathematicians discovered two incredible rules that let you find the remainder—or check if a polynomial perfectly divides another—just by plugging in a single number!</p>
+        <table class="formula-table">
+            <tr>
+                <th>Theorem</th>
+                <th>The Rule</th>
+            </tr>
+            <tr>
+                <td><strong>Remainder Theorem</strong></td>
+                <td>If a polynomial <span class="math-eq">p(x)</span> is divided by a linear polynomial <span class="math-eq">(x - a)</span>, the remainder is simply <span class="math-eq">p(a)</span>. Just plug the opposite sign into the equation!</td>
+            </tr>
+            <tr>
+                <td><strong>Factor Theorem</strong></td>
+                <td>A special case of the Remainder Theorem! If <span class="math-eq">p(a) = 0</span>, then <span class="math-eq">(x - a)</span> is a perfect <strong>factor</strong> of the polynomial (meaning no remainder).</td>
+            </tr>
+            <tr>
+                <td><strong>The Catch</strong></td>
+                <td>This shortcut ONLY works when dividing by a <strong>linear</strong> term (like <span class="math-eq">x - 3</span> or <span class="math-eq">2x + 1</span>). You cannot use it to divide by <span class="math-eq">x²</span>!</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE MAGIC SHORTCUT CALCULATOR -->
+    <div class="section-box">
+        <h2 style="color: #1976d2; text-align: center; margin-top: 0;">🔮 1. The Magic Shortcut Calculator</h2>
+        <p style="text-align: center; color: #666;">Set up a quadratic polynomial p(x). Then, select a divisor (x - a). Watch how the simulator automatically extracts the root 'a' and plugs it into the polynomial to instantly reveal the remainder!</p>
+
+        <div class="interactive-container" style="background: #e3f2fd; border-color: #1976d2;">
+            
+            <div style="font-size: 1.5em; font-weight: bold; color: #0d47a1; margin-bottom: 20px;">
+                p(x) = <span id="eq-rem-a">1</span>x² <span id="eq-rem-b">+ 2</span>x <span id="eq-rem-c">- 3</span>
+            </div>
+
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #1e88e5;">
+                    <label style="color: #1565c0; font-weight: bold;">Coef a: <span id="val-rem-a">1</span></label>
+                    <input type="range" id="s-rem-a" min="-5" max="5" value="1">
+                </div>
+                <div class="slider-group" style="border-color: #1e88e5;">
+                    <label style="color: #1565c0; font-weight: bold;">Coef b: <span id="val-rem-b">2</span></label>
+                    <input type="range" id="s-rem-b" min="-5" max="5" value="2">
+                </div>
+                <div class="slider-group" style="border-color: #1e88e5;">
+                    <label style="color: #1565c0; font-weight: bold;">Coef c: <span id="val-rem-c">-3</span></label>
+                    <input type="range" id="s-rem-c" min="-10" max="10" value="-3">
+                </div>
+            </div>
+
+            <hr style="border: 1px dashed #90caf9; margin: 20px 0;">
+
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #f57c00; background: #fff3e0; min-width: 250px;">
+                    <label style="color: #e65100; font-weight: bold; font-size: 1.2em;">Dividing by: (x <span id="val-divisor-sign">-</span> <span id="val-divisor-root">2</span>)</label>
+                    <input type="range" id="s-divisor" min="-5" max="5" value="2">
+                </div>
+            </div>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #f57c00; background: #fff;">
+                    <span style="color: #e65100;">Step 1: Extract Root</span>
+                    <span class="val-num" style="color: #e65100;">x = <span id="calc-root">2</span></span>
+                </div>
+                <div class="dash-card" style="border-color: #1976d2; background: #bbdefb; flex-basis: 100%;">
+                    <span style="color: #0d47a1;">Step 2: Plug into p(x)</span>
+                    <span id="calc-plugged" class="val-num" style="color: #1565c0; font-size: 1.5em;">(1)(2)² + (2)(2) + (-3)</span>
+                </div>
+                <div class="dash-card" id="rem-result-card" style="border-color: #e91e63; background: #fce4ec; flex-basis: 100%;">
+                    <span style="color: #c2185b; font-size: 1.2em;">Final Remainder</span>
+                    <span id="calc-remainder" class="val-num" style="color: #ad1457; font-size: 2.5em;">5</span>
+                    <span id="calc-rem-msg" style="color: #880e4f; font-weight: normal; margin-top: 5px; display: block;">There is a remainder. This is NOT a factor!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE FACTOR DETECTIVE -->
+    <div class="section-box">
+        <h2 style="color: #00897b; text-align: center; margin-top: 0;">🕵️ 2. The Factor Detective Graph</h2>
+        <p style="text-align: center; color: #666;">The Factor Theorem is just the Remainder Theorem when the answer happens to be <strong>0</strong>. Visually, a remainder of 0 means the point sits perfectly on the X-axis (it's a zero/root!). Slide the test value to find the hidden factors of <strong>p(x) = x² - x - 6</strong>.</p>
+
+        <div class="interactive-container" style="background: #e0f2f1; border-color: #00897b;">
+            
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #00695c; background: #b2dfdb; min-width: 250px;">
+                    <label style="color: #004d40; font-weight: bold; font-size: 1.2em;">Test Divisor: (x <span id="fac-div-sign">-</span> <span id="fac-div-val">3</span>)</label>
+                    <input type="range" id="s-fac-div" min="-5" max="5" value="3">
+                </div>
+            </div>
+
+            <!-- Increased height to 400 to show the vertex perfectly -->
+            <svg id="factor-svg" class="svg-canvas" viewBox="0 0 600 400" style="height: 400px;">
+                <!-- Grid Lines -->
+                <g stroke="#eee" stroke-width="1">
+                    <!-- Verticals every 30px -->
+                    <line x1="30" y1="0" x2="30" y2="400"/><line x1="60" y1="0" x2="60" y2="400"/>
+                    <line x1="90" y1="0" x2="90" y2="400"/><line x1="120" y1="0" x2="120" y2="400"/>
+                    <line x1="150" y1="0" x2="150" y2="400"/><line x1="180" y1="0" x2="180" y2="400"/>
+                    <line x1="210" y1="0" x2="210" y2="400"/><line x1="240" y1="0" x2="240" y2="400"/>
+                    <line x1="270" y1="0" x2="270" y2="400"/><line x1="330" y1="0" x2="330" y2="400"/>
+                    <line x1="360" y1="0" x2="360" y2="400"/><line x1="390" y1="0" x2="390" y2="400"/>
+                    <line x1="420" y1="0" x2="420" y2="400"/><line x1="450" y1="0" x2="450" y2="400"/>
+                    <line x1="480" y1="0" x2="480" y2="400"/><line x1="510" y1="0" x2="510" y2="400"/>
+                    <line x1="540" y1="0" x2="540" y2="400"/><line x1="570" y1="0" x2="570" y2="400"/>
+                    
+                    <!-- Horizontals offset relative to Y-axis at 200 -->
+                    <line x1="0" y1="20" x2="600" y2="20"/><line x1="0" y1="50" x2="600" y2="50"/>
+                    <line x1="0" y1="80" x2="600" y2="80"/><line x1="0" y1="110" x2="600" y2="110"/>
+                    <line x1="0" y1="140" x2="600" y2="140"/><line x1="0" y1="170" x2="600" y2="170"/>
+                    <line x1="0" y1="230" x2="600" y2="230"/><line x1="0" y1="260" x2="600" y2="260"/>
+                    <line x1="0" y1="290" x2="600" y2="290"/><line x1="0" y1="320" x2="600" y2="320"/>
+                    <line x1="0" y1="350" x2="600" y2="350"/><line x1="0" y1="380" x2="600" y2="380"/>
+                </g>
+
+                <!-- Axes -->
+                <line x1="0" y1="200" x2="600" y2="200" stroke="#333" stroke-width="3"/> <!-- X Axis (Moved down to 200) -->
+                <line x1="300" y1="0" x2="300" y2="400" stroke="#333" stroke-width="3"/> <!-- Y Axis -->
+
+                <!-- Curve for x^2 - x - 6 -->
+                <path id="fac-curve" fill="none" stroke="#00897b" stroke-width="4" d=""/>
+                
+                <!-- Target Intercepts (Ghost Rings on X Axis y=200) -->
+                <circle cx="240" cy="200" r="10" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="3,3"/> <!-- x = -2 -->
+                <circle cx="390" cy="200" r="10" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="3,3"/> <!-- x = 3 -->
+
+                <!-- The Moving Evaluator Dot -->
+                <circle id="fac-dot" cx="390" cy="200" r="8" fill="#ff9800" stroke="#fff" stroke-width="2"/>
+                
+                <!-- Vertical Line connecting dot to X-axis -->
+                <line id="fac-drop-line" x1="390" y1="200" x2="390" y2="200" stroke="#ff9800" stroke-width="2" stroke-dasharray="4,4"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" id="fac-verdict-card" style="border-color: #4caf50; background: #e8f5e9; flex-basis: 100%;">
+                    <span style="color: #1b5e20; font-size: 1.2em;">Calculated Remainder: p(<span id="lbl-plug-val">3</span>)</span>
+                    <span id="fac-remainder" class="val-num" style="color: #2e7d32; font-size: 2.5em;">0</span>
+                    <span id="fac-msg" style="color: #1b5e20; font-weight: bold; font-size: 1.2em; display: block; margin-top: 5px;">FACTOR FOUND! 🎉</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: What is the remainder when p(x) = x³ + 1 is divided by (x + 1)?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Step 1:</strong> Identify the divisor, which is (x + 1). Set it to 0 to find the root: x = -1.<br>
+                <strong>Step 2:</strong> Plug -1 into the polynomial p(x).<br>
+                p(-1) = (-1)³ + 1<br>
+                <strong>Step 3:</strong> Calculate.<br>
+                p(-1) = -1 + 1 = 0.<br>
+                <strong>Final Answer: The remainder is 0. This means (x + 1) is a perfect factor of x³ + 1.</strong>
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: Can I use the Remainder Theorem to divide a polynomial by (x² - 2)?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>No, you cannot.</strong><br><br>
+                The Remainder Theorem strictly requires the divisor to be a <strong>linear</strong> polynomial (degree 1), meaning it must be in the form (x - a) or (ax + b). Because (x² - 2) has a degree of 2, the magic shortcut fails, and you must use standard long division!
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic2_2.html" class="nav-btn">← Prev Topic</a>
+        <a href="topic2_4.html" class="nav-btn">Next: Factor Theorem ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. MAGIC SHORTCUT CALCULATOR LOGIC ---
+        const sRemA = document.getElementById('s-rem-a');
+        const sRemB = document.getElementById('s-rem-b');
+        const sRemC = document.getElementById('s-rem-c');
+        const sDivisor = document.getElementById('s-divisor');
+
+        function updateRemainderCalc() {
+            let a = parseInt(sRemA.value);
+            let b = parseInt(sRemB.value);
+            let c = parseInt(sRemC.value);
+            let root = parseInt(sDivisor.value); // The exact value of 'a' in (x - a)
+
+            // Update Polynomial Display
+            document.getElementById('val-rem-a').textContent = a;
+            document.getElementById('val-rem-b').textContent = b;
+            document.getElementById('val-rem-c').textContent = c;
+
+            let aStr = a === 1 ? "" : a === -1 ? "-" : a;
+            let bStr = b < 0 ? `- ${Math.abs(b)}` : `+ ${b}`;
+            let cStr = c < 0 ? `- ${Math.abs(c)}` : `+ ${c}`;
+            
+            if (a === 0) aStr = "0";
+            document.getElementById('eq-rem-a').textContent = aStr;
+            document.getElementById('eq-rem-b').textContent = b === 0 ? "" : bStr;
+            document.getElementById('eq-rem-c').textContent = c === 0 ? "" : cStr;
+
+            // Update Divisor Display (Note the sign flip!)
+            let divSign = root < 0 ? "+" : "-";
+            let divVal = Math.abs(root);
+            if (root === 0) { divSign = "-"; divVal = "0"; } // Handle edge case (x - 0)
+
+            document.getElementById('val-divisor-sign').textContent = divSign;
+            document.getElementById('val-divisor-root').textContent = divVal;
+            document.getElementById('calc-root').textContent = root;
+
+            // Calculate Remainder
+            let pluggedStr = `(${a})(${root})² + (${b})(${root}) + (${c})`;
+            document.getElementById('calc-plugged').textContent = pluggedStr;
+
+            let remainder = (a * Math.pow(root, 2)) + (b * root) + c;
+            document.getElementById('calc-remainder').textContent = remainder;
+
+            let resultCard = document.getElementById('rem-result-card');
+            let resultMsg = document.getElementById('calc-rem-msg');
+
+            if (remainder === 0) {
+                resultCard.style.borderColor = "#4caf50";
+                resultCard.style.background = "#e8f5e9";
+                document.getElementById('calc-remainder').style.color = "#2e7d32";
+                resultMsg.textContent = "Remainder is exactly 0. This IS a perfect factor!";
+                resultMsg.style.color = "#1b5e20";
+            } else {
+                resultCard.style.borderColor = "#e91e63";
+                resultCard.style.background = "#fce4ec";
+                document.getElementById('calc-remainder').style.color = "#ad1457";
+                resultMsg.textContent = "There is a remainder. This is NOT a factor.";
+                resultMsg.style.color = "#880e4f";
+            }
+        }
+
+        sRemA.addEventListener('input', updateRemainderCalc);
+        sRemB.addEventListener('input', updateRemainderCalc);
+        sRemC.addEventListener('input', updateRemainderCalc);
+        sDivisor.addEventListener('input', updateRemainderCalc);
+        updateRemainderCalc();
+
+
+        // --- 2. FACTOR DETECTIVE GRAPH LOGIC ---
+        const facScale = 30; // 1 unit = 30px
+        function mapX(x) { return 300 + (x * facScale); }
+        function mapY(y) { return 200 - (y * facScale); } // X-Axis moved down to y=200
+
+        const sFacDiv = document.getElementById('s-fac-div');
+
+        function initFactorGraph() {
+            // Target Polynomial: p(x) = x^2 - x - 6
+            let pathD = "";
+            for (let mathX = -10; mathX <= 10; mathX += 0.2) {
+                let mathY = (mathX * mathX) - mathX - 6;
+                let sx = mapX(mathX);
+                let sy = mapY(mathY);
+                if (mathX === -10) pathD += `M ${sx} ${sy} `;
+                else pathD += `L ${sx} ${sy} `;
+            }
+            document.getElementById('fac-curve').setAttribute('d', pathD);
+        }
+        initFactorGraph();
+
+        function updateFactorDetective() {
+            let root = parseInt(sFacDiv.value);
+            
+            // Format Divisor Label
+            let divSign = root < 0 ? "+" : "-";
+            let divVal = Math.abs(root);
+            if (root === 0) { divSign = "-"; divVal = "0"; }
+            document.getElementById('fac-div-sign').textContent = divSign;
+            document.getElementById('fac-div-val').textContent = divVal;
+            document.getElementById('lbl-plug-val').textContent = root;
+
+            // Math: p(x) = x^2 - x - 6
+            let remainder = (root * root) - root - 6;
+
+            // Plot Dot
+            let svgX = mapX(root);
+            let svgY = mapY(remainder);
+            
+            let dot = document.getElementById('fac-dot');
+            dot.setAttribute('cx', svgX);
+            dot.setAttribute('cy', svgY);
+
+            // Draw drop line to X-axis
+            let dropLine = document.getElementById('fac-drop-line');
+            dropLine.setAttribute('x1', svgX);
+            dropLine.setAttribute('y1', 200); // X-axis
+            dropLine.setAttribute('x2', svgX);
+            dropLine.setAttribute('y2', svgY); // Dot y
+
+            // Dashboard
+            document.getElementById('fac-remainder').textContent = remainder;
+            let card = document.getElementById('fac-verdict-card');
+            let msg = document.getElementById('fac-msg');
+
+            if (remainder === 0) {
+                card.style.borderColor = "#4caf50";
+                card.style.background = "#e8f5e9";
+                document.getElementById('fac-remainder').style.color = "#2e7d32";
+                msg.textContent = "FACTOR FOUND! 🎉 (Crosses the X-Axis)";
+                msg.style.color = "#1b5e20";
+                
+                dot.setAttribute('fill', "#4caf50");
+                dropLine.style.display = 'none'; // No drop line needed when on axis
+            } else {
+                card.style.borderColor = "#f44336";
+                card.style.background = "#ffebee";
+                document.getElementById('fac-remainder').style.color = "#d32f2f";
+                msg.textContent = "Missed the X-axis. Not a factor.";
+                msg.style.color = "#b71c1c";
+                
+                dot.setAttribute('fill', "#f44336");
+                dropLine.style.display = 'block';
+                dropLine.setAttribute('stroke', "#f44336");
+            }
+        }
+
+        sFacDiv.addEventListener('input', updateFactorDetective);
+        updateFactorDetective();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = id === 'ans1' ? 'Show Answer Step-by-Step' : 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

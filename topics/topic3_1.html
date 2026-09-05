@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intro to Coordinate Geometry - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #00838f; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; font-size: 1.05em; }
+        .formula-table th { background: #00838f; color: white; }
+        
+        .math-eq { font-family: 'Times New Roman', serif; font-style: italic; font-size: 1.2em; color: #006064; font-weight: bold; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #00838f; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 500px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        .svg-canvas-quad { max-width: 400px; height: 400px; }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #4dd0e1; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.6em; display: block; margin-top: 5px; font-family: monospace; }
+        
+        /* TOGGLE BUTTONS */
+        .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .toggle-btn { padding: 10px 20px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1em; }
+        .toggle-btn.active { background: #ff9800; color: white; border-color: #ff9800; }
+
+        /* DATA TABLE */
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 1.1em; }
+        .data-table th, .data-table td { border: 2px solid #ce93d8; padding: 10px; text-align: center; font-family: monospace; font-weight: bold; }
+        .data-table th { background: #f3e5f5; color: #4a148c; width: 50px; }
+        .data-table td { background: #fff; color: #333; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e0f7fa; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00838f; }
+        .qa-question { font-weight: bold; color: #006064; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #00838f; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #00838f; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter3.html" class="back-btn">⬅️ Back to Chapter Index</a>
+
+    <h1>🗺️ Introduction to Coordinate Geometry</h1>
+    <p class="subtitle">Turning geometry into algebra using the magical Cartesian Plane!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Map of Mathematics</h2>
+        <p>To precisely locate any point on a flat surface, we use a grid system called the <strong>Cartesian Plane</strong>. It's like a city map with horizontal streets and vertical avenues!</p>
+        <table class="formula-table">
+            <tr>
+                <th>Component</th>
+                <th>Definition</th>
+            </tr>
+            <tr>
+                <td><strong>X-Axis & Y-Axis</strong></td>
+                <td>The horizontal line is the <strong>X-axis</strong>. The vertical line is the <strong>Y-axis</strong>. Together, they divide the plane into four sections.</td>
+            </tr>
+            <tr>
+                <td><strong>The Origin</strong></td>
+                <td>The exact center where the two axes intersect. Its coordinates are always <strong>(0, 0)</strong>.</td>
+            </tr>
+            <tr>
+                <td><strong>Coordinates (x, y)</strong></td>
+                <td>An ordered pair that acts as a GPS address. The first number (x-coordinate or <em>abscissa</em>) tells you how far left/right to go. The second number (y-coordinate or <em>ordinate</em>) tells you how far up/down to go.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE COORDINATE PLOTTER -->
+    <div class="section-box">
+        <h2 style="color: #e65100; text-align: center; margin-top: 0;">📍 1. The Coordinate Plotter</h2>
+        <p style="text-align: center; color: #666;">Use the sliders below to move the red dot around the city grid. Notice how positive X moves you right, while negative X moves you left. Positive Y moves you up, while negative Y moves you down!</p>
+
+        <div class="interactive-container" style="background: #fff3e0; border-color: #ef6c00;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #e65100; background: #ffebee;">
+                    <label style="color: #bf360c; font-weight: bold;">X-Coordinate (Abscissa): <span id="val-plot-x">4</span></label>
+                    <input type="range" id="s-plot-x" min="-10" max="10" value="4">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Y-Coordinate (Ordinate): <span id="val-plot-y">3</span></label>
+                    <input type="range" id="s-plot-y" min="-10" max="10" value="3">
+                </div>
+            </div>
+
+            <svg id="plot-svg" class="svg-canvas" viewBox="-30 -30 560 560">
+                <defs>
+                    <pattern id="grid" width="25" height="25" patternUnits="userSpaceOnUse">
+                        <rect width="25" height="25" fill="none" stroke="#eee" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                <rect x="0" y="0" width="500" height="500" fill="url(#grid)" />
+
+                <line x1="0" y1="250" x2="500" y2="250" stroke="#333" stroke-width="3"/>
+                <text x="515" y="258" font-weight="bold" fill="#333" font-size="20px">X</text>
+                
+                <line x1="250" y1="0" x2="250" y2="500" stroke="#333" stroke-width="3"/>
+                <text x="242" y="-10" font-weight="bold" fill="#333" font-size="20px">Y</text>
+
+                <!-- Origin Marker -->
+                <circle cx="250" cy="250" r="4" fill="#333"/>
+                <text x="260" y="240" font-weight="bold" fill="#333" font-size="16px">O(0,0)</text>
+
+                <line id="trace-x" x1="250" y1="250" x2="350" y2="250" stroke="#e65100" stroke-width="3" stroke-dasharray="4,4"/>
+                <line id="trace-y" x1="350" y1="250" x2="350" y2="175" stroke="#1976d2" stroke-width="3" stroke-dasharray="4,4"/>
+
+                <circle id="plot-dot" cx="350" cy="175" r="9" fill="#d32f2f" stroke="#fff" stroke-width="2"/>
+                <text id="plot-lbl" x="350" y="155" font-weight="bold" fill="#d32f2f" text-anchor="middle" font-size="18px">(4, 3)</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #ef6c00; background: #fff; flex-basis: 100%;">
+                    <span style="color: #e65100; font-size: 1.1em;">Current Point Location</span>
+                    <span id="loc-coords" class="val-num" style="color: #d32f2f; font-size: 2.2em;">P(4, 3)</span>
+                    <span id="loc-quad" style="color: #bf360c; font-weight: bold; margin-top: 5px; display: block;">Quadrant I</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE QUADRANT INSPECTOR -->
+    <div class="section-box">
+        <h2 style="color: #1976d2; text-align: center; margin-top: 0;">🧭 2. The Quadrant Inspector</h2>
+        <p style="text-align: center; color: #666;">The two axes divide the plane into four zones called <strong>Quadrants</strong>. We count them counter-clockwise starting from the top right. Click the buttons below to see the strict sign rules for each zone!</p>
+
+        <div class="interactive-container" style="background: #e3f2fd; border-color: #1976d2;">
+            <div class="face-toggles">
+                <button class="toggle-btn active" id="btn-q1" onclick="highlightQuad(1)">Quadrant I</button>
+                <button class="toggle-btn" id="btn-q2" onclick="highlightQuad(2)">Quadrant II</button>
+                <button class="toggle-btn" id="btn-q3" onclick="highlightQuad(3)">Quadrant III</button>
+                <button class="toggle-btn" id="btn-q4" onclick="highlightQuad(4)">Quadrant IV</button>
+            </div>
+
+            <svg class="svg-canvas svg-canvas-quad" viewBox="0 0 400 400" style="background: #fafafa;">
+                <rect id="q1-box" x="200" y="0" width="200" height="200" fill="#4caf50" opacity="0.3" style="transition: opacity 0.3s;"/>
+                <rect id="q2-box" x="0" y="0" width="200" height="200" fill="#ffeb3b" opacity="0" style="transition: opacity 0.3s;"/>
+                <rect id="q3-box" x="0" y="200" width="200" height="200" fill="#f44336" opacity="0" style="transition: opacity 0.3s;"/>
+                <rect id="q4-box" x="200" y="200" width="200" height="200" fill="#2196f3" opacity="0" style="transition: opacity 0.3s;"/>
+                
+                <line x1="0" y1="200" x2="400" y2="200" stroke="#333" stroke-width="4"/>
+                <line x1="200" y1="0" x2="200" y2="400" stroke="#333" stroke-width="4"/>
+
+                <!-- Origin Marker -->
+                <circle cx="200" cy="200" r="4" fill="#333"/>
+                <text x="210" y="190" font-weight="bold" fill="#333" font-size="14px">O</text>
+
+                <text x="300" y="110" font-size="40px" font-weight="bold" fill="#333" text-anchor="middle" opacity="0.3">I</text>
+                <text x="100" y="110" font-size="40px" font-weight="bold" fill="#333" text-anchor="middle" opacity="0.3">II</text>
+                <text x="100" y="310" font-size="40px" font-weight="bold" fill="#333" text-anchor="middle" opacity="0.3">III</text>
+                <text x="300" y="310" font-size="40px" font-weight="bold" fill="#333" text-anchor="middle" opacity="0.3">IV</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" id="quad-info-card" style="border-color: #4caf50; background: #e8f5e9; flex-basis: 100%;">
+                    <span style="color: #1b5e20; font-size: 1.1em;" id="quad-title">Quadrant I</span>
+                    <span id="quad-signs" class="val-num" style="color: #2e7d32; font-size: 2.5em;">(+ , +)</span>
+                    <span id="quad-desc" style="color: #1b5e20; font-weight: normal; margin-top: 5px; display: block;">Both the X and Y coordinates must be positive.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: PLOTTING A GRAPH -->
+    <div class="section-box">
+        <h2 style="color: #7b1fa2; text-align: center; margin-top: 0;">📈 3. The Equation Grapher</h2>
+        <p style="text-align: center; color: #666;">A straight line is just an infinite collection of coordinates obeying a rule! Adjust the standard linear equation <strong>ax + by + c = 0</strong> to calculate coordinates and watch the mathematical line form across the grid.</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #9c27b0;">
+            
+            <div style="font-size: 1.8em; font-weight: bold; color: #4a148c; margin-bottom: 20px; font-family: 'Times New Roman', serif; font-style: italic;">
+                <span id="lbl-eq-full">2x - y + 1 = 0</span>
+            </div>
+
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #d32f2f; background: #ffebee;">
+                    <label style="color: #b71c1c; font-weight: bold;">Coef a: <span id="val-graph-a">2</span></label>
+                    <input type="range" id="s-graph-a" min="-5" max="5" value="2">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Coef b: <span id="val-graph-b">-1</span></label>
+                    <input type="range" id="s-graph-b" min="-5" max="5" value="-1">
+                </div>
+                <div class="slider-group" style="border-color: #f57c00; background: #fff3e0;">
+                    <label style="color: #e65100; font-weight: bold;">Constant c: <span id="val-graph-c">1</span></label>
+                    <input type="range" id="s-graph-c" min="-10" max="10" value="1">
+                </div>
+            </div>
+
+            <table class="data-table">
+                <tr>
+                    <th>x</th>
+                    <td id="td-x1">-4</td>
+                    <td id="td-x2">-2</td>
+                    <td id="td-x3">0</td>
+                    <td id="td-x4">2</td>
+                    <td id="td-x5">4</td>
+                </tr>
+                <tr>
+                    <th>y</th>
+                    <td id="td-y1">...</td>
+                    <td id="td-y2">...</td>
+                    <td id="td-y3">...</td>
+                    <td id="td-y4">...</td>
+                    <td id="td-y5">...</td>
+                </tr>
+            </table>
+
+            <svg id="line-svg" class="svg-canvas" viewBox="-30 -30 560 560" style="margin-top: 20px;">
+                <rect x="0" y="0" width="500" height="500" fill="url(#grid)" />
+                <line x1="0" y1="250" x2="500" y2="250" stroke="#333" stroke-width="3"/>
+                <line x1="250" y1="0" x2="250" y2="500" stroke="#333" stroke-width="3"/>
+                
+                <!-- Origin Marker -->
+                <circle cx="250" cy="250" r="4" fill="#333"/>
+                <text x="260" y="240" font-weight="bold" fill="#333" font-size="16px">O(0,0)</text>
+
+                <!-- The Graph Line -->
+                <line id="graph-line" x1="0" y1="0" x2="0" y2="0" stroke="#9c27b0" stroke-width="4"/>
+
+                <!-- Plot Points -->
+                <circle id="g-dot-1" r="6" fill="#4a148c" stroke="#fff" stroke-width="2"/>
+                <circle id="g-dot-2" r="6" fill="#4a148c" stroke="#fff" stroke-width="2"/>
+                <circle id="g-dot-3" r="6" fill="#4a148c" stroke="#fff" stroke-width="2"/>
+                <circle id="g-dot-4" r="6" fill="#4a148c" stroke="#fff" stroke-width="2"/>
+                <circle id="g-dot-5" r="6" fill="#4a148c" stroke="#fff" stroke-width="2"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: In which quadrant does the point (-3, 5) lie?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>It lies in Quadrant II.</strong><br><br>
+                The x-coordinate is negative (-), meaning you move left. The y-coordinate is positive (+), meaning you move up. The combination of (-, +) always lands in the second quadrant!
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: If you plot the equation x - y = 0, which two quadrants will the line pass through?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans2">
+                <strong>Step 1:</strong> Rearrange the equation slightly: if x - y = 0, then y = x.<br>
+                <strong>Step 2:</strong> If x is positive, y is positive (+, +). These points lie in Quadrant I.<br>
+                <strong>Step 3:</strong> If x is negative, y is negative (-, -). These points lie in Quadrant III.<br>
+                <strong>Final Answer: The line will pass perfectly diagonally through Quadrant I and Quadrant III!</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <span style="width: 150px;"></span>
+        <a href="topic3_2.html" class="nav-btn">Next: Distance Formula ➡️</a>
+    </div>
+
+    <script>
+        // Common SVG Mapping Logic
+        const plotScale = 25; // 1 math unit = 25px
+        function mapX(x) { return 250 + (x * plotScale); }
+        function mapY(y) { return 250 - (y * plotScale); }
+
+        // --- 1. COORDINATE PLOTTER LOGIC ---
+        const sPlotX = document.getElementById('s-plot-x');
+        const sPlotY = document.getElementById('s-plot-y');
+
+        function updatePlotter() {
+            let x = parseInt(sPlotX.value);
+            let y = parseInt(sPlotY.value);
+
+            document.getElementById('val-plot-x').textContent = x;
+            document.getElementById('val-plot-y').textContent = y;
+
+            let svgX = mapX(x);
+            let svgY = mapY(y);
+
+            document.getElementById('plot-dot').setAttribute('cx', svgX);
+            document.getElementById('plot-dot').setAttribute('cy', svgY);
+            
+            let lbl = document.getElementById('plot-lbl');
+            lbl.setAttribute('x', svgX);
+            if (y > 8) lbl.setAttribute('y', svgY + 25);
+            else lbl.setAttribute('y', svgY - 15);
+            lbl.textContent = `(${x}, ${y})`;
+
+            document.getElementById('trace-x').setAttribute('x2', svgX);
+            document.getElementById('trace-y').setAttribute('x1', svgX);
+            document.getElementById('trace-y').setAttribute('x2', svgX);
+            document.getElementById('trace-y').setAttribute('y2', svgY);
+
+            document.getElementById('loc-coords').textContent = `P(${x}, ${y})`;
+            
+            let quadText = "";
+            if (x > 0 && y > 0) quadText = "Quadrant I";
+            else if (x < 0 && y > 0) quadText = "Quadrant II";
+            else if (x < 0 && y < 0) quadText = "Quadrant III";
+            else if (x > 0 && y < 0) quadText = "Quadrant IV";
+            else if (x === 0 && y === 0) quadText = "The Origin";
+            else if (y === 0) quadText = "On the X-Axis";
+            else if (x === 0) quadText = "On the Y-Axis";
+
+            document.getElementById('loc-quad').textContent = quadText;
+        }
+
+        sPlotX.addEventListener('input', updatePlotter);
+        sPlotY.addEventListener('input', updatePlotter);
+        updatePlotter();
+
+
+        // --- 2. QUADRANT INSPECTOR LOGIC ---
+        function highlightQuad(quadNum) {
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`btn-q${i}`).classList.remove('active');
+                document.getElementById(`q${i}-box`).setAttribute('opacity', '0');
+            }
+            
+            document.getElementById(`btn-q${quadNum}`).classList.add('active');
+            document.getElementById(`q${quadNum}-box`).setAttribute('opacity', '0.4');
+
+            let card = document.getElementById('quad-info-card');
+            let title = document.getElementById('quad-title');
+            let signs = document.getElementById('quad-signs');
+            let desc = document.getElementById('quad-desc');
+
+            if (quadNum === 1) {
+                card.style.borderColor = "#4caf50"; card.style.background = "#e8f5e9";
+                title.style.color = "#1b5e20"; signs.style.color = "#2e7d32"; desc.style.color = "#1b5e20";
+                title.textContent = "Quadrant I"; signs.textContent = "(+ , +)"; desc.textContent = "Both the X and Y coordinates must be positive (Right & Up).";
+            } else if (quadNum === 2) {
+                card.style.borderColor = "#ffeb3b"; card.style.background = "#fffde7";
+                title.style.color = "#f57f17"; signs.style.color = "#fbc02d"; desc.style.color = "#f57f17";
+                title.textContent = "Quadrant II"; signs.textContent = "(- , +)"; desc.textContent = "X is negative, Y is positive (Left & Up).";
+            } else if (quadNum === 3) {
+                card.style.borderColor = "#f44336"; card.style.background = "#ffebee";
+                title.style.color = "#b71c1c"; signs.style.color = "#d32f2f"; desc.style.color = "#b71c1c";
+                title.textContent = "Quadrant III"; signs.textContent = "(- , -)"; desc.textContent = "Both the X and Y coordinates must be negative (Left & Down).";
+            } else if (quadNum === 4) {
+                card.style.borderColor = "#2196f3"; card.style.background = "#e3f2fd";
+                title.style.color = "#0d47a1"; signs.style.color = "#1565c0"; desc.style.color = "#0d47a1";
+                title.textContent = "Quadrant IV"; signs.textContent = "(+ , -)"; desc.textContent = "X is positive, Y is negative (Right & Down).";
+            }
+        }
+
+        // --- 3. GRAPH PLOTTER LOGIC (ax + by + c = 0) ---
+        const sGraphA = document.getElementById('s-graph-a');
+        const sGraphB = document.getElementById('s-graph-b');
+        const sGraphC = document.getElementById('s-graph-c');
+
+        function updateGraphPlotter() {
+            let a = parseInt(sGraphA.value);
+            let b = parseInt(sGraphB.value);
+            
+            // Force c = 0 if both a and b are 0 to prevent a mathematically invalid equation
+            if (a === 0 && b === 0) {
+                sGraphC.value = 0;
+            }
+            let c = parseInt(sGraphC.value);
+
+            document.getElementById('val-graph-a').textContent = a;
+            document.getElementById('val-graph-b').textContent = b;
+            document.getElementById('val-graph-c').textContent = c;
+
+            // Robust Equation Formatter
+            let eqStr = "";
+            if(a !== 0) eqStr += (a === 1 ? "x" : a === -1 ? "-x" : a + "x");
+            
+            if(b !== 0) {
+                if(eqStr !== "") {
+                    eqStr += (b > 0 ? ` + ${b === 1 ? '' : b}y` : ` - ${b === -1 ? '' : Math.abs(b)}y`);
+                } else {
+                    eqStr += (b === 1 ? "y" : b === -1 ? "-y" : b + "y");
+                }
+            }
+            
+            if(c !== 0) {
+                if(eqStr !== "") eqStr += (c > 0 ? ` + ${c}` : ` - ${Math.abs(c)}`);
+                else eqStr += c;
+            }
+            
+            if(eqStr === "") eqStr = "0";
+            document.getElementById('lbl-eq-full').textContent = eqStr + " = 0";
+
+            // Determine data points
+            let pts = [];
+            if (b !== 0) {
+                let xs = [-4, -2, 0, 2, 4];
+                for(let i=0; i<5; i++) {
+                    pts.push({ x: xs[i], y: (-a * xs[i] - c) / b });
+                }
+            } else if (a !== 0) {
+                let ys = [-4, -2, 0, 2, 4];
+                for(let i=0; i<5; i++) {
+                    pts.push({ x: (-c) / a, y: ys[i] });
+                }
+            } else {
+                for(let i=0; i<5; i++) pts.push({ x: 0, y: 0 }); // Invalid line fallback
+            }
+
+            // Update Table and SVG Dots
+            for(let i=0; i<5; i++) {
+                document.getElementById(`td-x${i+1}`).textContent = Number.isInteger(pts[i].x) ? pts[i].x : pts[i].x.toFixed(1);
+                document.getElementById(`td-y${i+1}`).textContent = Number.isInteger(pts[i].y) ? pts[i].y : pts[i].y.toFixed(1);
+
+                let dot = document.getElementById(`g-dot-${i+1}`);
+                let svgX = mapX(pts[i].x);
+                let svgY = mapY(pts[i].y);
+
+                if(pts[i].x < -15 || pts[i].x > 15 || pts[i].y < -15 || pts[i].y > 15 || (a === 0 && b === 0)) {
+                    dot.style.display = "none";
+                } else {
+                    dot.style.display = "block";
+                    dot.setAttribute('cx', svgX);
+                    dot.setAttribute('cy', svgY);
+                }
+            }
+
+            // Draw Full SVG Line
+            let line = document.getElementById('graph-line');
+            if (a === 0 && b === 0) {
+                line.style.display = "none";
+            } else {
+                line.style.display = "block";
+                if (Math.abs(b) >= Math.abs(a)) {
+                    // Use X bounds to find Y
+                    let xStart = -20; let yStart = (-a * xStart - c) / b;
+                    let xEnd = 20; let yEnd = (-a * xEnd - c) / b;
+                    line.setAttribute('x1', mapX(xStart)); line.setAttribute('y1', mapY(yStart));
+                    line.setAttribute('x2', mapX(xEnd)); line.setAttribute('y2', mapY(yEnd));
+                } else {
+                    // Use Y bounds to find X
+                    let yStart = -20; let xStart = (-b * yStart - c) / a;
+                    let yEnd = 20; let xEnd = (-b * yEnd - c) / a;
+                    line.setAttribute('x1', mapX(xStart)); line.setAttribute('y1', mapY(yStart));
+                    line.setAttribute('x2', mapX(xEnd)); line.setAttribute('y2', mapY(yEnd));
+                }
+            }
+        }
+
+        sGraphA.addEventListener('input', updateGraphPlotter);
+        sGraphB.addEventListener('input', updateGraphPlotter);
+        sGraphC.addEventListener('input', updateGraphPlotter);
+        updateGraphPlotter();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = id === 'ans1' ? 'Show Answer' : 'Show Answer Step-by-Step';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

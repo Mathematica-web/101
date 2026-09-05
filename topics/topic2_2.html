@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeroes of a Polynomial - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #1b5e20; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #4caf50; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c8e6c9; text-align: left; font-size: 1.05em; }
+        .formula-table th { background: #4caf50; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #4caf50; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 600px; height: 300px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #81c784; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; }
+        .val-num { font-size: 1.8em; display: block; margin-top: 5px; }
+        
+        .math-eq { font-family: 'Times New Roman', serif; font-style: italic; font-size: 1.3em; color: #1b5e20; }
+
+        /* TOGGLE BUTTONS */
+        .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .toggle-btn { padding: 10px 20px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1em; }
+        .toggle-btn.active { background: #ff9800; color: white; border-color: #ff9800; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #4caf50; }
+        .qa-question { font-weight: bold; color: #1b5e20; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #4caf50; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter2.html" class="back-btn">⬅️ Back to Chapter Index</a>
+
+    <h1>🎯 Zeroes of a Polynomial</h1>
+    <p class="subtitle">Finding the magic numbers that make the polynomial vanish!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>What is a "Zero"?</h2>
+        <p>A zero (or root) of a polynomial p(x) is simply any number <em>c</em> that, when plugged in for <em>x</em>, makes the entire equation equal to exactly <strong>0</strong>. Visually, this is where the graph crashes into the X-axis!</p>
+        <table class="formula-table">
+            <tr>
+                <th>Concept</th>
+                <th>Explanation</th>
+            </tr>
+            <tr>
+                <td><strong>Mathematical Definition</strong></td>
+                <td>If <span class="math-eq">p(c) = 0</span>, then <em>c</em> is a zero of the polynomial <span class="math-eq">p(x)</span>.</td>
+            </tr>
+            <tr>
+                <td><strong>Geometrical Meaning</strong></td>
+                <td>The <strong>x-intercepts</strong>. Every time the line or curve crosses the horizontal X-axis, the y-value is 0. That x-coordinate is your zero!</td>
+            </tr>
+            <tr>
+                <td><strong>The Degree Rule</strong></td>
+                <td>A polynomial of degree <strong>n</strong> can have <em>at most</em> <strong>n</strong> real zeroes. (A linear equation has 1, a quadratic can have up to 2, a cubic up to 3).</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: LINEAR ROOT FINDER -->
+    <div class="section-box">
+        <h2 style="color: #1976d2; text-align: center; margin-top: 0;">📏 1. The Linear Root Finder</h2>
+        <p style="text-align: center; color: #666;">A Linear Polynomial (Degree 1) forms a perfectly straight line and crosses the X-axis exactly once. Adjust the slope (<strong>a</strong>) and constant (<strong>b</strong>) to see how the zero changes!</p>
+
+        <div class="interactive-container" style="background: #e3f2fd; border-color: #1976d2;">
+            <div style="margin-bottom: 15px; font-size: 1.5em; font-weight: bold; color: #0d47a1;">
+                p(x) = <span id="eq-lin-a">1</span>x + <span id="eq-lin-b">0</span>
+            </div>
+
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #1e88e5;">
+                    <label style="color: #1565c0; font-weight: bold;">Slope (a): <span id="val-lin-a">1</span></label>
+                    <input type="range" id="s-lin-a" min="-5" max="5" value="1">
+                </div>
+                <div class="slider-group" style="border-color: #f57c00;">
+                    <label style="color: #e65100; font-weight: bold;">Constant (b): <span id="val-lin-b">0</span></label>
+                    <input type="range" id="s-lin-b" min="-10" max="10" value="0">
+                </div>
+            </div>
+
+            <svg id="lin-svg" class="svg-canvas" viewBox="0 0 600 300">
+                <!-- Grid Lines -->
+                <g stroke="#eee" stroke-width="1">
+                    <line x1="30" y1="0" x2="30" y2="300"/><line x1="90" y1="0" x2="90" y2="300"/>
+                    <line x1="150" y1="0" x2="150" y2="300"/><line x1="210" y1="0" x2="210" y2="300"/>
+                    <line x1="270" y1="0" x2="270" y2="300"/><line x1="330" y1="0" x2="330" y2="300"/>
+                    <line x1="390" y1="0" x2="390" y2="300"/><line x1="450" y1="0" x2="450" y2="300"/>
+                    <line x1="510" y1="0" x2="510" y2="300"/><line x1="570" y1="0" x2="570" y2="300"/>
+                    <line x1="0" y1="30" x2="600" y2="30"/><line x1="0" y1="90" x2="600" y2="90"/>
+                    <line x1="0" y1="210" x2="600" y2="210"/><line x1="0" y1="270" x2="600" y2="270"/>
+                </g>
+                <line x1="0" y1="150" x2="600" y2="150" stroke="#333" stroke-width="3"/> 
+                <line x1="300" y1="0" x2="300" y2="300" stroke="#333" stroke-width="3"/> 
+                <line id="lin-line" x1="0" y1="0" x2="0" y2="0" stroke="#1976d2" stroke-width="4"/>
+                <circle id="lin-zero-dot" cx="300" cy="150" r="8" fill="#d32f2f" stroke="#fff" stroke-width="2" style="display:none;"/>
+                <text id="lin-zero-lbl" x="300" y="130" font-weight="bold" fill="#d32f2f" text-anchor="middle" style="display:none;">Zero</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #d32f2f; background: #ffebee; flex-basis: 100%;">
+                    <span style="color: #b71c1c; font-size: 1.1em;">The Zero (x-intercept)</span>
+                    <span id="calc-lin-zero" class="val-num" style="color: #c2185b; font-family: monospace;">x = 0</span>
+                    <span id="calc-lin-formula" style="color: #b71c1c; font-weight: normal; font-size: 0.9em; display: block; margin-top: 5px;">Calculated as x = -b / a</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE PARABOLA BENDER -->
+    <div class="section-box">
+        <h2 style="color: #e91e63; text-align: center; margin-top: 0;">🧲 2. The Parabola Bender</h2>
+        <p style="text-align: center; color: #666;">A Quadratic Polynomial (Degree 2) forms a U-shaped curve called a Parabola. Depending on where it sits, it can crash through the X-axis twice, touch it once, or miss it completely! Adjust the Constant (<strong>c</strong>) to shift it up and down.</p>
+
+        <div class="interactive-container" style="background: #fce4ec; border-color: #e91e63;">
+            <div style="margin-bottom: 15px; font-size: 1.5em; font-weight: bold; color: #880e4f;">
+                p(x) = x² <span id="eq-quad-b">+ 0</span>x <span id="eq-quad-c">- 4</span>
+            </div>
+
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #c2185b;">
+                    <label style="color: #ad1457; font-weight: bold;">Horizontal Shift (b): <span id="val-quad-b">0</span></label>
+                    <input type="range" id="s-quad-b" min="-6" max="6" value="0">
+                </div>
+                <div class="slider-group" style="border-color: #7b1fa2;">
+                    <label style="color: #6a1b9a; font-weight: bold;">Vertical Shift (c): <span id="val-quad-c">-4</span></label>
+                    <input type="range" id="s-quad-c" min="-8" max="8" value="-4">
+                </div>
+            </div>
+
+            <svg id="quad-svg" class="svg-canvas" viewBox="0 0 600 300">
+                <!-- Grid Lines -->
+                <g stroke="#eee" stroke-width="1">
+                    <line x1="60" y1="0" x2="60" y2="300"/><line x1="120" y1="0" x2="120" y2="300"/>
+                    <line x1="180" y1="0" x2="180" y2="300"/><line x1="240" y1="0" x2="240" y2="300"/>
+                    <line x1="360" y1="0" x2="360" y2="300"/><line x1="420" y1="0" x2="420" y2="300"/>
+                    <line x1="480" y1="0" x2="480" y2="300"/><line x1="540" y1="0" x2="540" y2="300"/>
+                    <line x1="0" y1="30" x2="600" y2="30"/><line x1="0" y1="60" x2="600" y2="60"/>
+                    <line x1="0" y1="90" x2="600" y2="90"/><line x1="0" y1="120" x2="600" y2="120"/>
+                    <line x1="0" y1="180" x2="600" y2="180"/><line x1="0" y1="210" x2="600" y2="210"/>
+                    <line x1="0" y1="240" x2="600" y2="240"/><line x1="0" y1="270" x2="600" y2="270"/>
+                </g>
+                <line x1="0" y1="150" x2="600" y2="150" stroke="#333" stroke-width="3"/> 
+                <line x1="300" y1="0" x2="300" y2="300" stroke="#333" stroke-width="3"/> 
+                
+                <path id="quad-curve" fill="none" stroke="#e91e63" stroke-width="4" d=""/>
+                <g id="quad-roots"></g>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" id="quad-verdict-card" style="border-color: #e91e63; background: #fce4ec; flex-basis: 100%;">
+                    <span style="color: #ad1457; font-size: 1.1em;">Number of Real Zeroes</span>
+                    <span id="quad-verdict" class="val-num" style="color: #c2185b;">2</span>
+                    <span id="quad-roots-text" style="color: #880e4f; font-family: monospace; display: block; margin-top: 5px;">x = -2, x = 2</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: ROOTS & COEFFICIENTS LINK (VIETA'S FORMULAS) -->
+    <div class="section-box">
+        <h2 style="color: #ff9800; text-align: center; margin-top: 0;">🔗 3. The Root-Coefficient Link</h2>
+        <p style="text-align: center; color: #666;">Even if you don't know the exact zeroes, you can easily calculate their <strong>Sum</strong> and <strong>Product</strong> just by looking at the coefficients! This magic trick is known as Vieta's Formulas.</p>
+
+        <div class="interactive-container" style="background: #fff8e1; border-color: #ffb300;">
+            <div class="face-toggles">
+                <button class="toggle-btn active" onclick="setVietaMode('quad', this)">Quadratic (Degree 2)</button>
+                <button class="toggle-btn" onclick="setVietaMode('cubic', this)">Cubic (Degree 3)</button>
+            </div>
+
+            <div style="margin-bottom: 20px; font-size: 1.8em; font-weight: bold; color: #e65100; font-family: 'Times New Roman', serif; font-style: italic;" id="vieta-eq-display">
+                <!-- Generated by JS -->
+            </div>
+
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #e65100;">
+                    <label style="color: #bf360c; font-weight: bold;">Coef a (x highest): <span id="val-vieta-a">1</span></label>
+                    <input type="range" id="s-vieta-a" min="1" max="5" value="1">
+                </div>
+                <div class="slider-group" style="border-color: #e65100;">
+                    <label style="color: #bf360c; font-weight: bold;">Coef b: <span id="val-vieta-b">4</span></label>
+                    <input type="range" id="s-vieta-b" min="-5" max="5" value="4">
+                </div>
+                <div class="slider-group" style="border-color: #e65100;">
+                    <label style="color: #bf360c; font-weight: bold;">Coef c: <span id="val-vieta-c">-5</span></label>
+                    <input type="range" id="s-vieta-c" min="-5" max="5" value="-5">
+                </div>
+                <div class="slider-group" id="vieta-d-container" style="border-color: #e65100; display: none;">
+                    <label style="color: #bf360c; font-weight: bold;">Coef d (Constant): <span id="val-vieta-d">2</span></label>
+                    <input type="range" id="s-vieta-d" min="-5" max="5" value="2">
+                </div>
+            </div>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #f57c00; background: #ffe0b2;">
+                    <span style="color: #e65100;">Sum of Zeroes (-b / a)</span>
+                    <span id="vieta-sum" class="val-num" style="color: #d84315; font-family: monospace;">-4</span>
+                    <span id="vieta-sum-formula" style="color: #bf360c; font-size: 0.9em; font-weight: normal;">(&alpha; + &beta;)</span>
+                </div>
+                
+                <div class="dash-card" id="vieta-cubic-mid-card" style="border-color: #ff9800; background: #fff3e0; display: none;">
+                    <span style="color: #ef6c00;">Sum of Prod (c / a)</span>
+                    <span id="vieta-mid" class="val-num" style="color: #e65100; font-family: monospace;">-5</span>
+                    <span style="color: #bf360c; font-size: 0.9em; font-weight: normal;">(&alpha;&beta; + &beta;&gamma; + &gamma;&alpha;)</span>
+                </div>
+
+                <div class="dash-card" style="border-color: #f57c00; background: #ffe0b2;">
+                    <span style="color: #e65100;" id="vieta-prod-title">Product of Zeroes (c / a)</span>
+                    <span id="vieta-prod" class="val-num" style="color: #d84315; font-family: monospace;">-5</span>
+                    <span id="vieta-prod-formula" style="color: #bf360c; font-size: 0.9em; font-weight: normal;">(&alpha; &times; &beta;)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: Find the zero of the linear polynomial p(x) = 2x - 6.</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Step 1:</strong> To find a zero, set the polynomial equal to 0.<br>
+                2x - 6 = 0<br>
+                <strong>Step 2:</strong> Add 6 to both sides.<br>
+                2x = 6<br>
+                <strong>Step 3:</strong> Divide by 2.<br>
+                x = 6 / 2 = 3.<br>
+                <strong>Final Answer: The zero is 3.</strong>
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: Without finding the actual roots, what is the sum and product of the zeroes for the quadratic p(x) = 3x² - 12x + 9?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans2">
+                <strong>Step 1:</strong> Identify coefficients: a = 3, b = -12, c = 9.<br>
+                <strong>Step 2:</strong> Calculate the Sum using (-b / a).<br>
+                -(-12) / 3 = 12 / 3 = 4.<br>
+                <strong>Step 3:</strong> Calculate the Product using (c / a).<br>
+                9 / 3 = 3.<br>
+                <strong>Final Answer: The sum of the roots is 4, and the product is 3.</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic2_1.html" class="nav-btn">← Prev Topic</a>
+        <a href="topic2_3.html" class="nav-btn">Next: Remainder Theorem ➡️</a>
+    </div>
+
+    <script>
+        function mapX(x, scale) { return 300 + (x * scale); }
+        function mapY(y, scale) { return 150 - (y * scale); }
+
+        // --- 1. LINEAR ROOT FINDER LOGIC ---
+        const sLinA = document.getElementById('s-lin-a');
+        const sLinB = document.getElementById('s-lin-b');
+        const linScale = 30; 
+
+        function updateLinear() {
+            let a = parseInt(sLinA.value);
+            let b = parseInt(sLinB.value);
+
+            document.getElementById('val-lin-a').textContent = a;
+            document.getElementById('val-lin-b').textContent = b;
+
+            let aStr = a === 1 ? "" : a === -1 ? "-" : a;
+            let bStr = b < 0 ? `(- ${Math.abs(b)})` : `${b}`;
+            if (a === 0) aStr = "0";
+            document.getElementById('eq-lin-a').textContent = aStr;
+            document.getElementById('eq-lin-b').textContent = b === 0 ? "" : bStr;
+            if(b===0) document.getElementById('eq-lin-b').textContent = ""; 
+
+            let x1 = -10, y1 = (a * x1) + b;
+            let x2 = 10, y2 = (a * x2) + b;
+
+            let line = document.getElementById('lin-line');
+            line.setAttribute('x1', mapX(x1, linScale));
+            line.setAttribute('y1', mapY(y1, linScale));
+            line.setAttribute('x2', mapX(x2, linScale));
+            line.setAttribute('y2', mapY(y2, linScale));
+
+            let dot = document.getElementById('lin-zero-dot');
+            let lbl = document.getElementById('lin-zero-lbl');
+            let zeroCalc = document.getElementById('calc-lin-zero');
+
+            if (a === 0) {
+                dot.style.display = 'none';
+                lbl.style.display = 'none';
+                if (b === 0) {
+                    zeroCalc.textContent = "Every real number is a zero!";
+                    zeroCalc.style.color = "#1565c0";
+                } else {
+                    zeroCalc.textContent = "No zeroes! (Parallel line)";
+                    zeroCalc.style.color = "#d32f2f";
+                }
+            } else {
+                let zeroX = -b / a;
+                dot.style.display = 'block';
+                lbl.style.display = 'block';
+                
+                let svgX = mapX(zeroX, linScale);
+                let svgY = mapY(0, linScale);
+
+                if(svgX < 0 || svgX > 600) {
+                    dot.style.display = 'none';
+                    lbl.style.display = 'none';
+                } else {
+                    dot.setAttribute('cx', svgX);
+                    dot.setAttribute('cy', svgY);
+                    lbl.setAttribute('x', svgX);
+                    lbl.setAttribute('y', svgY - 15);
+                }
+
+                zeroCalc.textContent = `x = ${zeroX % 1 === 0 ? zeroX : zeroX.toFixed(2)}`;
+                zeroCalc.style.color = "#c2185b";
+            }
+        }
+
+        sLinA.addEventListener('input', updateLinear);
+        sLinB.addEventListener('input', updateLinear);
+        updateLinear();
+
+
+        // --- 2. PARABOLA BENDER LOGIC ---
+        const sQuadB = document.getElementById('s-quad-b');
+        const sQuadC = document.getElementById('s-quad-c');
+        const quadScale = 30; 
+
+        function updateQuadratic() {
+            let b = parseInt(sQuadB.value);
+            let c = parseInt(sQuadC.value);
+
+            document.getElementById('val-quad-b').textContent = b;
+            document.getElementById('val-quad-c').textContent = c;
+
+            let bStr = b < 0 ? `- ${Math.abs(b)}` : `+ ${b}`;
+            let cStr = c < 0 ? `- ${Math.abs(c)}` : `+ ${c}`;
+            if(b === 0) bStr = "+ 0";
+            if(c === 0) cStr = "+ 0";
+
+            document.getElementById('eq-quad-b').textContent = bStr;
+            document.getElementById('eq-quad-c').textContent = cStr;
+
+            let pathD = "";
+            for (let mathX = -10; mathX <= 10; mathX += 0.2) {
+                let mathY = (mathX * mathX) + (b * mathX) + c;
+                let sx = mapX(mathX, quadScale);
+                let sy = mapY(mathY, quadScale);
+                
+                if (mathX === -10) {
+                    pathD += `M ${sx} ${sy} `;
+                } else {
+                    pathD += `L ${sx} ${sy} `;
+                }
+            }
+            document.getElementById('quad-curve').setAttribute('d', pathD);
+
+            let discriminant = (b * b) - (4 * 1 * c);
+            let rootsGroup = document.getElementById('quad-roots');
+            rootsGroup.innerHTML = ""; 
+
+            let verdictTxt = "";
+            let rootsTxt = "";
+            let cardColor = "";
+
+            if (discriminant > 0) {
+                verdictTxt = "2";
+                let r1 = (-b - Math.sqrt(discriminant)) / 2;
+                let r2 = (-b + Math.sqrt(discriminant)) / 2;
+                rootsTxt = `x = ${r1.toFixed(2)}, x = ${r2.toFixed(2)}`;
+                cardColor = "#4caf50"; 
+                
+                drawRootDot(rootsGroup, r1);
+                drawRootDot(rootsGroup, r2);
+
+            } else if (discriminant === 0) {
+                verdictTxt = "1";
+                let r = -b / 2;
+                rootsTxt = `x = ${r.toFixed(2)} (Touches axis exactly)`;
+                cardColor = "#ff9800"; 
+
+                drawRootDot(rootsGroup, r);
+            } else {
+                verdictTxt = "0";
+                rootsTxt = "No real zeroes (Never touches X-axis!)";
+                cardColor = "#f44336"; 
+            }
+
+            document.getElementById('quad-verdict').textContent = verdictTxt;
+            document.getElementById('quad-roots-text').textContent = rootsTxt;
+            document.getElementById('quad-verdict-card').style.borderColor = cardColor;
+            document.getElementById('quad-verdict').style.color = cardColor;
+        }
+
+        function drawRootDot(group, mathX) {
+            let svgX = mapX(mathX, quadScale);
+            let svgY = mapY(0, quadScale);
+
+            if(svgX >= 0 && svgX <= 600) {
+                let dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                dot.setAttribute("cx", svgX);
+                dot.setAttribute("cy", svgY);
+                dot.setAttribute("r", 8);
+                dot.setAttribute("fill", "#333");
+                dot.setAttribute("stroke", "#fff");
+                dot.setAttribute("stroke-width", 2);
+                group.appendChild(dot);
+            }
+        }
+
+        sQuadB.addEventListener('input', updateQuadratic);
+        sQuadC.addEventListener('input', updateQuadratic);
+        updateQuadratic();
+
+        // --- 3. ROOTS & COEFFICIENTS LINK (VIETA) LOGIC ---
+        let currentVietaMode = 'quad';
+        const sVietaA = document.getElementById('s-vieta-a');
+        const sVietaB = document.getElementById('s-vieta-b');
+        const sVietaC = document.getElementById('s-vieta-c');
+        const sVietaD = document.getElementById('s-vieta-d');
+
+        function setVietaMode(mode, btn) {
+            let btns = btn.parentElement.children;
+            for(let i=0; i<btns.length; i++) btns[i].classList.remove('active');
+            btn.classList.add('active');
+            
+            currentVietaMode = mode;
+            
+            if(mode === 'cubic') {
+                document.getElementById('vieta-d-container').style.display = 'block';
+                document.getElementById('vieta-cubic-mid-card').style.display = 'block';
+                document.getElementById('vieta-prod-title').textContent = "Product of Zeroes (-d / a)";
+                document.getElementById('vieta-sum-formula').textContent = "(\u03B1 + \u03B2 + \u03B3)";
+                document.getElementById('vieta-prod-formula').textContent = "(\u03B1 \u00D7 \u03B2 \u00D7 \u03B3)";
+            } else {
+                document.getElementById('vieta-d-container').style.display = 'none';
+                document.getElementById('vieta-cubic-mid-card').style.display = 'none';
+                document.getElementById('vieta-prod-title').textContent = "Product of Zeroes (c / a)";
+                document.getElementById('vieta-sum-formula').textContent = "(\u03B1 + \u03B2)";
+                document.getElementById('vieta-prod-formula').textContent = "(\u03B1 \u00D7 \u03B2)";
+            }
+            updateVieta();
+        }
+
+        function formatVietaEq(a, b, c, d) {
+            let bStr = b < 0 ? `- ${Math.abs(b)}` : `+ ${Math.abs(b)}`;
+            let cStr = c < 0 ? `- ${Math.abs(c)}` : `+ ${Math.abs(c)}`;
+            let dStr = d < 0 ? `- ${Math.abs(d)}` : `+ ${Math.abs(d)}`;
+
+            if (currentVietaMode === 'quad') {
+                return `p(x) = ${a}x² ${bStr}x ${cStr}`;
+            } else {
+                return `p(x) = ${a}x³ ${bStr}x² ${cStr}x ${dStr}`;
+            }
+        }
+
+        function updateVieta() {
+            let a = parseInt(sVietaA.value);
+            let b = parseInt(sVietaB.value);
+            let c = parseInt(sVietaC.value);
+            let d = parseInt(sVietaD.value);
+
+            document.getElementById('val-vieta-a').textContent = a;
+            document.getElementById('val-vieta-b').textContent = b;
+            document.getElementById('val-vieta-c').textContent = c;
+            document.getElementById('val-vieta-d').textContent = d;
+
+            document.getElementById('vieta-eq-display').textContent = formatVietaEq(a, b, c, d);
+
+            // Calculations
+            let sum = -b / a;
+            document.getElementById('vieta-sum').textContent = sum % 1 === 0 ? sum : sum.toFixed(2);
+
+            if(currentVietaMode === 'quad') {
+                let prod = c / a;
+                document.getElementById('vieta-prod').textContent = prod % 1 === 0 ? prod : prod.toFixed(2);
+            } else {
+                let mid = c / a;
+                let prod = -d / a;
+                document.getElementById('vieta-mid').textContent = mid % 1 === 0 ? mid : mid.toFixed(2);
+                document.getElementById('vieta-prod').textContent = prod % 1 === 0 ? prod : prod.toFixed(2);
+            }
+        }
+
+        sVietaA.addEventListener('input', updateVieta);
+        sVietaB.addEventListener('input', updateVieta);
+        sVietaC.addEventListener('input', updateVieta);
+        sVietaD.addEventListener('input', updateVieta);
+        updateVieta();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = id === 'ans2' ? 'Show Answer Step-by-Step' : 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

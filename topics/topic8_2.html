@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angle Sum Property & Theorems - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #4a148c; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #6a1b9a; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #e1bee7; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #6a1b9a; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #6a1b9a; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #ce93d8; font-size: 0.95em; min-width: 140px; flex: 1; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #f3e5f5; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #6a1b9a; }
+        .qa-question { font-weight: bold; color: #4a148c; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #6a1b9a; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #6a1b9a; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #4a148c; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>🔄 Angle Sum Property & Theorems</h1>
+    <p class="subtitle">Unlocking the mathematical secrets of the 360° rule and parallelogram diagonals!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The 360° Rule and Theorem 8.1</h2>
+        <p>Just like every triangle is mathematically anchored to 180°, every single 4-sided figure is anchored to exactly 360°. Furthermore, when we draw a diagonal line across these shapes, incredible properties are revealed—especially in parallelograms!</p>
+        <table class="formula-table">
+            <tr>
+                <th>Property / Theorem</th>
+                <th>What it Means</th>
+            </tr>
+            <tr>
+                <td><strong>Angle Sum Property</strong></td>
+                <td>The sum of all four interior angles of any quadrilateral is always <strong>exactly 360°</strong>.</td>
+            </tr>
+            <tr>
+                <td><strong>Theorem 8.1</strong></td>
+                <td>A diagonal of a parallelogram divides it into <strong>two congruent triangles</strong>.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: ANGLE SUM PROPERTY -->
+    <div class="section-box">
+        <h2 style="color: #6a1b9a; text-align: center; margin-top: 0;">🔄 1. The 360° Rule</h2>
+        <p style="text-align: center; color: #666;">Drag Vertex D around to deform the shape. Watch how the four angles constantly rebalance themselves, instantly adjusting their sizes to maintain a perfect 360° total!</p>
+
+        <div class="interactive-container" style="background: #fce4ec; border-color: #d81b60;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #d81b60; background: #f8bbd0;">
+                    <label style="color: #880e4f; font-weight: bold;">Move Vertex D (Left/Right)</label>
+                    <input type="range" id="s-quad-x" min="80" max="250" value="150">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Move Vertex D (Up/Down)</label>
+                    <input type="range" id="s-quad-y" min="40" max="150" value="80">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
+                <!-- Quadrilateral -->
+                <polygon id="quad-shape" fill="rgba(106, 27, 154, 0.1)" stroke="#6a1b9a" stroke-width="4"/>
+
+                <!-- Angle Arcs -->
+                <path id="q-arc-a" fill="rgba(211, 47, 47, 0.3)" stroke="#d32f2f" stroke-width="2"/>
+                <path id="q-arc-b" fill="rgba(25, 118, 210, 0.3)" stroke="#1976d2" stroke-width="2"/>
+                <path id="q-arc-c" fill="rgba(56, 142, 60, 0.3)" stroke="#388e3c" stroke-width="2"/>
+                <path id="q-arc-d" fill="rgba(230, 81, 0, 0.3)" stroke="#e65100" stroke-width="2"/>
+
+                <!-- Angle Labels -->
+                <text id="q-lbl-a" font-weight="bold" fill="#d32f2f" font-size="16px" text-anchor="middle" alignment-baseline="middle"></text>
+                <text id="q-lbl-b" font-weight="bold" fill="#1976d2" font-size="16px" text-anchor="middle" alignment-baseline="middle"></text>
+                <text id="q-lbl-c" font-weight="bold" fill="#388e3c" font-size="16px" text-anchor="middle" alignment-baseline="middle"></text>
+                <text id="q-lbl-d" font-weight="bold" fill="#e65100" font-size="16px" text-anchor="middle" alignment-baseline="middle"></text>
+
+                <!-- Vertices -->
+                <circle cx="100" cy="250" r="6" fill="#333"/>
+                <text x="80" y="270" font-weight="bold" fill="#333" font-size="20px">A</text>
+
+                <circle cx="400" cy="250" r="6" fill="#333"/>
+                <text x="420" y="270" font-weight="bold" fill="#333" font-size="20px">B</text>
+
+                <circle cx="350" cy="80" r="6" fill="#333"/>
+                <text x="370" y="70" font-weight="bold" fill="#333" font-size="20px">C</text>
+
+                <circle id="quad-dot-d" r="8" fill="#e65100" stroke="#fff" stroke-width="2"/>
+                <text id="quad-txt-d" font-weight="bold" fill="#e65100" font-size="20px">D</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #6a1b9a; background: #fff; flex-basis: 100%;">
+                    <span style="color: #6a1b9a; font-size: 1.2em; display: block; margin-bottom: 5px;">Interior Angle Sum Property</span>
+                    <span id="quad-math" class="val-num" style="color: #4a148c; font-size: 2em;">A + B + C + D = 360°</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE DIAGONAL DIVIDER -->
+    <div class="section-box">
+        <h2 style="color: #1976d2; text-align: center; margin-top: 0;">✂️ 2. The Diagonal Divider</h2>
+        <p style="text-align: center; color: #666;">Why is the angle sum exactly 360°? The secret lies in the diagonal! Draw a diagonal line connecting two opposite vertices, and watch how it physically splits the quadrilateral into <strong>two distinct triangles</strong>.</p>
+
+        <div class="interactive-container" style="background: #e3f2fd; border-color: #1976d2;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #1565c0; background: #fff; width: 80%;">
+                    <label style="color: #0d47a1; font-weight: bold; font-size: 1.2em;">Pull Apart the Quadrilateral</label>
+                    <input type="range" id="s-split" min="0" max="100" value="0">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
+                <!-- Triangle 1 (Bottom Left) -->
+                <g id="split-t1">
+                    <polygon points="100,280 400,280 300,80" fill="rgba(211, 47, 47, 0.2)" stroke="#d32f2f" stroke-width="4"/>
+                    <text x="250" y="220" font-weight="bold" fill="#d32f2f" font-size="20px" text-anchor="middle">Triangle 1</text>
+                    <text x="250" y="245" font-weight="bold" fill="#d32f2f" font-size="16px" text-anchor="middle">Sum = 180°</text>
+                </g>
+
+                <!-- Triangle 2 (Top Right) -->
+                <g id="split-t2">
+                    <polygon points="100,280 150,80 300,80" fill="rgba(25, 118, 210, 0.2)" stroke="#1976d2" stroke-width="4"/>
+                    <text x="180" y="140" font-weight="bold" fill="#1976d2" font-size="20px" text-anchor="middle">Triangle 2</text>
+                    <text x="180" y="165" font-weight="bold" fill="#1976d2" font-size="16px" text-anchor="middle">Sum = 180°</text>
+                </g>
+
+                <!-- Connecting Diagonal Indicator when joined -->
+                <line id="diag-line" x1="100" y1="280" x2="300" y2="80" stroke="#333" stroke-width="3" stroke-dasharray="8,4" opacity="1"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #1976d2; background: #fff; flex-basis: 100%;">
+                    <span id="split-math" class="val-num" style="color: #0d47a1; font-size: 2em;">1 Triangle + 1 Triangle = 1 Quadrilateral</span>
+                    <span id="split-desc" style="color: #d32f2f; font-size: 1.2em; display: block; margin-top: 5px; font-weight: bold;">Therefore: 180° + 180° = 360°</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: THEOREM 8.1 PROOF -->
+    <div class="section-box">
+        <h2 style="color: #00897b; text-align: center; margin-top: 0;">💫 3. Theorem 8.1 Rotator</h2>
+        <p style="text-align: center; color: #666;"><strong>Theorem 8.1: A diagonal of a parallelogram divides it into two congruent triangles.</strong><br>Slide the control to mathematically rotate the top triangle 180° around the midpoint of the diagonal. Watch it superimpose perfectly onto the bottom triangle!</p>
+
+        <div class="interactive-container" style="background: #e0f2f1; border-color: #00897b;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #00695c; background: #fff; width: 80%;">
+                    <label style="color: #00695c; font-weight: bold; font-size: 1.2em;">Rotate Triangle CDA</label>
+                    <input type="range" id="s-thm" min="0" max="180" value="0">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
+                <!-- Fixed Triangle ABC (Bottom) -->
+                <!-- A: 100,250 | B: 350,250 | C: 400,100 -->
+                <polygon points="100,250 350,250 400,100" fill="rgba(56, 142, 60, 0.2)" stroke="#388e3c" stroke-width="4"/>
+                
+                <text x="80" y="270" font-weight="bold" fill="#333" font-size="20px">A</text>
+                <text x="360" y="270" font-weight="bold" fill="#333" font-size="20px">B</text>
+                <text x="420" y="100" font-weight="bold" fill="#333" font-size="20px">C</text>
+
+                <!-- Midpoint of Diagonal AC: ((100+400)/2, (250+100)/2) = (250, 175) -->
+                <circle cx="250" cy="175" r="5" fill="#e65100"/>
+                <text x="260" y="170" font-weight="bold" fill="#e65100" font-size="14px">Midpoint</text>
+
+                <!-- Diagonal Line (Dashed) -->
+                <line x1="100" y1="250" x2="400" y2="100" stroke="#333" stroke-width="3" stroke-dasharray="8,4"/>
+
+                <!-- Rotating Triangle CDA (Top) -->
+                <!-- C: 400,100 | D: 150,100 | A: 100,250 -->
+                <g id="thm-t2" transform="rotate(0 250 175)">
+                    <polygon points="400,100 150,100 100,250" fill="rgba(25, 118, 210, 0.6)" stroke="#1976d2" stroke-width="4"/>
+                    <text x="130" y="90" font-weight="bold" fill="#1976d2" font-size="20px">D</text>
+                </g>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00897b; background: #fff; flex-basis: 100%;">
+                    <span id="thm-status" style="color: #00695c; font-size: 1.5em; font-weight: bold;">Slide to rotate Triangle CDA.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: The angles of a quadrilateral are in the ratio 3:5:9:13. What is the measurement of the smallest angle?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Step 1:</strong> Let the angles be 3x, 5x, 9x, and 13x.<br>
+                <strong>Step 2:</strong> By the Angle Sum Property, 3x + 5x + 9x + 13x = 360°.<br>
+                <strong>Step 3:</strong> Combine terms: 30x = 360°, which means x = 12°.<br>
+                <strong>Step 4:</strong> The smallest angle is 3x. So, 3 × 12° = 36°.<br>
+                <strong>Final Answer: 36°</strong>
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: How do we prove Theorem 8.1 using congruence rules?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>By using the ASA (Angle-Side-Angle) rule!</strong><br><br>
+                When a diagonal is drawn in a parallelogram, the alternate interior angles formed by the parallel opposite sides are equal. The diagonal itself is a common side shared by both triangles. Therefore, by Angle-Side-Angle, the two triangles must be mathematically congruent!
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic8_1.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter8.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic8_3.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        // Mathematical Helpers
+        function normalizeRad(rad) {
+            if (rad < 0) rad += 2 * Math.PI;
+            return rad;
+        }
+
+        function polarToCartesian(cx, cy, r, angleInRads) {
+            return {
+                x: cx + r * Math.cos(angleInRads),
+                y: cy + r * Math.sin(angleInRads)
+            };
+        }
+
+        function createWedge(cx, cy, r, startRad, endRad) {
+            if (endRad < startRad) endRad += 2 * Math.PI;
+            let start = polarToCartesian(cx, cy, r, startRad);
+            let end = polarToCartesian(cx, cy, r, endRad);
+            return `M ${cx} ${cy} L ${start.x} ${start.y} A ${r} ${r} 0 0 1 ${end.x} ${end.y} Z`;
+        }
+
+        function dist(x1, y1, x2, y2) {
+            return Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2));
+        }
+
+        function getAngleLawOfCosines(s1, s2, diag) {
+            let cosVal = (s1*s1 + s2*s2 - diag*diag) / (2 * s1 * s2);
+            cosVal = Math.max(-1, Math.min(1, cosVal));
+            return Math.acos(cosVal) * 180 / Math.PI;
+        }
+
+        // --- 1. ANGLE SUM PROPERTY LOGIC ---
+        const sQuadX = document.getElementById('s-quad-x');
+        const sQuadY = document.getElementById('s-quad-y');
+
+        function updateQuad() {
+            let dx = parseInt(sQuadX.value);
+            let dy = parseInt(sQuadY.value);
+            
+            // Fixed Vertices
+            let ax = 100, ay = 250;
+            let bx = 400, by = 250;
+            let cx = 350, cy = 80;
+
+            document.getElementById('quad-shape').setAttribute('points', `${ax},${ay} ${bx},${by} ${cx},${cy} ${dx},${dy}`);
+            
+            document.getElementById('quad-dot-d').setAttribute('cx', dx);
+            document.getElementById('quad-dot-d').setAttribute('cy', dy);
+            document.getElementById('quad-txt-d').setAttribute('x', dx - 15);
+            document.getElementById('quad-txt-d').setAttribute('y', dy - 15);
+
+            let lenAB = dist(ax, ay, bx, by);
+            let lenBC = dist(bx, by, cx, cy);
+            let lenCD = dist(cx, cy, dx, dy);
+            let lenDA = dist(dx, dy, ax, ay);
+            
+            let diagAC = dist(ax, ay, cx, cy);
+            let diagBD = dist(bx, by, dx, dy);
+
+            let degA = getAngleLawOfCosines(lenAB, lenDA, diagBD);
+            let degB = getAngleLawOfCosines(lenBC, lenAB, diagAC);
+            let degC = getAngleLawOfCosines(lenCD, lenBC, diagBD);
+            let degD = 360 - (degA + degB + degC); // Force to exactly 360° to avoid float errors
+
+            let radAB = Math.atan2(by - ay, bx - ax);
+            let radAD = Math.atan2(dy - ay, dx - ax);
+            
+            let radBA = Math.atan2(ay - by, ax - bx);
+            let radBC = Math.atan2(cy - by, cx - bx);
+            
+            let radCB = Math.atan2(by - cy, bx - cx);
+            let radCD = Math.atan2(dy - cy, dx - cx);
+            
+            let radDC = Math.atan2(cy - dy, cx - dx);
+            let radDA = Math.atan2(ay - dy, ax - dx);
+
+            document.getElementById('q-arc-a').setAttribute('d', createWedge(ax, ay, 40, radAD, radAB));
+            document.getElementById('q-arc-b').setAttribute('d', createWedge(bx, by, 40, radBA, radBC));
+            document.getElementById('q-arc-c').setAttribute('d', createWedge(cx, cy, 40, radCB, radCD));
+            document.getElementById('q-arc-d').setAttribute('d', createWedge(dx, dy, 40, radDC, radDA));
+
+            let pA = polarToCartesian(ax, ay, 60, radAD + (radAB > radAD ? radAB - radAD : radAB + 2*Math.PI - radAD)/2);
+            document.getElementById('q-lbl-a').setAttribute('x', pA.x); document.getElementById('q-lbl-a').setAttribute('y', pA.y);
+            document.getElementById('q-lbl-a').textContent = `${Math.round(degA)}°`;
+
+            let pB = polarToCartesian(bx, by, 60, radBA + (radBC > radBA ? radBC - radBA : radBC + 2*Math.PI - radBA)/2);
+            document.getElementById('q-lbl-b').setAttribute('x', pB.x); document.getElementById('q-lbl-b').setAttribute('y', pB.y);
+            document.getElementById('q-lbl-b').textContent = `${Math.round(degB)}°`;
+
+            let pC = polarToCartesian(cx, cy, 60, radCB + (radCD > radCB ? radCD - radCB : radCD + 2*Math.PI - radCB)/2);
+            document.getElementById('q-lbl-c').setAttribute('x', pC.x); document.getElementById('q-lbl-c').setAttribute('y', pC.y);
+            document.getElementById('q-lbl-c').textContent = `${Math.round(degC)}°`;
+
+            let pD = polarToCartesian(dx, dy, 60, radDC + (radDA > radDC ? radDA - radDC : radDA + 2*Math.PI - radDC)/2);
+            document.getElementById('q-lbl-d').setAttribute('x', pD.x); document.getElementById('q-lbl-d').setAttribute('y', pD.y);
+            document.getElementById('q-lbl-d').textContent = `${Math.round(degD)}°`;
+
+            document.getElementById('quad-math').textContent = `${Math.round(degA)}° + ${Math.round(degB)}° + ${Math.round(degC)}° + ${Math.round(degD)}° = 360°`;
+        }
+
+        sQuadX.addEventListener('input', updateQuad);
+        sQuadY.addEventListener('input', updateQuad);
+        updateQuad();
+
+
+        // --- 2. THE DIAGONAL DIVIDER LOGIC ---
+        const sSplit = document.getElementById('s-split');
+
+        function updateSplit() {
+            let offset = parseInt(sSplit.value); // 0 to 100
+            
+            // T1 moves bottom-right
+            let t1X = offset * 0.7;
+            let t1Y = offset * 0.7;
+            
+            // T2 moves top-left
+            let t2X = -offset * 0.7;
+            let t2Y = -offset * 0.7;
+
+            document.getElementById('split-t1').setAttribute('transform', `translate(${t1X}, ${t1Y})`);
+            document.getElementById('split-t2').setAttribute('transform', `translate(${t2X}, ${t2Y})`);
+
+            let diag = document.getElementById('diag-line');
+            if (offset > 5) {
+                diag.setAttribute('opacity', '0');
+                document.getElementById('split-math').textContent = "Two separate triangles: 180° + 180°";
+                document.getElementById('split-math').style.color = "#d32f2f";
+            } else {
+                diag.setAttribute('opacity', '1');
+                document.getElementById('split-math').textContent = "They combine to form 1 Quadrilateral!";
+                document.getElementById('split-math').style.color = "#0d47a1";
+            }
+        }
+
+        sSplit.addEventListener('input', updateSplit);
+        updateSplit();
+
+
+        // --- 3. THEOREM 8.1 PROOF LOGIC ---
+        const sThm = document.getElementById('s-thm');
+
+        function updateThm() {
+            let angle = parseInt(sThm.value); // 0 to 180
+            
+            // Rotate the top triangle around the midpoint of the diagonal (250, 175)
+            document.getElementById('thm-t2').setAttribute('transform', `rotate(${angle} 250 175)`);
+
+            let status = document.getElementById('thm-status');
+            
+            if (angle === 180) {
+                status.textContent = "✅ Perfect Superposition! The triangles are Congruent. (ΔABC ≅ ΔCDA)";
+                status.style.color = "#388e3c";
+                document.getElementById('thm-t2').setAttribute('fill', 'rgba(56, 142, 60, 0.8)'); // Turn green to match base
+            } else if (angle === 0) {
+                status.textContent = "Slide to rotate Triangle CDA around the midpoint.";
+                status.style.color = "#00695c";
+                document.getElementById('thm-t2').setAttribute('fill', 'rgba(25, 118, 210, 0.6)'); // Blue original
+            } else {
+                status.textContent = `Rotating... (${angle}°)`;
+                status.style.color = "#1976d2";
+                document.getElementById('thm-t2').setAttribute('fill', 'rgba(25, 118, 210, 0.6)');
+            }
+        }
+
+        sThm.addEventListener('input', updateThm);
+        updateThm();
+
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = id === 'ans1' ? 'Show Answer Step-by-Step' : 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

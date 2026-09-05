@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuboid & Cube - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; }
+        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #4ecdc4; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 900px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; }
+        .formula-table th { background: #00838f; color: white; font-size: 1.1em; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fff3e0; border: 3px dashed #ff9800; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 450px; height: 300px; background: white; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #ffcc80; }
+        input[type=range] { width: 120px; cursor: pointer; display: block; margin-top: 5px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; }
+
+        /* TOGGLE BUTTONS (ROOM PAINTER) */
+        .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .toggle-btn { padding: 10px 15px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        
+        /* Specific Button Active Colors */
+        .toggle-btn.btn-front.active { background: #4ecdc4; color: white; border-color: #4ecdc4; }
+        .toggle-btn.btn-back.active { background: #9c27b0; color: white; border-color: #9c27b0; }
+        .toggle-btn.btn-left.active { background: #ff9800; color: white; border-color: #ff9800; }
+        .toggle-btn.btn-right.active { background: #e91e63; color: white; border-color: #e91e63; }
+        .toggle-btn.btn-top.active { background: #2196f3; color: white; border-color: #2196f3; }
+        .toggle-btn.btn-bottom.active { background: #795548; color: white; border-color: #795548; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #4caf50; }
+        .qa-question { font-weight: bold; color: #2e7d32; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; }
+        .show-answer-btn { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-family: inherit; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #4ecdc4; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+        .chapter-btn { background: #ff6b6b; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter11.html" class="back-btn">⬅️ Back to Chapter</a>
+
+    <h1>🧊 Cuboids & Cubes</h1>
+    <p class="subtitle">Mastering surface areas and volumes in 3D space!</p>
+
+    <!-- FORMULAS SECTION -->
+    <div class="section-box">
+        <h2>The Core Formulas</h2>
+        <table class="formula-table">
+            <tr>
+                <th>Measurement</th>
+                <th>Cuboid (Length <em>l</em>, Width <em>w</em>, Height <em>h</em>)</th>
+                <th>Cube (Edge <em>a</em>)</th>
+            </tr>
+            <tr>
+                <td><strong>Volume (V)</strong><br><span style="font-size:0.8em; font-weight:normal;">Space inside</span></td>
+                <td>l &times; w &times; h</td>
+                <td>a&sup3;</td>
+            </tr>
+            <tr>
+                <td><strong>Lateral Surface Area (LSA)</strong><br><span style="font-size:0.8em; font-weight:normal;">4 side walls only (no top/bottom)</span></td>
+                <td>2h(l + w)</td>
+                <td>4a&sup2;</td>
+            </tr>
+            <tr>
+                <td><strong>Total Surface Area (TSA)</strong><br><span style="font-size:0.8em; font-weight:normal;">All 6 faces</span></td>
+                <td>2(lw + wh + hl)</td>
+                <td>6a&sup2;</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: 3D RESIZER -->
+    <div class="section-box">
+        <h2 style="color: #ef6c00; text-align: center; margin-top: 0;">🎮 The 3D Box Resizer</h2>
+        <p style="text-align: center; color: #666;">Adjust the dimensions. Notice how the shape transforms from a Cuboid into a Cube when all three sides are perfectly equal!</p>
+
+        <div class="interactive-container">
+            <div class="slider-row">
+                <div class="slider-group">
+                    <label style="color: #e91e63; font-weight: bold;">Length (l): <span id="val-l">10</span></label>
+                    <input type="range" id="sl" min="2" max="20" value="10">
+                </div>
+                <div class="slider-group">
+                    <label style="color: #4caf50; font-weight: bold;">Width (w): <span id="val-w">10</span></label>
+                    <input type="range" id="sw" min="2" max="20" value="10">
+                </div>
+                <div class="slider-group">
+                    <label style="color: #2196f3; font-weight: bold;">Height (h): <span id="val-h">10</span></label>
+                    <input type="range" id="sh" min="2" max="20" value="10">
+                </div>
+            </div>
+
+            <svg id="box-svg" class="svg-canvas" viewBox="0 0 400 300">
+                <!-- Back faces (for depth illusion) -->
+                <polygon id="back-face" points="150,150 250,150 250,50 150,50" fill="#f5f5f5" stroke="#ccc" stroke-width="1"/>
+                
+                <!-- Front Face -->
+                <rect id="front-face" x="100" y="100" width="100" height="100" fill="#bbdefb" stroke="#1565c0" stroke-width="3"/>
+                <!-- Top Face -->
+                <polygon id="top-face" points="100,100 200,100 250,50 150,50" fill="#e3f2fd" stroke="#1565c0" stroke-width="3"/>
+                <!-- Side Face -->
+                <polygon id="side-face" points="200,100 250,50 250,150 200,200" fill="#90caf9" stroke="#1565c0" stroke-width="3"/>
+                
+                <!-- Labels -->
+                <text id="lbl-l" x="150" y="220" font-weight="bold" fill="#e91e63">l</text>
+                <text id="lbl-h" x="80" y="150" font-weight="bold" fill="#2196f3">h</text>
+                <text id="lbl-w" x="235" y="180" font-weight="bold" fill="#4caf50">w</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #9c27b0;">
+                    <span style="color: #7b1fa2;">Shape Detected</span>
+                    <span id="shape-type" class="val-num" style="color: #9c27b0;">Cube</span>
+                </div>
+                <div class="dash-card" style="border-color: #ff9800;">
+                    <span style="color: #e65100;">Volume</span>
+                    <span id="calc-v" class="val-num" style="color: #ff9800;">1000</span>
+                </div>
+                <div class="dash-card" style="border-color: #4caf50;">
+                    <span style="color: #2e7d32;">Total Surface Area</span>
+                    <span id="calc-tsa" class="val-num" style="color: #4caf50;">600</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE ROOM PAINTER -->
+    <div class="section-box">
+        <h2 style="color: #00838f; text-align: center; margin-top: 0;">🖌️ Real-World: The Room Painter</h2>
+        <p style="text-align: center; color: #666;">NCERT questions often ask you to paint specific parts of a room. Toggle the buttons below to select which surfaces get painted and watch the diagram and math update instantly!</p>
+
+        <div class="interactive-container" style="background: #e8f5e9; border-color: #4caf50;">
+            <div class="face-toggles">
+                <button class="toggle-btn btn-front active" onclick="toggleFace('front', this)">Front Wall (lh)</button>
+                <button class="toggle-btn btn-back active" onclick="toggleFace('back', this)">Back Wall (lh)</button>
+                <button class="toggle-btn btn-left active" onclick="toggleFace('left', this)">Left Wall (wh)</button>
+                <button class="toggle-btn btn-right active" onclick="toggleFace('right', this)">Right Wall (wh)</button>
+                <button class="toggle-btn btn-top active" onclick="toggleFace('top', this)">Ceiling (lw)</button>
+                <button class="toggle-btn btn-bottom" onclick="toggleFace('bottom', this)">Floor (lw)</button>
+            </div>
+
+            <!-- DYNAMIC ROOM SVG -->
+            <svg class="svg-canvas" viewBox="0 0 450 300" style="background: #f8f9fa;">
+                <!-- Back Wall -->
+                <polygon id="svg-face-back" points="160,150 360,150 360,50 160,50" />
+                <!-- Bottom Floor -->
+                <polygon id="svg-face-bottom" points="80,220 280,220 360,150 160,150" />
+                <!-- Top Ceiling -->
+                <polygon id="svg-face-top" points="80,120 280,120 360,50 160,50" />
+                <!-- Left Wall -->
+                <polygon id="svg-face-left" points="80,220 160,150 160,50 80,120" />
+                <!-- Right Wall -->
+                <polygon id="svg-face-right" points="280,220 360,150 360,50 280,120" />
+                <!-- Front Wall -->
+                <polygon id="svg-face-front" points="80,220 280,220 280,120 80,120" />
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #2e7d32; flex-basis: 100%; background: #c8e6c9;">
+                    <span style="color: #1b5e20;">Total Area to Paint</span>
+                    <span id="paint-area" class="val-num" style="color: #2e7d32; font-size: 1.8em;">500</span>
+                    <span id="paint-formula" style="color: #555; font-size: 0.9em; font-weight: normal;">(2hl + 2hw + lw)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: A room has dimensions 5m x 4m x 3m (L x W x H). What is the total area of its 4 walls?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>54 m²</strong><br><br>
+                The area of the 4 walls is the Lateral Surface Area (LSA).<br>
+                LSA = 2h(l + w)<br>
+                LSA = 2 × 3(5 + 4) = 6 × 9 = 54 m².
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: If the edge of a cube is doubled, how many times does its volume increase?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>8 times!</strong><br><br>
+                Original Volume = a³<br>
+                New Volume = (2a)³ = 2³ × a³ = 8a³.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="../chapters/chapter11.html" class="nav-btn chapter-btn">← Chapter Menu</a>
+        <a href="topic11_2.html" class="nav-btn">Next: Cylinder ➡️</a>
+    </div>
+
+    <script>
+        // --- 3D BOX RESIZER LOGIC ---
+        const sl = document.getElementById('sl'), sw = document.getElementById('sw'), sh = document.getElementById('sh');
+        const front = document.getElementById('front-face'), topF = document.getElementById('top-face'), side = document.getElementById('side-face');
+        
+        let currentL = 10, currentW = 10, currentH = 10;
+
+        function updateBox() {
+            currentL = parseInt(sl.value); currentW = parseInt(sw.value); currentH = parseInt(sh.value);
+            
+            document.getElementById('val-l').innerText = currentL; 
+            document.getElementById('val-w').innerText = currentW; 
+            document.getElementById('val-h').innerText = currentH;
+            
+            // Core Math
+            document.getElementById('calc-v').innerText = currentL * currentW * currentH;
+            document.getElementById('calc-tsa').innerText = 2 * ((currentL*currentW) + (currentW*currentH) + (currentH*currentL));
+            document.getElementById('shape-type').innerText = (currentL === currentW && currentW === currentH) ? "Cube" : "Cuboid";
+
+            // Visual Scaling
+            let scale = 12; 
+            let px = currentL * scale, py = currentH * scale, pz = currentW * (scale / 1.5); 
+            let x0 = 200 - px/2 - pz/2, y0 = 220 - py;
+            
+            front.setAttribute('x', x0); front.setAttribute('y', y0);
+            front.setAttribute('width', px); front.setAttribute('height', py);
+            
+            topF.setAttribute('points', `${x0},${y0} ${x0+px},${y0} ${x0+px+pz},${y0-pz} ${x0+pz},${y0-pz}`);
+            side.setAttribute('points', `${x0+px},${y0} ${x0+px+pz},${y0-pz} ${x0+px+pz},${y0-pz+py} ${x0+px},${y0+py}`);
+
+            document.getElementById('lbl-l').setAttribute('x', x0 + px/2 - 5);
+            document.getElementById('lbl-l').setAttribute('y', y0 + py + 20);
+            document.getElementById('lbl-h').setAttribute('x', x0 - 20);
+            document.getElementById('lbl-h').setAttribute('y', y0 + py/2 + 5);
+            document.getElementById('lbl-w').setAttribute('x', x0 + px + pz/2 + 10);
+            document.getElementById('lbl-w').setAttribute('y', y0 + py - pz/2 + 10);
+
+            updatePainter();
+        }
+
+        // --- ROOM PAINTER LOGIC ---
+        const facesActive = { front: true, back: true, left: true, right: true, top: true, bottom: false };
+        
+        const faceColors = {
+            front: "rgba(78, 205, 196, 0.7)",  
+            back: "rgba(156, 39, 176, 0.7)",   
+            left: "rgba(255, 152, 0, 0.7)",    
+            right: "rgba(233, 30, 99, 0.7)",   
+            top: "rgba(33, 150, 243, 0.7)",    
+            bottom: "rgba(121, 85, 72, 0.7)"   
+        };
+
+        function toggleFace(face, btnElement) {
+            facesActive[face] = !facesActive[face];
+            btnElement.classList.toggle('active');
+            updatePainter();
+        }
+
+        function updatePainter() {
+            let areaFront = currentL * currentH;
+            let areaSide = currentW * currentH;
+            let areaTop = currentL * currentW;
+            
+            let totalPaintArea = 0;
+            let lhCount = 0, whCount = 0, lwCount = 0;
+
+            if(facesActive.front) { totalPaintArea += areaFront; lhCount++; }
+            if(facesActive.back) { totalPaintArea += areaFront; lhCount++; }
+            if(facesActive.left) { totalPaintArea += areaSide; whCount++; }
+            if(facesActive.right) { totalPaintArea += areaSide; whCount++; }
+            if(facesActive.top) { totalPaintArea += areaTop; lwCount++; }
+            if(facesActive.bottom) { totalPaintArea += areaTop; lwCount++; }
+
+            for(let face in facesActive) {
+                let svgEl = document.getElementById('svg-face-' + face);
+                if(facesActive[face]) {
+                    svgEl.setAttribute('fill', faceColors[face]);
+                    svgEl.setAttribute('stroke', '#333');
+                    svgEl.setAttribute('stroke-width', '2');
+                } else {
+                    svgEl.setAttribute('fill', 'rgba(0,0,0,0.03)');
+                    svgEl.setAttribute('stroke', '#bbb');
+                    svgEl.setAttribute('stroke-width', '1');
+                    svgEl.setAttribute('stroke-dasharray', '4,4'); 
+                }
+            }
+
+            let terms = [];
+            if(lhCount > 0) terms.push(`${lhCount}hl`);
+            if(whCount > 0) terms.push(`${whCount}hw`);
+            if(lwCount > 0) terms.push(`${lwCount}lw`);
+
+            document.getElementById('paint-area').innerText = totalPaintArea;
+            document.getElementById('paint-formula').innerText = terms.length === 0 ? "(0 faces selected)" : "(" + terms.join(" + ") + ")";
+        }
+
+        // Q&A Toggle Logic
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+
+        // Initialize
+        sl.addEventListener('input', updateBox); 
+        sw.addEventListener('input', updateBox); 
+        sh.addEventListener('input', updateBox);
+        updateBox(); 
+    </script>
+</body>
+</html>

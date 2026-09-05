@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversion of Solids - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; }
+        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #4ecdc4; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .golden-rule-box { background: #fff3e0; padding: 20px; border-radius: 15px; margin: 20px 0; border-left: 6px solid #ff9800; text-align: center; }
+        .big-math { font-size: 1.6em; font-weight: bold; color: #e65100; margin: 15px 0; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #f3e5f5; border: 3px dashed #9c27b0; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 600px; height: 300px; background: white; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #ce93d8; font-size: 0.9em; }
+        input[type=range] { width: 110px; cursor: pointer; display: block; margin-top: 5px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; }
+        .val-num { font-size: 1.5em; display: block; margin-top: 5px; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #4caf50; }
+        .qa-question { font-weight: bold; color: #2e7d32; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; }
+        .show-answer-btn { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #4ecdc4; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+        .chapter-btn { background: #ff6b6b; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter11.html" class="back-btn">⬅️ Back to Chapter</a>
+
+    <h1>🔄 Conversion of Solids</h1>
+    <p class="subtitle">Melting, molding, and the conservation of volume!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <p style="font-size: 1.1em;">When we melt a solid metallic shape and cast it into a completely new shape, its surface area will drastically change. However, the actual amount of metal does not disappear! This leads us to the most important rule of this topic:</p>
+
+        <div class="golden-rule-box">
+            <h3 style="margin-top: 0; color: #e65100;">The Golden Rule of Conversion</h3>
+            <div class="big-math">Volume of Original Solid = Volume of New Solid</div>
+            <p style="margin-bottom: 0;"><em>(This also applies to pouring liquids from one container to another!)</em></p>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 1: MELTING SIMULATOR -->
+    <div class="section-box">
+        <h2 style="color: #9c27b0; text-align: center; margin-top: 0;">🔥 1. The Melting Simulator</h2>
+        <p style="text-align: center; color: #666;">We are melting a metallic sphere to form a solid cylinder. Adjust the sphere's radius to change the total metal available, then choose how thick you want your new cylinder to be. Watch how the cylinder's height is forced to change to conserve the volume!</p>
+
+        <div class="interactive-container">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #2196f3;">
+                    <label style="color: #1565c0; font-weight: bold;">Sphere Radius (R₁): <span id="val-r1">6</span></label>
+                    <input type="range" id="sr1" min="3" max="10" value="6">
+                </div>
+                <div class="slider-group" style="border-color: #4caf50;">
+                    <label style="color: #2e7d32; font-weight: bold;">Cylinder Radius (R₂): <span id="val-r2">4</span></label>
+                    <input type="range" id="sr2" min="2" max="12" value="4">
+                </div>
+            </div>
+
+            <svg id="melt-svg" class="svg-canvas" viewBox="0 0 600 300">
+                <!-- Original Sphere -->
+                <circle id="melt-sphere" cx="120" cy="150" r="60" fill="#bbdefb" stroke="#1565c0" stroke-width="3"/>
+                <text id="txt-v1" x="120" y="250" font-weight="bold" fill="#1565c0" text-anchor="middle">V = 904.8</text>
+
+                <!-- Arrow -->
+                <path d="M 230 150 L 320 150" stroke="#9c27b0" stroke-width="5" marker-end="url(#arrow)"/>
+                <polygon points="320,140 340,150 320,160" fill="#9c27b0"/>
+                <text x="285" y="135" font-size="24px" text-anchor="middle">🔥</text>
+
+                <!-- New Cylinder -->
+                <g id="melt-cyl-group">
+                    <rect id="melt-cyl-body" x="430" y="100" width="80" height="100" fill="#c8e6c9" stroke="#2e7d32" stroke-width="3"/>
+                    <ellipse id="melt-cyl-bot" cx="470" cy="200" rx="40" ry="12" fill="#a5d6a7" stroke="#2e7d32" stroke-width="3"/>
+                    <ellipse id="melt-cyl-top" cx="470" cy="100" rx="40" ry="12" fill="#e8f5e9" stroke="#2e7d32" stroke-width="3"/>
+                </g>
+                <text id="txt-v2" x="470" y="280" font-weight="bold" fill="#2e7d32" text-anchor="middle">V = 904.8</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #2196f3;">
+                    <span style="color: #1565c0;">Original Volume</span>
+                    <span id="dash-v" class="val-num" style="color: #1565c0;">904.8</span>
+                </div>
+                <div class="dash-card" style="border-color: #e91e63; background: #fce4ec;">
+                    <span style="color: #c2185b;">Resulting Cylinder Height (h)</span>
+                    <span id="dash-h" class="val-num" style="color: #e91e63;">18.0</span>
+                    <span style="font-size: 0.8em; color: #880e4f; font-weight: normal;">h = Volume ÷ (&pi;R₂&sup2;)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: MULTIPLE OBJECTS CASTER -->
+    <div class="section-box">
+        <h2 style="color: #ff9800; text-align: center; margin-top: 0;">🏭 2. The Multi-Caster</h2>
+        <p style="text-align: center; color: #666;">What if we pour a large cylinder of juice into multiple small conical glasses? Adjust the dimensions to visually scale the objects and calculate exactly how many glasses you can fill!<br><em>Formula: Number of objects (N) = Volume of Large Solid ÷ Volume of One Small Solid.</em></p>
+
+        <div class="interactive-container" style="background: #fff8e1; border-color: #ffb300;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #f57c00;">
+                    <label style="color: #ef6c00; font-weight: bold;">Big Cyl Radius (R): <span id="val-big-r">15</span></label>
+                    <input type="range" id="s-big-r" min="10" max="25" value="15">
+                    <label style="color: #ef6c00; font-weight: bold; margin-top:10px;">Big Cyl Height (H): <span id="val-big-h">20</span></label>
+                    <input type="range" id="s-big-h" min="10" max="40" value="20">
+                </div>
+                <div class="slider-group" style="border-color: #00acc1;">
+                    <label style="color: #00838f; font-weight: bold;">Small Cone Radius (r): <span id="val-small-r">5</span></label>
+                    <input type="range" id="s-small-r" min="3" max="10" value="5">
+                    <label style="color: #00838f; font-weight: bold; margin-top:10px;">Small Cone Height (h): <span id="val-small-h">10</span></label>
+                    <input type="range" id="s-small-h" min="5" max="20" value="10">
+                </div>
+            </div>
+
+            <svg id="multi-svg" class="svg-canvas" viewBox="0 0 600 300">
+                <!-- Big Cylinder -->
+                <g id="multi-cyl">
+                    <rect id="mc-body" x="80" y="80" width="100" height="150" fill="#ffe0b2" stroke="#f57c00" stroke-width="3"/>
+                    <ellipse id="mc-bot" cx="130" cy="230" rx="50" ry="15" fill="#ffcc80" stroke="#f57c00" stroke-width="3"/>
+                    <ellipse id="mc-top" cx="130" cy="80" rx="50" ry="15" fill="#fff3e0" stroke="#f57c00" stroke-width="3"/>
+                </g>
+                <text id="txt-big-v" x="130" y="270" font-weight="bold" fill="#e65100" text-anchor="middle">Vol: 14137</text>
+
+                <!-- Arrow -->
+                <path d="M 230 150 L 320 150" stroke="#333" stroke-width="5" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
+                <polygon points="320,140 340,150 320,160" fill="#333"/>
+                <text x="285" y="135" font-size="20px" text-anchor="middle">Pours into</text>
+
+                <!-- Small Cone -->
+                <g id="multi-cone">
+                    <polygon id="mc-cone-body" points="470,120 420,230 520,230" fill="#b2ebf2" stroke="#00acc1" stroke-width="3"/>
+                    <ellipse id="mc-cone-bot" cx="470" cy="230" rx="50" ry="15" fill="#80deea" stroke="#00acc1" stroke-width="3"/>
+                </g>
+                <text id="txt-small-v" x="470" y="270" font-weight="bold" fill="#00838f" text-anchor="middle">Vol: 261.8</text>
+                
+                <text id="txt-n-multiplier" x="380" y="180" font-weight="bold" fill="#c2185b" font-size="1.5em">× N</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #ff9800; background: #fff3e0; flex-basis: 100%;">
+                    <span style="color: #e65100; font-size: 1.1em;">Glasses that can be fully filled (N = Big Vol ÷ Small Vol)</span>
+                    <span id="calc-n" class="val-num" style="color: #e65100; font-size: 2em;">54</span>
+                    <span id="calc-rem" style="color: #d84315; font-size: 0.9em;">(with leftover juice)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: HOLLOW CYLINDER CASTER -->
+    <div class="section-box">
+        <h2 style="color: #009688; text-align: center; margin-top: 0;">🕳️ 3. The Hollow Pipe Caster</h2>
+        <p style="text-align: center; color: #666;">Now let's do the reverse! We are melting a <strong>Large Solid Sphere</strong> to form a <strong>Hollow Cylindrical Pipe</strong>. You set the outer (R) and inner (r) thickness of the pipe, and the math will dictate how long (Height) the pipe will be!</p>
+
+        <div class="interactive-container" style="background: #e0f2f1; border-color: #009688;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #c2185b;">
+                    <label style="color: #c2185b; font-weight: bold;">Sphere Radius (Rₛ): <span id="val-hc-sr">8</span></label>
+                    <input type="range" id="s-hc-sr" min="4" max="15" value="8">
+                </div>
+                <div class="slider-group" style="border-color: #00897b;">
+                    <label style="color: #00796b; font-weight: bold;">Pipe Outer Radius (R): <span id="val-hc-outr">10</span></label>
+                    <input type="range" id="s-hc-outr" min="6" max="20" value="10">
+                    <label style="color: #00695c; font-weight: bold; margin-top:10px;">Pipe Inner Radius (r): <span id="val-hc-inr">6</span></label>
+                    <input type="range" id="s-hc-inr" min="2" max="19" value="6">
+                </div>
+            </div>
+
+            <svg id="hollow-svg" class="svg-canvas" viewBox="0 0 600 300">
+                <defs>
+                    <radialGradient id="hc-sphere-grad" cx="30%" cy="30%" r="70%">
+                        <stop offset="0%" stop-color="#f8bbd0" />
+                        <stop offset="100%" stop-color="#c2185b" />
+                    </radialGradient>
+                </defs>
+
+                <!-- Sphere -->
+                <circle id="hc-sphere" cx="120" cy="150" r="50" fill="url(#hc-sphere-grad)" stroke="#880e4f" stroke-width="3"/>
+                <text id="txt-hc-sv" x="120" y="250" font-weight="bold" fill="#880e4f" text-anchor="middle">Total V: 2145</text>
+
+                <!-- Arrow -->
+                <path d="M 230 150 L 320 150" stroke="#00897b" stroke-width="5" marker-end="url(#arrow)"/>
+                <polygon points="320,140 340,150 320,160" fill="#00897b"/>
+                <text x="285" y="135" font-size="24px" text-anchor="middle">🔥</text>
+
+                <!-- Hollow Cylinder -->
+                <g id="hc-pipe">
+                    <!-- Outer Body -->
+                    <rect id="hc-body" x="410" y="70" width="100" height="150" fill="#b2dfdb" stroke="#00796b" stroke-width="3"/>
+                    <!-- Outer Bottom -->
+                    <ellipse id="hc-bot-out" cx="460" cy="220" rx="50" ry="15" fill="#80cbc4" stroke="#00796b" stroke-width="3"/>
+                    <!-- Inner Dashed Line (Hollow indicator) -->
+                    <line id="hc-inner-left" x1="430" y1="70" x2="430" y2="220" stroke="#004d40" stroke-width="2" stroke-dasharray="5,5"/>
+                    <line id="hc-inner-right" x1="490" y1="70" x2="490" y2="220" stroke="#004d40" stroke-width="2" stroke-dasharray="5,5"/>
+                    <ellipse id="hc-bot-in" cx="460" cy="220" rx="30" ry="9" fill="none" stroke="#004d40" stroke-width="2" stroke-dasharray="4,4"/>
+                    <!-- Top Ring -->
+                    <ellipse id="hc-top-out" cx="460" cy="70" rx="50" ry="15" fill="#e0f2f1" stroke="#00796b" stroke-width="3"/>
+                    <ellipse id="hc-top-in" cx="460" cy="70" rx="30" ry="9" fill="#fff" stroke="#004d40" stroke-width="3"/>
+                </g>
+                <text id="txt-hc-h" x="380" y="150" font-weight="bold" fill="#00695c">H=?</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00796b; background: #e0f2f1; flex-basis: 100%;">
+                    <span style="color: #00695c; font-size: 1.1em;">Resulting Pipe Height (H = Sphere Vol ÷ &pi;(R&sup2; - r&sup2;))</span>
+                    <span id="calc-hc-h" class="val-num" style="color: #004d40; font-size: 2em;">10.67</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: A metallic sphere of radius 4.2 cm is melted and recast into the shape of a solid cylinder of radius 6 cm. Find the height of the cylinder.</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Step 1:</strong> Volume of Sphere = (4/3) &times; &pi; &times; (4.2)&sup3;<br>
+                <strong>Step 2:</strong> Volume of Cylinder = &pi; &times; (6)&sup2; &times; h<br>
+                <strong>Step 3:</strong> Equate the volumes: &pi; &times; 36 &times; h = (4/3) &times; &pi; &times; (4.2)&sup3;<br>
+                <strong>Step 4:</strong> Cancel &pi; from both sides and solve for h.<br>
+                h = [ (4/3) &times; 74.088 ] / 36<br>
+                <strong>Final Answer: h = 2.744 cm</strong>
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: How many silver coins, 1.75 cm in diameter and of thickness 2 mm, must be melted to form a cuboid of dimensions 5.5 cm × 10 cm × 3.5 cm?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans2">
+                <strong>Step 1:</strong> A coin is a solid cylinder. Radius (r) = 1.75/2 = 0.875 cm. Height (h) = 2 mm = 0.2 cm.<br>
+                <strong>Step 2:</strong> Volume of one coin = &pi;r&sup2;h = &pi; &times; (0.875)&sup2; &times; 0.2 &approx; 0.48125 cm&sup3;.<br>
+                <strong>Step 3:</strong> Volume of cuboid = l &times; w &times; h = 5.5 &times; 10 &times; 3.5 = 192.5 cm&sup3;.<br>
+                <strong>Step 4:</strong> Number of coins (N) = Volume of Cuboid &divide; Volume of one coin.<br>
+                N = 192.5 &divide; 0.48125<br>
+                <strong>Final Answer: 400 coins!</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chapter Completion -->
+    <div class="section-box" style="background: linear-gradient(135deg, #e3f2fd, #bbdefb); border: 3px solid #2196f3; text-align: center;">
+        <h2 style="color: #1565c0; margin-top:0;">🏆 Congratulations! Chapter 11 Complete!</h2>
+        <p style="font-size: 1.2em;">You have officially mastered the geometry of 3D solids!</p>
+        <p style="font-weight: bold; margin-top: 15px; color: #0d47a1;">Ready for Data and Charts? Let's move on to Chapter 12 (Statistics)! 📊</p>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic11_4.html" class="nav-btn chapter-btn">← Prev Topic</a>
+        <a href="../chapters/chapter12.html" class="nav-btn">Next Chapter ➡️</a>
+    </div>
+
+    <script>
+        const pi = Math.PI;
+
+        // --- 1. MELTING SIMULATOR LOGIC ---
+        const sr1 = document.getElementById('sr1');
+        const sr2 = document.getElementById('sr2');
+        
+        function updateMelting() {
+            let r1 = parseFloat(sr1.value);
+            let r2 = parseFloat(sr2.value);
+            document.getElementById('val-r1').textContent = r1;
+            document.getElementById('val-r2').textContent = r2;
+
+            let vol = (4/3) * pi * Math.pow(r1, 3);
+            let h = vol / (pi * Math.pow(r2, 2));
+
+            document.getElementById('dash-v').textContent = vol.toFixed(1);
+            document.getElementById('txt-v1').textContent = "V = " + vol.toFixed(1);
+            document.getElementById('txt-v2').textContent = "V = " + vol.toFixed(1);
+            document.getElementById('dash-h').textContent = h.toFixed(2);
+
+            let sphereScale = 7;
+            document.getElementById('melt-sphere').setAttribute('r', r1 * sphereScale);
+
+            let cylScaleX = 6;
+            let px = r2 * cylScaleX;
+            let py = h * 3; 
+            if(py > 160) py = 160; 
+            if(py < 20) py = 20;
+
+            let cx = 470, cyBase = 240;
+            document.getElementById('melt-cyl-bot').setAttribute('rx', px);
+            document.getElementById('melt-cyl-bot').setAttribute('ry', px * 0.3);
+            document.getElementById('melt-cyl-bot').setAttribute('cy', cyBase);
+
+            document.getElementById('melt-cyl-top').setAttribute('rx', px);
+            document.getElementById('melt-cyl-top').setAttribute('ry', px * 0.3);
+            document.getElementById('melt-cyl-top').setAttribute('cy', cyBase - py);
+
+            document.getElementById('melt-cyl-body').setAttribute('x', cx - px);
+            document.getElementById('melt-cyl-body').setAttribute('y', cyBase - py);
+            document.getElementById('melt-cyl-body').setAttribute('width', px * 2);
+            document.getElementById('melt-cyl-body').setAttribute('height', py);
+        }
+
+        sr1.addEventListener('input', updateMelting);
+        sr2.addEventListener('input', updateMelting);
+        updateMelting();
+
+        // --- 2. MULTI-CASTER LOGIC (Dynamic Shapes & Precision Fix) ---
+        const sBigR = document.getElementById('s-big-r');
+        const sBigH = document.getElementById('s-big-h');
+        const sSmallR = document.getElementById('s-small-r');
+        const sSmallH = document.getElementById('s-small-h');
+
+        function updateMultiCaster() {
+            let bR = parseFloat(sBigR.value);
+            let bH = parseFloat(sBigH.value);
+            let sR = parseFloat(sSmallR.value);
+            let sH = parseFloat(sSmallH.value);
+
+            document.getElementById('val-big-r').textContent = bR;
+            document.getElementById('val-big-h').textContent = bH;
+            document.getElementById('val-small-r').textContent = sR;
+            document.getElementById('val-small-h').textContent = sH;
+
+            let vBig = pi * Math.pow(bR, 2) * bH;
+            let vSmall = (1/3) * pi * Math.pow(sR, 2) * sH;
+
+            document.getElementById('txt-big-v').textContent = "Vol: " + vBig.toFixed(0);
+            document.getElementById('txt-small-v').textContent = "Vol: " + vSmall.toFixed(1);
+
+            // Precision adjustment buffer before rounding down
+            let n = Math.floor((vBig / vSmall) + 0.0001);
+            let remainder = vBig - (n * vSmall);
+            if (remainder < 0.1) remainder = 0; // Fixes microscopic floating point issues
+
+            document.getElementById('calc-n').textContent = n;
+            let remText = document.getElementById('calc-rem');
+            
+            if(remainder === 0) {
+                remText.textContent = "(Perfect fit!)";
+                remText.style.color = "#2e7d32";
+            } else {
+                remText.textContent = `(with ${remainder.toFixed(1)} units left over)`;
+                remText.style.color = "#d84315";
+            }
+
+            let scaleB = 3;
+            let pxB = bR * scaleB;
+            let pyB = bH * scaleB;
+            let cxB = 130, cyBaseB = 240;
+
+            document.getElementById('mc-bot').setAttribute('rx', pxB);
+            document.getElementById('mc-bot').setAttribute('ry', pxB * 0.3);
+            document.getElementById('mc-bot').setAttribute('cy', cyBaseB);
+            document.getElementById('mc-top').setAttribute('rx', pxB);
+            document.getElementById('mc-top').setAttribute('ry', pxB * 0.3);
+            document.getElementById('mc-top').setAttribute('cy', cyBaseB - pyB);
+            document.getElementById('mc-body').setAttribute('x', cxB - pxB);
+            document.getElementById('mc-body').setAttribute('y', cyBaseB - pyB);
+            document.getElementById('mc-body').setAttribute('width', pxB * 2);
+            document.getElementById('mc-body').setAttribute('height', pyB);
+
+            let scaleS = 5;
+            let pxS = sR * scaleS;
+            let pyS = sH * scaleS;
+            let cxS = 470, cyBaseS = 240;
+
+            document.getElementById('mc-cone-bot').setAttribute('rx', pxS);
+            document.getElementById('mc-cone-bot').setAttribute('ry', pxS * 0.3);
+            document.getElementById('mc-cone-bot').setAttribute('cy', cyBaseS);
+            document.getElementById('mc-cone-body').setAttribute('points', `${cxS},${cyBaseS - pyS} ${cxS - pxS},${cyBaseS} ${cxS + pxS},${cyBaseS}`);
+        }
+
+        sBigR.addEventListener('input', updateMultiCaster);
+        sBigH.addEventListener('input', updateMultiCaster);
+        sSmallR.addEventListener('input', updateMultiCaster);
+        sSmallH.addEventListener('input', updateMultiCaster);
+        updateMultiCaster();
+
+        // --- 3. HOLLOW CYLINDER CASTER LOGIC ---
+        const sHcSr = document.getElementById('s-hc-sr');
+        const sHcOutR = document.getElementById('s-hc-outr');
+        const sHcInR = document.getElementById('s-hc-inr');
+
+        function updateHollowCaster() {
+            let sr = parseInt(sHcSr.value);
+            let outR = parseInt(sHcOutR.value);
+            let inR = parseInt(sHcInR.value);
+
+            if (inR >= outR) {
+                inR = outR - 1;
+                sHcInR.value = inR; 
+            }
+
+            document.getElementById('val-hc-sr').textContent = sr;
+            document.getElementById('val-hc-outr').textContent = outR;
+            document.getElementById('val-hc-inr').textContent = inR;
+
+            let totalV = (4/3) * pi * Math.pow(sr, 3);
+            document.getElementById('txt-hc-sv').textContent = "Total V: " + totalV.toFixed(0);
+
+            let baseArea = pi * (Math.pow(outR, 2) - Math.pow(inR, 2));
+            let H = totalV / baseArea;
+
+            document.getElementById('calc-hc-h').textContent = H.toFixed(2);
+
+            let scaleSphere = 5;
+            document.getElementById('hc-sphere').setAttribute('r', sr * scaleSphere);
+
+            let scaleR = 3.5;
+            let pOut = outR * scaleR;
+            let pIn = inR * scaleR;
+            let pyH = H * 5; 
+            if (pyH > 160) pyH = 160;
+            if (pyH < 20) pyH = 20;
+
+            let cx = 460, cyBase = 240;
+
+            document.getElementById('hc-bot-out').setAttribute('rx', pOut);
+            document.getElementById('hc-bot-out').setAttribute('ry', pOut * 0.3);
+            document.getElementById('hc-bot-out').setAttribute('cy', cyBase);
+            document.getElementById('hc-bot-in').setAttribute('rx', pIn);
+            document.getElementById('hc-bot-in').setAttribute('ry', pIn * 0.3);
+            document.getElementById('hc-bot-in').setAttribute('cy', cyBase);
+
+            document.getElementById('hc-top-out').setAttribute('rx', pOut);
+            document.getElementById('hc-top-out').setAttribute('ry', pOut * 0.3);
+            document.getElementById('hc-top-out').setAttribute('cy', cyBase - pyH);
+            document.getElementById('hc-top-in').setAttribute('rx', pIn);
+            document.getElementById('hc-top-in').setAttribute('ry', pIn * 0.3);
+            document.getElementById('hc-top-in').setAttribute('cy', cyBase - pyH);
+
+            document.getElementById('hc-body').setAttribute('x', cx - pOut);
+            document.getElementById('hc-body').setAttribute('y', cyBase - pyH);
+            document.getElementById('hc-body').setAttribute('width', pOut * 2);
+            document.getElementById('hc-body').setAttribute('height', pyH);
+
+            document.getElementById('hc-inner-left').setAttribute('x1', cx - pIn);
+            document.getElementById('hc-inner-left').setAttribute('y1', cyBase - pyH);
+            document.getElementById('hc-inner-left').setAttribute('x2', cx - pIn);
+            document.getElementById('hc-inner-left').setAttribute('y2', cyBase);
+
+            document.getElementById('hc-inner-right').setAttribute('x1', cx + pIn);
+            document.getElementById('hc-inner-right').setAttribute('y1', cyBase - pyH);
+            document.getElementById('hc-inner-right').setAttribute('x2', cx + pIn);
+            document.getElementById('hc-inner-right').setAttribute('y2', cyBase);
+
+            document.getElementById('txt-hc-h').setAttribute('y', cyBase - (pyH/2));
+        }
+
+        sHcSr.addEventListener('input', updateHollowCaster);
+        sHcOutR.addEventListener('input', updateHollowCaster);
+        sHcInR.addEventListener('input', updateHollowCaster);
+        updateHollowCaster();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer Step-by-Step';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

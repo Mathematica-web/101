@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basics of Probability - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #4a148c; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #ab47bc; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #e1bee7; text-align: left; }
+        .formula-table th { background: #8e24aa; color: white; font-size: 1.1em; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #ab47bc; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; }
+        .val-num { font-size: 1.5em; display: block; margin-top: 5px; }
+
+        /* BUTTONS */
+        .btn-group { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .action-btn { padding: 12px 25px; border-radius: 25px; border: none; background: #8e24aa; color: white; font-weight: bold; font-size: 1.1em; cursor: pointer; transition: transform 0.2s, background 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .action-btn:hover { transform: scale(1.05); background: #6a1b9a; }
+        .action-btn.btn-reset { background: #ff5252; }
+        .action-btn.btn-reset:hover { background: #d32f2f; }
+
+        /* COIN STYLES */
+        .coin-stage { display: flex; justify-content: center; margin: 20px 0; height: 120px; align-items: center; }
+        .coin { width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(#ffd54f, #ff9800); border: 4px solid #ef6c00; display: flex; justify-content: center; align-items: center; font-size: 2.5em; font-weight: bold; color: #e65100; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.1s; }
+        .flipping { animation: flipAnim 0.3s infinite linear; }
+        @keyframes flipAnim { 0% { transform: scaleY(1); } 50% { transform: scaleY(0); } 100% { transform: scaleY(1); } }
+
+        /* DICE STYLES & BAR CHART */
+        .dice-stage { font-size: 5em; margin: 10px 0; color: #4a148c; display: flex; justify-content: center; }
+        .rolling { animation: shakeAnim 0.2s infinite linear; }
+        @keyframes shakeAnim { 0% { transform: rotate(0deg); } 25% { transform: rotate(15deg); } 75% { transform: rotate(-15deg); } 100% { transform: rotate(0deg); } }
+
+        .bar-chart-container { margin-top: 20px; text-align: left; }
+        .chart-row { display: flex; align-items: center; margin: 8px 0; }
+        .chart-label { width: 50px; font-weight: bold; font-size: 1.2em; color: #4a148c; }
+        .chart-bar-bg { flex-grow: 1; background: #e1bee7; height: 25px; border-radius: 12px; overflow: hidden; position: relative; }
+        .chart-bar-fill { background: #8e24aa; height: 100%; width: 0%; transition: width 0.3s; display: flex; align-items: center; justify-content: flex-end; padding-right: 5px; color: white; font-weight: bold; font-size: 0.85em; box-sizing: border-box; }
+        
+        /* Q&A SECTION */
+        .qa-box { background: #f3e5f5; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #8e24aa; }
+        .qa-question { font-weight: bold; color: #4a148c; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; }
+        .show-answer-btn { background: #8e24aa; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #ab47bc; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+        .chapter-btn { background: #ff6b6b; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter12.html" class="back-btn">⬅️ Back to Chapter</a>
+
+    <h1>🎲 Basics of Probability</h1>
+    <p class="subtitle">Measuring the likelihood of events, from coin tosses to drawing cards!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The Core Probability Rules</h2>
+        <p>Probability is simply a fraction that describes how likely something is to happen. <strong>Theoretical Probability</strong> is what we <em>expect</em> to happen logically. <strong>Experimental Probability</strong> is what <em>actually</em> happens when we run an experiment.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Concept</th>
+                <th>Rule / Formula</th>
+            </tr>
+            <tr>
+                <td><strong>Probability Formula</strong></td>
+                <td>P(E) = Number of favorable outcomes / Total possible outcomes</td>
+            </tr>
+            <tr>
+                <td><strong>The Limits</strong></td>
+                <td>Probability is always between 0 and 1. <strong>0 &le; P(E) &le; 1</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Certain & Impossible</strong></td>
+                <td>A <strong>Sure Event</strong> has a probability of exactly <strong>1</strong> (100%).<br>An <strong>Impossible Event</strong> has a probability of exactly <strong>0</strong>.</td>
+            </tr>
+            <tr>
+                <td><strong>Complementary Events</strong></td>
+                <td>The probability of an event happening plus it NOT happening is always 1.<br><strong>P(E) + P(Not E) = 1</strong></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: COIN FLIPPER (LAW OF LARGE NUMBERS) -->
+    <div class="section-box">
+        <h2 style="color: #ff9800; text-align: center; margin-top: 0;">🪙 1. The Coin Flipper (Law of Large Numbers)</h2>
+        <p style="text-align: center; color: #666;">Theoretical probability says a fair coin will land on Heads 1/2 of the time. But if you flip it just 3 times, you might get 3/3 Heads! The <strong>Law of Large Numbers</strong> states that as you run more experiments (flip 100s of times), the experimental probability fraction will get closer and closer to the theoretical 1/2.</p>
+
+        <div class="interactive-container" style="background: #fff3e0; border-color: #ffb300;">
+            <div class="coin-stage">
+                <div class="coin" id="coin-ui">H</div>
+            </div>
+
+            <div class="btn-group">
+                <button class="action-btn" onclick="flipCoin(1)" style="background: #f57c00;">Flip 1x</button>
+                <button class="action-btn" onclick="flipCoin(10)" style="background: #ef6c00;">Flip 10x</button>
+                <button class="action-btn" onclick="flipCoin(100)" style="background: #e65100;">Flip 100x</button>
+                <button class="action-btn btn-reset" onclick="resetCoin()">Reset</button>
+            </div>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #f57c00; background: #ffe0b2;">
+                    <span style="color: #e65100;">Total Flips</span>
+                    <span id="coin-total" class="val-num" style="color: #e65100;">0</span>
+                </div>
+                <div class="dash-card" style="border-color: #4caf50;">
+                    <span style="color: #2e7d32;">Heads (H)</span>
+                    <span id="coin-h-count" class="val-num" style="color: #4caf50;">0</span>
+                    <span id="coin-h-pct" style="color: #666; font-size: 1.1em; font-weight: normal;">0/0</span>
+                </div>
+                <div class="dash-card" style="border-color: #2196f3;">
+                    <span style="color: #1565c0;">Tails (T)</span>
+                    <span id="coin-t-count" class="val-num" style="color: #2196f3;">0</span>
+                    <span id="coin-t-pct" style="color: #666; font-size: 1.1em; font-weight: normal;">0/0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: DICE FREQUENCY TRACKER -->
+    <div class="section-box">
+        <h2 style="color: #4a148c; text-align: center; margin-top: 0;">🎲 2. The Dice Roller & Tracker</h2>
+        <p style="text-align: center; color: #666;">A standard 6-sided die has a 1/6 theoretical chance of landing on any specific number. Roll the die repeatedly to build a live frequency bar chart, tracking the exact fractions of your experimental data!</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #9c27b0;">
+            <div class="dice-stage" id="dice-ui">⚅</div>
+
+            <div class="btn-group">
+                <button class="action-btn" onclick="rollDice(1)">Roll 1x</button>
+                <button class="action-btn" onclick="rollDice(50)">Roll 50x</button>
+                <button class="action-btn btn-reset" onclick="resetDice()">Clear Data</button>
+            </div>
+
+            <div class="live-dashboard" style="margin-bottom: 20px;">
+                <div class="dash-card" style="border-color: #8e24aa; background: #e1bee7; flex-basis: 100%;">
+                    <span style="color: #4a148c; font-size: 1.2em;">Total Experimental Rolls: <span id="dice-total">0</span></span>
+                </div>
+            </div>
+
+            <div class="bar-chart-container">
+                <div class="chart-row"><div class="chart-label">⚀ 1</div><div class="chart-bar-bg"><div class="chart-bar-fill" id="bar-1">0/0</div></div></div>
+                <div class="chart-row"><div class="chart-label">⚁ 2</div><div class="chart-bar-bg"><div class="chart-bar-fill" id="bar-2">0/0</div></div></div>
+                <div class="chart-row"><div class="chart-label">⚂ 3</div><div class="chart-bar-bg"><div class="chart-bar-fill" id="bar-3">0/0</div></div></div>
+                <div class="chart-row"><div class="chart-label">⚃ 4</div><div class="chart-bar-bg"><div class="chart-bar-fill" id="bar-4">0/0</div></div></div>
+                <div class="chart-row"><div class="chart-label">⚄ 5</div><div class="chart-bar-bg"><div class="chart-bar-fill" id="bar-5">0/0</div></div></div>
+                <div class="chart-row"><div class="chart-label">⚅ 6</div><div class="chart-bar-bg"><div class="chart-bar-fill" id="bar-6">0/0</div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: What is the probability of rolling a 7 on a standard six-sided die?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>0 (An Impossible Event)</strong><br><br>
+                A standard die only has the numbers 1, 2, 3, 4, 5, and 6. Because there are no 7s, the number of favorable outcomes is 0. <br>
+                0 / 6 = 0.
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: The weather forecast states there is a 65% chance of rain today. What is the probability that it will NOT rain?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans2">
+                <strong>Step 1:</strong> Convert 65% to a decimal probability: 0.65.<br>
+                <strong>Step 2:</strong> Use the Complementary Event rule: P(E) + P(Not E) = 1.<br>
+                <strong>Step 3:</strong> 0.65 + P(Not Rain) = 1.<br>
+                <strong>Step 4:</strong> P(Not Rain) = 1 - 0.65 = 0.35.<br>
+                <strong>Final Answer: 0.35 (or a 35% chance).</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic12_2.html" class="nav-btn chapter-btn">← Prev Topic</a>
+        <a href="topic12_4.html" class="nav-btn">Next: Applications ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. COIN FLIPPER LOGIC ---
+        let totalFlips = 0;
+        let heads = 0;
+        let tails = 0;
+        const coinUi = document.getElementById('coin-ui');
+
+        function flipCoin(times) {
+            if(times === 1) {
+                coinUi.classList.add('flipping');
+                setTimeout(() => { coinUi.classList.remove('flipping'); executeFlips(1); }, 300);
+            } else {
+                executeFlips(times);
+            }
+        }
+
+        function executeFlips(times) {
+            for(let i=0; i<times; i++) {
+                let result = Math.floor(Math.random() * 2); // 0 or 1
+                if(result === 0) {
+                    heads++;
+                    coinUi.textContent = "H";
+                } else {
+                    tails++;
+                    coinUi.textContent = "T";
+                }
+                totalFlips++;
+            }
+            updateCoinDashboard();
+        }
+
+        function resetCoin() {
+            totalFlips = 0; heads = 0; tails = 0;
+            coinUi.textContent = "H";
+            updateCoinDashboard();
+        }
+
+        function updateCoinDashboard() {
+            document.getElementById('coin-total').textContent = totalFlips;
+            document.getElementById('coin-h-count').textContent = heads;
+            document.getElementById('coin-t-count').textContent = tails;
+
+            let hFrac = totalFlips > 0 ? heads + "/" + totalFlips : "0/0";
+            let tFrac = totalFlips > 0 ? tails + "/" + totalFlips : "0/0";
+
+            document.getElementById('coin-h-pct').textContent = hFrac;
+            document.getElementById('coin-t-pct').textContent = tFrac;
+        }
+
+        // --- 2. DICE ROLLER LOGIC ---
+        let totalRolls = 0;
+        let diceCounts = [0, 0, 0, 0, 0, 0]; 
+        const diceFaces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+        const diceUi = document.getElementById('dice-ui');
+
+        function rollDice(times) {
+            if(times === 1) {
+                diceUi.classList.add('rolling');
+                setTimeout(() => { diceUi.classList.remove('rolling'); executeRolls(1); }, 200);
+            } else {
+                executeRolls(times);
+            }
+        }
+
+        function executeRolls(times) {
+            let lastRoll = 0;
+            for(let i=0; i<times; i++) {
+                let result = Math.floor(Math.random() * 6); 
+                diceCounts[result]++;
+                totalRolls++;
+                lastRoll = result;
+            }
+            diceUi.textContent = diceFaces[lastRoll];
+            updateDiceDashboard();
+        }
+
+        function resetDice() {
+            totalRolls = 0;
+            diceCounts = [0, 0, 0, 0, 0, 0];
+            diceUi.textContent = "⚅";
+            updateDiceDashboard();
+        }
+
+        function updateDiceDashboard() {
+            document.getElementById('dice-total').textContent = totalRolls;
+
+            for(let i=0; i<6; i++) {
+                let bar = document.getElementById('bar-' + (i+1));
+                let pct = totalRolls > 0 ? ((diceCounts[i] / totalRolls) * 100) : 0;
+                let fracStr = totalRolls > 0 ? diceCounts[i] + "/" + totalRolls : "0/0";
+                
+                bar.style.width = pct + "%";
+                bar.textContent = fracStr;
+            }
+        }
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                if(id === 'ans1') btn.textContent = 'Show Answer';
+                if(id === 'ans2') btn.textContent = 'Show Answer Step-by-Step';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

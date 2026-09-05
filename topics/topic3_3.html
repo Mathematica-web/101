@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Section Formula - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #00838f; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; font-size: 1.05em; }
+        .formula-table th { background: #00838f; color: white; }
+        
+        .math-eq { font-family: 'Times New Roman', serif; font-style: italic; font-size: 1.2em; color: #006064; font-weight: bold; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #00838f; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 550px; height: 550px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        .svg-canvas-2d { height: 400px; max-width: 500px; }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #4dd0e1; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+        
+        /* Q&A SECTION */
+        .qa-box { background: #e0f7fa; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00838f; }
+        .qa-question { font-weight: bold; color: #006064; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #00838f; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #00838f; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter3.html" class="back-btn">⬅️ Back to Chapter Index</a>
+
+    <h1>📏 The Section Formula</h1>
+    <p class="subtitle">Slicing line segments into perfect ratios!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>Dividing the Line</h2>
+        <p>The Section Formula allows us to find the exact coordinates of a point P that divides a line segment connecting points A(x₁, y₁) and B(x₂, y₂) into a specific ratio of m : n.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Type of Division</th>
+                <th>The Formula</th>
+                <th>When to Use It</th>
+            </tr>
+            <tr>
+                <td><strong>Internal Division</strong></td>
+                <td><span class="math-eq">x = (mx₂ + nx₁) / (m + n)</span><br><span class="math-eq">y = (my₂ + ny₁) / (m + n)</span></td>
+                <td>When point P lies strictly <strong>between</strong> point A and point B.</td>
+            </tr>
+            <tr>
+                <td><strong>External Division</strong></td>
+                <td><span class="math-eq">x = (mx₂ - nx₁) / (m - n)</span><br><span class="math-eq">y = (my₂ - ny₁) / (m - n)</span></td>
+                <td>When point P lies on the line passing through A and B, but sits <strong>outside</strong> the actual segment AB.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: INTERNAL DIVISION -->
+    <div class="section-box">
+        <h2 style="color: #00838f; text-align: center; margin-top: 0;">✂️ 1. The Internal Divider</h2>
+        <p style="text-align: center; color: #666;">Adjust the ratio m:n. Watch how point P slides along the segment AB, recalculating its exact coordinate position based on the Internal Section Formula!</p>
+
+        <div class="interactive-container" style="background: #e0f7fa; border-color: #00838f;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #e65100; background: #fff3e0;">
+                    <label style="color: #bf360c; font-weight: bold;">Ratio (m): <span id="val-int-m">2</span></label>
+                    <input type="range" id="s-int-m" min="1" max="5" value="2">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Ratio (n): <span id="val-int-n">3</span></label>
+                    <input type="range" id="s-int-n" min="1" max="5" value="3">
+                </div>
+            </div>
+
+            <svg id="int-svg" class="svg-canvas" viewBox="-40 -40 580 580">
+                <defs>
+                    <pattern id="grid1" width="25" height="25" patternUnits="userSpaceOnUse">
+                        <rect width="25" height="25" fill="none" stroke="#eee" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                <rect x="0" y="0" width="500" height="500" fill="url(#grid1)" />
+                <line x1="0" y1="250" x2="500" y2="250" stroke="#333" stroke-width="3"/>
+                <line x1="250" y1="0" x2="250" y2="500" stroke="#333" stroke-width="3"/>
+                
+                <line id="int-line-m" stroke="#e65100" stroke-width="6"/>
+                <line id="int-line-n" stroke="#1976d2" stroke-width="6"/>
+                
+                <circle id="int-dot-a" r="8" fill="#333" stroke="#fff" stroke-width="2"/>
+                <text id="int-lbl-a" font-weight="bold" fill="#333" font-size="14px">A(-8, -4)</text>
+                
+                <circle id="int-dot-b" r="8" fill="#333" stroke="#fff" stroke-width="2"/>
+                <text id="int-lbl-b" font-weight="bold" fill="#333" font-size="14px">B(7, 6)</text>
+
+                <circle id="int-dot-p" r="10" fill="#2e7d32" stroke="#fff" stroke-width="3"/>
+                <text id="int-lbl-p" font-weight="bold" fill="#2e7d32" font-size="18px">P</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #2e7d32; background: #e8f5e9; flex-basis: 100%;">
+                    <span style="color: #1b5e20; font-size: 1.1em;">Internal Coordinate P(x, y)</span>
+                    <span id="int-calc" class="val-num" style="color: #388e3c; font-size: 1.2em; font-family: monospace;">P = ( (2(7) + 3(-8)) / 5 , (2(6) + 3(-4)) / 5 )</span>
+                    <span id="int-result" class="val-num" style="color: #1b5e20; font-size: 2.2em; margin-top: 10px;">P(-2, 0)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: EXTERNAL DIVISION -->
+    <div class="section-box">
+        <h2 style="color: #d32f2f; text-align: center; margin-top: 0;">🚀 2. The External Divider</h2>
+        <p style="text-align: center; color: #666;">Here, P is placed <em>outside</em> the bounds of A and B. Notice how the formula requires a subtraction! If m = n, the lines become parallel and point P mathematically shoots off to infinity.</p>
+
+        <div class="interactive-container" style="background: #ffebee; border-color: #d32f2f;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #e65100; background: #fff3e0;">
+                    <label style="color: #bf360c; font-weight: bold;">Ratio (m): <span id="val-ext-m">4</span></label>
+                    <input type="range" id="s-ext-m" min="1" max="6" value="4">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Ratio (n): <span id="val-ext-n">2</span></label>
+                    <input type="range" id="s-ext-n" min="1" max="6" value="2">
+                </div>
+            </div>
+
+            <svg id="ext-svg" class="svg-canvas" viewBox="-40 -40 580 580">
+                <defs>
+                    <pattern id="grid2" width="25" height="25" patternUnits="userSpaceOnUse">
+                        <rect width="25" height="25" fill="none" stroke="#eee" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                <rect x="0" y="0" width="500" height="500" fill="url(#grid2)" />
+                <line x1="0" y1="250" x2="500" y2="250" stroke="#333" stroke-width="3"/>
+                <line x1="250" y1="0" x2="250" y2="500" stroke="#333" stroke-width="3"/>
+                
+                <line id="ext-line-full" stroke="#999" stroke-width="4" stroke-dasharray="5,5"/>
+                <line id="ext-line-ab" stroke="#333" stroke-width="6"/>
+                
+                <circle id="ext-dot-a" r="8" fill="#333" stroke="#fff" stroke-width="2"/>
+                <text id="ext-lbl-a" font-weight="bold" fill="#333" font-size="14px">A(-2, -2)</text>
+                
+                <circle id="ext-dot-b" r="8" fill="#333" stroke="#fff" stroke-width="2"/>
+                <text id="ext-lbl-b" font-weight="bold" fill="#333" font-size="14px">B(2, 2)</text>
+
+                <circle id="ext-dot-p" r="10" fill="#d32f2f" stroke="#fff" stroke-width="3"/>
+                <text id="ext-lbl-p" font-weight="bold" fill="#d32f2f" font-size="18px">P</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" id="ext-card" style="border-color: #d32f2f; background: #fff; flex-basis: 100%;">
+                    <span style="color: #b71c1c; font-size: 1.1em;">External Coordinate P(x, y)</span>
+                    <span id="ext-calc" class="val-num" style="color: #d32f2f; font-size: 1.2em; font-family: monospace;">P = ( (4(2) - 2(-2)) / 2 , (4(2) - 2(-2)) / 2 )</span>
+                    <span id="ext-result" class="val-num" style="color: #b71c1c; font-size: 2.2em; margin-top: 10px;">P(6, 6)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: DECISION ENGINE (INTERNAL VS EXTERNAL) IN 2D -->
+    <div class="section-box">
+        <h2 style="color: #7b1fa2; text-align: center; margin-top: 0;">🧭 3. The 2D Boundary Tester</h2>
+        <p style="text-align: center; color: #666;">Not sure which formula to use? Slide point P across the infinite 2D line passing through A and B. Observe how crossing the boundaries instantly flips the math context!</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #9c27b0;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #7b1fa2; background: #fff; min-width: 300px;">
+                    <label style="color: #4a148c; font-weight: bold;">Drag Position of Point P</label>
+                    <input type="range" id="s-test-t" min="-0.5" max="1.5" step="0.05" value="0.5">
+                </div>
+            </div>
+
+            <svg id="test-svg" class="svg-canvas svg-canvas-2d" viewBox="0 0 500 400">
+                <!-- Background Grid -->
+                <defs>
+                    <pattern id="grid3" width="25" height="25" patternUnits="userSpaceOnUse">
+                        <rect width="25" height="25" fill="none" stroke="#f3e5f5" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                <rect x="0" y="0" width="500" height="400" fill="url(#grid3)" />
+
+                <!-- Extended dashed line -->
+                <line x1="50" y1="400" x2="450" y2="0" stroke="#ccc" stroke-width="4" stroke-dasharray="10,5"/>
+                
+                <!-- Main segment AB -->
+                <line id="test-line-ab" x1="150" y1="300" x2="350" y2="100" stroke="#333" stroke-width="8"/>
+                
+                <circle cx="150" cy="300" r="8" fill="#333"/>
+                <text x="125" y="325" font-weight="bold" fill="#333">A</text>
+                
+                <circle cx="350" cy="100" r="8" fill="#333"/>
+                <text x="365" y="95" font-weight="bold" fill="#333">B</text>
+
+                <!-- Draggable Point P -->
+                <circle id="test-dot-p" cx="250" cy="200" r="12" fill="#7b1fa2" stroke="#fff" stroke-width="3"/>
+                <text id="test-lbl-p" x="270" y="205" font-weight="bold" fill="#7b1fa2" font-size="18px">P</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" id="test-card" style="border-color: #7b1fa2; background: #fff; flex-basis: 100%;">
+                    <span id="test-status" style="color: #4a148c; font-size: 1.5em; font-weight: bold;">P is INSIDE the segment</span>
+                    <span id="test-formula" class="val-num" style="color: #7b1fa2; font-size: 1.2em; margin-top: 10px;">Use INTERNAL Division Formula</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic3_2.html" class="nav-btn">← Prev Topic</a>
+        <a href="topic3_4.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        const plotScale = 25; 
+        function mapX(x) { return 250 + (x * plotScale); }
+        function mapY(y) { return 250 - (y * plotScale); }
+        function wrapNeg(val) { return val < 0 ? `(${val})` : val; }
+
+        // --- 1. INTERNAL DIVISION LOGIC ---
+        const A_int = {x: -8, y: -4};
+        const B_int = {x: 7, y: 6};
+        const sIntM = document.getElementById('s-int-m');
+        const sIntN = document.getElementById('s-int-n');
+
+        function updateInternal() {
+            let m = parseInt(sIntM.value);
+            let n = parseInt(sIntN.value);
+            
+            document.getElementById('val-int-m').textContent = m;
+            document.getElementById('val-int-n').textContent = n;
+
+            // Math
+            let px = (m * B_int.x + n * A_int.x) / (m + n);
+            let py = (m * B_int.y + n * A_int.y) / (m + n);
+
+            // SVG Updates
+            document.getElementById('int-dot-a').setAttribute('cx', mapX(A_int.x));
+            document.getElementById('int-dot-a').setAttribute('cy', mapY(A_int.y));
+            document.getElementById('int-lbl-a').setAttribute('x', mapX(A_int.x) - 10);
+            document.getElementById('int-lbl-a').setAttribute('y', mapY(A_int.y) + 25);
+
+            document.getElementById('int-dot-b').setAttribute('cx', mapX(B_int.x));
+            document.getElementById('int-dot-b').setAttribute('cy', mapY(B_int.y));
+            document.getElementById('int-lbl-b').setAttribute('x', mapX(B_int.x) + 10);
+            document.getElementById('int-lbl-b').setAttribute('y', mapY(B_int.y) - 15);
+
+            let svgPx = mapX(px);
+            let svgPy = mapY(py);
+
+            document.getElementById('int-dot-p').setAttribute('cx', svgPx);
+            document.getElementById('int-dot-p').setAttribute('cy', svgPy);
+            document.getElementById('int-lbl-p').setAttribute('x', svgPx - 15);
+            document.getElementById('int-lbl-p').setAttribute('y', svgPy - 15);
+
+            document.getElementById('int-line-m').setAttribute('x1', mapX(A_int.x));
+            document.getElementById('int-line-m').setAttribute('y1', mapY(A_int.y));
+            document.getElementById('int-line-m').setAttribute('x2', svgPx);
+            document.getElementById('int-line-m').setAttribute('y2', svgPy);
+
+            document.getElementById('int-line-n').setAttribute('x1', svgPx);
+            document.getElementById('int-line-n').setAttribute('y1', svgPy);
+            document.getElementById('int-line-n').setAttribute('x2', mapX(B_int.x));
+            document.getElementById('int-line-n').setAttribute('y2', mapY(B_int.y));
+
+            // Dashboard
+            let pxStr = Number.isInteger(px) ? px : px.toFixed(2);
+            let pyStr = Number.isInteger(py) ? py : py.toFixed(2);
+            document.getElementById('int-calc').textContent = `x = (${m}(${B_int.x}) + ${n}(${A_int.x})) / ${m+n}  |  y = (${m}(${B_int.y}) + ${n}(${A_int.y})) / ${m+n}`;
+            document.getElementById('int-result').textContent = `P(${pxStr}, ${pyStr})`;
+        }
+
+        sIntM.addEventListener('input', updateInternal);
+        sIntN.addEventListener('input', updateInternal);
+        updateInternal();
+
+
+        // --- 2. EXTERNAL DIVISION LOGIC ---
+        const A_ext = {x: -2, y: -2};
+        const B_ext = {x: 2, y: 2};
+        const sExtM = document.getElementById('s-ext-m');
+        const sExtN = document.getElementById('s-ext-n');
+
+        function updateExternal() {
+            let m = parseInt(sExtM.value);
+            let n = parseInt(sExtN.value);
+            
+            document.getElementById('val-ext-m').textContent = m;
+            document.getElementById('val-ext-n').textContent = n;
+
+            let card = document.getElementById('ext-card');
+            let calcText = document.getElementById('ext-calc');
+            let resultText = document.getElementById('ext-result');
+            let dotP = document.getElementById('ext-dot-p');
+            let lblP = document.getElementById('ext-lbl-p');
+            let lineFull = document.getElementById('ext-line-full');
+
+            // Draw base A-B
+            document.getElementById('ext-dot-a').setAttribute('cx', mapX(A_ext.x));
+            document.getElementById('ext-dot-a').setAttribute('cy', mapY(A_ext.y));
+            document.getElementById('ext-lbl-a').setAttribute('x', mapX(A_ext.x) - 30);
+            document.getElementById('ext-lbl-a').setAttribute('y', mapY(A_ext.y) + 25);
+
+            document.getElementById('ext-dot-b').setAttribute('cx', mapX(B_ext.x));
+            document.getElementById('ext-dot-b').setAttribute('cy', mapY(B_ext.y));
+            document.getElementById('ext-lbl-b').setAttribute('x', mapX(B_ext.x) - 30);
+            document.getElementById('ext-lbl-b').setAttribute('y', mapY(B_ext.y) - 15);
+
+            document.getElementById('ext-line-ab').setAttribute('x1', mapX(A_ext.x));
+            document.getElementById('ext-line-ab').setAttribute('y1', mapY(A_ext.y));
+            document.getElementById('ext-line-ab').setAttribute('x2', mapX(B_ext.x));
+            document.getElementById('ext-line-ab').setAttribute('y2', mapY(B_ext.y));
+
+            if (m === n) {
+                card.style.background = "#ffebee";
+                calcText.textContent = "Error: Division by zero! (m - n = 0)";
+                resultText.textContent = "P is at Infinity";
+                dotP.style.display = "none";
+                lblP.style.display = "none";
+                lineFull.style.display = "none";
+            } else {
+                card.style.background = "#fff";
+                dotP.style.display = "block";
+                lblP.style.display = "block";
+                lineFull.style.display = "block";
+
+                let px = (m * B_ext.x - n * A_ext.x) / (m - n);
+                let py = (m * B_ext.y - n * A_ext.y) / (m - n);
+
+                let svgPx = mapX(px);
+                let svgPy = mapY(py);
+
+                dotP.setAttribute('cx', svgPx);
+                dotP.setAttribute('cy', svgPy);
+                lblP.setAttribute('x', svgPx + 15);
+                lblP.setAttribute('y', svgPy + 5);
+
+                // Draw extending line
+                let startX = (m > n) ? mapX(A_ext.x) : svgPx;
+                let startY = (m > n) ? mapY(A_ext.y) : svgPy;
+                let endX = (m > n) ? svgPx : mapX(B_ext.x);
+                let endY = (m > n) ? svgPy : mapY(B_ext.y);
+
+                lineFull.setAttribute('x1', startX);
+                lineFull.setAttribute('y1', startY);
+                lineFull.setAttribute('x2', endX);
+                lineFull.setAttribute('y2', endY);
+
+                let pxStr = Number.isInteger(px) ? px : px.toFixed(2);
+                let pyStr = Number.isInteger(py) ? py : py.toFixed(2);
+                calcText.textContent = `x = (${m}(${B_ext.x}) - ${n}(${wrapNeg(A_ext.x)})) / ${m-n}  |  y = (${m}(${B_ext.y}) - ${n}(${wrapNeg(A_ext.y)})) / ${m-n}`;
+                resultText.textContent = `P(${pxStr}, ${pyStr})`;
+            }
+        }
+
+        sExtM.addEventListener('input', updateExternal);
+        sExtN.addEventListener('input', updateExternal);
+        updateExternal();
+
+
+        // --- 3. BOUNDARY TESTER LOGIC (2D) ---
+        const sTestT = document.getElementById('s-test-t');
+        
+        function updateTester() {
+            let t = parseFloat(sTestT.value);
+            
+            // Linear interpolation between A(150, 300) and B(350, 100)
+            let svgX = 150 + t * (350 - 150); 
+            let svgY = 300 + t * (100 - 300);
+
+            document.getElementById('test-dot-p').setAttribute('cx', svgX);
+            document.getElementById('test-dot-p').setAttribute('cy', svgY);
+            
+            document.getElementById('test-lbl-p').setAttribute('x', svgX + 20);
+            document.getElementById('test-lbl-p').setAttribute('y', svgY + 5);
+
+            let card = document.getElementById('test-card');
+            let status = document.getElementById('test-status');
+            let form = document.getElementById('test-formula');
+
+            if (t > 0 && t < 1) {
+                card.style.borderColor = "#4caf50"; card.style.background = "#e8f5e9";
+                status.style.color = "#1b5e20"; form.style.color = "#2e7d32";
+                status.textContent = "P is INSIDE the segment";
+                form.textContent = "✅ Use INTERNAL Division Formula";
+                document.getElementById('test-dot-p').setAttribute('fill', '#4caf50');
+                document.getElementById('test-lbl-p').setAttribute('fill', '#4caf50');
+            } else if (t === 0 || t === 1) {
+                card.style.borderColor = "#333"; card.style.background = "#eee";
+                status.style.color = "#333"; form.style.color = "#555";
+                status.textContent = t === 0 ? "P is directly ON Point A" : "P is directly ON Point B";
+                form.textContent = "No division formula needed!";
+                document.getElementById('test-dot-p').setAttribute('fill', '#333');
+                document.getElementById('test-lbl-p').setAttribute('fill', '#333');
+            } else {
+                card.style.borderColor = "#d32f2f"; card.style.background = "#ffebee";
+                status.style.color = "#b71c1c"; form.style.color = "#d32f2f";
+                status.textContent = "P is OUTSIDE the segment";
+                form.textContent = "⚠️ Use EXTERNAL Division Formula";
+                document.getElementById('test-dot-p').setAttribute('fill', '#d32f2f');
+                document.getElementById('test-lbl-p').setAttribute('fill', '#d32f2f');
+            }
+        }
+
+        sTestT.addEventListener('input', updateTester);
+        updateTester();
+
+    </script>
+</body>
+</html>

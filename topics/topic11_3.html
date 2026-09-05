@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cone - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; }
+        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #4ecdc4; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 900px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; }
+        .formula-table th { background: #00838f; color: white; font-size: 1.1em; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fff3e0; border: 3px dashed #ff9800; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 450px; height: 350px; background: white; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #ffcc80; }
+        input[type=range] { width: 120px; cursor: pointer; display: block; margin-top: 5px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; }
+
+        /* TOGGLE BUTTONS (MATERIAL SIMULATOR) */
+        .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .toggle-btn { padding: 10px 15px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        
+        /* Specific Button Active Colors */
+        .toggle-btn.btn-bottom.active { background: #795548; color: white; border-color: #795548; }
+        .toggle-btn.btn-curved.active { background: #e91e63; color: white; border-color: #e91e63; }
+        
+        /* Multiplier Buttons */
+        .coat-toggles { border-top: 2px dashed #f48fb1; padding-top: 15px; margin-bottom: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; align-items: center; }
+        .toggle-btn.btn-coat.active { background: #ff9800; color: white; border-color: #ff9800; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #4caf50; }
+        .qa-question { font-weight: bold; color: #2e7d32; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; }
+        .show-answer-btn { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-family: inherit; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #4ecdc4; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+        .chapter-btn { background: #ff6b6b; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter11.html" class="back-btn">⬅️ Back to Chapter</a>
+
+    <h1>🎨 Cones</h1>
+    <p class="subtitle">The geometry of ice creams and party hats!</p>
+
+    <!-- FORMULAS SECTION -->
+    <div class="section-box">
+        <h2>The Core Formulas</h2>
+        <table class="formula-table">
+            <tr>
+                <th>Measurement</th>
+                <th>Formula (Radius <em>r</em>, Height <em>h</em>, Slant <em>l</em>)</th>
+                <th>Practical Example</th>
+            </tr>
+            <tr>
+                <td><strong>Slant Height (l)</strong><br><span style="font-size:0.8em; font-weight:normal;">Hypotenuse of the internal triangle</span></td>
+                <td>&radic;(r&sup2; + h&sup2;)</td>
+                <td>The slanted distance from the tip to the rim.</td>
+            </tr>
+            <tr>
+                <td><strong>Volume (V)</strong><br><span style="font-size:0.8em; font-weight:normal;">Exactly 1/3 of a cylinder</span></td>
+                <td>(1/3)&pi;r&sup2;h</td>
+                <td>Amount of ice cream needed to fill the cone.</td>
+            </tr>
+            <tr>
+                <td><strong>Curved Surface Area (CSA)</strong><br><span style="font-size:0.8em; font-weight:normal;">The curved wall only</span></td>
+                <td>&pi;rl</td>
+                <td>Paper required to make a hollow party hat.</td>
+            </tr>
+            <tr>
+                <td><strong>Total Surface Area (TSA)</strong><br><span style="font-size:0.8em; font-weight:normal;">Curved wall + circular base</span></td>
+                <td>&pi;r(l + r)</td>
+                <td>Making a solid wooden traffic cone.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: CONE RESIZER -->
+    <div class="section-box">
+        <h2 style="color: #ef6c00; text-align: center; margin-top: 0;">🎮 The Slant Height Secret</h2>
+        <p style="text-align: center; color: #666;">A cone hides a right-angled triangle inside it! Adjust the radius (r) and height (h) to see how the <strong>slant height (l)</strong> responds using the Pythagorean theorem.</p>
+
+        <div class="interactive-container">
+            <div class="slider-row">
+                <div class="slider-group">
+                    <label style="color: #1565c0; font-weight: bold;">Radius (r): <span id="val-r">6</span></label>
+                    <input type="range" id="sr" min="3" max="15" value="6">
+                </div>
+                <div class="slider-group">
+                    <label style="color: #333; font-weight: bold;">Height (h): <span id="val-h">8</span></label>
+                    <input type="range" id="sh" min="5" max="25" value="8">
+                </div>
+            </div>
+
+            <svg id="cone-svg" class="svg-canvas" viewBox="0 0 450 350">
+                <!-- Triangle (Body) -->
+                <polygon id="cone-body" points="225,50 125,250 325,250" fill="#f8bbd0" stroke="#c2185b" stroke-width="3"/>
+                <!-- Bottom ellipse -->
+                <ellipse id="cone-bot" cx="225" cy="250" rx="100" ry="30" fill="#f48fb1" stroke="#c2185b" stroke-width="3"/>
+                <!-- Internal Lines -->
+                <line id="h-line" x1="225" y1="50" x2="225" y2="250" stroke="#333" stroke-width="2" stroke-dasharray="5,5"/>
+                <line id="r-line" x1="225" y1="250" x2="325" y2="250" stroke="#1565c0" stroke-width="3"/>
+                <rect id="right-angle" x="225" y="235" width="15" height="15" fill="none" stroke="#333" stroke-width="2"/>
+                
+                <text id="r-txt" x="265" y="240" font-weight="bold" fill="#1565c0">r</text>
+                <text id="h-txt" x="205" y="160" font-weight="bold" fill="#333">h</text>
+                <text id="l-txt" x="290" y="140" font-weight="bold" fill="#c2185b">l</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #c2185b;">
+                    <span style="color: #e91e63;">Slant Height (l)</span>
+                    <span id="calc-l" class="val-num" style="color: #c2185b;">10.0</span>
+                </div>
+                <div class="dash-card" style="border-color: #ff9800;">
+                    <span style="color: #e65100;">Volume</span>
+                    <span id="calc-v" class="val-num" style="color: #ff9800;">301.6</span>
+                </div>
+                <div class="dash-card" style="border-color: #4caf50;">
+                    <span style="color: #2e7d32;">Total Surface (TSA)</span>
+                    <span id="calc-tsa" class="val-num" style="color: #4caf50;">301.6</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE CONE MANUFACTURER -->
+    <div class="section-box">
+        <h2 style="color: #c2185b; text-align: center; margin-top: 0;">🏭 Real-World: Manufacturer & Painter</h2>
+        <p style="text-align: center; color: #666;">Are you making a solid wooden cone or a hollow party hat? Toggle the surfaces, then choose whether you are painting just the <strong>Outside</strong> or both the <strong>Inside & Outside</strong>!</p>
+
+        <div class="interactive-container" style="background: #fce4ec; border-color: #e91e63;">
+            <div class="face-toggles">
+                <button class="toggle-btn btn-curved active" onclick="toggleFace('curved', this)">Curved Wall (&pi;rl)</button>
+                <button class="toggle-btn btn-bottom active" onclick="toggleFace('bottom', this)">Bottom Base (&pi;r&sup2;)</button>
+            </div>
+            
+            <div class="coat-toggles">
+                <span style="font-weight: bold; color: #c2185b;">Painting Requirement:</span>
+                <button class="toggle-btn btn-coat active" id="btn-out" onclick="setCoating('outside', this)">Outside Only</button>
+                <button class="toggle-btn btn-coat" id="btn-both" onclick="setCoating('both', this)">Inside & Outside (x2 Area)</button>
+            </div>
+
+            <!-- DYNAMIC CONE SVG -->
+            <svg class="svg-canvas" viewBox="0 0 450 350" style="background: #f8f9fa;">
+                <!-- Bottom Base -->
+                <ellipse id="svg-face-bottom" cx="225" cy="260" rx="80" ry="25" />
+                
+                <!-- Curved Surface -->
+                <polygon id="svg-face-curved" points="225,80 145,260 305,260" />
+                <path id="svg-curve-overlay" d="M 145,260 A 80,25 0 0,0 305,260" fill="rgba(233, 30, 99, 0.7)" />
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #c2185b; flex-basis: 100%; background: #f8bbd0;">
+                    <span style="color: #880e4f;" id="paint-label">Total Area to Paint</span>
+                    <span id="material-area" class="val-num" style="color: #c2185b; font-size: 1.8em;">301.6</span>
+                    <span id="material-formula" style="color: #555; font-size: 0.9em; font-weight: normal;">(&pi;rl + &pi;r&sup2;)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: If a cone and a cylinder have the exact same base radius and height, what is the ratio of their volumes?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>1 : 3</strong><br><br>
+                The formula for the volume of a cylinder is πr²h. The formula for the volume of a cone is ⅓πr²h. Therefore, it takes exactly three identical cones to fill one matching cylinder!
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: A cone has a radius of 3cm and a height of 4cm. What is its slant height?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>5 cm</strong><br><br>
+                Using the Pythagorean theorem inside the cone:<br>
+                l = √(r² + h²)<br>
+                l = √(3² + 4²) = √(9 + 16) = √25 = 5 cm.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic11_2.html" class="nav-btn chapter-btn">← Prev Topic</a>
+        <a href="topic11_4.html" class="nav-btn">Next: Sphere ➡️</a>
+    </div>
+
+    <script>
+        // --- CONE RESIZER LOGIC ---
+        const sr = document.getElementById('sr');
+        const sh = document.getElementById('sh');
+        
+        const body = document.getElementById('cone-body');
+        const bot = document.getElementById('cone-bot');
+        const rLine = document.getElementById('r-line');
+        const hLine = document.getElementById('h-line');
+        const rightAngle = document.getElementById('right-angle');
+        
+        let currentR = 6, currentH = 8, currentL = 10;
+        const pi = Math.PI;
+
+        function updateCone() {
+            currentR = parseInt(sr.value);
+            currentH = parseInt(sh.value);
+            currentL = Math.sqrt((currentR * currentR) + (currentH * currentH));
+            
+            document.getElementById('val-r').innerText = currentR; 
+            document.getElementById('val-h').innerText = currentH;
+            document.getElementById('calc-l').innerText = currentL.toFixed(1);
+            
+            // Core Math
+            document.getElementById('calc-v').innerText = ((1/3) * pi * currentR * currentR * currentH).toFixed(1);
+            document.getElementById('calc-tsa').innerText = (pi * currentR * (currentL + currentR)).toFixed(1);
+
+            // Visual Scaling 
+            let scaleR = 10, scaleH = 10;
+            let px = currentR * scaleR;
+            let py = currentH * scaleH;
+            let cx = 225, cyBase = 280;
+            
+            bot.setAttribute('rx', px); bot.setAttribute('ry', px * 0.3); bot.setAttribute('cy', cyBase);
+            body.setAttribute('points', `${cx},${cyBase - py} ${cx - px},${cyBase} ${cx + px},${cyBase}`);
+            
+            hLine.setAttribute('y1', cyBase - py); hLine.setAttribute('y2', cyBase);
+            rLine.setAttribute('x1', cx); rLine.setAttribute('y1', cyBase); rLine.setAttribute('x2', cx + px); rLine.setAttribute('y2', cyBase);
+            
+            rightAngle.setAttribute('x', cx);
+            rightAngle.setAttribute('y', cyBase - 15);
+            
+            document.getElementById('r-txt').setAttribute('x', cx + (px/2));
+            document.getElementById('r-txt').setAttribute('y', cyBase - 10);
+            document.getElementById('h-txt').setAttribute('x', cx - 20);
+            document.getElementById('h-txt').setAttribute('y', cyBase - (py/2));
+            document.getElementById('l-txt').setAttribute('x', cx + (px/2) + 15);
+            document.getElementById('l-txt').setAttribute('y', cyBase - (py/2));
+
+            updateMaterial();
+        }
+
+        // --- MATERIAL SIMULATOR LOGIC ---
+        const facesActive = { curved: true, bottom: true };
+        let paintMultiplier = 1;
+        
+        const faceColors = {
+            curved: "rgba(233, 30, 99, 0.7)",   
+            bottom: "rgba(121, 85, 72, 0.7)"    
+        };
+
+        function toggleFace(face, btnElement) {
+            facesActive[face] = !facesActive[face];
+            btnElement.classList.toggle('active');
+            updateMaterial();
+        }
+        
+        function setCoating(type, btnElement) {
+            document.getElementById('btn-out').classList.remove('active');
+            document.getElementById('btn-both').classList.remove('active');
+            btnElement.classList.add('active');
+            
+            if(type === 'both') {
+                paintMultiplier = 2;
+                document.getElementById('paint-label').innerText = "Total Area to Paint (Inside & Outside)";
+            } else {
+                paintMultiplier = 1;
+                document.getElementById('paint-label').innerText = "Total Area to Paint (Outside Only)";
+            }
+            updateMaterial();
+        }
+
+        function updateMaterial() {
+            let areaFlat = pi * currentR * currentR;
+            let areaCurved = pi * currentR * currentL;
+            
+            let baseMaterialArea = 0;
+            let hasFlat = false;
+            let hasCurved = false;
+
+            if(facesActive.bottom) { baseMaterialArea += areaFlat; hasFlat = true; }
+            if(facesActive.curved) { baseMaterialArea += areaCurved; hasCurved = true; }
+
+            let svgCurved = document.getElementById('svg-face-curved');
+            let svgCurveOverlay = document.getElementById('svg-curve-overlay');
+            let svgBottom = document.getElementById('svg-face-bottom');
+
+            if(facesActive.curved) {
+                svgCurved.setAttribute('fill', faceColors.curved);
+                svgCurved.setAttribute('stroke', '#333');
+                svgCurved.setAttribute('stroke-width', '2');
+                svgCurveOverlay.setAttribute('fill', faceColors.curved);
+                svgCurveOverlay.setAttribute('stroke', '#333');
+                svgCurveOverlay.setAttribute('stroke-width', '2');
+            } else {
+                svgCurved.setAttribute('fill', 'rgba(0,0,0,0.03)');
+                svgCurved.setAttribute('stroke', '#bbb');
+                svgCurved.setAttribute('stroke-width', '1');
+                svgCurved.setAttribute('stroke-dasharray', '4,4'); 
+                svgCurveOverlay.setAttribute('fill', 'none');
+                svgCurveOverlay.setAttribute('stroke', 'none');
+            }
+
+            if(facesActive.bottom) {
+                svgBottom.setAttribute('fill', faceColors.bottom);
+                svgBottom.setAttribute('stroke', '#333');
+                svgBottom.setAttribute('stroke-width', '2');
+            } else {
+                svgBottom.setAttribute('fill', 'rgba(0,0,0,0.03)');
+                svgBottom.setAttribute('stroke', '#bbb');
+                svgBottom.setAttribute('stroke-width', '1');
+                svgBottom.setAttribute('stroke-dasharray', '4,4'); 
+            }
+
+            let terms = [];
+            if(hasCurved) terms.push(`\u03C0rl`); 
+            if(hasFlat) terms.push(`\u03C0r\u00B2`); 
+
+            let formulaStr = terms.length === 0 ? "(0 surfaces selected)" : "(" + terms.join(" + ") + ")";
+            if(paintMultiplier === 2 && terms.length > 0) {
+                formulaStr = "2 \u00D7 " + formulaStr;
+            }
+
+            document.getElementById('material-area').innerText = (baseMaterialArea * paintMultiplier).toFixed(1);
+            document.getElementById('material-formula').innerText = formulaStr;
+        }
+
+        // Q&A Toggle Logic
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+
+        // Initialize
+        sr.addEventListener('input', updateCone); 
+        sh.addEventListener('input', updateCone); 
+        updateCone();
+    </script>
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parallel Lines and a Transversal - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #0d47a1; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #1976d2; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #bbdefb; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #1976d2; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #1976d2; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #64b5f6; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e3f2fd; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #1976d2; }
+        .qa-question { font-weight: bold; color: #0d47a1; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #1976d2; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #1976d2; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #0d47a1; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>🛤️ Parallel Lines and a Transversal</h1>
+    <p class="subtitle">Discover the secret patterns created when one line slices through two others!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>The 8 Angles of a Transversal</h2>
+        <p>A <strong>Transversal</strong> is simply a line that passes through two or more other lines. When it cuts across two perfectly <strong>Parallel Lines</strong>, it creates 8 distinct angles that share incredibly special and predictable relationships.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Angle Pair Type</th>
+                <th>Relationship (If lines are parallel)</th>
+            </tr>
+            <tr>
+                <td><strong>Corresponding Angles</strong></td>
+                <td>Angles in the exact same position at each intersection. They are always <strong>Equal</strong>.</td>
+            </tr>
+            <tr>
+                <td><strong>Alternate Interior Angles</strong></td>
+                <td>Angles on opposite sides of the transversal and between the two lines. They are always <strong>Equal</strong>.</td>
+            </tr>
+            <tr>
+                <td><strong>Alternate Exterior Angles</strong></td>
+                <td>Angles on opposite sides of the transversal and outside the two lines. They are always <strong>Equal</strong>.</td>
+            </tr>
+            <tr>
+                <td><strong>Co-Interior Angles</strong></td>
+                <td>Angles on the same side of the transversal and between the two lines. They always <strong>Sum to 180 degrees</strong>.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE TRANSVERSAL EXPLORER -->
+    <div class="section-box">
+        <h2 style="color: #e65100; text-align: center; margin-top: 0;">🧭 1. The Transversal Explorer</h2>
+        <p style="text-align: center; color: #666;">Slide to change the angle of the transversal line. Notice how all 8 angles instantly update, yet they only ever consist of <strong>two unique measurements</strong>!</p>
+
+        <div class="interactive-container" style="background: #fff8e1; border-color: #ffb300;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #e65100; background: #ffebee; width: 80%;">
+                    <label style="color: #b71c1c; font-weight: bold; font-size: 1.2em;">Adjust Transversal Angle</label>
+                    <input type="range" id="s-trans" min="40" max="140" value="60">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 400" style="height: 400px; background: #fafafa;">
+                <!-- Top Intersection Wedges -->
+                <path id="t-arc-1" fill="#ce93d8" stroke="#7b1fa2" stroke-width="2" opacity="0.6"/>
+                <path id="t-arc-2" fill="#fff59d" stroke="#f57f17" stroke-width="2" opacity="0.6"/>
+                <path id="t-arc-3" fill="#ce93d8" stroke="#7b1fa2" stroke-width="2" opacity="0.6"/>
+                <path id="t-arc-4" fill="#fff59d" stroke="#f57f17" stroke-width="2" opacity="0.6"/>
+
+                <!-- Bottom Intersection Wedges -->
+                <path id="b-arc-1" fill="#ce93d8" stroke="#7b1fa2" stroke-width="2" opacity="0.6"/>
+                <path id="b-arc-2" fill="#fff59d" stroke="#f57f17" stroke-width="2" opacity="0.6"/>
+                <path id="b-arc-3" fill="#ce93d8" stroke="#7b1fa2" stroke-width="2" opacity="0.6"/>
+                <path id="b-arc-4" fill="#fff59d" stroke="#f57f17" stroke-width="2" opacity="0.6"/>
+
+                <!-- Parallel Lines -->
+                <line x1="50" y1="120" x2="450" y2="120" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
+                <line x1="50" y1="280" x2="450" y2="280" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
+
+                <!-- Transversal Line -->
+                <line id="s1-trans" stroke="#333" stroke-width="6" stroke-linecap="round"/>
+
+                <!-- Labels Top -->
+                <text id="lbl-t1" font-weight="bold" fill="#4a148c" font-size="16px" text-anchor="middle" alignment-baseline="middle">1</text>
+                <text id="lbl-t2" font-weight="bold" fill="#e65100" font-size="16px" text-anchor="middle" alignment-baseline="middle">2</text>
+                <text id="lbl-t3" font-weight="bold" fill="#4a148c" font-size="16px" text-anchor="middle" alignment-baseline="middle">3</text>
+                <text id="lbl-t4" font-weight="bold" fill="#e65100" font-size="16px" text-anchor="middle" alignment-baseline="middle">4</text>
+
+                <!-- Labels Bottom -->
+                <text id="lbl-b1" font-weight="bold" fill="#4a148c" font-size="16px" text-anchor="middle" alignment-baseline="middle">5</text>
+                <text id="lbl-b2" font-weight="bold" fill="#e65100" font-size="16px" text-anchor="middle" alignment-baseline="middle">6</text>
+                <text id="lbl-b3" font-weight="bold" fill="#4a148c" font-size="16px" text-anchor="middle" alignment-baseline="middle">7</text>
+                <text id="lbl-b4" font-weight="bold" fill="#e65100" font-size="16px" text-anchor="middle" alignment-baseline="middle">8</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #9c27b0; background: #fff;">
+                    <span style="color: #7b1fa2; font-size: 1.1em; display: block; margin-bottom: 5px;">Group A (Purple)</span>
+                    <span id="trans-math-1" class="val-num" style="color: #4a148c; font-size: 1.5em;">Angles 1, 3, 5, 7 = 60°</span>
+                </div>
+                <div class="dash-card" style="border-color: #fbc02d; background: #fff;">
+                    <span style="color: #f57f17; font-size: 1.1em; display: block; margin-bottom: 5px;">Group B (Yellow)</span>
+                    <span id="trans-math-2" class="val-num" style="color: #e65100; font-size: 1.5em;">Angles 2, 4, 6, 8 = 120°</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE PARALLEL TEST -->
+    <div class="section-box">
+        <h2 style="color: #00897b; text-align: center; margin-top: 0;">✅ 2. The Parallel Line Test</h2>
+        <p style="text-align: center; color: #666;">We know that if lines are parallel, Alternate Interior Angles are equal. But this works in reverse too! Tilt the bottom line. The very moment the two interior angles match, the lines become perfectly parallel.</p>
+
+        <div class="interactive-container" style="background: #e0f2f1; border-color: #00897b;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #00695c; background: #fff; width: 80%;">
+                    <label style="color: #00695c; font-weight: bold; font-size: 1.2em;">Tilt the Bottom Line</label>
+                    <input type="range" id="s-tilt" min="-20" max="20" value="-15">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
+                <!-- Arcs for Alternate Interior -->
+                <path id="alt-top-arc" fill="rgba(25, 118, 210, 0.4)" stroke="#1976d2" stroke-width="2"/>
+                <path id="alt-bot-arc" fill="rgba(211, 47, 47, 0.4)" stroke="#d32f2f" stroke-width="2"/>
+
+                <!-- Fixed Top Line -->
+                <line x1="50" y1="80" x2="450" y2="80" stroke="#333" stroke-width="6" stroke-linecap="round"/>
+                
+                <!-- Fixed Transversal -->
+                <line id="s2-trans" stroke="#7b1fa2" stroke-width="4" stroke-linecap="round"/>
+
+                <!-- Tilting Bottom Line -->
+                <line id="s2-bot" stroke="#00897b" stroke-width="6" stroke-linecap="round"/>
+
+                <!-- Angle Labels -->
+                <text id="lbl-alt-top" font-weight="bold" fill="#1976d2" font-size="18px" text-anchor="middle" alignment-baseline="middle">50°</text>
+                <text id="lbl-alt-bot" font-weight="bold" fill="#d32f2f" font-size="18px" text-anchor="middle" alignment-baseline="middle">65°</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00897b; background: #fff; flex-basis: 100%;">
+                    <span id="tilt-status" class="val-num" style="color: #d32f2f; font-size: 1.8em;">Angles do not match. Lines will intersect!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: CO-INTERIOR ANGLES -->
+    <div class="section-box">
+        <h2 style="color: #d81b60; text-align: center; margin-top: 0;">🤝 3. The Co-Interior Sum</h2>
+        <p style="text-align: center; color: #666;">Angles on the <strong>same side</strong> of the transversal (between the parallel lines) are called Co-Interior or Consecutive Interior angles. Move the transversal and watch how they always work together to reach exactly 180 degrees.</p>
+
+        <div class="interactive-container" style="background: #fce4ec; border-color: #d81b60;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #c2185b; background: #f8bbd0; width: 80%;">
+                    <label style="color: #880e4f; font-weight: bold; font-size: 1.2em;">Adjust Transversal Angle</label>
+                    <input type="range" id="s-coint" min="40" max="140" value="70">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
+                <path id="coint-arc-top" fill="rgba(245, 124, 0, 0.4)" stroke="#e65100" stroke-width="2"/>
+                <path id="coint-arc-bot" fill="rgba(123, 31, 162, 0.4)" stroke="#7b1fa2" stroke-width="2"/>
+
+                <line x1="50" y1="100" x2="450" y2="100" stroke="#333" stroke-width="6"/>
+                <line x1="50" y1="220" x2="450" y2="220" stroke="#333" stroke-width="6"/>
+
+                <line id="s3-trans" stroke="#880e4f" stroke-width="5"/>
+
+                <text id="lbl-coint-top" font-weight="bold" fill="#e65100" font-size="18px" text-anchor="middle" alignment-baseline="middle">110°</text>
+                <text id="lbl-coint-bot" font-weight="bold" fill="#7b1fa2" font-size="18px" text-anchor="middle" alignment-baseline="middle">70°</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #d81b60; background: #fff; flex-basis: 100%;">
+                    <span style="color: #c2185b; font-size: 1.2em; display: block; margin-bottom: 5px;">Co-Interior Angle Sum</span>
+                    <span id="coint-math" class="val-num" style="color: #880e4f; font-size: 2.2em;">110° + 70° = 180°</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: If two lines are parallel and a transversal creates a corresponding angle of 55 degrees, what is the measurement of the alternate interior angle?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Step 1:</strong> Corresponding angles are equal. So the angle directly "sliding down" the transversal is also 55 degrees.<br>
+                <strong>Step 2:</strong> Alternate interior angles are vertically opposite to corresponding angles, making them equal as well.<br>
+                <strong>Final Answer: 55 degrees.</strong> In parallel lines, all acute angles created by the transversal are identical!
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: If interior angles on the same side of a transversal sum to 178 degrees, what does that tell us about the two lines?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>They are NOT parallel!</strong><br><br>
+                Because 178 degrees is less than 180 degrees, Euclid's 5th Postulate guarantees that if you extend those two lines, they will eventually crash into each other on that exact side of the transversal.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic6_2.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter6.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic6_4.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        // Core Mathematical Functions for explicit Cartesian Drawing
+        function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
+            let angleInRadians = (angleInDegrees) * Math.PI / 180.0;
+            return {
+                x: centerX + (radius * Math.cos(angleInRadians)),
+                y: centerY - (radius * Math.sin(angleInRadians)) // SVG Y is inverted
+            };
+        }
+        
+        function getWedgePath(cx, cy, r, startAngle, endAngle) {
+            // Ensure proper angular sweep direction
+            while (endAngle <= startAngle) endAngle += 360;
+            let start = polarToCartesian(cx, cy, r, startAngle);
+            let end = polarToCartesian(cx, cy, r, endAngle);
+            let largeArcFlag = Math.abs(endAngle - startAngle) > 180 ? "1" : "0";
+            return `M ${cx} ${cy} L ${start.x} ${start.y} A ${r} ${r} 0 ${largeArcFlag} 0 ${end.x} ${end.y} Z`;
+        }
+
+        // --- 1. TRANSVERSAL EXPLORER LOGIC ---
+        const sTrans = document.getElementById('s-trans');
+
+        function updateTransversal() {
+            let ang = parseInt(sTrans.value); 
+            let sup = 180 - ang;
+            
+            // Calculate precise intersection points
+            let cxTop = 250 + (200 - 120) / Math.tan(ang * Math.PI / 180);
+            let cxBot = 250 + (200 - 280) / Math.tan(ang * Math.PI / 180);
+
+            let cyTop = 120;
+            let cyBot = 280;
+
+            // Draw Transversal Line
+            let t1 = polarToCartesian(250, 200, 300, ang);
+            let t2 = polarToCartesian(250, 200, 300, ang + 180);
+            document.getElementById('s1-trans').setAttribute('x1', t1.x);
+            document.getElementById('s1-trans').setAttribute('y1', t1.y);
+            document.getElementById('s1-trans').setAttribute('x2', t2.x);
+            document.getElementById('s1-trans').setAttribute('y2', t2.y);
+
+            // Draw Wedges Top
+            document.getElementById('t-arc-1').setAttribute('d', getWedgePath(cxTop, cyTop, 40, 0, ang)); 
+            document.getElementById('t-arc-2').setAttribute('d', getWedgePath(cxTop, cyTop, 40, ang, 180)); 
+            document.getElementById('t-arc-3').setAttribute('d', getWedgePath(cxTop, cyTop, 40, 180, 180 + ang)); 
+            document.getElementById('t-arc-4').setAttribute('d', getWedgePath(cxTop, cyTop, 40, 180 + ang, 360));
+
+            // Draw Wedges Bottom
+            document.getElementById('b-arc-1').setAttribute('d', getWedgePath(cxBot, cyBot, 40, 0, ang)); 
+            document.getElementById('b-arc-2').setAttribute('d', getWedgePath(cxBot, cyBot, 40, ang, 180)); 
+            document.getElementById('b-arc-3').setAttribute('d', getWedgePath(cxBot, cyBot, 40, 180, 180 + ang)); 
+            document.getElementById('b-arc-4').setAttribute('d', getWedgePath(cxBot, cyBot, 40, 180 + ang, 360)); 
+
+            // Position Labels Top
+            let pT1 = polarToCartesian(cxTop, cyTop, 60, ang/2);
+            let pT2 = polarToCartesian(cxTop, cyTop, 60, ang + sup/2);
+            let pT3 = polarToCartesian(cxTop, cyTop, 60, 180 + ang/2);
+            let pT4 = polarToCartesian(cxTop, cyTop, 60, 180 + ang + sup/2);
+
+            document.getElementById('lbl-t1').setAttribute('x', pT1.x); document.getElementById('lbl-t1').setAttribute('y', pT1.y);
+            document.getElementById('lbl-t2').setAttribute('x', pT2.x); document.getElementById('lbl-t2').setAttribute('y', pT2.y);
+            document.getElementById('lbl-t3').setAttribute('x', pT3.x); document.getElementById('lbl-t3').setAttribute('y', pT3.y);
+            document.getElementById('lbl-t4').setAttribute('x', pT4.x); document.getElementById('lbl-t4').setAttribute('y', pT4.y);
+
+            // Position Labels Bottom
+            let pB1 = polarToCartesian(cxBot, cyBot, 60, ang/2);
+            let pB2 = polarToCartesian(cxBot, cyBot, 60, ang + sup/2);
+            let pB3 = polarToCartesian(cxBot, cyBot, 60, 180 + ang/2);
+            let pB4 = polarToCartesian(cxBot, cyBot, 60, 180 + ang + sup/2);
+
+            document.getElementById('lbl-b1').setAttribute('x', pB1.x); document.getElementById('lbl-b1').setAttribute('y', pB1.y);
+            document.getElementById('lbl-b2').setAttribute('x', pB2.x); document.getElementById('lbl-b2').setAttribute('y', pB2.y);
+            document.getElementById('lbl-b3').setAttribute('x', pB3.x); document.getElementById('lbl-b3').setAttribute('y', pB3.y);
+            document.getElementById('lbl-b4').setAttribute('x', pB4.x); document.getElementById('lbl-b4').setAttribute('y', pB4.y);
+
+            document.getElementById('trans-math-1').textContent = `Angles 1, 3, 5, 7 = ${ang}°`;
+            document.getElementById('trans-math-2').textContent = `Angles 2, 4, 6, 8 = ${sup}°`;
+        }
+
+        sTrans.addEventListener('input', updateTransversal);
+        updateTransversal();
+
+
+        // --- 2. THE PARALLEL TEST LOGIC ---
+        const sTilt = document.getElementById('s-tilt');
+
+        function updateTilt() {
+            let tilt = parseInt(sTilt.value); 
+            
+            // Fixed Transversal Angle = 130 degrees (points Up-Left to Down-Right)
+            let transAng = 130;
+            let cxTop = 250 + (160 - 80) / Math.tan(transAng * Math.PI / 180);
+            let cxBot = 250 + (160 - 240) / Math.tan(transAng * Math.PI / 180);
+
+            // Draw Transversal
+            let t1 = polarToCartesian(250, 160, 300, transAng);
+            let t2 = polarToCartesian(250, 160, 300, transAng + 180);
+            document.getElementById('s2-trans').setAttribute('x1', t1.x);
+            document.getElementById('s2-trans').setAttribute('y1', t1.y);
+            document.getElementById('s2-trans').setAttribute('x2', t2.x);
+            document.getElementById('s2-trans').setAttribute('y2', t2.y);
+            
+            // Draw Tilted Bottom Line
+            let b1 = polarToCartesian(cxBot, 240, 300, tilt);
+            let b2 = polarToCartesian(cxBot, 240, 300, tilt + 180);
+            document.getElementById('s2-bot').setAttribute('x1', b1.x);
+            document.getElementById('s2-bot').setAttribute('y1', b1.y);
+            document.getElementById('s2-bot').setAttribute('x2', b2.x);
+            document.getElementById('s2-bot').setAttribute('y2', b2.y);
+
+            // Draw Wedges
+            document.getElementById('alt-top-arc').setAttribute('d', getWedgePath(cxTop, 80, 45, 310, 360));
+            document.getElementById('alt-bot-arc').setAttribute('d', getWedgePath(cxBot, 240, 45, 130, 180 + tilt));
+
+            // Position Labels
+            let pTop = polarToCartesian(cxTop, 80, 65, 335);
+            document.getElementById('lbl-alt-top').setAttribute('x', pTop.x);
+            document.getElementById('lbl-alt-top').setAttribute('y', pTop.y);
+            document.getElementById('lbl-alt-top').textContent = `50°`;
+
+            let botAng = 50 + tilt;
+            let pBot = polarToCartesian(cxBot, 240, 65, 155 + tilt/2);
+            document.getElementById('lbl-alt-bot').setAttribute('x', pBot.x);
+            document.getElementById('lbl-alt-bot').setAttribute('y', pBot.y);
+            document.getElementById('lbl-alt-bot').textContent = `${botAng}°`;
+
+            let status = document.getElementById('tilt-status');
+            if (tilt === 0) {
+                status.textContent = "✅ Angles Match (50° = 50°). Lines are Parallel!";
+                status.style.color = "#2e7d32";
+            } else {
+                status.textContent = `❌ Angles do not match. Lines will intersect!`;
+                status.style.color = "#d32f2f";
+            }
+        }
+
+        sTilt.addEventListener('input', updateTilt);
+        updateTilt();
+
+
+        // --- 3. CO-INTERIOR ANGLES LOGIC ---
+        const sCoint = document.getElementById('s-coint');
+
+        function updateCoint() {
+            let ang = parseInt(sCoint.value);
+            let sup = 180 - ang;
+            
+            let cxTop = 250 + (160 - 100) / Math.tan(ang * Math.PI / 180);
+            let cxBot = 250 + (160 - 220) / Math.tan(ang * Math.PI / 180);
+
+            // Draw Transversal
+            let t1 = polarToCartesian(250, 160, 300, ang);
+            let t2 = polarToCartesian(250, 160, 300, ang + 180);
+            document.getElementById('s3-trans').setAttribute('x1', t1.x);
+            document.getElementById('s3-trans').setAttribute('y1', t1.y);
+            document.getElementById('s3-trans').setAttribute('x2', t2.x);
+            document.getElementById('s3-trans').setAttribute('y2', t2.y);
+
+            // Draw Wedges
+            document.getElementById('coint-arc-top').setAttribute('d', getWedgePath(cxTop, 100, 45, 180 + ang, 360));
+            document.getElementById('coint-arc-bot').setAttribute('d', getWedgePath(cxBot, 220, 45, 0, ang));
+
+            // Position Labels
+            let pT = polarToCartesian(cxTop, 100, 65, (180 + ang + 360) / 2);
+            document.getElementById('lbl-coint-top').setAttribute('x', pT.x);
+            document.getElementById('lbl-coint-top').setAttribute('y', pT.y);
+            document.getElementById('lbl-coint-top').textContent = `${180 - ang}°`;
+
+            let pB = polarToCartesian(cxBot, 220, 65, ang / 2);
+            document.getElementById('lbl-coint-bot').setAttribute('x', pB.x);
+            document.getElementById('lbl-coint-bot').setAttribute('y', pB.y);
+            document.getElementById('lbl-coint-bot').textContent = `${ang}°`;
+
+            document.getElementById('coint-math').textContent = `${180 - ang}° + ${ang}° = 180°`;
+        }
+
+        sCoint.addEventListener('input', updateCoint);
+        updateCoint();
+
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = id === 'ans1' ? 'Show Answer Step-by-Step' : 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

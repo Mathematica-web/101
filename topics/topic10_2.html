@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heron's Formula & Equilateral Triangles - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #1a237e; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #3f51b5; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); background: #303f9f; }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c5cae9; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #3f51b5; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #3f51b5; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #9fa8da; font-size: 0.95em; min-width: 140px; flex: 1; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+        
+        .proof-box { background: #e8eaf6; padding: 20px; border-radius: 10px; border-left: 6px solid #3f51b5; margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
+        .proof-box h3 { color: #1a237e; margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8eaf6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #3f51b5; }
+        .qa-question { font-weight: bold; color: #1a237e; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #3f51b5; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); background: #303f9f; }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #3f51b5; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #1a237e; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>📐 Heron's Formula & Equilateral Triangles</h1>
+    <p class="subtitle">Calculate the area using ONLY the side lengths!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>Area Without the Height</h2>
+        <p>In the real world, finding the exact perpendicular height of a triangular field is often impossible. Hero of Alexandria (Heron) discovered a brilliant formula to find the area using only the lengths of its three boundaries.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Method</th>
+                <th>The Formula</th>
+            </tr>
+            <tr>
+                <td><strong>Semi-Perimeter (s)</strong></td>
+                <td>First, find half the perimeter: <br><strong>s = (a + b + c) / 2</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Heron's Formula</strong></td>
+                <td><strong>Area = √[ s * (s - a) * (s - b) * (s - c) ]</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Equilateral Triangle Shortcut</strong></td>
+                <td>If all 3 sides are identical (a), the formula simplifies to:<br><strong>Area = (√3) / 4 * a²</strong></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: HERON's CALCULATOR -->
+    <div class="section-box">
+        <h2 style="color: #ff8f00; text-align: center; margin-top: 0;">🧮 1. Heron's Formula Engine</h2>
+        <p style="text-align: center; color: #666;">Adjust the three side lengths. Watch the engine automatically calculate the Semi-Perimeter (s) and plug it into Heron's Formula to find the area. Notice what happens if you try to make a side too long!</p>
+
+        <div class="interactive-container" style="background: #fff8e1; border-color: #ffb300;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #d32f2f; background: #ffebee;">
+                    <label style="color: #b71c1c; font-weight: bold;">Side a (Red): <span id="val-a">150</span> units</label>
+                    <input type="range" id="s-side-a" min="50" max="300" value="150">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Side b (Blue): <span id="val-b">200</span> units</label>
+                    <input type="range" id="s-side-b" min="50" max="300" value="200">
+                </div>
+                <div class="slider-group" style="border-color: #388e3c; background: #e8f5e9;">
+                    <label style="color: #1b5e20; font-weight: bold;">Side c (Green): <span id="val-c">250</span> units</label>
+                    <input type="range" id="s-side-c" min="50" max="300" value="250">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
+                <polygon id="heron-poly" fill="rgba(255, 179, 0, 0.2)" stroke="none"/>
+                
+                <line id="h-side-c" stroke="#388e3c" stroke-width="6" stroke-linecap="round"/>
+                <line id="h-side-a" stroke="#d32f2f" stroke-width="6" stroke-linecap="round"/>
+                <line id="h-side-b" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
+
+                <circle id="h-dot-1" r="6" fill="#333"/>
+                <circle id="h-dot-2" r="6" fill="#333"/>
+                <circle id="h-dot-3" r="6" fill="#333"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #ff8f00; background: #fff; flex-basis: 100%;">
+                    <span id="heron-s" style="color: #e65100; font-size: 1.2em; display: block; margin-bottom: 5px;">s = (150 + 200 + 250) / 2 = 300</span>
+                    <span id="heron-area" class="val-num" style="color: #333; font-size: 1.8em;">Area = √(300 * 150 * 100 * 50) = 15000 sq units</span>
+                </div>
+            </div>
+
+            <div class="proof-box" style="border-left-color: #ff8f00; background: #fff8e1;">
+                <h3 style="color: #e65100;">💡 Why does this work? (The Proof)</h3>
+                <p>Heron's formula is actually derived from the standard <strong>1/2 * base * height</strong> formula using the Pythagorean theorem! By dropping an imaginary altitude h to base c, dividing the base into x and c-x, you get two right triangles. By solving a² - x² = h² = b² - (c-x)², mathematicians isolated h strictly in terms of a, b, and c. When they substituted this massive algebraic block back into the standard area formula and factored it using the "difference of squares", the elegant Semi-Perimeter (s) formula emerged!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: EQUILATERAL TRIANGLE SCALER -->
+    <div class="section-box">
+        <h2 style="color: #00897b; text-align: center; margin-top: 0;">🔼 2. Equilateral Area Scaler</h2>
+        <p style="text-align: center; color: #666;">When all three sides are equal, we don't need the heavy Heron's formula. We can use a direct algebraic shortcut!</p>
+
+        <div class="interactive-container" style="background: #e0f2f1; border-color: #00897b;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #00695c; background: #fff; width: 80%;">
+                    <label style="color: #004d40; font-weight: bold; font-size: 1.2em;">Side Length (a): <span id="val-eq-a">200</span> units</label>
+                    <input type="range" id="s-eq-a" min="80" max="300" value="200">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
+                <polygon id="eq-poly" fill="rgba(0, 137, 123, 0.2)" stroke="#00897b" stroke-width="4"/>
+                
+                <!-- Dropping Height for Visual Proof -->
+                <line id="eq-height" stroke="#d32f2f" stroke-width="3" stroke-dasharray="5,5"/>
+                
+                <path id="eq-90" fill="none" stroke="#d32f2f" stroke-width="2"/>
+                <text id="eq-h-lbl" font-weight="bold" fill="#d32f2f" font-size="14px">h = a * (√3) / 2</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #00897b; background: #fff; flex-basis: 100%;">
+                    <span style="color: #00695c; font-size: 1.2em; display: block; margin-bottom: 5px;">Equilateral Shortcut</span>
+                    <span id="eq-math" class="val-num" style="color: #004d40; font-size: 1.8em;">Area = (√3) / 4 * 200² = 17321 sq units</span>
+                </div>
+            </div>
+
+            <div class="proof-box" style="border-left-color: #00897b; background: #e0f2f1;">
+                <h3 style="color: #00695c;">💡 Why does this work? (The Proof)</h3>
+                <p>In an equilateral triangle, dropping an altitude perfectly bisects the base into two segments of a/2. This creates a right-angled triangle. Using Pythagoras: h² + (a/2)² = a². Solving for h gives us h = a * (√3) / 2. If we plug this specific height into the standard area formula (Area = 1/2 * base * height), we get: Area = 1/2 * a * (a * (√3) / 2), which cleanly multiplies out to <strong>(√3) / 4 * a²</strong>!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: Find the semi-perimeter (s) of a triangle with sides measuring 6 cm, 8 cm, and 10 cm.</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>12 cm.</strong><br><br>
+                The perimeter is 6 + 8 + 10 = 24 cm. The semi-perimeter is exactly half of that, which is 24 / 2 = 12 cm. (Fun fact: Heron's formula will perfectly yield an area of 24 sq cm for this right-angled triangle).
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: If the side length of an equilateral triangle is doubled, what happens to its area?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>The area becomes four times larger!</strong><br><br>
+                Because the side length (a) is squared in the formula <strong>(√3) / 4 * a²</strong>, doubling 'a' results in a factor of (2)², which multiplies the total area by 4.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic10_1.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter10.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic10_3.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. HERON'S FORMULA LOGIC ---
+        const sA = document.getElementById('s-side-a');
+        const sB = document.getElementById('s-side-b');
+        const sC = document.getElementById('s-side-c');
+
+        function updateHeron() {
+            let a = parseFloat(sA.value);
+            let b = parseFloat(sB.value);
+            let c = parseFloat(sC.value);
+
+            document.getElementById('val-a').textContent = a;
+            document.getElementById('val-b').textContent = b;
+            document.getElementById('val-c').textContent = c;
+
+            let sLine = document.getElementById('heron-s');
+            let aLine = document.getElementById('heron-area');
+
+            // Triangle Inequality Check
+            if (a + b > c && a + c > b && b + c > a) {
+                let s = (a + b + c) / 2;
+                let areaSq = s * (s - a) * (s - b) * (s - c);
+                let area = Math.sqrt(areaSq);
+
+                // Math texts
+                sLine.textContent = `s = (${a} + ${b} + ${c}) / 2 = ${s}`;
+                aLine.innerHTML = `Area = √(${s} * ${s-a} * ${s-b} * ${s-c}) = <strong>${Math.round(area)}</strong> sq units`;
+
+                // Calculate coordinates for SVG
+                // Base c lies on x-axis from (0,0) to (c,0)
+                let x = (c*c + b*b - a*a) / (2 * c);
+                let y = Math.sqrt(b*b - x*x);
+
+                // Center drawing inside 500x350 box
+                // Triangle bounding box:
+                let minX = Math.min(0, c, x);
+                let maxX = Math.max(0, c, x);
+                let w = maxX - minX;
+                let h = y;
+                
+                let offsetX = (500 - w) / 2 - minX;
+                let offsetY = (350 + h) / 2; // Y goes down
+
+                let pt1 = {x: 0 + offsetX, y: offsetY}; // Left base
+                let pt2 = {x: c + offsetX, y: offsetY}; // Right base
+                let pt3 = {x: x + offsetX, y: offsetY - y}; // Top vertex
+
+                document.getElementById('heron-poly').setAttribute('points', `${pt1.x},${pt1.y} ${pt2.x},${pt2.y} ${pt3.x},${pt3.y}`);
+                document.getElementById('heron-poly').style.display = 'block';
+
+                document.getElementById('h-side-c').setAttribute('x1', pt1.x); document.getElementById('h-side-c').setAttribute('y1', pt1.y);
+                document.getElementById('h-side-c').setAttribute('x2', pt2.x); document.getElementById('h-side-c').setAttribute('y2', pt2.y);
+                document.getElementById('h-side-c').style.display = 'block';
+
+                document.getElementById('h-side-a').setAttribute('x1', pt2.x); document.getElementById('h-side-a').setAttribute('y1', pt2.y);
+                document.getElementById('h-side-a').setAttribute('x2', pt3.x); document.getElementById('h-side-a').setAttribute('y2', pt3.y);
+                document.getElementById('h-side-a').style.display = 'block';
+
+                document.getElementById('h-side-b').setAttribute('x1', pt3.x); document.getElementById('h-side-b').setAttribute('y1', pt3.y);
+                document.getElementById('h-side-b').setAttribute('x2', pt1.x); document.getElementById('h-side-b').setAttribute('y2', pt1.y);
+                document.getElementById('h-side-b').style.display = 'block';
+
+                document.getElementById('h-dot-1').setAttribute('cx', pt1.x); document.getElementById('h-dot-1').setAttribute('cy', pt1.y);
+                document.getElementById('h-dot-2').setAttribute('cx', pt2.x); document.getElementById('h-dot-2').setAttribute('cy', pt2.y);
+                document.getElementById('h-dot-3').setAttribute('cx', pt3.x); document.getElementById('h-dot-3').setAttribute('cy', pt3.y);
+
+                sLine.style.color = "#e65100";
+            } else {
+                sLine.textContent = "❌ Invalid Triangle!";
+                sLine.style.color = "#d32f2f";
+                aLine.innerHTML = "The sum of any two sides must be strictly greater than the third side.";
+                
+                document.getElementById('heron-poly').style.display = 'none';
+                document.getElementById('h-side-c').style.display = 'none';
+                document.getElementById('h-side-a').style.display = 'none';
+                document.getElementById('h-side-b').style.display = 'none';
+            }
+        }
+        
+        sA.addEventListener('input', updateHeron);
+        sB.addEventListener('input', updateHeron);
+        sC.addEventListener('input', updateHeron);
+        updateHeron();
+
+        // --- 2. EQUILATERAL SCALER LOGIC ---
+        const sEqA = document.getElementById('s-eq-a');
+
+        function updateEq() {
+            let a = parseInt(sEqA.value);
+            document.getElementById('val-eq-a').textContent = a;
+
+            let area = (Math.sqrt(3) / 4) * a * a;
+            document.getElementById('eq-math').innerHTML = `Area = (√3) / 4 * ${a}² = <strong>${Math.round(area)}</strong> sq units`;
+
+            let h = (Math.sqrt(3) / 2) * a;
+
+            let cx = 250;
+            let by = 280; // Base y
+            
+            let p1x = cx - a/2, p1y = by;
+            let p2x = cx + a/2, p2y = by;
+            let p3x = cx, p3y = by - h;
+
+            document.getElementById('eq-poly').setAttribute('points', `${p1x},${p1y} ${p2x},${p2y} ${p3x},${p3y}`);
+            
+            document.getElementById('eq-height').setAttribute('x1', p3x); document.getElementById('eq-height').setAttribute('y1', p3y);
+            document.getElementById('eq-height').setAttribute('x2', cx); document.getElementById('eq-height').setAttribute('y2', by);
+
+            document.getElementById('eq-90').setAttribute('d', `M ${cx} ${by-10} L ${cx+10} ${by-10} L ${cx+10} ${by}`);
+
+            document.getElementById('eq-h-lbl').setAttribute('x', cx + 15);
+            document.getElementById('eq-h-lbl').setAttribute('y', by - h/2 + 5);
+        }
+        
+        sEqA.addEventListener('input', updateEq);
+        updateEq();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

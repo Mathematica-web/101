@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Probability Applications - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #4a148c; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #ab47bc; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #e1bee7; text-align: left; }
+        .formula-table th { background: #8e24aa; color: white; font-size: 1.1em; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #ab47bc; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 600px; height: 300px; background: white; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #ce93d8; font-size: 0.95em; }
+        input[type=range] { width: 150px; cursor: pointer; display: block; margin-top: 5px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; }
+        .val-num { font-size: 1.5em; display: block; margin-top: 5px; }
+
+        /* BUTTONS */
+        .btn-group { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .action-btn { padding: 12px 25px; border-radius: 25px; border: none; background: #8e24aa; color: white; font-weight: bold; font-size: 1.1em; cursor: pointer; transition: transform 0.2s, background 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .action-btn:hover { transform: scale(1.05); background: #6a1b9a; }
+        .action-btn.btn-reset { background: #ff5252; }
+        .action-btn.btn-reset:hover { background: #d32f2f; }
+
+        /* CARD STYLES */
+        .card-stage { display: flex; justify-content: center; margin: 20px 0; height: 160px; align-items: center; }
+        .playing-card { width: 100px; height: 140px; background: white; border: 2px solid #ccc; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 2.5em; font-weight: bold; position: relative; transition: transform 0.2s; }
+        .playing-card .top-left { position: absolute; top: 5px; left: 8px; font-size: 0.4em; }
+        .playing-card .bottom-right { position: absolute; bottom: 5px; right: 8px; font-size: 0.4em; transform: rotate(180deg); }
+        .card-red { color: #d32f2f; }
+        .card-black { color: #212121; }
+        .drawing { animation: drawAnim 0.3s ease-out; }
+        @keyframes drawAnim { 0% { transform: translateY(-50px) scale(0.8); opacity: 0; } 100% { transform: translateY(0) scale(1); opacity: 1; } }
+
+        /* Q&A SECTION */
+        .qa-box { background: #f3e5f5; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #8e24aa; }
+        .qa-question { font-weight: bold; color: #4a148c; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; }
+        .show-answer-btn { background: #8e24aa; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #ab47bc; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+        .chapter-btn { background: #ff6b6b; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter12.html" class="back-btn">⬅️ Back to Chapter</a>
+
+    <h1>🎯 Probability Applications</h1>
+    <p class="subtitle">Solving real-world scenarios: Cards, Factories, and Predictions!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>Applying Probability to the Real World</h2>
+        <p>Theoretical probability provides the baseline expectation, but applying it requires understanding the complete "Sample Space" (all possible outcomes). Here are standard sample spaces you must memorize:</p>
+        <table class="formula-table">
+            <tr>
+                <th>Scenario</th>
+                <th>Sample Space details</th>
+            </tr>
+            <tr>
+                <td><strong>Deck of Cards</strong></td>
+                <td>52 total cards. 26 Red (Hearts ♥, Diamonds ♦), 26 Black (Clubs ♣, Spades ♠).<br>12 Face Cards total (Jacks, Queens, Kings of each suit).</td>
+            </tr>
+            <tr>
+                <td><strong>Two Coins Tossed</strong></td>
+                <td>4 possible outcomes: (HH, HT, TH, TT).</td>
+            </tr>
+            <tr>
+                <td><strong>Two Dice Rolled</strong></td>
+                <td>36 possible outcomes (6 × 6 matrix of sums and pairs).</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE CARD DRAWER -->
+    <div class="section-box">
+        <h2 style="color: #d32f2f; text-align: center; margin-top: 0;">🃏 1. The Deck of Cards Simulator</h2>
+        <p style="text-align: center; color: #666;">Draw cards randomly from a massive combined deck! The theoretical probability of drawing a Red Card is exactly <strong>1/2</strong> (26 out of 52). The probability of drawing a Face Card (J, Q, K) is <strong>3/13</strong> (12 out of 52). Let's see your experimental results!</p>
+
+        <div class="interactive-container" style="background: #ffebee; border-color: #d32f2f;">
+            <div class="card-stage">
+                <div class="playing-card card-black" id="card-ui">
+                    <span class="top-left">♠<br>A</span>
+                    <span class="center-suit">♠</span>
+                    <span class="bottom-right">♠<br>A</span>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="action-btn" onclick="drawCard(1)" style="background: #d32f2f;">Draw 1 Card</button>
+                <button class="action-btn" onclick="drawCard(10)" style="background: #c62828;">Draw 10 Cards</button>
+                <button class="action-btn btn-reset" onclick="resetCards()">Shuffle Deck (Reset)</button>
+            </div>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #333;">
+                    <span style="color: #333;">Total Cards Drawn</span>
+                    <span id="card-total" class="val-num" style="color: #333;">0</span>
+                </div>
+                <div class="dash-card" style="border-color: #d32f2f;">
+                    <span style="color: #b71c1c;">Red Cards (♥/♦)</span>
+                    <span id="card-red-frac" class="val-num" style="color: #d32f2f;">0/0</span>
+                </div>
+                <div class="dash-card" style="border-color: #1976d2;">
+                    <span style="color: #0d47a1;">Face Cards (J,Q,K)</span>
+                    <span id="card-face-frac" class="val-num" style="color: #1976d2;">0/0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: QUALITY CONTROL -->
+    <div class="section-box">
+        <h2 style="color: #00897b; text-align: center; margin-top: 0;">🏭 2. Factory Quality Control</h2>
+        <p style="text-align: center; color: #666;">A factory produces 100 lightbulbs. Set the <strong>Theoretical Defect Rate</strong> (probability of a bulb breaking). Run the inspection to see the <strong>Experimental Probability</strong> of drawing a defective bulb from this specific batch!</p>
+
+        <div class="interactive-container" style="background: #e0f2f1; border-color: #009688;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #00897b;">
+                    <label style="color: #00695c; font-weight: bold;">Theoretical Defect Rate: <span id="val-defect-rate">5</span>%</label>
+                    <input type="range" id="s-defect-rate" min="1" max="25" value="5" oninput="document.getElementById('val-defect-rate').innerText = this.value">
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="action-btn" onclick="inspectBatch()" style="background: #00897b;">Inspect 100 New Bulbs</button>
+            </div>
+
+            <!-- SVG Grid for 100 Bulbs -->
+            <svg id="factory-svg" class="svg-canvas" viewBox="0 0 600 250" style="background: #eceff1;">
+                <g id="bulb-grid"></g>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #388e3c; background: #e8f5e9;">
+                    <span style="color: #1b5e20;">Good Bulbs</span>
+                    <span id="qc-good" class="val-num" style="color: #2e7d32;">0/100</span>
+                </div>
+                <div class="dash-card" style="border-color: #d32f2f; background: #ffebee;">
+                    <span style="color: #b71c1c;">Defective Bulbs</span>
+                    <span id="qc-defective" class="val-num" style="color: #d32f2f;">0/100</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: A bag contains 3 red balls and 5 black balls. A ball is drawn at random. What is the probability that the ball drawn is red?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Step 1:</strong> Find the Total Sample Space.<br>
+                Total balls = 3 (Red) + 5 (Black) = 8 total outcomes.<br>
+                <strong>Step 2:</strong> Find the Favorable Outcomes.<br>
+                Favorable outcomes (Red balls) = 3.<br>
+                <strong>Step 3:</strong> Calculate Probability = Favorable / Total.<br>
+                <strong>Final Answer: 3/8</strong>
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: A lot of 20 bulbs contains 4 defective ones. One bulb is drawn at random from the lot. What is the probability that this bulb is defective?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans2">
+                <strong>Step 1:</strong> Total number of outcomes (total bulbs) = 20.<br>
+                <strong>Step 2:</strong> Number of favorable outcomes (defective bulbs) = 4.<br>
+                <strong>Step 3:</strong> Calculate Probability = 4 / 20.<br>
+                <strong>Step 4:</strong> Simplify the fraction: 4/20 = 1/5.<br>
+                <strong>Final Answer: 1/5 (or 20%)</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- COURSE COMPLETION BANNER -->
+    <div class="section-box" style="background: linear-gradient(135deg, #fce4ec, #f8bbd0); border: 4px solid #e91e63; text-align: center; box-shadow: 0 10px 30px rgba(233,30,99,0.3);">
+        <h1 style="color: #880e4f; margin-top:0; font-size: 2.8em;">🎉 COURSE COMPLETE! 🎉</h1>
+        <p style="font-size: 1.3em; color: #ad1457;">You have successfully completed <strong>Mathematics 101</strong>, mastering everything from Triangles and Circles to 3D Solids and Probability!</p>
+        <p style="font-weight: bold; margin-top: 20px;">
+            <a href="../index.html" style="background: #e91e63; color: white; padding: 15px 30px; border-radius: 30px; text-decoration: none; font-size: 1.2em; display: inline-block; transition: 0.3s;">Return to Main Index 🏠</a>
+        </p>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic12_3.html" class="nav-btn chapter-btn">← Prev Topic</a>
+        <a href="../index.html" class="nav-btn">Course Home ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. CARD DRAWER LOGIC ---
+        const suits = [
+            { icon: '♥', color: 'card-red' },
+            { icon: '♦', color: 'card-red' },
+            { icon: '♣', color: 'card-black' },
+            { icon: '♠', color: 'card-black' }
+        ];
+        const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+        
+        let totalCards = 0;
+        let redCards = 0;
+        let faceCards = 0;
+        const cardUi = document.getElementById('card-ui');
+
+        function drawCard(times) {
+            if(times === 1) {
+                cardUi.classList.remove('drawing');
+                void cardUi.offsetWidth; // trigger reflow
+                cardUi.classList.add('drawing');
+                setTimeout(() => executeDraw(1), 150);
+            } else {
+                executeDraw(times);
+            }
+        }
+
+        function executeDraw(times) {
+            let lastSuit, lastVal;
+            
+            for(let i=0; i<times; i++) {
+                let randomSuit = suits[Math.floor(Math.random() * suits.length)];
+                let randomVal = values[Math.floor(Math.random() * values.length)];
+                
+                if(randomSuit.color === 'card-red') redCards++;
+                if(['J', 'Q', 'K'].includes(randomVal)) faceCards++;
+                totalCards++;
+
+                lastSuit = randomSuit;
+                lastVal = randomVal;
+            }
+
+            // Update UI with the last card drawn
+            cardUi.className = "playing-card " + lastSuit.color;
+            cardUi.innerHTML = `
+                <span class="top-left">${lastSuit.icon}<br>${lastVal}</span>
+                <span class="center-suit">${lastSuit.icon}</span>
+                <span class="bottom-right">${lastSuit.icon}<br>${lastVal}</span>
+            `;
+
+            updateCardDashboard();
+        }
+
+        function resetCards() {
+            totalCards = 0; redCards = 0; faceCards = 0;
+            cardUi.className = "playing-card card-black";
+            cardUi.innerHTML = `
+                <span class="top-left">♠<br>A</span>
+                <span class="center-suit">♠</span>
+                <span class="bottom-right">♠<br>A</span>
+            `;
+            updateCardDashboard();
+        }
+
+        function updateCardDashboard() {
+            document.getElementById('card-total').textContent = totalCards;
+            document.getElementById('card-red-frac').textContent = totalCards > 0 ? `${redCards}/${totalCards}` : "0/0";
+            document.getElementById('card-face-frac').textContent = totalCards > 0 ? `${faceCards}/${totalCards}` : "0/0";
+        }
+
+        // --- 2. QUALITY CONTROL LOGIC ---
+        const defectSlider = document.getElementById('s-defect-rate');
+        const gridContainer = document.getElementById('bulb-grid');
+        
+        // Initialize an empty grid
+        function initGrid() {
+            gridContainer.innerHTML = '';
+            for(let row = 0; row < 5; row++) {
+                for(let col = 0; col < 20; col++) {
+                    let circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                    circle.setAttribute("cx", 25 + col * 29);
+                    circle.setAttribute("cy", 30 + row * 45);
+                    circle.setAttribute("r", 10);
+                    circle.setAttribute("fill", "#cfd8dc"); // empty state
+                    circle.setAttribute("id", `bulb-${row}-${col}`);
+                    gridContainer.appendChild(circle);
+                }
+            }
+        }
+
+        function inspectBatch() {
+            const defectRate = parseInt(defectSlider.value); // percentage 1-25%
+            let defectiveCount = 0;
+            let goodCount = 0;
+
+            for(let row = 0; row < 5; row++) {
+                for(let col = 0; col < 20; col++) {
+                    let bulb = document.getElementById(`bulb-${row}-${col}`);
+                    
+                    // Experimental check against theoretical rate
+                    if(Math.random() * 100 < defectRate) {
+                        defectiveCount++;
+                        bulb.setAttribute("fill", "#f44336"); // Red (Broken)
+                    } else {
+                        goodCount++;
+                        bulb.setAttribute("fill", "#4caf50"); // Green (Good)
+                    }
+                }
+            }
+
+            document.getElementById('qc-good').textContent = `${goodCount}/100`;
+            document.getElementById('qc-defective').textContent = `${defectiveCount}/100`;
+        }
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer Step-by-Step';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+
+        // Boot
+        initGrid();
+
+    </script>
+</body>
+</html>

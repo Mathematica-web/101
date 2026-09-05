@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factorisation - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #1b5e20; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #4caf50; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c8e6c9; text-align: left; font-size: 1.05em; }
+        .formula-table th { background: #4caf50; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #4caf50; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #81c784; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.8em; display: block; margin-top: 5px; font-family: monospace; }
+        
+        /* PROOF BOX */
+        .proof-box { background: #fff; border: 2px solid #81c784; border-radius: 10px; padding: 20px; text-align: center; font-family: 'Times New Roman', serif; font-size: 1.4em; color: #1b5e20; line-height: 1.8; margin-top: 15px; box-shadow: inset 0 3px 5px rgba(0,0,0,0.05); font-style: italic; }
+
+        .math-eq { font-family: 'Times New Roman', serif; font-style: italic; font-size: 1.1em; color: #1b5e20; font-weight: bold; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #4caf50; }
+        .qa-question { font-weight: bold; color: #1b5e20; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #4caf50; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter2.html" class="back-btn">⬅️ Back to Chapter Index</a>
+
+    <h1>✂️ Factorisation of Polynomials</h1>
+    <p class="subtitle">Breaking down complex equations into simple puzzle pieces!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>What is Factorisation?</h2>
+        <p>Factorisation is the exact reverse of multiplication. Instead of expanding a polynomial, we are breaking it apart into its simplest building blocks (factors) so that when you multiply them together, you get the original polynomial back.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Method</th>
+                <th>How it Works</th>
+            </tr>
+            <tr>
+                <td><strong>Splitting the Middle Term</strong></td>
+                <td>Used for quadratics like <em>x² + bx + c</em>. You must find two magic numbers (p and q) that <strong>add up to 'b'</strong> but <strong>multiply to 'c'</strong>.</td>
+            </tr>
+            <tr>
+                <td><strong>Factor Theorem</strong></td>
+                <td>If you can guess a zero of the polynomial (let's call it <em>a</em>) such that p(a) = 0, then <em>(x - a)</em> is guaranteed to be a factor!</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE MIDDLE TERM SPLITTER -->
+    <div class="section-box">
+        <h2 style="color: #1976d2; text-align: center; margin-top: 0;">🪓 1. The Middle Term Splitter</h2>
+        <p style="text-align: center; color: #666;">Adjust the two hidden factors <strong>p</strong> and <strong>q</strong>. Watch how the simulator multiplies them to create the final quadratic polynomial, and generates the exact step-by-step factorization proof!</p>
+
+        <div class="interactive-container" style="background: #e3f2fd; border-color: #1976d2;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #d32f2f; background: #ffebee;">
+                    <label style="color: #b71c1c; font-weight: bold;">Factor 1 (p): <span id="val-p">2</span></label>
+                    <input type="range" id="s-p" min="-5" max="5" value="2">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Factor 2 (q): <span id="val-q">3</span></label>
+                    <input type="range" id="s-q" min="-5" max="5" value="3">
+                </div>
+            </div>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #9c27b0; background: #f3e5f5; flex-basis: 100%;">
+                    <span style="color: #7b1fa2; font-size: 1.1em;">The Target Quadratic Polynomial</span>
+                    <span id="target-poly" class="val-num" style="color: #4a148c; font-family: 'Times New Roman', serif; font-style: italic; font-size: 2.2em;">x² + 5x + 6</span>
+                </div>
+            </div>
+
+            <div class="proof-box" id="factor-proof">
+                <!-- Filled via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE AREA MODEL -->
+    <div class="section-box">
+        <h2 style="color: #f57c00; text-align: center; margin-top: 0;">🖼️ 2. The Area Model Grid</h2>
+        <p style="text-align: center; color: #666;">Algebra isn't just letters—it's geometry! Multiplying two factors like <strong>(x + p)(x + q)</strong> is exactly the same as finding the area of a rectangle. See how the four inner boxes add up to form the quadratic!</p>
+
+        <div class="interactive-container" style="background: #fff3e0; border-color: #f57c00;">
+            <div style="font-size: 1.5em; font-weight: bold; color: #e65100; margin-bottom: 20px; font-family: 'Times New Roman', serif; font-style: italic;" id="area-eq">
+                (x + 2)(x + 3) = x² + 5x + 6
+            </div>
+
+            <svg id="area-svg" class="svg-canvas" viewBox="0 0 500 350">
+                <!-- Background / Borders -->
+                <rect x="100" y="50" width="300" height="250" fill="none" stroke="#333" stroke-width="4"/>
+                <line x1="250" y1="50" x2="250" y2="300" stroke="#333" stroke-width="3"/>
+                <line x1="100" y1="200" x2="400" y2="200" stroke="#333" stroke-width="3"/>
+
+                <!-- Labels Top (Width) -->
+                <text x="175" y="35" font-size="24px" font-weight="bold" fill="#1b5e20" text-anchor="middle">x</text>
+                <text id="lbl-top-p" x="325" y="35" font-size="24px" font-weight="bold" fill="#d32f2f" text-anchor="middle">+ 2</text>
+
+                <!-- Labels Left (Height) -->
+                <text x="75" y="135" font-size="24px" font-weight="bold" fill="#1b5e20" text-anchor="end">x</text>
+                <text id="lbl-left-q" x="75" y="260" font-size="24px" font-weight="bold" fill="#1976d2" text-anchor="end">+ 3</text>
+
+                <!-- Inner Boxes Text -->
+                <!-- Top Left: x * x -->
+                <rect x="100" y="50" width="150" height="150" fill="#c8e6c9" opacity="0.5"/>
+                <text x="175" y="135" font-size="28px" font-family="'Times New Roman', serif" font-style="italic" fill="#1b5e20" text-anchor="middle">x²</text>
+
+                <!-- Top Right: p * x -->
+                <rect x="250" y="50" width="150" height="150" fill="#ffcdd2" opacity="0.5"/>
+                <text id="box-tr" x="325" y="135" font-size="28px" font-family="'Times New Roman', serif" font-style="italic" fill="#c62828" text-anchor="middle">2x</text>
+
+                <!-- Bottom Left: q * x -->
+                <rect x="100" y="200" width="150" height="100" fill="#bbdefb" opacity="0.5"/>
+                <text id="box-bl" x="175" y="260" font-size="28px" font-family="'Times New Roman', serif" font-style="italic" fill="#1565c0" text-anchor="middle">3x</text>
+
+                <!-- Bottom Right: p * q -->
+                <rect x="250" y="200" width="150" height="100" fill="#e1bee7" opacity="0.5"/>
+                <text id="box-br" x="325" y="260" font-size="28px" font-family="'Times New Roman', serif" font-weight="bold" fill="#6a1b9a" text-anchor="middle">6</text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- ADVANCED CONCEPT: NON-LINEAR DIVISORS -->
+    <div class="section-box">
+        <h2 style="color: #6a1b9a; text-align: center; margin-top: 0;">🚀 3. Masterclass: Higher-Degree Factors</h2>
+        <p style="text-align: center; color: #666;">The Factor Theorem is great for checking simple linear factors like <span class="math-eq">(x - 2)</span>. But what happens if you need to check if a massive quadratic like <span class="math-eq">x² - 16x + 27</span> is a factor of an even bigger polynomial like <span class="math-eq">x⁶ - 3x⁴ + 43x - 26</span>?</p>
+
+        <div class="interactive-container" style="background: #f3e5f5; border-color: #9c27b0; text-align: left;">
+            <h3 style="color: #4a148c; margin-top: 0;">Method 1: Polynomial Long Division (The Universal Method)</h3>
+            <p>Because the divisor is a quadratic (degree 2), you cannot simply plug a single number into the polynomial. Instead, you must perform standard algebraic long division.</p>
+            <ul style="color: #4a148c; font-size: 1.05em; line-height: 1.6;">
+                <li><strong>Step 1:</strong> Set up <span class="math-eq">x⁶ - 3x⁴ + 43x - 26</span> inside the division bracket, and <span class="math-eq">x² - 16x + 27</span> on the outside.</li>
+                <li><strong>Step 2:</strong> Divide term by term, subtracting at each level just like regular long division.</li>
+                <li><strong>The Verdict:</strong> If your final remainder at the very bottom is exactly <strong>0</strong>, then the quadratic IS a perfect factor! If there is any <em>x</em> or constant left over, it is NOT a factor.</li>
+            </ul>
+
+            <hr style="border: 1px dashed #ce93d8; margin: 20px 0;">
+
+            <h3 style="color: #4a148c;">Method 2: The Double-Root Shortcut (If Possible)</h3>
+            <p>If you are lucky, you might be able to factorize the quadratic divisor first!</p>
+            <ul style="color: #4a148c; font-size: 1.05em; line-height: 1.6;">
+                <li><strong>Step 1:</strong> Try to split the divisor into two linear terms: <span class="math-eq">(x - a)(x - b)</span>.</li>
+                <li><strong>Step 2:</strong> Use the Factor Theorem twice! Check if <span class="math-eq">P(a) = 0</span> AND <span class="math-eq">P(b) = 0</span>.</li>
+                <li><em>Note: In the case of <span class="math-eq">x² - 16x + 27</span>, the roots are irrational decimals, making Method 2 too messy. You must use Long Division!</em></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: Factorize the quadratic polynomial: x² - 7x + 12.</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Step 1:</strong> Find two numbers that add up to the middle term (-7) and multiply to the constant (12).<br>
+                <strong>Step 2:</strong> Test factors of 12: (-3) and (-4).<br>
+                (-3) + (-4) = -7. (-3) &times; (-4) = 12. Perfect!<br>
+                <strong>Step 3:</strong> Split the middle term: x² - 3x - 4x + 12.<br>
+                <strong>Step 4:</strong> Factor by grouping: x(x - 3) - 4(x - 3).<br>
+                <strong>Final Answer: (x - 3)(x - 4)</strong>
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: If (x - 2) is a factor of p(x) = x² - 5x + k, find the value of k.</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans2">
+                <strong>Step 1:</strong> Use the Factor Theorem! If (x - 2) is a factor, then p(2) must exactly equal 0.<br>
+                <strong>Step 2:</strong> Plug x = 2 into the polynomial.<br>
+                (2)² - 5(2) + k = 0<br>
+                4 - 10 + k = 0<br>
+                -6 + k = 0<br>
+                <strong>Step 3:</strong> Solve for k.<br>
+                <strong>Final Answer: k = 6.</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic2_3.html" class="nav-btn">← Prev Topic</a>
+        <a href="topic2_5.html" class="nav-btn">Next: Algebraic Identities ➡️</a>
+    </div>
+
+    <script>
+        // --- LOGIC: SHARED STATE FOR BOTH SIMULATORS ---
+        const sP = document.getElementById('s-p');
+        const sQ = document.getElementById('s-q');
+
+        function formatTerm(coeff, isFirst, isConstant = false) {
+            if (coeff === 0 && !isConstant) return "";
+            if (coeff === 0 && isConstant) return " + 0";
+
+            let str = "";
+            if (coeff < 0) {
+                str += isFirst ? "-" : " - ";
+            } else {
+                str += isFirst ? "" : " + ";
+            }
+
+            let absC = Math.abs(coeff);
+            
+            if (isConstant) {
+                str += absC;
+            } else {
+                if (absC !== 1) str += absC;
+                str += "x";
+            }
+            return str;
+        }
+
+        function updateAll() {
+            let p = parseInt(sP.value);
+            let q = parseInt(sQ.value);
+
+            // 1. Update Sliders
+            document.getElementById('val-p').textContent = p;
+            document.getElementById('val-q').textContent = q;
+
+            // 2. Calculate Quadratic Values
+            let b = p + q; 
+            let c = p * q; 
+
+            // 3. Format Target Polynomial
+            let bStr = formatTerm(b, false, false);
+            if (b === 0) bStr = ""; 
+            let cStr = formatTerm(c, false, true);
+            if (b === 0 && c > 0) cStr = " + " + c; 
+
+            document.getElementById('target-poly').textContent = `x²${bStr}${cStr}`;
+
+            // 4. Generate Step-by-Step Proof Box
+            let proofDiv = document.getElementById('factor-proof');
+            
+            let pStr = formatTerm(p, false, false);
+            let qStr = formatTerm(q, false, false);
+
+            let step1 = `x²<span style="color:#e65100;">${bStr}</span>${cStr}`;
+            let step2 = `x²<span style="color:#d32f2f;">${pStr}</span><span style="color:#1976d2;">${qStr}</span>${cStr}`;
+            
+            let pSign = p < 0 ? "-" : "+";
+            let qSign = q < 0 ? "-" : "+";
+            let absP = Math.abs(p);
+            let absQ = Math.abs(q);
+
+            let step3 = `x(x ${pSign} ${absP}) ${qSign} ${absQ}(x ${pSign} ${absP})`;
+            let step4 = `(x ${pSign} ${absP})(x ${qSign} ${absQ})`;
+
+            proofDiv.innerHTML = `
+                <div>${step1}</div>
+                <div>= ${step2}</div>
+                <div>= ${step3}</div>
+                <div style="color:#d84315; font-weight:bold; font-size:1.2em; margin-top:10px;">Final: ${step4}</div>
+            `;
+
+            // 5. Update Area Model Grid
+            let pLbl = p < 0 ? `- ${Math.abs(p)}` : `+ ${p}`;
+            let qLbl = q < 0 ? `- ${Math.abs(q)}` : `+ ${q}`;
+            
+            document.getElementById('lbl-top-p').textContent = pLbl;
+            document.getElementById('lbl-left-q').textContent = qLbl;
+            
+            let boxTR = formatTerm(p, true, false);
+            let boxBL = formatTerm(q, true, false);
+            if (p === 0) boxTR = "0";
+            if (q === 0) boxBL = "0";
+
+            document.getElementById('box-tr').textContent = boxTR;
+            document.getElementById('box-bl').textContent = boxBL;
+            document.getElementById('box-br').textContent = c;
+
+            document.getElementById('area-eq').textContent = `(x ${pSign} ${absP})(x ${qSign} ${absQ}) = x²${bStr}${cStr}`;
+        }
+
+        sP.addEventListener('input', updateAll);
+        sQ.addEventListener('input', updateAll);
+        
+        // Initial call
+        updateAll();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer Step-by-Step';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

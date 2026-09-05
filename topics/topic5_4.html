@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theorems and Proofs - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #1a237e; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .back-btn { display: inline-block; background: #3949ab; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateY(-3px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c5cae9; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #3949ab; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #3949ab; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #9fa8da; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8eaf6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #3949ab; }
+        .qa-question { font-weight: bold; color: #1a237e; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #3949ab; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #3949ab; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #283593; transform: scale(1.05); }
+
+        /* PROOF BUILDER */
+        .proof-step { background: #fff; border: 2px solid #c5cae9; border-radius: 10px; padding: 15px; margin-bottom: 10px; text-align: left; opacity: 0.3; transition: 0.5s; font-size: 1.1em; }
+        .proof-step.active { opacity: 1; border-color: #3949ab; box-shadow: 0 4px 10px rgba(57, 73, 171, 0.2); }
+        .btn-next-step { background: #e65100; color: white; border: none; padding: 12px 25px; border-radius: 20px; font-weight: bold; font-size: 1.1em; cursor: pointer; transition: 0.3s; margin-top: 15px; }
+        .btn-next-step:hover { background: #bf360c; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
+    <h1>🧩 Applying Euclid: Theorems and Proofs</h1>
+    <p class="subtitle">Using basic rules to prove complex mathematical truths!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>From Axioms to Theorems</h2>
+        <p>We know that Axioms and Postulates are assumptions we accept without proof. But a <strong>Theorem</strong> is a statement that <em>requires</em> a logical proof. We build these proofs by stacking Axioms and Postulates together like logical lego blocks.</p>
+        <table class="formula-table">
+            <tr>
+                <th>Proof Technique</th>
+                <th>How it Works</th>
+            </tr>
+            <tr>
+                <td><strong>Direct Proof</strong></td>
+                <td>Starting with known facts (Axioms) and taking logical step-by-step actions until you reach the conclusion.</td>
+            </tr>
+            <tr>
+                <td><strong>Proof by Contradiction</strong></td>
+                <td>Assuming the <em>opposite</em> of what you want to prove is true, then showing that this assumption breaks a fundamental Axiom. If the opposite is impossible, your theorem must be true!</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE CONTRADICTION VISUALIZER -->
+    <div class="section-box">
+        <h2 style="color: #e65100; text-align: center; margin-top: 0;">💥 1. The Contradiction Visualizer (Theorem 5.1)</h2>
+        <p style="text-align: center; color: #666;"><strong>Theorem 5.1:</strong> Two distinct lines cannot have more than one point in common.<br>Let's use <em>Proof by Contradiction</em>. What if we try to force two distinct lines (Blue and Red) to intersect at TWO points (P and Q)? Slide to find out!</p>
+
+        <div class="interactive-container" style="background: #fff8e1; border-color: #ffb300;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #e65100; background: #ffebee; width: 80%;">
+                    <label style="color: #b71c1c; font-weight: bold; font-size: 1.2em;">Try to intersect both P and Q together with the red line...</label>
+                    <input type="range" id="s-bend" min="0" max="100" value="0">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
+                <!-- Points P and Q -->
+                <circle cx="150" cy="150" r="8" fill="#333"/>
+                <text x="140" y="130" font-weight="bold" fill="#333" font-size="20px">P</text>
+                
+                <circle cx="350" cy="150" r="8" fill="#333"/>
+                <text x="345" y="130" font-weight="bold" fill="#333" font-size="20px">Q</text>
+
+                <!-- Fixed Blue Line intersecting P and Q -->
+                <line x1="0" y1="150" x2="500" y2="150" stroke="#1976d2" stroke-width="6"/>
+
+                <!-- Dynamic Red Line -->
+                <!-- Accurately pivots through P to perfectly hit Q at the end of the slide -->
+                <path id="red-line" fill="none" stroke="#d32f2f" stroke-width="6"/>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #ff8f00; background: #fff; flex-basis: 100%;">
+                    <span id="bend-status" class="val-num" style="color: #333; font-size: 1.4em;">The Red Line is straight but only hits P.</span>
+                    <span id="bend-rule" style="color: #d32f2f; font-weight: bold; font-size: 1.2em; margin-top: 10px; display: none;">Contradiction! It is no longer a straight line!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE LOGIC ENGINE -->
+    <div class="section-box">
+        <h2 style="color: #00897b; text-align: center; margin-top: 0;">⚙️ 2. The Proof Logic Engine</h2>
+        <p style="text-align: center; color: #666;">Now let's write out the mathematical proof for Theorem 5.1 step-by-step. Click the button to advance the logical argument.</p>
+
+        <div class="interactive-container" style="background: #e0f2f1; border-color: #00897b; text-align: center;">
+            
+            <div id="step-1" class="proof-step active">
+                <strong style="color: #00695c;">Step 1: The Setup</strong><br>
+                Let there be two distinct straight lines, <i>l</i> and <i>m</i>.
+            </div>
+            
+            <div id="step-2" class="proof-step">
+                <strong style="color: #00695c;">Step 2: The Contradiction Assumption</strong><br>
+                Assume the opposite of our theorem: Suppose lines <i>l</i> and <i>m</i> intersect at <strong>two distinct points</strong>, P and Q.
+            </div>
+
+            <div id="step-3" class="proof-step">
+                <strong style="color: #00695c;">Step 3: Finding the Flaw</strong><br>
+                If <i>l</i> and <i>m</i> both pass through P and Q, then we have two distinct straight lines passing through the exact same two points.
+            </div>
+
+            <div id="step-4" class="proof-step">
+                <strong style="color: #d32f2f;">Step 4: The Axiom Clash!</strong><br>
+                But Euclid's Axiom states: "Given two distinct points, there is one and only one line that passes through them." Our assumption breaks this rule!
+            </div>
+
+            <div id="step-5" class="proof-step">
+                <strong style="color: #1b5e20;">Step 5: Conclusion</strong><br>
+                Since our assumption leads to an impossible contradiction, our assumption must be false. Therefore, <strong>two distinct lines cannot have more than one point in common.</strong> (Q.E.D.)
+            </div>
+
+            <button class="btn-next-step" id="btn-logic" onclick="nextLogicStep()">Reveal Next Logical Step</button>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: What does "Q.E.D." mean at the end of a mathematical proof?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                It stands for <strong>Quod Erat Demonstrandum</strong>, which is Latin for "that which was to be demonstrated." Mathematicians write it at the very end of a proof to signal a mic drop—it means "I have successfully proven what I set out to prove!"
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: Why do we use Proof by Contradiction instead of just proving it directly?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                Sometimes proving something <em>directly</em> is incredibly difficult because you have to account for infinite possibilities. However, proving that the <em>opposite</em> scenario is physically or logically impossible immediately forces the original statement to be true. It's a clever shortcut!
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic5_3.html" class="nav-btn">← Prev Topic</a>
+        <a href="../chapters/chapter5.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="../chapters/chapter6.html" class="nav-btn">Next Chapter ➡️</a>
+    </div>
+
+    <script>
+        // --- 1. CONTRADICTION VISUALIZER LOGIC ---
+        const sBend = document.getElementById('s-bend');
+        const redLine = document.getElementById('red-line');
+        const bendStatus = document.getElementById('bend-status');
+        const bendRule = document.getElementById('bend-rule');
+
+        function updateBend() {
+            let t = parseInt(sBend.value) / 100; // 0 to 1
+
+            // We use a quadratic Bezier curve: M startX startY Q cx cy endX endY
+            // We want it to ALWAYS pass through P(150, 150) at a curve parameter s=0.3.
+            
+            // X-coordinates:
+            let startX = 0;
+            let cx = 250;
+            let endX = 500;
+            
+            // Y-coordinates:
+            // At t=0 (straight line missing Q), y0=225, cy=100, y2=-25
+            // At t=1 (curve hitting Q at x=350), y0=225, cy=46.42, y2=225
+            
+            let startY = 225;
+            let controlY = 100 + (46.42 - 100) * t;
+            let endY = -25 + (225 - (-25)) * t;
+
+            redLine.setAttribute('d', `M ${startX} ${startY} Q ${cx} ${controlY} ${endX} ${endY}`);
+
+            if (t === 0) {
+                bendStatus.textContent = "The Red Line is straight but only hits P.";
+                bendStatus.style.color = "#333";
+                redLine.setAttribute('stroke', '#d32f2f');
+                bendRule.style.display = "none";
+            } else if (t === 1) {
+                bendStatus.textContent = "It hits both P and Q, BUT...";
+                bendStatus.style.color = "#d32f2f";
+                redLine.setAttribute('stroke', '#c2185b');
+                bendRule.style.display = "block";
+            } else {
+                bendStatus.textContent = "Bending the line to force an intersection...";
+                bendStatus.style.color = "#f57c00";
+                redLine.setAttribute('stroke', '#d32f2f');
+                bendRule.style.display = "none";
+            }
+        }
+
+        sBend.addEventListener('input', updateBend);
+        updateBend();
+
+
+        // --- 2. LOGIC ENGINE ---
+        let currentStep = 1;
+        const totalSteps = 5;
+
+        function nextLogicStep() {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                document.getElementById(`step-${currentStep}`).classList.add('active');
+            }
+            if (currentStep === totalSteps) {
+                document.getElementById('btn-logic').style.display = 'none';
+            }
+        }
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>

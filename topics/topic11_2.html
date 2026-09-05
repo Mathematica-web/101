@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cylinder - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; }
+        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
+        .back-btn { display: inline-block; background: #4ecdc4; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
+        .back-btn:hover { transform: translateX(-5px); }
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 900px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; }
+        .formula-table th { background: #00838f; color: white; font-size: 1.1em; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fff3e0; border: 3px dashed #ff9800; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 450px; height: 350px; background: white; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #ffcc80; }
+        input[type=range] { width: 120px; cursor: pointer; display: block; margin-top: 5px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; }
+        .val-num { font-size: 1.4em; display: block; margin-top: 5px; }
+
+        /* TOGGLE BUTTONS (MATERIAL SIMULATOR) */
+        .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .toggle-btn { padding: 10px 15px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        
+        /* Specific Button Active Colors */
+        .toggle-btn.btn-top.active { background: #2196f3; color: white; border-color: #2196f3; }
+        .toggle-btn.btn-bottom.active { background: #795548; color: white; border-color: #795548; }
+        .toggle-btn.btn-curved.active { background: #4ecdc4; color: white; border-color: #4ecdc4; }
+        
+        /* Multiplier Buttons */
+        .coat-toggles { border-top: 2px dashed #a5d6a7; padding-top: 15px; margin-bottom: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; align-items: center; }
+        .toggle-btn.btn-coat.active { background: #ff9800; color: white; border-color: #ff9800; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #4caf50; }
+        .qa-question { font-weight: bold; color: #2e7d32; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; }
+        .show-answer-btn { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-family: inherit; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #4ecdc4; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+        .chapter-btn { background: #ff6b6b; }
+    </style>
+</head>
+<body>
+    <a href="../chapters/chapter11.html" class="back-btn">⬅️ Back to Chapter</a>
+
+    <h1>🥫 Cylinders</h1>
+    <p class="subtitle">Rolling out the math for tubes, tanks, and cans!</p>
+
+    <!-- FORMULAS SECTION -->
+    <div class="section-box">
+        <h2>The Core Formulas</h2>
+        <table class="formula-table">
+            <tr>
+                <th>Measurement</th>
+                <th>Formula (Radius <em>r</em>, Height <em>h</em>)</th>
+                <th>Practical Example</th>
+            </tr>
+            <tr>
+                <td><strong>Volume (V)</strong><br><span style="font-size:0.8em; font-weight:normal;">Space inside</span></td>
+                <td>&pi;r&sup2;h</td>
+                <td>Amount of water a cylindrical tank can hold.</td>
+            </tr>
+            <tr>
+                <td><strong>Curved Surface Area (CSA)</strong><br><span style="font-size:0.8em; font-weight:normal;">The rolled wall only</span></td>
+                <td>2&pi;rh</td>
+                <td>Paper label wrapped around a soup can.</td>
+            </tr>
+            <tr>
+                <td><strong>Total Surface Area (TSA)</strong><br><span style="font-size:0.8em; font-weight:normal;">Curved wall + top & bottom lids</span></td>
+                <td>2&pi;r(r + h)</td>
+                <td>Metal sheet required to make a fully closed drum.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: CYLINDER RESIZER -->
+    <div class="section-box">
+        <h2 style="color: #ef6c00; text-align: center; margin-top: 0;">🎮 The Cylinder Resizer</h2>
+        <p style="text-align: center; color: #666;">Adjust the radius and height. Watch the volume and surface areas calculate dynamically using &pi; &approx; 3.14159.</p>
+
+        <div class="interactive-container">
+            <div class="slider-row">
+                <div class="slider-group">
+                    <label style="color: #e91e63; font-weight: bold;">Radius (r): <span id="val-r">5</span></label>
+                    <input type="range" id="sr" min="2" max="15" value="5">
+                </div>
+                <div class="slider-group">
+                    <label style="color: #2196f3; font-weight: bold;">Height (h): <span id="val-h">15</span></label>
+                    <input type="range" id="sh" min="5" max="30" value="15">
+                </div>
+            </div>
+
+            <svg id="cyl-svg" class="svg-canvas" viewBox="0 0 450 350">
+                <!-- Body -->
+                <rect id="cyl-body" x="175" y="100" width="100" height="150" fill="#a5d6a7" stroke="#2e7d32" stroke-width="3"/>
+                <!-- Bottom ellipse -->
+                <ellipse id="cyl-bot" cx="225" cy="250" rx="50" ry="20" fill="#81c784" stroke="#2e7d32" stroke-width="3"/>
+                <!-- Top ellipse -->
+                <ellipse id="cyl-top" cx="225" cy="100" rx="50" ry="20" fill="#c8e6c9" stroke="#2e7d32" stroke-width="3"/>
+                
+                <!-- Labels -->
+                <line id="r-line" x1="225" y1="100" x2="275" y2="100" stroke="#e91e63" stroke-width="2" stroke-dasharray="4,4"/>
+                <text id="r-txt" x="245" y="95" font-weight="bold" fill="#e91e63">r</text>
+                
+                <line id="h-line" x1="150" y1="100" x2="150" y2="250" stroke="#1565c0" stroke-width="2"/>
+                <text id="h-txt" x="130" y="180" font-weight="bold" fill="#1565c0">h</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #ff9800;">
+                    <span style="color: #e65100;">Volume</span>
+                    <span id="calc-v" class="val-num" style="color: #ff9800;">1178.1</span>
+                </div>
+                <div class="dash-card" style="border-color: #4ecdc4;">
+                    <span style="color: #00838f;">Curved Surface (CSA)</span>
+                    <span id="calc-csa" class="val-num" style="color: #4ecdc4;">471.2</span>
+                </div>
+                <div class="dash-card" style="border-color: #4caf50;">
+                    <span style="color: #2e7d32;">Total Surface (TSA)</span>
+                    <span id="calc-tsa" class="val-num" style="color: #4caf50;">628.3</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE CAN MANUFACTURER -->
+    <div class="section-box">
+        <h2 style="color: #00838f; text-align: center; margin-top: 0;">🏭 Real-World: Manufacturer & Painter</h2>
+        <p style="text-align: center; color: #666;">Toggle the specific surfaces to manufacture, then choose whether you are painting just the <strong>Outside</strong> or both the <strong>Inside & Outside</strong> (which doubles the required paint area!).</p>
+
+        <div class="interactive-container" style="background: #e8f5e9; border-color: #4caf50;">
+            <div class="face-toggles">
+                <button class="toggle-btn btn-top active" onclick="toggleFace('top', this)">Top Lid (&pi;r&sup2;)</button>
+                <button class="toggle-btn btn-curved active" onclick="toggleFace('curved', this)">Curved Wall (2&pi;rh)</button>
+                <button class="toggle-btn btn-bottom active" onclick="toggleFace('bottom', this)">Bottom Base (&pi;r&sup2;)</button>
+            </div>
+            
+            <div class="coat-toggles">
+                <span style="font-weight: bold; color: #2e7d32;">Painting Requirement:</span>
+                <button class="toggle-btn btn-coat active" id="btn-out" onclick="setCoating('outside', this)">Outside Only</button>
+                <button class="toggle-btn btn-coat" id="btn-both" onclick="setCoating('both', this)">Inside & Outside (x2 Area)</button>
+            </div>
+
+            <!-- DYNAMIC CYLINDER SVG -->
+            <svg class="svg-canvas" viewBox="0 0 450 350" style="background: #f8f9fa;">
+                <!-- Bottom Base -->
+                <ellipse id="svg-face-bottom" cx="225" cy="260" rx="80" ry="25" />
+                
+                <!-- Curved Surface -->
+                <path id="svg-face-curved" d="M 145,100 v 160 a 80,25 0 0,0 160,0 v -160 a 80,25 0 0,1 -160,0 Z" />
+                
+                <!-- Top Lid -->
+                <ellipse id="svg-face-top" cx="225" cy="100" rx="80" ry="25" />
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #2e7d32; flex-basis: 100%; background: #c8e6c9;">
+                    <span style="color: #1b5e20;" id="paint-label">Total Area to Paint</span>
+                    <span id="material-area" class="val-num" style="color: #2e7d32; font-size: 1.8em;">628.3</span>
+                    <span id="material-formula" style="color: #555; font-size: 0.9em; font-weight: normal;">(2&pi;rh + 2&pi;r&sup2;)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: How does the volume of a cylinder change if its radius is doubled but its height remains the same?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+            <div class="qa-answer" id="ans1">
+                <strong>It becomes 4 times larger!</strong><br><br>
+                The formula for Volume is πr²h. Because the radius is squared, doubling it means (2r)² = 4r².<br>
+                New Volume = π(2r)²h = 4(πr²h).
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: What is the ratio of the Curved Surface Area (CSA) to the Total Surface Area (TSA) of a cylinder where the radius equals the height (r = h)?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>1:2</strong><br><br>
+                CSA = 2πrh. If r = h, then CSA = 2πr(r) = 2πr².<br>
+                TSA = 2πr(r + h). If r = h, then TSA = 2πr(r + r) = 2πr(2r) = 4πr².<br>
+                Ratio = 2πr² / 4πr² = 1/2.
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="topic11_1.html" class="nav-btn chapter-btn">← Prev Topic</a>
+        <a href="topic11_3.html" class="nav-btn">Next: Cone ➡️</a>
+    </div>
+
+    <script>
+        // --- CYLINDER RESIZER LOGIC ---
+        const sr = document.getElementById('sr');
+        const sh = document.getElementById('sh');
+        
+        const body = document.getElementById('cyl-body');
+        const bot = document.getElementById('cyl-bot');
+        const topE = document.getElementById('cyl-top');
+        const rLine = document.getElementById('r-line');
+        const hLine = document.getElementById('h-line');
+        
+        let currentR = 5, currentH = 15;
+        const pi = Math.PI;
+
+        function updateCyl() {
+            currentR = parseInt(sr.value);
+            currentH = parseInt(sh.value);
+            
+            document.getElementById('val-r').innerText = currentR; 
+            document.getElementById('val-h').innerText = currentH;
+            
+            document.getElementById('calc-v').innerText = (pi * currentR * currentR * currentH).toFixed(1);
+            document.getElementById('calc-csa').innerText = (2 * pi * currentR * currentH).toFixed(1);
+            document.getElementById('calc-tsa').innerText = (2 * pi * currentR * (currentR + currentH)).toFixed(1);
+
+            let scaleR = 8, scaleH = 7;
+            let px = currentR * scaleR, py = currentH * scaleH;
+            let cx = 225, cyBase = 280;
+            
+            bot.setAttribute('rx', px); bot.setAttribute('ry', px * 0.3); bot.setAttribute('cy', cyBase);
+            topE.setAttribute('rx', px); topE.setAttribute('ry', px * 0.3); topE.setAttribute('cy', cyBase - py);
+            
+            body.setAttribute('x', cx - px); body.setAttribute('y', cyBase - py);
+            body.setAttribute('width', px * 2); body.setAttribute('height', py);
+
+            rLine.setAttribute('x1', cx); rLine.setAttribute('y1', cyBase - py);
+            rLine.setAttribute('x2', cx + px); rLine.setAttribute('y2', cyBase - py);
+            document.getElementById('r-txt').setAttribute('x', cx + (px/2) - 5);
+            document.getElementById('r-txt').setAttribute('y', cyBase - py - 8);
+
+            hLine.setAttribute('x1', cx - px - 20); hLine.setAttribute('y1', cyBase - py);
+            hLine.setAttribute('x2', cx - px - 20); hLine.setAttribute('y2', cyBase);
+            document.getElementById('h-txt').setAttribute('x', cx - px - 35);
+            document.getElementById('h-txt').setAttribute('y', cyBase - (py/2));
+
+            updateMaterial();
+        }
+
+        // --- MATERIAL SIMULATOR LOGIC ---
+        const facesActive = { top: true, bottom: true, curved: true };
+        let paintMultiplier = 1;
+        
+        const faceColors = {
+            top: "rgba(33, 150, 243, 0.7)",     
+            curved: "rgba(78, 205, 196, 0.7)",  
+            bottom: "rgba(121, 85, 72, 0.7)"    
+        };
+
+        function toggleFace(face, btnElement) {
+            facesActive[face] = !facesActive[face];
+            btnElement.classList.toggle('active');
+            updateMaterial();
+        }
+        
+        function setCoating(type, btnElement) {
+            document.getElementById('btn-out').classList.remove('active');
+            document.getElementById('btn-both').classList.remove('active');
+            btnElement.classList.add('active');
+            
+            if(type === 'both') {
+                paintMultiplier = 2;
+                document.getElementById('paint-label').innerText = "Total Area to Paint (Inside & Outside)";
+            } else {
+                paintMultiplier = 1;
+                document.getElementById('paint-label').innerText = "Total Area to Paint (Outside Only)";
+            }
+            updateMaterial();
+        }
+
+        function updateMaterial() {
+            let areaFlat = pi * currentR * currentR;
+            let areaCurved = 2 * pi * currentR * currentH;
+            
+            let baseMaterialArea = 0;
+            let flatCount = 0;
+            let hasCurved = false;
+
+            if(facesActive.top) { baseMaterialArea += areaFlat; flatCount++; }
+            if(facesActive.bottom) { baseMaterialArea += areaFlat; flatCount++; }
+            if(facesActive.curved) { baseMaterialArea += areaCurved; hasCurved = true; }
+
+            for(let face in facesActive) {
+                let svgEl = document.getElementById('svg-face-' + face);
+                if(facesActive[face]) {
+                    svgEl.setAttribute('fill', faceColors[face]);
+                    svgEl.setAttribute('stroke', '#333');
+                    svgEl.setAttribute('stroke-width', '2');
+                } else {
+                    svgEl.setAttribute('fill', 'rgba(0,0,0,0.03)');
+                    svgEl.setAttribute('stroke', '#bbb');
+                    svgEl.setAttribute('stroke-width', '1');
+                    svgEl.setAttribute('stroke-dasharray', '4,4'); 
+                }
+            }
+
+            let terms = [];
+            if(hasCurved) terms.push(`2\u03C0rh`); 
+            if(flatCount > 0) {
+                if(flatCount === 1) terms.push(`\u03C0r\u00B2`); 
+                if(flatCount === 2) terms.push(`2\u03C0r\u00B2`); 
+            }
+
+            let formulaStr = terms.length === 0 ? "(0 surfaces selected)" : "(" + terms.join(" + ") + ")";
+            if(paintMultiplier === 2 && terms.length > 0) {
+                formulaStr = "2 \u00D7 " + formulaStr;
+            }
+
+            document.getElementById('material-area').innerText = (baseMaterialArea * paintMultiplier).toFixed(1);
+            document.getElementById('material-formula').innerText = formulaStr;
+        }
+
+        // Q&A Toggle Logic
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+
+        // Initialize
+        sr.addEventListener('input', updateCyl); 
+        sh.addEventListener('input', updateCyl); 
+        updateCyl();
+    </script>
+</body>
+</html>

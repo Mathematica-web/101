@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph of a Linear Equation - Mathematics 101</title>
+    <style>
+        /* 🎨 GLOBAL STYLES */
+        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #ede7f6 0%, #d1c4e9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
+        h1 { color: #311b92; font-size: 2.2em; margin-bottom: 10px; }
+        
+        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
+        
+        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #d1c4e9; text-align: left; font-size: 1.05em; line-height: 1.4; }
+        .formula-table th { background: #5e35b1; color: white; }
+        
+        /* INTERACTIVE CONTAINER */
+        .interactive-container { background: #fafafa; border: 3px dashed #5e35b1; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+        .svg-canvas { width: 100%; max-width: 500px; height: 500px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        
+        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #b39ddb; font-size: 0.95em; min-width: 140px; }
+        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
+        .val-num { font-size: 1.6em; display: block; margin-top: 5px; font-family: monospace; }
+
+        /* DATA TABLE */
+        .data-table { width: 100%; max-width: 400px; margin: 15px auto; border-collapse: collapse; font-size: 1.1em; }
+        .data-table th, .data-table td { border: 2px solid #9575cd; padding: 10px; text-align: center; font-family: monospace; font-weight: bold; }
+        .data-table th { background: #ede7f6; color: #311b92; width: 50px; }
+        .data-table td { background: #fff; color: #333; }
+
+        /* Q&A SECTION */
+        .qa-box { background: #ede7f6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #5e35b1; }
+        .qa-question { font-weight: bold; color: #311b92; font-size: 1.05em; margin-bottom: 10px; }
+        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+        .show-answer-btn { background: #5e35b1; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+        .show-answer-btn:hover { transform: scale(1.05); }
+
+        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+        .nav-btn { background: #5e35b1; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
+        .nav-btn:hover { background: #4527a0; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <h1>📈 Graph of a Linear Equation</h1>
+    <p class="subtitle">Translating algebraic equations into geometric lines!</p>
+
+    <!-- CORE CONCEPT -->
+    <div class="section-box">
+        <h2>From Algebra to Geometry</h2>
+        <p>A linear equation in two variables forms a perfectly straight line on the Cartesian plane. There is a direct, unbreakable link between the algebra (the numbers) and the geometry (the picture).</p>
+        <table class="formula-table">
+            <tr>
+                <th>Algebraic Concept</th>
+                <th>Geometric Meaning</th>
+            </tr>
+            <tr>
+                <td><strong>A Solution (x, y)</strong></td>
+                <td>A specific point that lies exactly <strong>on the line</strong>.</td>
+            </tr>
+            <tr>
+                <td><strong>Infinite Solutions</strong></td>
+                <td>A line extends infinitely in both directions, made up of an infinite number of points.</td>
+            </tr>
+            <tr>
+                <td><strong>Plotting the Graph</strong></td>
+                <td>You only need to find <strong>two solutions</strong> (two points) to draw the entire line! (Finding a third point is a great way to check your work).</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTERACTIVE 1: THE INTERCEPT FINDER -->
+    <div class="section-box">
+        <h2 style="color: #ff8f00; text-align: center; margin-top: 0;">🎯 1. Graphing via Intercepts</h2>
+        <p style="text-align: center; color: #666;">The easiest way to graph a line is to find where it crosses the X-axis (by setting y = 0) and the Y-axis (by setting x = 0). Adjust the equation below to see how the intercepts form the line!</p>
+
+        <div class="interactive-container" style="background: #fff8e1; border-color: #ffb300;">
+            <div style="font-size: 1.8em; font-weight: bold; color: #e65100; margin-bottom: 20px; font-family: 'Times New Roman', serif; font-style: italic;">
+                <span id="int-eq-display">2x + 3y = 12</span>
+            </div>
+
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #d32f2f; background: #ffebee;">
+                    <label style="color: #b71c1c; font-weight: bold;">Coef (a): <span id="val-int-a">2</span></label>
+                    <input type="range" id="s-int-a" min="-5" max="5" value="2">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Coef (b): <span id="val-int-b">3</span></label>
+                    <input type="range" id="s-int-b" min="-5" max="5" value="3">
+                </div>
+                <div class="slider-group" style="border-color: #f57c00; background: #fff3e0;">
+                    <label style="color: #e65100; font-weight: bold;">Constant (c): <span id="val-int-c">12</span></label>
+                    <input type="range" id="s-int-c" min="-20" max="20" value="12">
+                </div>
+            </div>
+
+            <table class="data-table">
+                <tr>
+                    <th>x</th>
+                    <td id="td-x1" style="color: #d32f2f;">0</td>
+                    <td id="td-x2" style="color: #1976d2;">...</td>
+                </tr>
+                <tr>
+                    <th>y</th>
+                    <td id="td-y1" style="color: #d32f2f;">...</td>
+                    <td id="td-y2" style="color: #1976d2;">0</td>
+                </tr>
+            </table>
+
+            <svg id="int-svg" class="svg-canvas" viewBox="-30 -30 560 560">
+                <defs>
+                    <pattern id="grid" width="25" height="25" patternUnits="userSpaceOnUse">
+                        <rect width="25" height="25" fill="none" stroke="#eee" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                <rect x="0" y="0" width="500" height="500" fill="url(#grid)" />
+                <line x1="0" y1="250" x2="500" y2="250" stroke="#333" stroke-width="3"/>
+                <text x="515" y="258" font-weight="bold" fill="#333" font-size="20px">X</text>
+                <line x1="250" y1="0" x2="250" y2="500" stroke="#333" stroke-width="3"/>
+                <text x="242" y="-10" font-weight="bold" fill="#333" font-size="20px">Y</text>
+
+                <!-- The Line -->
+                <line id="graph-line" stroke="#9c27b0" stroke-width="4"/>
+
+                <!-- Intercept Points -->
+                <circle id="dot-y-int" r="8" fill="#d32f2f" stroke="#fff" stroke-width="2"/>
+                <text id="lbl-y-int" font-weight="bold" fill="#d32f2f" font-size="16px"></text>
+
+                <circle id="dot-x-int" r="8" fill="#1976d2" stroke="#fff" stroke-width="2"/>
+                <text id="lbl-x-int" font-weight="bold" fill="#1976d2" font-size="16px"></text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 2: THE SLIDING SOLUTION -->
+    <div class="section-box">
+        <h2 style="color: #43a047; text-align: center; margin-top: 0;">🎢 2. The Sliding Solution</h2>
+        <p style="text-align: center; color: #666;">Because a line is continuous, every single point lying on it represents a valid decimal or fractional solution to the equation. Slide the point along the line <strong>x + y = 5</strong> to verify this!</p>
+
+        <div class="interactive-container" style="background: #e8f5e9; border-color: #4caf50;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #43a047; background: #fff; width: 80%;">
+                    <label style="color: #2e7d32; font-weight: bold; font-size: 1.2em;">Slide Point P along the graph</label>
+                    <input type="range" id="s-slide-x" min="-5" max="10" step="0.5" value="2.5">
+                </div>
+            </div>
+
+            <svg id="slide-svg" class="svg-canvas" viewBox="-30 -30 560 560" style="height: 350px;">
+                <rect x="0" y="0" width="500" height="500" fill="url(#grid)" />
+                <line x1="0" y1="250" x2="500" y2="250" stroke="#333" stroke-width="3"/>
+                <line x1="250" y1="0" x2="250" y2="500" stroke="#333" stroke-width="3"/>
+                
+                <!-- Fixed Line x + y = 5 (meaning y = -x + 5) -->
+                <!-- x=-10 -> y=15 -> mapX(0), mapY(-125) | x=10 -> y=-5 -> mapX(500), mapY(375) -->
+                <line x1="0" y1="-125" x2="500" y2="375" stroke="#4caf50" stroke-width="4" opacity="0.5"/>
+                
+                <circle id="slide-dot" r="10" fill="#2e7d32" stroke="#fff" stroke-width="3"/>
+                <text id="slide-lbl" font-weight="bold" fill="#2e7d32" font-size="18px"></text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #4caf50; background: #fff; flex-basis: 100%;">
+                    <span style="color: #1b5e20; font-size: 1.2em; display: block; margin-bottom: 10px;">Checking the Solution: x + y = 5</span>
+                    <span id="slide-calc" class="val-num" style="color: #388e3c; font-size: 1.5em; margin: 10px 0;"></span>
+                    <span style="color: #2e7d32; font-weight: bold; font-size: 1.3em;">✅ It Balances!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: If a point (3, 4) lies on the graph of the equation 3y = ax + 7, find the value of a.</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Step 1:</strong> Since the point lies on the line, it must satisfy the equation. Substitute x = 3 and y = 4 into the equation.<br>
+                <strong>Step 2:</strong> 3(4) = a(3) + 7<br>
+                <strong>Step 3:</strong> 12 = 3a + 7<br>
+                <strong>Step 4:</strong> 12 - 7 = 3a  ➡️  5 = 3a  ➡️  a = 5/3.<br>
+                <strong>Final Answer: a = 5/3</strong>
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: The graph of the linear equation x = 4 is a line parallel to which axis?</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+            <div class="qa-answer" id="ans2">
+                <strong>It is parallel to the Y-axis.</strong><br><br>
+                The equation x = 4 means that no matter what the y-value is, the x-value is always securely locked at 4. This creates a vertical line that never crosses the Y-axis (which is the line x = 0).
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="../chapters/chapter4.html" class="nav-btn">📑 Chapter Index</a>
+        <a href="topic4_3.html" class="nav-btn">Next Topic ➡️</a>
+    </div>
+
+    <script>
+        const plotScale = 25; // 1 math unit = 25px
+        function mapX(x) { return 250 + (x * plotScale); }
+        function mapY(y) { return 250 - (y * plotScale); }
+
+        // --- 1. INTERCEPT GRAPHING LOGIC ---
+        const sIntA = document.getElementById('s-int-a');
+        const sIntB = document.getElementById('s-int-b');
+        const sIntC = document.getElementById('s-int-c');
+
+        function updateInterceptGraph() {
+            let a = parseInt(sIntA.value);
+            let b = parseInt(sIntB.value);
+            
+            // Prevent mathematically invalid completely flat zero state
+            if (a === 0 && b === 0) {
+                b = 1; sIntB.value = 1;
+            }
+            
+            let c = parseInt(sIntC.value);
+
+            document.getElementById('val-int-a').textContent = a;
+            document.getElementById('val-int-b').textContent = b;
+            document.getElementById('val-int-c').textContent = c;
+
+            // Generate Equation String
+            let eqStr = "";
+            if (a !== 0) eqStr += (a === 1 ? "x" : a === -1 ? "-x" : a + "x");
+            
+            if (b !== 0) {
+                if (eqStr !== "") {
+                    eqStr += (b > 0 ? ` + ${b === 1 ? '' : b}y` : ` - ${b === -1 ? '' : Math.abs(b)}y`);
+                } else {
+                    eqStr += (b === 1 ? "y" : b === -1 ? "-y" : b + "y");
+                }
+            }
+            document.getElementById('int-eq-display').textContent = `${eqStr} = ${c}`;
+
+            let yInt = b !== 0 ? c / b : null;
+            let xInt = a !== 0 ? c / a : null;
+
+            // Update Table
+            document.getElementById('td-y1').textContent = yInt !== null ? (Number.isInteger(yInt) ? yInt : yInt.toFixed(2)) : "Undefined";
+            document.getElementById('td-x2').textContent = xInt !== null ? (Number.isInteger(xInt) ? xInt : xInt.toFixed(2)) : "Undefined";
+
+            let dotY = document.getElementById('dot-y-int');
+            let lblY = document.getElementById('lbl-y-int');
+            let dotX = document.getElementById('dot-x-int');
+            let lblX = document.getElementById('lbl-x-int');
+            let line = document.getElementById('graph-line');
+
+            // Handle Plotting
+            if (yInt !== null) {
+                dotY.style.display = "block"; lblY.style.display = "block";
+                dotY.setAttribute('cx', mapX(0)); dotY.setAttribute('cy', mapY(yInt));
+                lblY.setAttribute('x', mapX(0) + 15); lblY.setAttribute('y', mapY(yInt) - 10);
+                lblY.textContent = `(0, ${Number.isInteger(yInt) ? yInt : yInt.toFixed(1)})`;
+            } else {
+                dotY.style.display = "none"; lblY.style.display = "none";
+            }
+
+            if (xInt !== null) {
+                dotX.style.display = "block"; lblX.style.display = "block";
+                dotX.setAttribute('cx', mapX(xInt)); dotX.setAttribute('cy', mapY(0));
+                lblX.setAttribute('x', mapX(xInt) - 20); lblX.setAttribute('y', mapY(0) + 25);
+                lblX.textContent = `(${Number.isInteger(xInt) ? xInt : xInt.toFixed(1)}, 0)`;
+            } else {
+                dotX.style.display = "none"; lblX.style.display = "none";
+            }
+
+            // Draw full infinite line based on bounds
+            if (a !== 0 && b !== 0) {
+                let xStart = -20; let yStart = (c - a * xStart) / b;
+                let xEnd = 20; let yEnd = (c - a * xEnd) / b;
+                line.setAttribute('x1', mapX(xStart)); line.setAttribute('y1', mapY(yStart));
+                line.setAttribute('x2', mapX(xEnd)); line.setAttribute('y2', mapY(yEnd));
+            } else if (a === 0) {
+                // Horizontal line
+                line.setAttribute('x1', mapX(-20)); line.setAttribute('y1', mapY(yInt));
+                line.setAttribute('x2', mapX(20)); line.setAttribute('y2', mapY(yInt));
+            } else if (b === 0) {
+                // Vertical line
+                line.setAttribute('x1', mapX(xInt)); line.setAttribute('y1', mapY(-20));
+                line.setAttribute('x2', mapX(xInt)); line.setAttribute('y2', mapY(20));
+            }
+        }
+
+        sIntA.addEventListener('input', updateInterceptGraph);
+        sIntB.addEventListener('input', updateInterceptGraph);
+        sIntC.addEventListener('input', updateInterceptGraph);
+        updateInterceptGraph();
+
+
+        // --- 2. SLIDING SOLUTION LOGIC (x + y = 5) ---
+        const sSlideX = document.getElementById('s-slide-x');
+        
+        function wrapNeg(val) { return val < 0 ? `(${val})` : val; }
+
+        function updateSlider() {
+            let x = parseFloat(sSlideX.value);
+            let y = 5 - x; // Because x + y = 5
+
+            let svgX = mapX(x);
+            let svgY = mapY(y);
+
+            let dot = document.getElementById('slide-dot');
+            let lbl = document.getElementById('slide-lbl');
+            
+            dot.setAttribute('cx', svgX);
+            dot.setAttribute('cy', svgY);
+
+            lbl.setAttribute('x', svgX + 15);
+            lbl.setAttribute('y', svgY - 15);
+            lbl.textContent = `(${x}, ${y})`;
+
+            document.getElementById('slide-calc').textContent = `${wrapNeg(x)} + ${wrapNeg(y)} = 5`;
+        }
+
+        sSlideX.addEventListener('input', updateSlider);
+        updateSlider();
+
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = id === 'ans1' ? 'Show Answer Step-by-Step' : 'Show Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>
