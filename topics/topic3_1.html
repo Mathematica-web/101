@@ -4,59 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intro to Coordinate Geometry - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
-        .back-btn { display: inline-block; background: #00838f; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateX(-5px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; font-size: 1.05em; }
-        .formula-table th { background: #00838f; color: white; }
-        
+        /* INTERACTIVE SPECIFIC STYLES */
         .math-eq { font-family: 'Times New Roman', serif; font-style: italic; font-size: 1.2em; color: #006064; font-weight: bold; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #00838f; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 500px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        .svg-canvas { max-width: 500px; height: 500px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
         .svg-canvas-quad { max-width: 400px; height: 400px; }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #4dd0e1; font-size: 0.95em; min-width: 140px; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.6em; display: block; margin-top: 5px; font-family: monospace; }
-        
-        /* TOGGLE BUTTONS */
         .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
         .toggle-btn { padding: 10px 20px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1em; }
         .toggle-btn.active { background: #ff9800; color: white; border-color: #ff9800; }
-
-        /* DATA TABLE */
         .data-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 1.1em; }
         .data-table th, .data-table td { border: 2px solid #ce93d8; padding: 10px; text-align: center; font-family: monospace; font-weight: bold; }
         .data-table th { background: #f3e5f5; color: #4a148c; width: 50px; }
         .data-table td { background: #fff; color: #333; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e0f7fa; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00838f; }
-        .qa-question { font-weight: bold; color: #006064; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #00838f; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #00838f; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
     </style>
 </head>
-<body>
-    <a href="../chapters/chapter3.html" class="back-btn">⬅️ Back to Chapter Index</a>
+<body class="theme-ch3">
+    <a href="../index.html" class="back-btn">🏠 Course Index</a>
 
     <h1>🗺️ Introduction to Coordinate Geometry</h1>
     <p class="subtitle">Turning geometry into algebra using the magical Cartesian Plane!</p>
@@ -273,12 +237,12 @@
 
     <div class="nav-buttons">
         <span style="width: 150px;"></span>
+		<a href="../chapters/chapter3.html" class="nav-btn">⬅ Chapter Index</a>
         <a href="topic3_2.html" class="nav-btn">Next: Distance Formula ➡️</a>
     </div>
 
     <script>
-        // Common SVG Mapping Logic
-        const plotScale = 25; // 1 math unit = 25px
+        const plotScale = 25; 
         function mapX(x) { return 250 + (x * plotScale); }
         function mapY(y) { return 250 - (y * plotScale); }
 
@@ -372,7 +336,6 @@
             let a = parseInt(sGraphA.value);
             let b = parseInt(sGraphB.value);
             
-            // Force c = 0 if both a and b are 0 to prevent a mathematically invalid equation
             if (a === 0 && b === 0) {
                 sGraphC.value = 0;
             }
@@ -382,7 +345,6 @@
             document.getElementById('val-graph-b').textContent = b;
             document.getElementById('val-graph-c').textContent = c;
 
-            // Robust Equation Formatter
             let eqStr = "";
             if(a !== 0) eqStr += (a === 1 ? "x" : a === -1 ? "-x" : a + "x");
             
@@ -402,7 +364,6 @@
             if(eqStr === "") eqStr = "0";
             document.getElementById('lbl-eq-full').textContent = eqStr + " = 0";
 
-            // Determine data points
             let pts = [];
             if (b !== 0) {
                 let xs = [-4, -2, 0, 2, 4];
@@ -415,10 +376,9 @@
                     pts.push({ x: (-c) / a, y: ys[i] });
                 }
             } else {
-                for(let i=0; i<5; i++) pts.push({ x: 0, y: 0 }); // Invalid line fallback
+                for(let i=0; i<5; i++) pts.push({ x: 0, y: 0 }); 
             }
 
-            // Update Table and SVG Dots
             for(let i=0; i<5; i++) {
                 document.getElementById(`td-x${i+1}`).textContent = Number.isInteger(pts[i].x) ? pts[i].x : pts[i].x.toFixed(1);
                 document.getElementById(`td-y${i+1}`).textContent = Number.isInteger(pts[i].y) ? pts[i].y : pts[i].y.toFixed(1);
@@ -436,20 +396,17 @@
                 }
             }
 
-            // Draw Full SVG Line
             let line = document.getElementById('graph-line');
             if (a === 0 && b === 0) {
                 line.style.display = "none";
             } else {
                 line.style.display = "block";
                 if (Math.abs(b) >= Math.abs(a)) {
-                    // Use X bounds to find Y
                     let xStart = -20; let yStart = (-a * xStart - c) / b;
                     let xEnd = 20; let yEnd = (-a * xEnd - c) / b;
                     line.setAttribute('x1', mapX(xStart)); line.setAttribute('y1', mapY(yStart));
                     line.setAttribute('x2', mapX(xEnd)); line.setAttribute('y2', mapY(yEnd));
                 } else {
-                    // Use Y bounds to find X
                     let yStart = -20; let xStart = (-b * yStart - c) / a;
                     let yEnd = 20; let xEnd = (-b * yEnd - c) / a;
                     line.setAttribute('x1', mapX(xStart)); line.setAttribute('y1', mapY(yStart));
@@ -463,7 +420,6 @@
         sGraphC.addEventListener('input', updateGraphPlotter);
         updateGraphPlotter();
 
-        // --- Q&A LOGIC ---
         function toggleAnswer(id) {
             const ans = document.getElementById(id);
             const btn = ans.previousElementSibling;

@@ -4,47 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parallel Lines and a Transversal - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #0d47a1; font-size: 2.2em; margin-bottom: 10px; }
-        
-        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .back-btn { display: inline-block; background: #1976d2; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateY(-3px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #bbdefb; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #1976d2; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #1976d2; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #64b5f6; font-size: 0.95em; min-width: 140px; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e3f2fd; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #1976d2; }
-        .qa-question { font-weight: bold; color: #0d47a1; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #1976d2; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #1976d2; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
-        .nav-btn:hover { background: #0d47a1; transform: scale(1.05); }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 500px; aspect-ratio: 500 / 350; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
     </style>
 </head>
-<body>
+<body class="theme-ch6">
     <div class="top-nav">
         <a href="../index.html" class="back-btn">🏠 Course Index</a>
     </div>
@@ -94,32 +60,26 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 400" style="height: 400px; background: #fafafa;">
-                <!-- Top Intersection Wedges -->
                 <path id="t-arc-1" fill="#ce93d8" stroke="#7b1fa2" stroke-width="2" opacity="0.6"/>
                 <path id="t-arc-2" fill="#fff59d" stroke="#f57f17" stroke-width="2" opacity="0.6"/>
                 <path id="t-arc-3" fill="#ce93d8" stroke="#7b1fa2" stroke-width="2" opacity="0.6"/>
                 <path id="t-arc-4" fill="#fff59d" stroke="#f57f17" stroke-width="2" opacity="0.6"/>
 
-                <!-- Bottom Intersection Wedges -->
                 <path id="b-arc-1" fill="#ce93d8" stroke="#7b1fa2" stroke-width="2" opacity="0.6"/>
                 <path id="b-arc-2" fill="#fff59d" stroke="#f57f17" stroke-width="2" opacity="0.6"/>
                 <path id="b-arc-3" fill="#ce93d8" stroke="#7b1fa2" stroke-width="2" opacity="0.6"/>
                 <path id="b-arc-4" fill="#fff59d" stroke="#f57f17" stroke-width="2" opacity="0.6"/>
 
-                <!-- Parallel Lines -->
                 <line x1="50" y1="120" x2="450" y2="120" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
                 <line x1="50" y1="280" x2="450" y2="280" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
 
-                <!-- Transversal Line -->
                 <line id="s1-trans" stroke="#333" stroke-width="6" stroke-linecap="round"/>
 
-                <!-- Labels Top -->
                 <text id="lbl-t1" font-weight="bold" fill="#4a148c" font-size="16px" text-anchor="middle" alignment-baseline="middle">1</text>
                 <text id="lbl-t2" font-weight="bold" fill="#e65100" font-size="16px" text-anchor="middle" alignment-baseline="middle">2</text>
                 <text id="lbl-t3" font-weight="bold" fill="#4a148c" font-size="16px" text-anchor="middle" alignment-baseline="middle">3</text>
                 <text id="lbl-t4" font-weight="bold" fill="#e65100" font-size="16px" text-anchor="middle" alignment-baseline="middle">4</text>
 
-                <!-- Labels Bottom -->
                 <text id="lbl-b1" font-weight="bold" fill="#4a148c" font-size="16px" text-anchor="middle" alignment-baseline="middle">5</text>
                 <text id="lbl-b2" font-weight="bold" fill="#e65100" font-size="16px" text-anchor="middle" alignment-baseline="middle">6</text>
                 <text id="lbl-b3" font-weight="bold" fill="#4a148c" font-size="16px" text-anchor="middle" alignment-baseline="middle">7</text>
@@ -153,20 +113,15 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
-                <!-- Arcs for Alternate Interior -->
                 <path id="alt-top-arc" fill="rgba(25, 118, 210, 0.4)" stroke="#1976d2" stroke-width="2"/>
                 <path id="alt-bot-arc" fill="rgba(211, 47, 47, 0.4)" stroke="#d32f2f" stroke-width="2"/>
 
-                <!-- Fixed Top Line -->
                 <line x1="50" y1="80" x2="450" y2="80" stroke="#333" stroke-width="6" stroke-linecap="round"/>
                 
-                <!-- Fixed Transversal -->
                 <line id="s2-trans" stroke="#7b1fa2" stroke-width="4" stroke-linecap="round"/>
 
-                <!-- Tilting Bottom Line -->
                 <line id="s2-bot" stroke="#00897b" stroke-width="6" stroke-linecap="round"/>
 
-                <!-- Angle Labels -->
                 <text id="lbl-alt-top" font-weight="bold" fill="#1976d2" font-size="18px" text-anchor="middle" alignment-baseline="middle">50°</text>
                 <text id="lbl-alt-bot" font-weight="bold" fill="#d32f2f" font-size="18px" text-anchor="middle" alignment-baseline="middle">65°</text>
             </svg>
@@ -245,17 +200,15 @@
     </div>
 
     <script>
-        // Core Mathematical Functions for explicit Cartesian Drawing
         function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
             let angleInRadians = (angleInDegrees) * Math.PI / 180.0;
             return {
                 x: centerX + (radius * Math.cos(angleInRadians)),
-                y: centerY - (radius * Math.sin(angleInRadians)) // SVG Y is inverted
+                y: centerY - (radius * Math.sin(angleInRadians)) 
             };
         }
         
         function getWedgePath(cx, cy, r, startAngle, endAngle) {
-            // Ensure proper angular sweep direction
             while (endAngle <= startAngle) endAngle += 360;
             let start = polarToCartesian(cx, cy, r, startAngle);
             let end = polarToCartesian(cx, cy, r, endAngle);
@@ -270,14 +223,12 @@
             let ang = parseInt(sTrans.value); 
             let sup = 180 - ang;
             
-            // Calculate precise intersection points
             let cxTop = 250 + (200 - 120) / Math.tan(ang * Math.PI / 180);
             let cxBot = 250 + (200 - 280) / Math.tan(ang * Math.PI / 180);
 
             let cyTop = 120;
             let cyBot = 280;
 
-            // Draw Transversal Line
             let t1 = polarToCartesian(250, 200, 300, ang);
             let t2 = polarToCartesian(250, 200, 300, ang + 180);
             document.getElementById('s1-trans').setAttribute('x1', t1.x);
@@ -285,19 +236,16 @@
             document.getElementById('s1-trans').setAttribute('x2', t2.x);
             document.getElementById('s1-trans').setAttribute('y2', t2.y);
 
-            // Draw Wedges Top
             document.getElementById('t-arc-1').setAttribute('d', getWedgePath(cxTop, cyTop, 40, 0, ang)); 
             document.getElementById('t-arc-2').setAttribute('d', getWedgePath(cxTop, cyTop, 40, ang, 180)); 
             document.getElementById('t-arc-3').setAttribute('d', getWedgePath(cxTop, cyTop, 40, 180, 180 + ang)); 
             document.getElementById('t-arc-4').setAttribute('d', getWedgePath(cxTop, cyTop, 40, 180 + ang, 360));
 
-            // Draw Wedges Bottom
             document.getElementById('b-arc-1').setAttribute('d', getWedgePath(cxBot, cyBot, 40, 0, ang)); 
             document.getElementById('b-arc-2').setAttribute('d', getWedgePath(cxBot, cyBot, 40, ang, 180)); 
             document.getElementById('b-arc-3').setAttribute('d', getWedgePath(cxBot, cyBot, 40, 180, 180 + ang)); 
             document.getElementById('b-arc-4').setAttribute('d', getWedgePath(cxBot, cyBot, 40, 180 + ang, 360)); 
 
-            // Position Labels Top
             let pT1 = polarToCartesian(cxTop, cyTop, 60, ang/2);
             let pT2 = polarToCartesian(cxTop, cyTop, 60, ang + sup/2);
             let pT3 = polarToCartesian(cxTop, cyTop, 60, 180 + ang/2);
@@ -308,7 +256,6 @@
             document.getElementById('lbl-t3').setAttribute('x', pT3.x); document.getElementById('lbl-t3').setAttribute('y', pT3.y);
             document.getElementById('lbl-t4').setAttribute('x', pT4.x); document.getElementById('lbl-t4').setAttribute('y', pT4.y);
 
-            // Position Labels Bottom
             let pB1 = polarToCartesian(cxBot, cyBot, 60, ang/2);
             let pB2 = polarToCartesian(cxBot, cyBot, 60, ang + sup/2);
             let pB3 = polarToCartesian(cxBot, cyBot, 60, 180 + ang/2);
@@ -326,19 +273,16 @@
         sTrans.addEventListener('input', updateTransversal);
         updateTransversal();
 
-
         // --- 2. THE PARALLEL TEST LOGIC ---
         const sTilt = document.getElementById('s-tilt');
 
         function updateTilt() {
             let tilt = parseInt(sTilt.value); 
             
-            // Fixed Transversal Angle = 130 degrees (points Up-Left to Down-Right)
             let transAng = 130;
             let cxTop = 250 + (160 - 80) / Math.tan(transAng * Math.PI / 180);
             let cxBot = 250 + (160 - 240) / Math.tan(transAng * Math.PI / 180);
 
-            // Draw Transversal
             let t1 = polarToCartesian(250, 160, 300, transAng);
             let t2 = polarToCartesian(250, 160, 300, transAng + 180);
             document.getElementById('s2-trans').setAttribute('x1', t1.x);
@@ -346,7 +290,6 @@
             document.getElementById('s2-trans').setAttribute('x2', t2.x);
             document.getElementById('s2-trans').setAttribute('y2', t2.y);
             
-            // Draw Tilted Bottom Line
             let b1 = polarToCartesian(cxBot, 240, 300, tilt);
             let b2 = polarToCartesian(cxBot, 240, 300, tilt + 180);
             document.getElementById('s2-bot').setAttribute('x1', b1.x);
@@ -354,11 +297,9 @@
             document.getElementById('s2-bot').setAttribute('x2', b2.x);
             document.getElementById('s2-bot').setAttribute('y2', b2.y);
 
-            // Draw Wedges
             document.getElementById('alt-top-arc').setAttribute('d', getWedgePath(cxTop, 80, 45, 310, 360));
             document.getElementById('alt-bot-arc').setAttribute('d', getWedgePath(cxBot, 240, 45, 130, 180 + tilt));
 
-            // Position Labels
             let pTop = polarToCartesian(cxTop, 80, 65, 335);
             document.getElementById('lbl-alt-top').setAttribute('x', pTop.x);
             document.getElementById('lbl-alt-top').setAttribute('y', pTop.y);
@@ -383,7 +324,6 @@
         sTilt.addEventListener('input', updateTilt);
         updateTilt();
 
-
         // --- 3. CO-INTERIOR ANGLES LOGIC ---
         const sCoint = document.getElementById('s-coint');
 
@@ -394,7 +334,6 @@
             let cxTop = 250 + (160 - 100) / Math.tan(ang * Math.PI / 180);
             let cxBot = 250 + (160 - 220) / Math.tan(ang * Math.PI / 180);
 
-            // Draw Transversal
             let t1 = polarToCartesian(250, 160, 300, ang);
             let t2 = polarToCartesian(250, 160, 300, ang + 180);
             document.getElementById('s3-trans').setAttribute('x1', t1.x);
@@ -402,11 +341,9 @@
             document.getElementById('s3-trans').setAttribute('x2', t2.x);
             document.getElementById('s3-trans').setAttribute('y2', t2.y);
 
-            // Draw Wedges
             document.getElementById('coint-arc-top').setAttribute('d', getWedgePath(cxTop, 100, 45, 180 + ang, 360));
             document.getElementById('coint-arc-bot').setAttribute('d', getWedgePath(cxBot, 220, 45, 0, ang));
 
-            // Position Labels
             let pT = polarToCartesian(cxTop, 100, 65, (180 + ang + 360) / 2);
             document.getElementById('lbl-coint-top').setAttribute('x', pT.x);
             document.getElementById('lbl-coint-top').setAttribute('y', pT.y);
@@ -422,7 +359,6 @@
 
         sCoint.addEventListener('input', updateCoint);
         updateCoint();
-
 
         // --- Q&A LOGIC ---
         function toggleAnswer(id) {

@@ -4,47 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Introduction to Euclid's Geometry - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #1a237e; font-size: 2.2em; margin-bottom: 10px; }
-        
-        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .back-btn { display: inline-block; background: #3949ab; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateY(-3px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c5cae9; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #3949ab; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #3949ab; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 400px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #9fa8da; font-size: 0.95em; min-width: 140px; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e8eaf6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #3949ab; }
-        .qa-question { font-weight: bold; color: #1a237e; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #3949ab; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #3949ab; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
-        .nav-btn:hover { background: #283593; transform: scale(1.05); }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 500px; height: 400px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
     </style>
 </head>
-<body>
+<body class="theme-ch5">
     <div class="top-nav">
         <a href="../index.html" class="back-btn">🏠 Course Index</a>
     </div>
@@ -110,9 +76,7 @@
                 </defs>
                 <rect x="0" y="0" width="500" height="400" fill="url(#grid1)" />
 
-                <!-- The Extended Line (Postulate 2) -->
                 <line id="geom-line-ext" stroke="#ffb300" stroke-width="6" stroke-dasharray="10,10" opacity="0.6"/>
-                <!-- The Base Segment (Postulate 1) -->
                 <line id="geom-line-base" stroke="#e65100" stroke-width="6"/>
 
                 <circle id="geom-dot-a" r="8" fill="#d32f2f" stroke="#fff" stroke-width="2"/>
@@ -152,14 +116,11 @@
             <svg id="circ-svg" class="svg-canvas" viewBox="-30 -30 560 460">
                 <rect x="0" y="0" width="500" height="400" fill="url(#grid1)" />
                 
-                <!-- The Circle -->
                 <circle id="geom-circle" cx="250" cy="200" r="100" fill="#80cbc4" opacity="0.3" stroke="#00897b" stroke-width="4"/>
                 
-                <!-- Radius Line -->
                 <line id="geom-circ-rad" stroke="#004d40" stroke-width="3" stroke-dasharray="5,5"/>
                 <text id="geom-lbl-r" font-weight="bold" fill="#004d40" font-size="16px">r</text>
 
-                <!-- Center Point -->
                 <circle id="geom-circ-center" r="6" fill="#004d40"/>
                 <text id="geom-lbl-center" font-weight="bold" fill="#004d40" font-size="16px">Center</text>
             </svg>
@@ -180,14 +141,12 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
-                <!-- Target Blue Angle (Fixed) -->
                 <g transform="translate(150, 200)">
                     <path d="M 0 0 L 80 0 M 0 0 L 0 -80" fill="none" stroke="#1976d2" stroke-width="8" stroke-linecap="round"/>
                     <rect x="0" y="-20" width="20" height="20" fill="none" stroke="#1976d2" stroke-width="3"/>
                     <text x="-20" y="20" font-weight="bold" fill="#1976d2" font-size="18px">A</text>
                 </g>
 
-                <!-- Moving Red Angle -->
                 <g id="moving-angle">
                     <path d="M 0 0 L 80 0 M 0 0 L 0 -80" fill="none" stroke="#d32f2f" stroke-width="8" stroke-linecap="round" opacity="0.8"/>
                     <rect x="0" y="-20" width="20" height="20" fill="none" stroke="#d32f2f" stroke-width="3" opacity="0.8"/>
@@ -221,18 +180,14 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 600 400" style="background: #fff; height: 350px; max-width: 600px;">
-                <!-- Transversal -->
                 <line x1="200" y1="50" x2="200" y2="350" stroke="#333" stroke-width="4" stroke-dasharray="10,5"/>
                 
-                <!-- Rotating Lines -->
                 <line id="geom-line-top" stroke="#c2185b" stroke-width="6"/>
                 <line id="geom-line-bottom" stroke="#1976d2" stroke-width="6"/>
 
-                <!-- Angle Arcs -->
                 <path id="arc-top" fill="none" stroke="#c2185b" stroke-width="3"/>
                 <path id="arc-bottom" fill="none" stroke="#1976d2" stroke-width="3"/>
 
-                <!-- Dynamic Labels -->
                 <text id="lbl-ang1" font-weight="bold" fill="#c2185b" font-size="16px" text-anchor="middle" alignment-baseline="middle"></text>
                 <text id="lbl-ang2" font-weight="bold" fill="#1976d2" font-size="16px" text-anchor="middle" alignment-baseline="middle"></text>
             </svg>
@@ -437,17 +392,16 @@
         }
 
         function updateParallel() {
-            let ang1 = parseInt(sAng1.value); // Top interior 
-            let ang2 = parseInt(sAng2.value); // Bottom interior 
+            let ang1 = parseInt(sAng1.value); 
+            let ang2 = parseInt(sAng2.value); 
             
             document.getElementById('val-ang1').textContent = ang1;
             document.getElementById('val-ang2').textContent = ang2;
 
-            let cx1 = 200, cy1 = 120; // Top intersection
-            let cx2 = 200, cy2 = 280; // Bottom intersection
+            let cx1 = 200, cy1 = 120; 
+            let cx2 = 200, cy2 = 280; 
             let lineLength = 400;
 
-            // Transversal goes from top to bottom (angle 90° for top, angle -90° for bottom)
             let topAngle = 90 - ang1;
             let botAngle = -90 + ang2;
 
@@ -467,11 +421,9 @@
             document.getElementById('geom-line-bottom').setAttribute('x2', botP1.x);
             document.getElementById('geom-line-bottom').setAttribute('y2', botP1.y);
 
-            // Draw explicit SVG arcs
             document.getElementById('arc-top').setAttribute('d', getArcPath(cx1, cy1, 40, topAngle, 90));
             document.getElementById('arc-bottom').setAttribute('d', getArcPath(cx2, cy2, 40, -90, botAngle));
 
-            // Position and align labels dynamically
             let posT = polarToCartesian(cx1, cy1, 65, 90 - ang1/2);
             document.getElementById('lbl-ang1').setAttribute('x', posT.x);
             document.getElementById('lbl-ang1').setAttribute('y', posT.y);
@@ -482,7 +434,6 @@
             document.getElementById('lbl-ang2').setAttribute('y', posB.y);
             document.getElementById('lbl-ang2').textContent = ang2 + "°";
 
-            // Status Dashboard
             let sum = ang1 + ang2;
             document.getElementById('post5-sum').textContent = sum + "°";
             
@@ -503,7 +454,6 @@
         sAng2.addEventListener('input', updateParallel);
         updateParallel();
 
-        // --- Q&A LOGIC ---
         function toggleAnswer(id) {
             const ans = document.getElementById(id);
             const btn = ans.previousElementSibling;

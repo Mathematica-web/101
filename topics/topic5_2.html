@@ -4,47 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Euclid's Axioms - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #1a237e; font-size: 2.2em; margin-bottom: 10px; }
-        
-        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .back-btn { display: inline-block; background: #3949ab; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateY(-3px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c5cae9; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #3949ab; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #3949ab; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #9fa8da; font-size: 0.95em; min-width: 140px; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e8eaf6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #3949ab; }
-        .qa-question { font-weight: bold; color: #1a237e; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #3949ab; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #3949ab; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
-        .nav-btn:hover { background: #283593; transform: scale(1.05); }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 500px; height: 350px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
     </style>
 </head>
-<body>
+<body class="theme-ch5">
     <div class="top-nav">
         <a href="../index.html" class="back-btn">🏠 Course Index</a>
     </div>
@@ -113,17 +79,14 @@
             </div>
 
             <svg id="bal-svg" class="svg-canvas" viewBox="0 0 500 300" style="height: 300px;">
-                <!-- Ground -->
                 <line x1="50" y1="250" x2="450" y2="250" stroke="#333" stroke-width="4"/>
                 
-                <!-- Pillar A -->
                 <rect id="rect-a" x="125" y="150" width="80" height="100" fill="#d32f2f" stroke="#b71c1c" stroke-width="2"/>
                 <text id="lbl-a" x="165" y="210" font-weight="bold" fill="#fff" font-size="24px" text-anchor="middle">A</text>
                 
                 <rect id="rect-ca" x="125" y="100" width="80" height="50" fill="#1976d2" stroke="#0d47a1" stroke-width="2"/>
                 <text id="lbl-ca" x="165" y="135" font-weight="bold" fill="#fff" font-size="20px" text-anchor="middle">+C</text>
 
-                <!-- Pillar B -->
                 <rect id="rect-b" x="295" y="150" width="80" height="100" fill="#d32f2f" stroke="#b71c1c" stroke-width="2"/>
                 <text id="lbl-b" x="335" y="210" font-weight="bold" fill="#fff" font-size="24px" text-anchor="middle">B</text>
                 
@@ -156,11 +119,9 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 250" style="height: 250px; background: #fafafa;">
-                <!-- Fixed Polygon 1 -->
                 <polygon points="100,50 150,150 50,200" fill="none" stroke="#004d40" stroke-width="6"/>
                 <text x="75" y="140" font-weight="bold" fill="#004d40" font-size="20px">1</text>
 
-                <!-- Moving Polygon 2 -->
                 <g id="moving-poly">
                     <polygon points="350,50 400,150 300,200" fill="#80cbc4" stroke="#00897b" stroke-width="4" opacity="0.8"/>
                     <text x="325" y="140" font-weight="bold" fill="#00695c" font-size="20px">2</text>
@@ -189,14 +150,11 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 350" style="background: #fff; height: 350px;">
-                <!-- Full Circle (The Whole) -->
                 <circle cx="150" cy="175" r="100" fill="#f8bbd0" stroke="#c2185b" stroke-width="4"/>
                 <text x="150" y="310" font-weight="bold" fill="#880e4f" font-size="20px" text-anchor="middle">The Whole (360°)</text>
                 
-                <!-- The Extracted Part -->
                 <path id="pie-slice" fill="#d81b60" stroke="#880e4f" stroke-width="3" transform="translate(350, 175)"/>
                 
-                <!-- Utilizing tspan to ensure the text stays within the SVG Canvas -->
                 <text x="350" y="310" font-weight="bold" fill="#880e4f" font-size="20px" text-anchor="middle">The Part (<tspan id="txt-part">60</tspan>°)</text>
             </svg>
 
@@ -250,18 +208,15 @@
             document.getElementById('val-ax-ab').textContent = ab;
             document.getElementById('val-ax-c').textContent = c >= 0 ? "+" + c : c;
 
-            // Base scale 25px per unit
             let scale = 25;
             let baseH = ab * scale;
             let cH = Math.abs(c) * scale;
 
-            // Pillar A
             let rectA = document.getElementById('rect-a');
             rectA.setAttribute('y', 250 - baseH);
             rectA.setAttribute('height', baseH);
             document.getElementById('lbl-a').setAttribute('y', 250 - baseH/2 + 8);
 
-            // Addition C on A
             let rectCa = document.getElementById('rect-ca');
             let lblCa = document.getElementById('lbl-ca');
             if (c === 0) {
@@ -271,26 +226,23 @@
                 rectCa.style.display = "block"; lblCa.style.display = "block";
                 rectCa.setAttribute('y', 250 - baseH - cH);
                 rectCa.setAttribute('height', cH);
-                rectCa.setAttribute('fill', '#1976d2'); // Blue for add
+                rectCa.setAttribute('fill', '#1976d2'); 
                 lblCa.setAttribute('y', 250 - baseH - cH/2 + 6);
                 lblCa.textContent = `+${c}`;
             } else {
-                // Subtraction (hides part of base)
                 rectCa.style.display = "block"; lblCa.style.display = "block";
                 rectCa.setAttribute('y', 250 - baseH);
                 rectCa.setAttribute('height', cH);
-                rectCa.setAttribute('fill', 'rgba(255,255,255,0.7)'); // Ghost out top part
+                rectCa.setAttribute('fill', 'rgba(255,255,255,0.7)'); 
                 lblCa.setAttribute('y', 250 - baseH + cH/2 + 6);
                 lblCa.textContent = `${c}`;
             }
 
-            // Pillar B
             let rectB = document.getElementById('rect-b');
             rectB.setAttribute('y', 250 - baseH);
             rectB.setAttribute('height', baseH);
             document.getElementById('lbl-b').setAttribute('y', 250 - baseH/2 + 8);
 
-            // Addition C on B
             let rectCb = document.getElementById('rect-cb');
             let lblCb = document.getElementById('lbl-cb');
             if (c === 0) {
@@ -312,7 +264,6 @@
                 lblCb.textContent = `${c}`;
             }
 
-            // Dashboard
             let status = document.getElementById('ax123-status');
             let mathStr = document.getElementById('ax123-math');
             let total = ab + c;
@@ -333,15 +284,12 @@
         sAxC.addEventListener('input', updateBalance);
         updateBalance();
 
-
         // --- 2. AXIOM 4 (COINCIDENCE) LOGIC ---
         const sCoincide = document.getElementById('s-coincide');
 
         function updateCoincide() {
-            let t = parseInt(sCoincide.value) / 100; // 0 to 1
+            let t = parseInt(sCoincide.value) / 100; 
 
-            // Polygon 2 starts at x=350, needs to move to x=100 (a distance of -250)
-            // By translating -250*t, the polygon smoothly moves leftwards.
             let currX = 250 * t;
             
             let movingPoly = document.getElementById('moving-poly');

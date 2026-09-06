@@ -4,50 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heron's Formula & Equilateral Triangles - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #1a237e; font-size: 2.2em; margin-bottom: 10px; }
-        
-        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .back-btn { display: inline-block; background: #3f51b5; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateY(-3px); background: #303f9f; }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c5cae9; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #3f51b5; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #3f51b5; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #9fa8da; font-size: 0.95em; min-width: 140px; flex: 1; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
-        
-        .proof-box { background: #e8eaf6; padding: 20px; border-radius: 10px; border-left: 6px solid #3f51b5; margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
-        .proof-box h3 { color: #1a237e; margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e8eaf6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #3f51b5; }
-        .qa-question { font-weight: bold; color: #1a237e; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #3f51b5; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); background: #303f9f; }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #3f51b5; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
-        .nav-btn:hover { background: #1a237e; transform: scale(1.05); }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 500px; height: 350px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        .proof-box { background: var(--bg-light); padding: 20px; border-radius: 10px; border-left: 6px solid var(--btn-main); margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
+        .proof-box h3 { color: var(--text-main); margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
     </style>
 </head>
-<body>
+<body class="theme-ch10">
     <div class="top-nav">
         <a href="../index.html" class="back-btn">🏠 Course Index</a>
     </div>
@@ -210,34 +175,28 @@
             let sLine = document.getElementById('heron-s');
             let aLine = document.getElementById('heron-area');
 
-            // Triangle Inequality Check
             if (a + b > c && a + c > b && b + c > a) {
                 let s = (a + b + c) / 2;
                 let areaSq = s * (s - a) * (s - b) * (s - c);
                 let area = Math.sqrt(areaSq);
 
-                // Math texts
                 sLine.textContent = `s = (${a} + ${b} + ${c}) / 2 = ${s}`;
                 aLine.innerHTML = `Area = √(${s} * ${s-a} * ${s-b} * ${s-c}) = <strong>${Math.round(area)}</strong> sq units`;
 
-                // Calculate coordinates for SVG
-                // Base c lies on x-axis from (0,0) to (c,0)
                 let x = (c*c + b*b - a*a) / (2 * c);
                 let y = Math.sqrt(b*b - x*x);
 
-                // Center drawing inside 500x350 box
-                // Triangle bounding box:
                 let minX = Math.min(0, c, x);
                 let maxX = Math.max(0, c, x);
                 let w = maxX - minX;
                 let h = y;
                 
                 let offsetX = (500 - w) / 2 - minX;
-                let offsetY = (350 + h) / 2; // Y goes down
+                let offsetY = (350 + h) / 2; 
 
-                let pt1 = {x: 0 + offsetX, y: offsetY}; // Left base
-                let pt2 = {x: c + offsetX, y: offsetY}; // Right base
-                let pt3 = {x: x + offsetX, y: offsetY - y}; // Top vertex
+                let pt1 = {x: 0 + offsetX, y: offsetY}; 
+                let pt2 = {x: c + offsetX, y: offsetY}; 
+                let pt3 = {x: x + offsetX, y: offsetY - y}; 
 
                 document.getElementById('heron-poly').setAttribute('points', `${pt1.x},${pt1.y} ${pt2.x},${pt2.y} ${pt3.x},${pt3.y}`);
                 document.getElementById('heron-poly').style.display = 'block';
@@ -289,7 +248,7 @@
             let h = (Math.sqrt(3) / 2) * a;
 
             let cx = 250;
-            let by = 280; // Base y
+            let by = 280; 
             
             let p1x = cx - a/2, p1y = by;
             let p2x = cx + a/2, p2y = by;
@@ -309,7 +268,6 @@
         sEqA.addEventListener('input', updateEq);
         updateEq();
 
-        // --- Q&A LOGIC ---
         function toggleAnswer(id) {
             const ans = document.getElementById(id);
             const btn = ans.previousElementSibling;

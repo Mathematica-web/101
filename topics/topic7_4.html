@@ -4,47 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inequalities in a Triangle - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #004d40; font-size: 2.2em; margin-bottom: 10px; }
-        
-        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .back-btn { display: inline-block; background: #00695c; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateY(-3px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2dfdb; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #00695c; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #00695c; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #4db6ac; font-size: 0.95em; min-width: 140px; flex: 1; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e0f2f1; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00695c; }
-        .qa-question { font-weight: bold; color: #004d40; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #00695c; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #00695c; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
-        .nav-btn:hover { background: #004d40; transform: scale(1.05); }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 500px; height: 350px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
     </style>
 </head>
-<body>
+<body class="theme-ch7">
     <div class="top-nav">
         <a href="../index.html" class="back-btn">🏠 Course Index</a>
     </div>
@@ -90,22 +56,18 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
-                <!-- Triangle Sides -->
                 <line id="side-ab" stroke="#ccc" stroke-width="6" stroke-linecap="round"/>
                 <line id="side-bc" stroke="#ccc" stroke-width="6" stroke-linecap="round"/>
                 <line id="side-ca" stroke="#ccc" stroke-width="6" stroke-linecap="round"/>
 
-                <!-- Angle Wedges -->
                 <path id="arc-a" fill="rgba(0,0,0,0.1)" stroke="#999" stroke-width="2"/>
                 <path id="arc-b" fill="rgba(0,0,0,0.1)" stroke="#999" stroke-width="2"/>
                 <path id="arc-c" fill="rgba(0,0,0,0.1)" stroke="#999" stroke-width="2"/>
 
-                <!-- Angle Labels -->
                 <text id="lbl-ang-a" font-weight="bold" fill="#555" font-size="16px" text-anchor="middle" alignment-baseline="middle"></text>
                 <text id="lbl-ang-b" font-weight="bold" fill="#555" font-size="16px" text-anchor="middle" alignment-baseline="middle"></text>
                 <text id="lbl-ang-c" font-weight="bold" fill="#555" font-size="16px" text-anchor="middle" alignment-baseline="middle"></text>
 
-                <!-- Vertices -->
                 <circle id="dot-c" r="8" fill="#333" stroke="#fff" stroke-width="2"/>
                 <text id="txt-c" font-weight="bold" fill="#333" font-size="20px" text-anchor="middle">C</text>
 
@@ -147,17 +109,12 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 320" style="height: 320px; background: #fafafa;">
-                <!-- Fixed Base (250 units) -->
                 <line x1="125" y1="280" x2="375" y2="280" stroke="#388e3c" stroke-width="8" stroke-linecap="round"/>
                 <text x="250" y="310" font-weight="bold" fill="#388e3c" font-size="16px" text-anchor="middle">Base = 250 units</text>
 
-                <!-- Left Arm -->
                 <line id="bridge-arm-l" x1="125" y1="280" stroke="#d32f2f" stroke-width="6" stroke-linecap="round"/>
-                
-                <!-- Right Arm -->
                 <line id="bridge-arm-r" x1="375" y1="280" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
 
-                <!-- Vertex Points -->
                 <circle cx="125" cy="280" r="6" fill="#333"/>
                 <circle cx="375" cy="280" r="6" fill="#333"/>
 
@@ -206,7 +163,6 @@
     </div>
 
     <script>
-        // Mathematical Helpers
         function normalizeRad(rad) {
             if (rad < 0) rad += 2 * Math.PI;
             return rad;
@@ -215,7 +171,7 @@
         function polarToCartesian(cx, cy, r, angleInRads) {
             return {
                 x: cx + r * Math.cos(angleInRads),
-                y: cy + r * Math.sin(angleInRads) // Standard Y for math computations
+                y: cy + r * Math.sin(angleInRads) 
             };
         }
 
@@ -223,8 +179,6 @@
             if (endRad < startRad) endRad += 2 * Math.PI;
             let start = polarToCartesian(cx, cy, r, startRad);
             let end = polarToCartesian(cx, cy, r, endRad);
-            
-            // Sweep flag 1 draws positive direction
             return `M ${cx} ${cy} L ${start.x} ${start.y} A ${r} ${r} 0 0 1 ${end.x} ${end.y} Z`;
         }
 
@@ -268,36 +222,30 @@
             document.getElementById('txt-c').setAttribute('x', cx);
             document.getElementById('txt-c').setAttribute('y', cy - 15);
 
-            // Side lengths
-            let lenAB = Math.round(dist(ax, ay, bx, by)); // 300
+            let lenAB = Math.round(dist(ax, ay, bx, by)); 
             let lenBC = Math.round(dist(bx, by, cx, cy));
             let lenCA = Math.round(dist(cx, cy, ax, ay));
 
-            // Radians Calculation
-            let radAB = normalizeRad(Math.atan2(by - ay, bx - ax)); // 0 rad
+            let radAB = normalizeRad(Math.atan2(by - ay, bx - ax)); 
             let radAC = normalizeRad(Math.atan2(cy - ay, cx - ax));
             
-            let radBA = normalizeRad(Math.atan2(ay - by, ax - bx)); // PI rad
+            let radBA = normalizeRad(Math.atan2(ay - by, ax - bx)); 
             let radBC = normalizeRad(Math.atan2(cy - by, cx - bx));
             
             let radCA = normalizeRad(Math.atan2(ay - cy, ax - cx));
             let radCB = normalizeRad(Math.atan2(by - cy, bx - cx));
 
-            // Wedges
             document.getElementById('arc-a').setAttribute('d', createWedge(ax, ay, 40, radAC, radAB));
             document.getElementById('arc-b').setAttribute('d', createWedge(bx, by, 40, radBA, radBC));
             document.getElementById('arc-c').setAttribute('d', createWedge(cx, cy, 40, radCB, radCA));
 
-            // Degrees Calculation
             let degA = Math.round((radAB < radAC ? radAB + 2*Math.PI - radAC : radAB - radAC) * 180 / Math.PI);
             let degB = Math.round((radBC < radBA ? radBC + 2*Math.PI - radBA : radBC - radBA) * 180 / Math.PI);
             let degC = 180 - degA - degB; 
 
-            // Highlight logic
             let maxLen = Math.max(lenAB, lenBC, lenCA);
             let maxDeg = Math.max(degA, degB, degC);
 
-            // Reset styling
             document.getElementById('side-ab').setAttribute('stroke', '#ccc');
             document.getElementById('side-bc').setAttribute('stroke', '#ccc');
             document.getElementById('side-ca').setAttribute('stroke', '#ccc');
@@ -340,7 +288,6 @@
             else if (maxDeg === degB) { largestName = "B"; }
             else if (maxDeg === degC) { largestName = "C"; }
 
-            // Position Labels
             let pA = polarToCartesian(ax, ay, 65, getMidAngle(radAC, radAB));
             document.getElementById('lbl-ang-a').setAttribute('x', pA.x);
             document.getElementById('lbl-ang-a').setAttribute('y', pA.y);
@@ -356,7 +303,6 @@
             document.getElementById('lbl-ang-c').setAttribute('y', pC.y);
             document.getElementById('lbl-ang-c').textContent = `${degC}°`;
 
-            // Dashboard
             document.getElementById('stat-max-side').textContent = `Side ${longestName} = ${maxLen} units`;
             document.getElementById('stat-max-ang').textContent = `Angle ${largestName} = ${maxDeg}°`;
         }
@@ -371,13 +317,13 @@
         const sArmR = document.getElementById('s-arm-r');
 
         function updateInequality() {
-            let armL = parseInt(sArmL.value); // b
-            let armR = parseInt(sArmR.value); // a
+            let armL = parseInt(sArmL.value); 
+            let armR = parseInt(sArmR.value); 
             
             document.getElementById('val-arm-l').textContent = armL;
             document.getElementById('val-arm-r').textContent = armR;
 
-            let baseLen = 250; // c
+            let baseLen = 250; 
             let ax = 125, ay = 280;
             let bx = 375, by = 280;
 
@@ -391,12 +337,11 @@
             document.getElementById('bridge-sum').textContent = `${armL} + ${armR} = ${armL + armR} units`;
 
             if (armL + armR > baseLen) {
-                // Triangle forms! Calculate intersection point.
                 let x = (armL*armL - armR*armR + baseLen*baseLen) / (2 * baseLen);
                 let y = Math.sqrt(armL*armL - x*x);
 
                 let cx = ax + x;
-                let cy = ay - y; // Y inverted
+                let cy = ay - y; 
 
                 lineL.setAttribute('x2', cx);
                 lineL.setAttribute('y2', cy);
@@ -405,13 +350,12 @@
 
                 dotL.setAttribute('cx', cx); dotL.setAttribute('cy', cy);
                 dotR.setAttribute('cx', cx); dotR.setAttribute('cy', cy);
-                dotR.style.display = 'none'; // Overlaps perfectly
+                dotR.style.display = 'none'; 
                 lblGap.textContent = "";
 
                 status.textContent = `${armL + armR} > ${baseLen} : Triangle successfully forms!`;
                 status.style.color = "#2e7d32";
             } else {
-                // Arms fall flat
                 lineL.setAttribute('x2', ax + armL);
                 lineL.setAttribute('y2', ay);
                 lineR.setAttribute('x2', bx - armR);

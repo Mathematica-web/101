@@ -4,50 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Angle Subtended by an Arc - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
-        
-        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .back-btn { display: inline-block; background: #00838f; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateY(-3px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #00838f; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #00838f; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #80deea; font-size: 0.95em; min-width: 140px; flex: 1; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
-        
-        .proof-box { background: #e0f7fa; padding: 20px; border-radius: 10px; border-left: 6px solid #00838f; margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
-        .proof-box h3 { color: #006064; margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e0f7fa; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00838f; }
-        .qa-question { font-weight: bold; color: #006064; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #00838f; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #00838f; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
-        .nav-btn:hover { background: #006064; transform: scale(1.05); }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 500px; height: 350px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        .proof-box { background: var(--bg-light); padding: 20px; border-radius: 10px; border-left: 6px solid var(--btn-main); margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
+        .proof-box h3 { color: var(--text-main); margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
     </style>
 </head>
-<body>
+<body class="theme-ch9">
     <div class="top-nav">
         <a href="../index.html" class="back-btn">🏠 Course Index</a>
     </div>
@@ -88,7 +53,8 @@
             <div class="slider-row">
                 <div class="slider-group" style="border-color: #c2185b; background: #fff; width: 80%;">
                     <label style="color: #880e4f; font-weight: bold;">Slide Point C along the Major Arc</label>
-                    <input type="range" id="s-arc-c" min="20" max="160" value="90">
+                    <!-- Map 190 to 350 for the top arc -->
+                    <input type="range" id="s-arc-c" min="190" max="350" value="270">
                 </div>
             </div>
 
@@ -97,27 +63,24 @@
                 <circle cx="250" cy="180" r="5" fill="#333"/>
                 <text x="250" y="170" font-weight="bold" fill="#333" text-anchor="middle">Center</text>
 
-                <!-- Fixed Base Arc & Radii -->
-                <path d="M 146 240 A 120 120 0 0 0 354 240" fill="none" stroke="#d81b60" stroke-width="8"/>
-                <line x1="250" y1="180" x2="146" y2="240" stroke="#d81b60" stroke-width="4"/>
-                <line x1="250" y1="180" x2="354" y2="240" stroke="#d81b60" stroke-width="4"/>
+                <path id="base-arc" fill="none" stroke="#d81b60" stroke-width="8"/>
+                <line id="rad-a" stroke="#d81b60" stroke-width="4"/>
+                <line id="rad-b" stroke="#d81b60" stroke-width="4"/>
                 
-                <path d="M 250 180 L 224 195 A 30 30 0 0 0 276 195 Z" fill="rgba(216, 27, 96, 0.3)"/>
-                <text x="250" y="220" font-weight="bold" fill="#d81b60" text-anchor="middle">120°</text>
+                <path id="cent-wedge" fill="rgba(216, 27, 96, 0.3)"/>
+                <text id="cent-lbl" font-weight="bold" fill="#d81b60" text-anchor="middle">120°</text>
 
-                <!-- Dynamic Lines to Circumference -->
                 <line id="line-ca" stroke="#1976d2" stroke-width="4"/>
                 <line id="line-cb" stroke="#1976d2" stroke-width="4"/>
 
                 <path id="wedge-c" fill="rgba(25, 118, 210, 0.3)" stroke="#1976d2" stroke-width="2"/>
                 <text id="lbl-c-ang" font-weight="bold" fill="#1976d2" text-anchor="middle">60°</text>
 
-                <!-- Vertices -->
-                <circle cx="146" cy="240" r="6" fill="#333"/>
-                <text x="125" y="255" font-weight="bold" fill="#333" font-size="20px">A</text>
+                <circle id="dot-a" r="6" fill="#333"/>
+                <text id="txt-a" font-weight="bold" fill="#333" font-size="20px">A</text>
 
-                <circle cx="354" cy="240" r="6" fill="#333"/>
-                <text x="365" y="255" font-weight="bold" fill="#333" font-size="20px">B</text>
+                <circle id="dot-b" r="6" fill="#333"/>
+                <text id="txt-b" font-weight="bold" fill="#333" font-size="20px">B</text>
 
                 <circle id="dot-c" r="8" fill="#1976d2" stroke="#fff" stroke-width="2"/>
                 <text id="txt-c" font-weight="bold" fill="#1976d2" font-size="20px">C</text>
@@ -150,11 +113,11 @@
             <div class="slider-row">
                 <div class="slider-group" style="border-color: #1976d2; background: #fff;">
                     <label style="color: #0d47a1; font-weight: bold;">Move Point C (Blue)</label>
-                    <input type="range" id="s-seg-c" min="20" max="80" value="45">
+                    <input type="range" id="s-seg-c" min="190" max="260" value="230">
                 </div>
                 <div class="slider-group" style="border-color: #f57c00; background: #fff;">
                     <label style="color: #e65100; font-weight: bold;">Move Point D (Orange)</label>
-                    <input type="range" id="s-seg-d" min="100" max="160" value="135">
+                    <input type="range" id="s-seg-d" min="280" max="350" value="310">
                 </div>
             </div>
 
@@ -162,32 +125,24 @@
                 <circle cx="250" cy="180" r="120" fill="none" stroke="#ccc" stroke-width="4"/>
                 
                 <!-- Fixed Base Arc & Chord -->
-                <path d="M 146 240 A 120 120 0 0 0 354 240" fill="none" stroke="#00897b" stroke-width="8"/>
-                <line x1="146" y1="240" x2="354" y2="240" stroke="#00897b" stroke-width="2" stroke-dasharray="5,5"/>
+                <path id="seg-arc" fill="none" stroke="#00897b" stroke-width="8"/>
+                <line id="seg-chord" stroke="#00897b" stroke-width="2" stroke-dasharray="5,5"/>
 
-                <!-- Dynamic Lines Point C -->
                 <line id="seg-line-ca" stroke="#1976d2" stroke-width="3" stroke-linecap="round"/>
                 <line id="seg-line-cb" stroke="#1976d2" stroke-width="3" stroke-linecap="round"/>
 
-                <!-- Dynamic Lines Point D -->
                 <line id="seg-line-da" stroke="#f57c00" stroke-width="3" stroke-linecap="round"/>
                 <line id="seg-line-db" stroke="#f57c00" stroke-width="3" stroke-linecap="round"/>
 
-                <!-- Angle Wedges -->
                 <path id="seg-wedge-c" fill="rgba(25, 118, 210, 0.4)" stroke="#1976d2" stroke-width="2"/>
                 <path id="seg-wedge-d" fill="rgba(245, 124, 0, 0.4)" stroke="#f57c00" stroke-width="2"/>
 
                 <text id="seg-lbl-c" font-weight="bold" fill="#1976d2" text-anchor="middle">60°</text>
                 <text id="seg-lbl-d" font-weight="bold" fill="#f57c00" text-anchor="middle">60°</text>
 
-                <!-- Vertices -->
-                <circle cx="146" cy="240" r="6" fill="#333"/>
-                <text x="125" y="255" font-weight="bold" fill="#333" font-size="20px">A</text>
+                <circle id="seg-dot-a" r="6" fill="#333"/><text id="seg-txt-a" font-weight="bold" fill="#333" font-size="20px">A</text>
+                <circle id="seg-dot-b" r="6" fill="#333"/><text id="seg-txt-b" font-weight="bold" fill="#333" font-size="20px">B</text>
 
-                <circle cx="354" cy="240" r="6" fill="#333"/>
-                <text x="365" y="255" font-weight="bold" fill="#333" font-size="20px">B</text>
-
-                <!-- Dynamic Points -->
                 <circle id="seg-dot-c" r="8" fill="#1976d2" stroke="#fff" stroke-width="2"/>
                 <text id="seg-txt-c" font-weight="bold" fill="#1976d2" font-size="20px">C</text>
 
@@ -201,7 +156,6 @@
                 </div>
             </div>
 
-            <!-- EDUCATIONAL LOGIC BOX -->
             <div class="proof-box" style="border-left-color: #00897b; background: #e0f2f1;">
                 <h3 style="color: #00695c;">💡 Why does this work? (The Proof)</h3>
                 <p>Imagine drawing invisible lines from the center of the circle to points A and B. This creates a central angle AOB. According to the <strong>Double Angle Theorem</strong> (from the first simulator), the angle at the center is always exactly twice the angle at the edge. This mathematically dictates that ∠AOB = 2 &times; ∠ACB, AND ∠AOB = 2 &times; ∠ADB. Since both angles at the edge are exactly half of the <em>same</em> central angle, they must be perfectly equal to each other!</p>
@@ -218,35 +172,29 @@
             <div class="slider-row">
                 <div class="slider-group" style="border-color: #7b1fa2; background: #fff; width: 80%;">
                     <label style="color: #4a148c; font-weight: bold;">Move Point C along the Semicircle</label>
-                    <input type="range" id="s-semi-c" min="10" max="170" value="60">
+                    <input type="range" id="s-semi-c" min="190" max="350" value="270">
                 </div>
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
-                <!-- Full Circle faded -->
                 <circle cx="250" cy="220" r="120" fill="none" stroke="#eee" stroke-width="4"/>
                 
-                <!-- Highlighted Semicircle -->
-                <path d="M 130 220 A 120 120 0 0 1 370 220" fill="rgba(123, 31, 162, 0.05)" stroke="#7b1fa2" stroke-width="4"/>
+                <path id="semi-arc" fill="rgba(123, 31, 162, 0.05)" stroke="#7b1fa2" stroke-width="4"/>
                 
-                <!-- Diameter -->
-                <line x1="130" y1="220" x2="370" y2="220" stroke="#4a148c" stroke-width="6" stroke-linecap="round"/>
+                <line id="semi-diam" stroke="#4a148c" stroke-width="6" stroke-linecap="round"/>
                 <circle cx="250" cy="220" r="5" fill="#333"/>
                 <text x="250" y="240" font-weight="bold" fill="#333" text-anchor="middle">Center (180° Straight Line)</text>
 
-                <!-- Dynamic Lines -->
                 <line id="semi-line-ca" stroke="#e65100" stroke-width="4" stroke-linecap="round"/>
                 <line id="semi-line-cb" stroke="#e65100" stroke-width="4" stroke-linecap="round"/>
 
-                <!-- 90 Degree Indicator Box -->
                 <path id="semi-90-box" fill="rgba(230, 81, 0, 0.2)" stroke="#e65100" stroke-width="3"/>
 
-                <!-- Vertices -->
-                <circle cx="130" cy="220" r="6" fill="#333"/>
-                <text x="110" y="225" font-weight="bold" fill="#333" font-size="20px">A</text>
+                <circle id="semi-dot-a" r="6" fill="#333"/>
+                <text id="semi-txt-a" font-weight="bold" fill="#333" font-size="20px">A</text>
 
-                <circle cx="370" cy="220" r="6" fill="#333"/>
-                <text x="385" y="225" font-weight="bold" fill="#333" font-size="20px">B</text>
+                <circle id="semi-dot-b" r="6" fill="#333"/>
+                <text id="semi-txt-b" font-weight="bold" fill="#333" font-size="20px">B</text>
 
                 <circle id="semi-dot-c" r="8" fill="#e65100" stroke="#fff" stroke-width="2"/>
                 <text id="semi-txt-c" font-weight="bold" fill="#e65100" font-size="20px">C (90°)</text>
@@ -258,7 +206,6 @@
                 </div>
             </div>
 
-            <!-- EDUCATIONAL LOGIC BOX -->
             <div class="proof-box" style="border-left-color: #9c27b0; background: #f3e5f5;">
                 <h3 style="color: #7b1fa2;">💡 Why does this work? (The Proof)</h3>
                 <p>This is a brilliant shortcut derived directly from the Double Angle Theorem! Because points A and B are connected by a diameter, the line passing through the center is perfectly straight. A straight line forms an angle of exactly 180°. Since the angle at the circumference (Angle C) must be exactly half of the central angle, it mathematically calculates to 180° &div; 2 = 90°.</p>
@@ -295,59 +242,94 @@
     </div>
 
     <script>
-        function polarToCartesian(cx, cy, r, angleInDegrees) {
-            let angleInRadians = (angleInDegrees) * Math.PI / 180.0;
+        // Bulletproof pure SVG Cartesian angle functions
+        function getAngleSVG(cx, cy, px, py) {
+            let ang = Math.atan2(py - cy, px - cx) * 180 / Math.PI;
+            if (ang < 0) ang += 360;
+            return ang;
+        }
+
+        function polarToCartesianSVG(cx, cy, r, angleInDegrees) {
+            let rad = angleInDegrees * Math.PI / 180.0;
             return {
-                x: cx + r * Math.cos(angleInRadians),
-                y: cy - r * Math.sin(angleInRadians) // Inverted Y in SVG
+                x: cx + r * Math.cos(rad),
+                y: cy + r * Math.sin(rad)
             };
         }
 
-        function createWedge(cx, cy, r, startAng, endAng) {
-            // Ensure proper angular sweep direction
-            while (endAng <= startAng) endAng += 360;
-            let start = polarToCartesian(cx, cy, r, startAng);
-            let end = polarToCartesian(cx, cy, r, endAng);
-            let largeArcFlag = Math.abs(endAng - startAng) > 180 ? "1" : "0";
-            return `M ${cx} ${cy} L ${start.x} ${start.y} A ${r} ${r} 0 ${largeArcFlag} 0 ${end.x} ${end.y} Z`;
+        function createWedgeSVG(cx, cy, r, startAng, endAng) {
+            while(endAng <= startAng) endAng += 360;
+            let start = polarToCartesianSVG(cx, cy, r, startAng);
+            let end = polarToCartesianSVG(cx, cy, r, endAng);
+            let largeArcFlag = endAng - startAng <= 180 ? "0" : "1";
+            return `M ${cx} ${cy} L ${start.x} ${start.y} A ${r} ${r} 0 ${largeArcFlag} 1 ${end.x} ${end.y} Z`;
+        }
+
+        function getInteriorWedgeSVG(cx, cy, r, px1, py1, px2, py2) {
+            let a1 = getAngleSVG(cx, cy, px1, py1);
+            let a2 = getAngleSVG(cx, cy, px2, py2);
+            let diff = a2 - a1;
+            if (diff < 0) diff += 360;
+            if (diff > 180) {
+                let temp = a1; a1 = a2; a2 = temp;
+            }
+            return createWedgeSVG(cx, cy, r, a1, a2);
+        }
+
+        function getMidAnglePosSVG(cx, cy, r, px1, py1, px2, py2) {
+            let a1 = getAngleSVG(cx, cy, px1, py1);
+            let a2 = getAngleSVG(cx, cy, px2, py2);
+            let diff = a2 - a1;
+            if (diff < 0) diff += 360;
+            if (diff > 180) {
+                let temp = a1; a1 = a2; a2 = temp;
+            }
+            let mid = a1 + (a2 < a1 ? a2 + 360 - a1 : a2 - a1) / 2;
+            return polarToCartesianSVG(cx, cy, r, mid);
         }
 
         // --- 1. DOUBLE ANGLE LOGIC ---
         const sArcC = document.getElementById('s-arc-c');
 
         function updateArcAngle() {
-            let angleDeg = parseInt(sArcC.value); // 20 to 160 top hemisphere
+            let angleC = parseInt(sArcC.value); // 190 to 350
             let cx = 250, cy = 180, r = 120;
-            let posC = polarToCartesian(cx, cy, r, angleDeg);
+            
+            let posA = polarToCartesianSVG(cx, cy, r, 150);
+            let posB = polarToCartesianSVG(cx, cy, r, 30);
+            let posC = polarToCartesianSVG(cx, cy, r, angleC);
 
-            let ax = 146, ay = 240; // Approx 210 degrees
-            let bx = 354, by = 240; // Approx 330 degrees
+            // Base Arc A to B (30 to 150 downwards in SVG)
+            let baseArcFlag = 150 - 30 <= 180 ? "0" : "1";
+            document.getElementById('base-arc').setAttribute('d', `M ${posB.x} ${posB.y} A ${r} ${r} 0 ${baseArcFlag} 1 ${posA.x} ${posA.y}`);
+
+            document.getElementById('rad-a').setAttribute('x1', cx); document.getElementById('rad-a').setAttribute('y1', cy);
+            document.getElementById('rad-a').setAttribute('x2', posA.x); document.getElementById('rad-a').setAttribute('y2', posA.y);
+            document.getElementById('rad-b').setAttribute('x1', cx); document.getElementById('rad-b').setAttribute('y1', cy);
+            document.getElementById('rad-b').setAttribute('x2', posB.x); document.getElementById('rad-b').setAttribute('y2', posB.y);
+
+            document.getElementById('cent-wedge').setAttribute('d', createWedgeSVG(cx, cy, 30, 30, 150));
+            let lblCent = polarToCartesianSVG(cx, cy, 55, 90);
+            document.getElementById('cent-lbl').setAttribute('x', lblCent.x); document.getElementById('cent-lbl').setAttribute('y', lblCent.y + 5);
+
+            document.getElementById('dot-a').setAttribute('cx', posA.x); document.getElementById('dot-a').setAttribute('cy', posA.y);
+            document.getElementById('txt-a').setAttribute('x', posA.x - 20); document.getElementById('txt-a').setAttribute('y', posA.y + 15);
+            
+            document.getElementById('dot-b').setAttribute('cx', posB.x); document.getElementById('dot-b').setAttribute('cy', posB.y);
+            document.getElementById('txt-b').setAttribute('x', posB.x + 20); document.getElementById('txt-b').setAttribute('y', posB.y + 15);
 
             document.getElementById('line-ca').setAttribute('x1', posC.x); document.getElementById('line-ca').setAttribute('y1', posC.y);
-            document.getElementById('line-ca').setAttribute('x2', ax); document.getElementById('line-ca').setAttribute('y2', ay);
+            document.getElementById('line-ca').setAttribute('x2', posA.x); document.getElementById('line-ca').setAttribute('y2', posA.y);
 
             document.getElementById('line-cb').setAttribute('x1', posC.x); document.getElementById('line-cb').setAttribute('y1', posC.y);
-            document.getElementById('line-cb').setAttribute('x2', bx); document.getElementById('line-cb').setAttribute('y2', by);
+            document.getElementById('line-cb').setAttribute('x2', posB.x); document.getElementById('line-cb').setAttribute('y2', posB.y);
 
             document.getElementById('dot-c').setAttribute('cx', posC.x); document.getElementById('dot-c').setAttribute('cy', posC.y);
-            document.getElementById('txt-c').setAttribute('x', posC.x - 10); document.getElementById('txt-c').setAttribute('y', posC.y - 15);
+            document.getElementById('txt-c').setAttribute('x', posC.x); document.getElementById('txt-c').setAttribute('y', posC.y - 15);
 
-            // Vector math for accurate wedge drawing from C
-            // We use mathematical angle (0 is right, CCW is positive)
-            let angCA = Math.atan2(ay - posC.y, posC.x - ax) * 180 / Math.PI; 
-            let angCB = Math.atan2(by - posC.y, posC.x - bx) * 180 / Math.PI;
+            document.getElementById('wedge-c').setAttribute('d', getInteriorWedgeSVG(posC.x, posC.y, 40, posB.x, posB.y, posA.x, posA.y));
             
-            if (angCA < 0) angCA += 360;
-            if (angCB < 0) angCB += 360;
-
-            // Ensure proper sweep from CB to CA
-            document.getElementById('wedge-c').setAttribute('d', createWedge(posC.x, posC.y, 40, angCB, angCA));
-
-            // Position Label C
-            let midAng = angCB + (angCA - angCB)/2;
-            if (angCA < angCB) midAng = angCB + (angCA + 360 - angCB)/2;
-            
-            let pLbl = polarToCartesian(posC.x, posC.y, 60, midAng);
+            let pLbl = getMidAnglePosSVG(posC.x, posC.y, 60, posB.x, posB.y, posA.x, posA.y);
             document.getElementById('lbl-c-ang').setAttribute('x', pLbl.x);
             document.getElementById('lbl-c-ang').setAttribute('y', pLbl.y + 5);
         }
@@ -359,51 +341,49 @@
         const sSegD = document.getElementById('s-seg-d');
 
         function updateSegmentAngles() {
-            let degC = parseInt(sSegC.value);
-            let degD = parseInt(sSegD.value);
+            let degC = parseInt(sSegC.value); // 190 to 260
+            let degD = parseInt(sSegD.value); // 280 to 350
             let cx = 250, cy = 180, r = 120;
 
-            let posC = polarToCartesian(cx, cy, r, degC);
-            let posD = polarToCartesian(cx, cy, r, degD);
+            let posA = polarToCartesianSVG(cx, cy, r, 150);
+            let posB = polarToCartesianSVG(cx, cy, r, 30);
+            let posC = polarToCartesianSVG(cx, cy, r, degC);
+            let posD = polarToCartesianSVG(cx, cy, r, degD);
 
-            let ax = 146, ay = 240; 
-            let bx = 354, by = 240;
+            let baseArcFlag = 150 - 30 <= 180 ? "0" : "1";
+            document.getElementById('seg-arc').setAttribute('d', `M ${posB.x} ${posB.y} A ${r} ${r} 0 ${baseArcFlag} 1 ${posA.x} ${posA.y}`);
+            
+            document.getElementById('seg-chord').setAttribute('x1', posB.x); document.getElementById('seg-chord').setAttribute('y1', posB.y);
+            document.getElementById('seg-chord').setAttribute('x2', posA.x); document.getElementById('seg-chord').setAttribute('y2', posA.y);
 
-            // Point C lines
             document.getElementById('seg-line-ca').setAttribute('x1', posC.x); document.getElementById('seg-line-ca').setAttribute('y1', posC.y);
-            document.getElementById('seg-line-ca').setAttribute('x2', ax); document.getElementById('seg-line-ca').setAttribute('y2', ay);
+            document.getElementById('seg-line-ca').setAttribute('x2', posA.x); document.getElementById('seg-line-ca').setAttribute('y2', posA.y);
             document.getElementById('seg-line-cb').setAttribute('x1', posC.x); document.getElementById('seg-line-cb').setAttribute('y1', posC.y);
-            document.getElementById('seg-line-cb').setAttribute('x2', bx); document.getElementById('seg-line-cb').setAttribute('y2', by);
+            document.getElementById('seg-line-cb').setAttribute('x2', posB.x); document.getElementById('seg-line-cb').setAttribute('y2', posB.y);
 
-            // Point D lines
             document.getElementById('seg-line-da').setAttribute('x1', posD.x); document.getElementById('seg-line-da').setAttribute('y1', posD.y);
-            document.getElementById('seg-line-da').setAttribute('x2', ax); document.getElementById('seg-line-da').setAttribute('y2', ay);
+            document.getElementById('seg-line-da').setAttribute('x2', posA.x); document.getElementById('seg-line-da').setAttribute('y2', posA.y);
             document.getElementById('seg-line-db').setAttribute('x1', posD.x); document.getElementById('seg-line-db').setAttribute('y1', posD.y);
-            document.getElementById('seg-line-db').setAttribute('x2', bx); document.getElementById('seg-line-db').setAttribute('y2', by);
+            document.getElementById('seg-line-db').setAttribute('x2', posB.x); document.getElementById('seg-line-db').setAttribute('y2', posB.y);
 
-            // Dots and text
+            document.getElementById('seg-dot-a').setAttribute('cx', posA.x); document.getElementById('seg-dot-a').setAttribute('cy', posA.y);
+            document.getElementById('seg-txt-a').setAttribute('x', posA.x - 20); document.getElementById('seg-txt-a').setAttribute('y', posA.y + 15);
+            
+            document.getElementById('seg-dot-b').setAttribute('cx', posB.x); document.getElementById('seg-dot-b').setAttribute('cy', posB.y);
+            document.getElementById('seg-txt-b').setAttribute('x', posB.x + 20); document.getElementById('seg-txt-b').setAttribute('y', posB.y + 15);
+
             document.getElementById('seg-dot-c').setAttribute('cx', posC.x); document.getElementById('seg-dot-c').setAttribute('cy', posC.y);
-            document.getElementById('seg-txt-c').setAttribute('x', posC.x - 10); document.getElementById('seg-txt-c').setAttribute('y', posC.y - 15);
+            document.getElementById('seg-txt-c').setAttribute('x', posC.x - 15); document.getElementById('seg-txt-c').setAttribute('y', posC.y - 15);
 
             document.getElementById('seg-dot-d').setAttribute('cx', posD.x); document.getElementById('seg-dot-d').setAttribute('cy', posD.y);
-            document.getElementById('seg-txt-d').setAttribute('x', posD.x + 10); document.getElementById('seg-txt-d').setAttribute('y', posD.y - 15);
+            document.getElementById('seg-txt-d').setAttribute('x', posD.x + 15); document.getElementById('seg-txt-d').setAttribute('y', posD.y - 15);
 
-            // Wedges C
-            let cAngA = Math.atan2(ay - posC.y, posC.x - ax) * 180 / Math.PI; 
-            let cAngB = Math.atan2(by - posC.y, posC.x - bx) * 180 / Math.PI;
-            if (cAngA < 0) cAngA += 360; if (cAngB < 0) cAngB += 360;
-            document.getElementById('seg-wedge-c').setAttribute('d', createWedge(posC.x, posC.y, 40, cAngB, cAngA));
-            let cMid = cAngB + (cAngA < cAngB ? cAngA + 360 - cAngB : cAngA - cAngB)/2;
-            let cLblPos = polarToCartesian(posC.x, posC.y, 60, cMid);
+            document.getElementById('seg-wedge-c').setAttribute('d', getInteriorWedgeSVG(posC.x, posC.y, 40, posB.x, posB.y, posA.x, posA.y));
+            let cLblPos = getMidAnglePosSVG(posC.x, posC.y, 60, posB.x, posB.y, posA.x, posA.y);
             document.getElementById('seg-lbl-c').setAttribute('x', cLblPos.x); document.getElementById('seg-lbl-c').setAttribute('y', cLblPos.y + 5);
 
-            // Wedges D
-            let dAngA = Math.atan2(ay - posD.y, posD.x - ax) * 180 / Math.PI; 
-            let dAngB = Math.atan2(by - posD.y, posD.x - bx) * 180 / Math.PI;
-            if (dAngA < 0) dAngA += 360; if (dAngB < 0) dAngB += 360;
-            document.getElementById('seg-wedge-d').setAttribute('d', createWedge(posD.x, posD.y, 40, dAngB, dAngA));
-            let dMid = dAngB + (dAngA < dAngB ? dAngA + 360 - dAngB : dAngA - dAngB)/2;
-            let dLblPos = polarToCartesian(posD.x, posD.y, 60, dMid);
+            document.getElementById('seg-wedge-d').setAttribute('d', getInteriorWedgeSVG(posD.x, posD.y, 40, posB.x, posB.y, posA.x, posA.y));
+            let dLblPos = getMidAnglePosSVG(posD.x, posD.y, 60, posB.x, posB.y, posA.x, posA.y);
             document.getElementById('seg-lbl-d').setAttribute('x', dLblPos.x); document.getElementById('seg-lbl-d').setAttribute('y', dLblPos.y + 5);
         }
         sSegC.addEventListener('input', updateSegmentAngles);
@@ -414,46 +394,48 @@
         const sSemiC = document.getElementById('s-semi-c');
 
         function updateSemicircle() {
-            let angleDeg = parseInt(sSemiC.value); // 10 to 170
+            let angleDeg = parseInt(sSemiC.value); // 190 to 350
             let cx = 250, cy = 220, r = 120;
-            let posC = polarToCartesian(cx, cy, r, angleDeg);
+            let posC = polarToCartesianSVG(cx, cy, r, angleDeg);
 
-            let ax = 130, ay = 220; // 180 deg
-            let bx = 370, by = 220; // 0 deg
+            let posA = polarToCartesianSVG(cx, cy, r, 180);
+            let posB = polarToCartesianSVG(cx, cy, r, 0);
 
             document.getElementById('semi-line-ca').setAttribute('x1', posC.x); document.getElementById('semi-line-ca').setAttribute('y1', posC.y);
-            document.getElementById('semi-line-ca').setAttribute('x2', ax); document.getElementById('semi-line-ca').setAttribute('y2', ay);
+            document.getElementById('semi-line-ca').setAttribute('x2', posA.x); document.getElementById('semi-line-ca').setAttribute('y2', posA.y);
 
             document.getElementById('semi-line-cb').setAttribute('x1', posC.x); document.getElementById('semi-line-cb').setAttribute('y1', posC.y);
-            document.getElementById('semi-line-cb').setAttribute('x2', bx); document.getElementById('semi-line-cb').setAttribute('y2', by);
+            document.getElementById('semi-line-cb').setAttribute('x2', posB.x); document.getElementById('semi-line-cb').setAttribute('y2', posB.y);
+
+            document.getElementById('semi-diam').setAttribute('x1', posA.x); document.getElementById('semi-diam').setAttribute('y1', posA.y);
+            document.getElementById('semi-diam').setAttribute('x2', posB.x); document.getElementById('semi-diam').setAttribute('y2', posB.y);
+
+            document.getElementById('semi-dot-a').setAttribute('cx', posA.x); document.getElementById('semi-dot-a').setAttribute('cy', posA.y);
+            document.getElementById('semi-txt-a').setAttribute('x', posA.x - 20); document.getElementById('semi-txt-a').setAttribute('y', posA.y + 5);
+
+            document.getElementById('semi-dot-b').setAttribute('cx', posB.x); document.getElementById('semi-dot-b').setAttribute('cy', posB.y);
+            document.getElementById('semi-txt-b').setAttribute('x', posB.x + 20); document.getElementById('semi-txt-b').setAttribute('y', posB.y + 5);
 
             document.getElementById('semi-dot-c').setAttribute('cx', posC.x); document.getElementById('semi-dot-c').setAttribute('cy', posC.y);
             
-            // Adjust label position dynamically based on point
-            let lblX = posC.x;
-            let lblY = posC.y - 15;
-            if (angleDeg < 90) { lblX += 20; lblY -= 5; }
-            else { lblX -= 20; lblY -= 5; }
+            let lblX = posC.x; let lblY = posC.y - 15;
+            if (angleDeg > 270) { lblX += 30; } else { lblX -= 30; }
             document.getElementById('semi-txt-c').setAttribute('x', lblX); 
             document.getElementById('semi-txt-c').setAttribute('y', lblY);
 
-            // Construct perfect 90 degree box
-            // Vector CA
-            let dxA = ax - posC.x; let dyA = ay - posC.y;
-            let lenA = Math.sqrt(dxA*dxA + dyA*dyA);
-            let uxA = dxA / lenA; let uyA = dyA / lenA; // Unit vector CA
+            // Construct perfect 90 degree box visually
+            let distCA = Math.sqrt(Math.pow(posA.x-posC.x,2) + Math.pow(posA.y-posC.y,2));
+            let uxA = (posA.x - posC.x)/distCA; let uyA = (posA.y - posC.y)/distCA; 
 
-            // Vector CB
-            let dxB = bx - posC.x; let dyB = by - posC.y;
-            let lenB = Math.sqrt(dxB*dxB + dyB*dyB);
-            let uxB = dxB / lenB; let uyB = dyB / lenB; // Unit vector CB
+            let distCB = Math.sqrt(Math.pow(posB.x-posC.x,2) + Math.pow(posB.y-posC.y,2));
+            let uxB = (posB.x - posC.x)/distCB; let uyB = (posB.y - posC.y)/distCB; 
 
             let boxSize = 18;
-            let p1 = `${posC.x + uxA*boxSize},${posC.y + uyA*boxSize}`;
-            let p2 = `${posC.x + uxA*boxSize + uxB*boxSize},${posC.y + uyA*boxSize + uyB*boxSize}`;
-            let p3 = `${posC.x + uxB*boxSize},${posC.y + uyB*boxSize}`;
+            let p1 = {x: posC.x + uxA*boxSize, y: posC.y + uyA*boxSize};
+            let p2 = {x: p1.x + uxB*boxSize, y: p1.y + uyB*boxSize};
+            let p3 = {x: posC.x + uxB*boxSize, y: posC.y + uyB*boxSize};
 
-            document.getElementById('semi-90-box').setAttribute('d', `M ${posC.x} ${posC.y} L ${p1} L ${p2} L ${p3} Z`);
+            document.getElementById('semi-90-box').setAttribute('d', `M ${posC.x} ${posC.y} L ${p1.x} ${p1.y} L ${p2.x} ${p2.y} L ${p3.x} ${p3.y} Z`);
         }
         sSemiC.addEventListener('input', updateSemicircle);
         updateSemicircle();

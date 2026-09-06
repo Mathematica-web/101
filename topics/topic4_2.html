@@ -4,50 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Graph of a Linear Equation - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #ede7f6 0%, #d1c4e9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #311b92; font-size: 2.2em; margin-bottom: 10px; }
-        
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #d1c4e9; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #5e35b1; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #5e35b1; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 500px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #b39ddb; font-size: 0.95em; min-width: 140px; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.6em; display: block; margin-top: 5px; font-family: monospace; }
-
-        /* DATA TABLE */
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 500px; height: 500px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
         .data-table { width: 100%; max-width: 400px; margin: 15px auto; border-collapse: collapse; font-size: 1.1em; }
         .data-table th, .data-table td { border: 2px solid #9575cd; padding: 10px; text-align: center; font-family: monospace; font-weight: bold; }
         .data-table th { background: #ede7f6; color: #311b92; width: 50px; }
         .data-table td { background: #fff; color: #333; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #ede7f6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #5e35b1; }
-        .qa-question { font-weight: bold; color: #311b92; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #5e35b1; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #5e35b1; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
-        .nav-btn:hover { background: #4527a0; transform: scale(1.05); }
     </style>
 </head>
-<body>
+<body class="theme-ch4">
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
+
     <h1>📈 Graph of a Linear Equation</h1>
     <p class="subtitle">Translating algebraic equations into geometric lines!</p>
 
@@ -156,8 +127,6 @@
                 <line x1="0" y1="250" x2="500" y2="250" stroke="#333" stroke-width="3"/>
                 <line x1="250" y1="0" x2="250" y2="500" stroke="#333" stroke-width="3"/>
                 
-                <!-- Fixed Line x + y = 5 (meaning y = -x + 5) -->
-                <!-- x=-10 -> y=15 -> mapX(0), mapY(-125) | x=10 -> y=-5 -> mapX(500), mapY(375) -->
                 <line x1="0" y1="-125" x2="500" y2="375" stroke="#4caf50" stroke-width="4" opacity="0.5"/>
                 
                 <circle id="slide-dot" r="10" fill="#2e7d32" stroke="#fff" stroke-width="3"/>
@@ -201,12 +170,13 @@
     </div>
 
     <div class="nav-buttons">
+		<a href="topic4_1.html" class="nav-btn chapter-btn">← Prev Topic</a>
         <a href="../chapters/chapter4.html" class="nav-btn">📑 Chapter Index</a>
         <a href="topic4_3.html" class="nav-btn">Next Topic ➡️</a>
     </div>
 
     <script>
-        const plotScale = 25; // 1 math unit = 25px
+        const plotScale = 25; 
         function mapX(x) { return 250 + (x * plotScale); }
         function mapY(y) { return 250 - (y * plotScale); }
 
@@ -219,7 +189,6 @@
             let a = parseInt(sIntA.value);
             let b = parseInt(sIntB.value);
             
-            // Prevent mathematically invalid completely flat zero state
             if (a === 0 && b === 0) {
                 b = 1; sIntB.value = 1;
             }
@@ -230,7 +199,6 @@
             document.getElementById('val-int-b').textContent = b;
             document.getElementById('val-int-c').textContent = c;
 
-            // Generate Equation String
             let eqStr = "";
             if (a !== 0) eqStr += (a === 1 ? "x" : a === -1 ? "-x" : a + "x");
             
@@ -246,7 +214,6 @@
             let yInt = b !== 0 ? c / b : null;
             let xInt = a !== 0 ? c / a : null;
 
-            // Update Table
             document.getElementById('td-y1').textContent = yInt !== null ? (Number.isInteger(yInt) ? yInt : yInt.toFixed(2)) : "Undefined";
             document.getElementById('td-x2').textContent = xInt !== null ? (Number.isInteger(xInt) ? xInt : xInt.toFixed(2)) : "Undefined";
 
@@ -256,7 +223,6 @@
             let lblX = document.getElementById('lbl-x-int');
             let line = document.getElementById('graph-line');
 
-            // Handle Plotting
             if (yInt !== null) {
                 dotY.style.display = "block"; lblY.style.display = "block";
                 dotY.setAttribute('cx', mapX(0)); dotY.setAttribute('cy', mapY(yInt));
@@ -275,18 +241,15 @@
                 dotX.style.display = "none"; lblX.style.display = "none";
             }
 
-            // Draw full infinite line based on bounds
             if (a !== 0 && b !== 0) {
                 let xStart = -20; let yStart = (c - a * xStart) / b;
                 let xEnd = 20; let yEnd = (c - a * xEnd) / b;
                 line.setAttribute('x1', mapX(xStart)); line.setAttribute('y1', mapY(yStart));
                 line.setAttribute('x2', mapX(xEnd)); line.setAttribute('y2', mapY(yEnd));
             } else if (a === 0) {
-                // Horizontal line
                 line.setAttribute('x1', mapX(-20)); line.setAttribute('y1', mapY(yInt));
                 line.setAttribute('x2', mapX(20)); line.setAttribute('y2', mapY(yInt));
             } else if (b === 0) {
-                // Vertical line
                 line.setAttribute('x1', mapX(xInt)); line.setAttribute('y1', mapY(-20));
                 line.setAttribute('x2', mapX(xInt)); line.setAttribute('y2', mapY(20));
             }
@@ -305,7 +268,7 @@
 
         function updateSlider() {
             let x = parseFloat(sSlideX.value);
-            let y = 5 - x; // Because x + y = 5
+            let y = 5 - x; 
 
             let svgX = mapX(x);
             let svgY = mapY(y);

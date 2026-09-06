@@ -4,47 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pairs of Angles and Intersecting Lines - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #0d47a1; font-size: 2.2em; margin-bottom: 10px; }
-        
-        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .back-btn { display: inline-block; background: #1976d2; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateY(-3px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #bbdefb; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #1976d2; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #1976d2; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #64b5f6; font-size: 0.95em; min-width: 140px; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e3f2fd; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #1976d2; }
-        .qa-question { font-weight: bold; color: #0d47a1; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #1976d2; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #1976d2; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
-        .nav-btn:hover { background: #0d47a1; transform: scale(1.05); }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 500px; aspect-ratio: 500 / 350; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
     </style>
 </head>
-<body>
+<body class="theme-ch6">
     <div class="top-nav">
         <a href="../index.html" class="back-btn">🏠 Course Index</a>
     </div>
@@ -257,7 +223,6 @@
             let start = polarToCartesian(cx, cy, r, startAngle);
             let end = polarToCartesian(cx, cy, r, endAngle);
             let largeArcFlag = Math.abs(endAngle - startAngle) > 180 ? "1" : "0";
-            // For standard math orientation (CCW is positive, but SVG Y is inverted)
             return `M ${start.x} ${start.y} A ${r} ${r} 0 ${largeArcFlag} 0 ${end.x} ${end.y}`;
         }
         
@@ -345,13 +310,11 @@
 
             let angSup = 180 - ang;
 
-            // Arcs as wedges
             document.getElementById('vert-arc-right').setAttribute('d', getWedgePath(cx, cy, 50, 0, ang));
             document.getElementById('vert-arc-top').setAttribute('d', getWedgePath(cx, cy, 50, ang, 180));
             document.getElementById('vert-arc-left').setAttribute('d', getWedgePath(cx, cy, 50, 180, 180 + ang));
             document.getElementById('vert-arc-bot').setAttribute('d', getWedgePath(cx, cy, 50, 180 + ang, 360));
 
-            // Labels
             let pRight = polarToCartesian(cx, cy, 80, ang / 2);
             document.getElementById('vert-lbl-right').setAttribute('x', pRight.x);
             document.getElementById('vert-lbl-right').setAttribute('y', pRight.y + 5);

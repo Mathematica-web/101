@@ -4,45 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Irrational Numbers - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #0d47a1; font-size: 2.2em; margin-bottom: 10px; }
-        .back-btn { display: inline-block; background: #1976d2; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateX(-5px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #bbdefb; text-align: left; }
-        .formula-table th { background: #1976d2; color: white; font-size: 1.1em; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #1976d2; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 600px; height: 350px; background: #f5f5f5; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #90caf9; font-size: 1em; }
-        input[type=range] { width: 250px; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; }
-        .val-num { font-size: 1.8em; display: block; margin-top: 5px; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e3f2fd; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #1976d2; }
-        .qa-question { font-weight: bold; color: #0d47a1; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; }
-        .show-answer-btn { background: #1976d2; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #1976d2; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 600px; aspect-ratio: 600 / 350; }
     </style>
 </head>
-<body>
-    <a href="../chapters/chapter1.html" class="back-btn">⬅️ Back to Chapter</a>
+<body class="theme-ch1">
+    <a href="../index.html" class="back-btn">🏠 Course Index</a>
 
     <h1>🌪️ Irrational Numbers</h1>
     <p class="subtitle">The rebel numbers that refuse to be simple fractions!</p>
@@ -160,6 +129,7 @@
 
     <div class="nav-buttons">
         <a href="topic1_3.html" class="nav-btn">← Prev Topic</a>
+		<a href="../chapters/chapter1.html" class="nav-btn">Chapter Index</a>
         <a href="topic1_5.html" class="nav-btn">Next: Law of Exponents ➡️</a>
     </div>
 
@@ -213,37 +183,30 @@
             let count = parseInt(sTri.value);
             document.getElementById('val-tri').textContent = count;
             
-            spiralGroup.innerHTML = ''; // Clear previous
+            spiralGroup.innerHTML = ''; 
 
             let cx = 300, cy = 175;
             let scale = 40; 
             
-            // P0 is the center point
             let p0 = { x: cx, y: cy };
             
-            // P1 is the first point on the horizontal axis
             let currentX = cx + scale;
             let currentY = cy;
-            let currentAngle = 0; // angle of the hypotenuse from center
+            let currentAngle = 0; 
 
             for(let i = 1; i <= count; i++) {
-                // Calculate next point perpendicular to current hypotenuse
-                // The direction is currentAngle + 90 degrees (pi/2 radians)
                 let perpAngle = currentAngle + (Math.PI / 2);
                 
                 let nextX = currentX + (scale * Math.cos(perpAngle));
                 let nextY = currentY + (scale * Math.sin(perpAngle));
 
-                // Draw the Triangle
                 let polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
                 polygon.setAttribute("points", `${p0.x},${p0.y} ${currentX},${currentY} ${nextX},${nextY}`);
-                polygon.setAttribute("fill", `hsl(${i * 20}, 70%, 85%)`); // Colorful gradient effect
+                polygon.setAttribute("fill", `hsl(${i * 20}, 70%, 85%)`); 
                 polygon.setAttribute("stroke", "#e65100");
                 polygon.setAttribute("stroke-width", "2");
                 spiralGroup.appendChild(polygon);
 
-                // Draw Right Angle Box
-                // To draw the box, step back slightly along the hypotenuse and the new leg
                 let boxSize = 5;
                 let rx = currentX - (boxSize * Math.cos(currentAngle)) + (boxSize * Math.cos(perpAngle));
                 let ry = currentY - (boxSize * Math.sin(currentAngle)) + (boxSize * Math.sin(perpAngle));
@@ -255,11 +218,9 @@
                 rPath.setAttribute("stroke-width", "1");
                 spiralGroup.appendChild(rPath);
 
-                // Add the text label for the new hypotenuse
                 let midX = (p0.x + nextX) / 2;
                 let midY = (p0.y + nextY) / 2;
                 
-                // Offset label slightly outward
                 let labelAngle = Math.atan2(nextY - cy, nextX - cx);
                 let labelX = midX + 15 * Math.cos(labelAngle + Math.PI/2);
                 let labelY = midY + 15 * Math.sin(labelAngle + Math.PI/2);
@@ -274,13 +235,11 @@
                 text.innerHTML = `&radic;${i+1}`;
                 spiralGroup.appendChild(text);
 
-                // Update for next iteration
                 currentX = nextX;
                 currentY = nextY;
                 currentAngle = Math.atan2(currentY - cy, currentX - cx);
             }
 
-            // Update Dashboard Math
             document.getElementById('calc-hyp').innerHTML = `&radic;${count + 1}`;
             let prevRoot = count === 1 ? "1" : `&radic;${count}`;
             document.getElementById('calc-hyp').nextElementSibling.innerHTML = `Built using base ${prevRoot} and height 1. (${prevRoot}&sup2; + 1&sup2; = &radic;${count+1}&sup2;)`;

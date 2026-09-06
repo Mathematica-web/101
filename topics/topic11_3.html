@@ -4,58 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cone - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; }
-        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
-        .back-btn { display: inline-block; background: #4ecdc4; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateX(-5px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 900px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; }
-        .formula-table th { background: #00838f; color: white; font-size: 1.1em; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fff3e0; border: 3px dashed #ff9800; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 450px; height: 350px; background: white; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #ffcc80; }
-        input[type=range] { width: 120px; cursor: pointer; display: block; margin-top: 5px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; }
-
-        /* TOGGLE BUTTONS (MATERIAL SIMULATOR) */
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 450px; height: 350px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
         .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
         .toggle-btn { padding: 10px 15px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        
-        /* Specific Button Active Colors */
         .toggle-btn.btn-bottom.active { background: #795548; color: white; border-color: #795548; }
         .toggle-btn.btn-curved.active { background: #e91e63; color: white; border-color: #e91e63; }
-        
-        /* Multiplier Buttons */
         .coat-toggles { border-top: 2px dashed #f48fb1; padding-top: 15px; margin-bottom: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; align-items: center; }
         .toggle-btn.btn-coat.active { background: #ff9800; color: white; border-color: #ff9800; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #4caf50; }
-        .qa-question { font-weight: bold; color: #2e7d32; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; }
-        .show-answer-btn { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-family: inherit; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #4ecdc4; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
-        .chapter-btn { background: #ff6b6b; }
     </style>
 </head>
-<body>
-    <a href="../chapters/chapter11.html" class="back-btn">⬅️ Back to Chapter</a>
+<body class="theme-ch11">
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
 
     <h1>🎨 Cones</h1>
     <p class="subtitle">The geometry of ice creams and party hats!</p>
@@ -110,11 +74,9 @@
             </div>
 
             <svg id="cone-svg" class="svg-canvas" viewBox="0 0 450 350">
-                <!-- Triangle (Body) -->
                 <polygon id="cone-body" points="225,50 125,250 325,250" fill="#f8bbd0" stroke="#c2185b" stroke-width="3"/>
-                <!-- Bottom ellipse -->
                 <ellipse id="cone-bot" cx="225" cy="250" rx="100" ry="30" fill="#f48fb1" stroke="#c2185b" stroke-width="3"/>
-                <!-- Internal Lines -->
+                
                 <line id="h-line" x1="225" y1="50" x2="225" y2="250" stroke="#333" stroke-width="2" stroke-dasharray="5,5"/>
                 <line id="r-line" x1="225" y1="250" x2="325" y2="250" stroke="#1565c0" stroke-width="3"/>
                 <rect id="right-angle" x="225" y="235" width="15" height="15" fill="none" stroke="#333" stroke-width="2"/>
@@ -160,10 +122,7 @@
 
             <!-- DYNAMIC CONE SVG -->
             <svg class="svg-canvas" viewBox="0 0 450 350" style="background: #f8f9fa;">
-                <!-- Bottom Base -->
                 <ellipse id="svg-face-bottom" cx="225" cy="260" rx="80" ry="25" />
-                
-                <!-- Curved Surface -->
                 <polygon id="svg-face-curved" points="225,80 145,260 305,260" />
                 <path id="svg-curve-overlay" d="M 145,260 A 80,25 0 0,0 305,260" fill="rgba(233, 30, 99, 0.7)" />
             </svg>
@@ -205,6 +164,7 @@
 
     <div class="nav-buttons">
         <a href="topic11_2.html" class="nav-btn chapter-btn">← Prev Topic</a>
+		<a href="../chapters/chapter11.html" class="nav-btn">Chapter Index</a>
         <a href="topic11_4.html" class="nav-btn">Next: Sphere ➡️</a>
     </div>
 
@@ -231,11 +191,9 @@
             document.getElementById('val-h').innerText = currentH;
             document.getElementById('calc-l').innerText = currentL.toFixed(1);
             
-            // Core Math
             document.getElementById('calc-v').innerText = ((1/3) * pi * currentR * currentR * currentH).toFixed(1);
             document.getElementById('calc-tsa').innerText = (pi * currentR * (currentL + currentR)).toFixed(1);
 
-            // Visual Scaling 
             let scaleR = 10, scaleH = 10;
             let px = currentR * scaleR;
             let py = currentH * scaleH;
@@ -345,7 +303,6 @@
             document.getElementById('material-formula').innerText = formulaStr;
         }
 
-        // Q&A Toggle Logic
         function toggleAnswer(id) {
             const ans = document.getElementById(id);
             const btn = ans.previousElementSibling;
@@ -358,7 +315,6 @@
             }
         }
 
-        // Initialize
         sr.addEventListener('input', updateCone); 
         sh.addEventListener('input', updateCone); 
         updateCone();

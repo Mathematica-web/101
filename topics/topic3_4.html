@@ -4,47 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Area of a Triangle - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
-        .back-btn { display: inline-block; background: #00838f; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateX(-5px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #00838f; color: white; }
-        
+        /* INTERACTIVE SPECIFIC STYLES */
         .math-eq { font-family: 'Times New Roman', serif; font-style: italic; font-size: 1.2em; color: #006064; font-weight: bold; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #00838f; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 550px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #4dd0e1; font-size: 0.95em; min-width: 120px; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e0f7fa; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00838f; }
-        .qa-question { font-weight: bold; color: #006064; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #00838f; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #00838f; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+        .svg-canvas { max-width: 550px; height: 350px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
     </style>
 </head>
-<body>
-    <a href="../chapters/chapter3.html" class="back-btn">⬅️ Back to Chapter Index</a>
+<body class="theme-ch3">
+    <a href="../index.html" class="back-btn">🏠 Course Index</a>
 
     <h1>📐 Area of a Triangle</h1>
     <p class="subtitle">Finding the space inside a polygon using just its corners!</p>
@@ -141,39 +109,29 @@
 
         <div class="interactive-container" style="background: #fff3e0; border-color: #e65100;">
             <svg id="shoe-svg" class="svg-canvas" viewBox="0 0 550 250" style="height:250px; background:transparent; border:none; box-shadow:none;">
-                <!-- Column Headers -->
                 <text x="180" y="30" font-weight="bold" font-size="20px" fill="#555">X</text>
                 <text x="280" y="30" font-weight="bold" font-size="20px" fill="#555">Y</text>
                 
-                <!-- Vertical Bars -->
                 <line x1="130" y1="40" x2="130" y2="230" stroke="#333" stroke-width="3"/>
                 <line x1="330" y1="40" x2="330" y2="230" stroke="#333" stroke-width="3"/>
 
-                <!-- Green Diagonals (Down) -->
                 <line x1="190" y1="60" x2="270" y2="100" stroke="#4caf50" stroke-width="3" opacity="0.6"/>
                 <line x1="190" y1="110" x2="270" y2="150" stroke="#4caf50" stroke-width="3" opacity="0.6"/>
                 <line x1="190" y1="160" x2="270" y2="200" stroke="#4caf50" stroke-width="3" opacity="0.6"/>
 
-                <!-- Red Diagonals (Up) -->
                 <line x1="270" y1="60" x2="190" y2="100" stroke="#f44336" stroke-width="3" opacity="0.6"/>
                 <line x1="270" y1="110" x2="190" y2="150" stroke="#f44336" stroke-width="3" opacity="0.6"/>
                 <line x1="270" y1="160" x2="190" y2="200" stroke="#f44336" stroke-width="3" opacity="0.6"/>
 
-                <!-- Coordinates Text -->
-                <!-- A -->
                 <text id="shoe-x1" x="180" y="70" font-size="22px" font-weight="bold" fill="#d32f2f">-3</text>
                 <text id="shoe-y1" x="280" y="70" font-size="22px" font-weight="bold" fill="#d32f2f">-2</text>
-                <!-- B -->
                 <text id="shoe-x2" x="180" y="120" font-size="22px" font-weight="bold" fill="#1976d2">4</text>
                 <text id="shoe-y2" x="280" y="120" font-size="22px" font-weight="bold" fill="#1976d2">-1</text>
-                <!-- C -->
                 <text id="shoe-x3" x="180" y="170" font-size="22px" font-weight="bold" fill="#388e3c">1</text>
                 <text id="shoe-y3" x="280" y="170" font-size="22px" font-weight="bold" fill="#388e3c">4</text>
-                <!-- A (Repeated) -->
                 <text id="shoe-x4" x="180" y="220" font-size="22px" font-weight="bold" fill="#d32f2f">-3</text>
                 <text id="shoe-y4" x="280" y="220" font-size="22px" font-weight="bold" fill="#d32f2f">-2</text>
 
-                <!-- Calculations -->
                 <text x="360" y="80" font-size="16px" fill="#2e7d32" font-weight="bold">↘ <span id="shoe-g1">3</span></text>
                 <text x="360" y="130" font-size="16px" fill="#2e7d32" font-weight="bold">↘ <span id="shoe-g2">16</span></text>
                 <text x="360" y="180" font-size="16px" fill="#2e7d32" font-weight="bold">↘ <span id="shoe-g3">-2</span></text>
@@ -207,45 +165,33 @@
 
         <div class="interactive-container" style="background: #f3e5f5; border-color: #9c27b0;">
             <svg id="grid-svg" class="svg-canvas" viewBox="0 0 550 220" style="height:220px; background:transparent; border:none; box-shadow:none;">
-                <!-- Main Array Brackets -->
                 <path d="M 120 30 L 100 30 L 100 190 L 120 190" fill="none" stroke="#333" stroke-width="4"/>
                 <path d="M 280 30 L 300 30 L 300 190 L 280 190" fill="none" stroke="#333" stroke-width="4"/>
                 
-                <!-- Separator Line for copied columns -->
                 <line x1="320" y1="30" x2="320" y2="190" stroke="#ccc" stroke-width="2" stroke-dasharray="5,5"/>
 
-                <!-- Green Diagonals (Down) -->
                 <line x1="130" y1="50" x2="270" y2="170" stroke="#4caf50" stroke-width="4" opacity="0.4"/>
                 <line x1="200" y1="50" x2="350" y2="170" stroke="#4caf50" stroke-width="4" opacity="0.4"/>
                 <line x1="270" y1="50" x2="430" y2="170" stroke="#4caf50" stroke-width="4" opacity="0.4"/>
 
-                <!-- Red Diagonals (Up) -->
                 <line x1="130" y1="170" x2="270" y2="50" stroke="#f44336" stroke-width="4" opacity="0.4"/>
                 <line x1="200" y1="170" x2="350" y2="50" stroke="#f44336" stroke-width="4" opacity="0.4"/>
                 <line x1="270" y1="170" x2="430" y2="50" stroke="#f44336" stroke-width="4" opacity="0.4"/>
 
-                <!-- Original 3x3 Data -->
-                <!-- Row 1 -->
                 <text id="arr-r1-c1" x="130" y="60" font-size="22px" font-weight="bold" fill="#333" text-anchor="middle">-3</text>
                 <text id="arr-r1-c2" x="200" y="60" font-size="22px" font-weight="bold" fill="#333" text-anchor="middle">-2</text>
                 <text x="270" y="60" font-size="22px" font-weight="bold" fill="#333" text-anchor="middle">1</text>
-                <!-- Row 2 -->
                 <text id="arr-r2-c1" x="130" y="120" font-size="22px" font-weight="bold" fill="#333" text-anchor="middle">4</text>
                 <text id="arr-r2-c2" x="200" y="120" font-size="22px" font-weight="bold" fill="#333" text-anchor="middle">-1</text>
                 <text x="270" y="120" font-size="22px" font-weight="bold" fill="#333" text-anchor="middle">1</text>
-                <!-- Row 3 -->
                 <text id="arr-r3-c1" x="130" y="180" font-size="22px" font-weight="bold" fill="#333" text-anchor="middle">1</text>
                 <text id="arr-r3-c2" x="200" y="180" font-size="22px" font-weight="bold" fill="#333" text-anchor="middle">4</text>
                 <text x="270" y="180" font-size="22px" font-weight="bold" fill="#333" text-anchor="middle">1</text>
 
-                <!-- Copied Columns -->
-                <!-- Row 1 -->
                 <text id="copy-r1-c1" x="350" y="60" font-size="22px" font-weight="bold" fill="#888" text-anchor="middle">-3</text>
                 <text id="copy-r1-c2" x="430" y="60" font-size="22px" font-weight="bold" fill="#888" text-anchor="middle">-2</text>
-                <!-- Row 2 -->
                 <text id="copy-r2-c1" x="350" y="120" font-size="22px" font-weight="bold" fill="#888" text-anchor="middle">4</text>
                 <text id="copy-r2-c2" x="430" y="120" font-size="22px" font-weight="bold" fill="#888" text-anchor="middle">-1</text>
-                <!-- Row 3 -->
                 <text id="copy-r3-c1" x="350" y="180" font-size="22px" font-weight="bold" fill="#888" text-anchor="middle">1</text>
                 <text id="copy-r3-c2" x="430" y="180" font-size="22px" font-weight="bold" fill="#888" text-anchor="middle">4</text>
             </svg>
@@ -292,11 +238,12 @@
 
     <div class="nav-buttons">
         <a href="topic3_3.html" class="nav-btn">← Prev Topic</a>
+		<a href="../chapters/chapter3.html" class="nav-btn">Chapter Index</a>
         <a href="../chapters/chapter4.html" class="nav-btn">Next Chapter ➡️</a>
     </div>
 
     <script>
-        const scale = 30; // 1 unit = 30px
+        const scale = 30; 
         const cx = 150;
         const cy = 150;
         
@@ -316,7 +263,6 @@
             let x2 = parseInt(sBx.value); let y2 = parseInt(sBy.value);
             let x3 = parseInt(sCx.value); let y3 = parseInt(sCy.value);
 
-            // 1. Update Labels & Visual Triangle
             document.getElementById('val-a-x').textContent = x1; document.getElementById('val-a-y').textContent = y1;
             document.getElementById('val-b-x').textContent = x2; document.getElementById('val-b-y').textContent = y2;
             document.getElementById('val-c-x').textContent = x3; document.getElementById('val-c-y').textContent = y3;
@@ -336,7 +282,6 @@
 
             document.getElementById('tri-polygon').setAttribute('points', `${pAx},${pAy} ${pBx},${pBy} ${pCx},${pCy}`);
 
-            // NCERT Formula Math Logic
             let part1 = x1 * (y2 - y3);
             let part2 = x2 * (y3 - y1);
             let part3 = x3 * (y1 - y2);
@@ -354,7 +299,6 @@
 
             document.getElementById('final-area').textContent = `Area = ${area}`;
 
-            // 2. Update Shoelace
             document.getElementById('shoe-x1').textContent = x1; document.getElementById('shoe-y1').textContent = y1;
             document.getElementById('shoe-x2').textContent = x2; document.getElementById('shoe-y2').textContent = y2;
             document.getElementById('shoe-x3').textContent = x3; document.getElementById('shoe-y3').textContent = y3;
@@ -372,7 +316,6 @@
             document.getElementById('shoe-sum-r').textContent = sumR;
             document.getElementById('shoe-final').innerHTML = `&frac12; | ${sumG} - (${sumR}) | = ${area}`;
 
-            // 3. Update 3x3 Grid
             document.getElementById('arr-r1-c1').textContent = x1; document.getElementById('arr-r1-c2').textContent = y1;
             document.getElementById('arr-r2-c1').textContent = x2; document.getElementById('arr-r2-c2').textContent = y2;
             document.getElementById('arr-r3-c1').textContent = x3; document.getElementById('arr-r3-c2').textContent = y3;
@@ -391,7 +334,6 @@
         sCx.addEventListener('input', updateAll); sCy.addEventListener('input', updateAll);
         updateAll();
 
-        // Q&A LOGIC
         function toggleAnswer(id) {
             const ans = document.getElementById(id);
             const btn = ans.previousElementSibling;

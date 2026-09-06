@@ -4,47 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Distance Formula - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
-        .back-btn { display: inline-block; background: #00838f; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateX(-5px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; font-size: 1.05em; }
-        .formula-table th { background: #00838f; color: white; }
-        
+        /* INTERACTIVE SPECIFIC STYLES */
         .math-eq { font-family: 'Times New Roman', serif; font-style: italic; font-size: 1.2em; color: #006064; font-weight: bold; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #00838f; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 550px; height: 550px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #4dd0e1; font-size: 0.95em; min-width: 140px; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.6em; display: block; margin-top: 5px; font-family: monospace; }
-        
-        /* Q&A SECTION */
-        .qa-box { background: #e0f7fa; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00838f; }
-        .qa-question { font-weight: bold; color: #006064; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #00838f; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #00838f; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
+        .svg-canvas { max-width: 550px; height: 550px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
     </style>
 </head>
-<body>
-    <a href="../chapters/chapter3.html" class="back-btn">⬅️ Back to Chapter Index</a>
+<body class="theme-ch3">
+    <a href="../index.html" class="back-btn">🏠 Course Index</a>
 
     <h1>📏 The Distance Formula</h1>
     <p class="subtitle">Using Pythagoras to measure the distance between any two points!</p>
@@ -96,7 +64,6 @@
             </div>
 
             <svg id="dist-svg" class="svg-canvas" viewBox="-40 -40 580 580">
-                <!-- Smart Grid Definition -->
                 <defs>
                     <pattern id="grid" width="25" height="25" patternUnits="userSpaceOnUse">
                         <rect width="25" height="25" fill="none" stroke="#eee" stroke-width="1"/>
@@ -104,27 +71,22 @@
                 </defs>
                 <rect x="0" y="0" width="500" height="500" fill="url(#grid)" />
 
-                <!-- Axes -->
                 <line x1="0" y1="250" x2="500" y2="250" stroke="#333" stroke-width="3"/>
                 <text x="515" y="258" font-weight="bold" fill="#333" font-size="20px">X</text>
                 
                 <line x1="250" y1="0" x2="250" y2="500" stroke="#333" stroke-width="3"/>
                 <text x="242" y="-10" font-weight="bold" fill="#333" font-size="20px">Y</text>
 
-                <!-- The Triangle Lines -->
                 <line id="line-base" stroke="#e65100" stroke-width="4" stroke-dasharray="6,4"/>
                 <line id="line-height" stroke="#2e7d32" stroke-width="4" stroke-dasharray="6,4"/>
                 <line id="line-hyp" stroke="#8e24aa" stroke-width="5"/>
                 
-                <!-- Right Angle Symbol -->
                 <polyline id="right-angle" fill="none" stroke="#333" stroke-width="2"/>
 
-                <!-- Triangle Edge Labels -->
                 <text id="lbl-base" font-weight="bold" fill="#e65100" font-size="16px" text-anchor="middle">dx = x₂ - x₁</text>
                 <text id="lbl-height" font-weight="bold" fill="#2e7d32" font-size="16px" text-anchor="middle">dy = y₂ - y₁</text>
                 <text id="lbl-hyp" font-weight="bold" fill="#8e24aa" font-size="20px" text-anchor="middle">d</text>
 
-                <!-- Points and Coordinates -->
                 <circle id="dot-c" r="6" fill="#333" stroke="#fff" stroke-width="2"/>
                 <text id="lbl-c" font-weight="bold" fill="#333" font-size="14px">C</text>
 
@@ -185,6 +147,7 @@
 
     <div class="nav-buttons">
         <a href="topic3_1.html" class="nav-btn">← Prev Topic</a>
+		<a href="../chapters/chapter3.html" class="nav-btn">Chapter Index</a>
         <a href="topic3_3.html" class="nav-btn">Next Topic ➡️</a>
     </div>
 
@@ -193,7 +156,7 @@
         const sP1Y = document.getElementById('s-p1-y');
         const sP2X = document.getElementById('s-p2-x');
         const sP2Y = document.getElementById('s-p2-y');
-        const plotScale = 25; // 1 math unit = 25px
+        const plotScale = 25; 
 
         function mapX(x) { return 250 + (x * plotScale); }
         function mapY(y) { return 250 - (y * plotScale); }
@@ -219,7 +182,6 @@
             let svgX3 = svgX2;
             let svgY3 = svgY1;
 
-            // Draw Lines
             document.getElementById('line-base').setAttribute('x1', svgX1);
             document.getElementById('line-base').setAttribute('y1', svgY1);
             document.getElementById('line-base').setAttribute('x2', svgX3);
@@ -235,7 +197,6 @@
             document.getElementById('line-hyp').setAttribute('x2', svgX2);
             document.getElementById('line-hyp').setAttribute('y2', svgY2);
 
-            // Draw Right Angle Box
             let dirX = x1 < x2 ? -1 : 1;
             let dirY = y2 < y1 ? 1 : -1;
             
@@ -248,7 +209,6 @@
             
             document.getElementById('right-angle').setAttribute('points', `${px1},${py1} ${px2},${py2} ${px3},${py3}`);
 
-            // Draw Dots
             document.getElementById('dot-a').setAttribute('cx', svgX1);
             document.getElementById('dot-a').setAttribute('cy', svgY1);
             document.getElementById('dot-b').setAttribute('cx', svgX2);
@@ -256,7 +216,6 @@
             document.getElementById('dot-c').setAttribute('cx', svgX3);
             document.getElementById('dot-c').setAttribute('cy', svgY3);
 
-            // Position Labels and Text
             let lblA = document.getElementById('lbl-a');
             lblA.setAttribute('x', svgX1 + (x1 < x2 ? -10 : 10));
             lblA.setAttribute('y', svgY1 + (y1 < y2 ? -15 : 20));
@@ -275,7 +234,6 @@
             lblC.setAttribute('text-anchor', x2 < x1 ? 'end' : 'start');
             lblC.textContent = `C(${x2}, ${y1})`;
 
-            // Edge Length Labels
             let lblBase = document.getElementById('lbl-base');
             lblBase.setAttribute('x', (svgX1 + svgX3) / 2);
             lblBase.setAttribute('y', svgY3 + (y2 < y1 ? -10 : 25));
@@ -289,7 +247,6 @@
             document.getElementById('lbl-hyp').setAttribute('x', (svgX1 + svgX2) / 2 - 20);
             document.getElementById('lbl-hyp').setAttribute('y', (svgY1 + svgY2) / 2 - 15);
 
-            // Math Logic
             let dx = x2 - x1;
             let dy = y2 - y1;
             let distSq = (dx * dx) + (dy * dy);
@@ -304,7 +261,6 @@
             document.getElementById('calc-dist-steps').innerHTML = `d = &radic;(${wrapNeg(dx)}² + ${wrapNeg(dy)}²) = &radic;(${dx*dx} + ${dy*dy}) = &radic;${distSq}`;
             document.getElementById('calc-dist').textContent = dist % 1 === 0 ? dist : dist.toFixed(2);
 
-            // Hide base/height lines and Point C if points align to prevent ugly rendering
             if (x1 === x2 && y1 === y2) {
                 document.getElementById('line-base').style.display = 'none';
                 document.getElementById('line-height').style.display = 'none';
@@ -338,7 +294,6 @@
         sP2Y.addEventListener('input', updateDistance);
         updateDistance();
 
-        // --- Q&A LOGIC ---
         function toggleAnswer(id) {
             const ans = document.getElementById(id);
             const btn = ans.previousElementSibling;

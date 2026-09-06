@@ -4,47 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Angle Sum Property of a Triangle - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #0d47a1; font-size: 2.2em; margin-bottom: 10px; }
-        
-        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .back-btn { display: inline-block; background: #1976d2; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateY(-3px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #bbdefb; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #1976d2; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #1976d2; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #64b5f6; font-size: 0.95em; min-width: 140px; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e3f2fd; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #1976d2; }
-        .qa-question { font-weight: bold; color: #0d47a1; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #1976d2; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #1976d2; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
-        .nav-btn:hover { background: #0d47a1; transform: scale(1.05); }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 500px; aspect-ratio: 500 / 350; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
     </style>
 </head>
-<body>
+<body class="theme-ch6">
     <div class="top-nav">
         <a href="../index.html" class="back-btn">🏠 Course Index</a>
     </div>
@@ -90,24 +56,19 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 320" style="height: 320px; background: #fafafa;">
-                <!-- Triangle Base -->
                 <line x1="100" y1="260" x2="400" y2="260" stroke="#333" stroke-width="4" stroke-linecap="round"/>
                 
-                <!-- Triangle Sides -->
                 <line id="tri-side-ab" stroke="#333" stroke-width="4" stroke-linecap="round"/>
                 <line id="tri-side-ac" stroke="#333" stroke-width="4" stroke-linecap="round"/>
 
-                <!-- Angle Wedges -->
                 <path id="arc-a" fill="rgba(211, 47, 47, 0.4)" stroke="#d32f2f" stroke-width="2"/>
                 <path id="arc-b" fill="rgba(25, 118, 210, 0.4)" stroke="#1976d2" stroke-width="2"/>
                 <path id="arc-c" fill="rgba(245, 124, 0, 0.4)" stroke="#e65100" stroke-width="2"/>
 
-                <!-- Angle Labels -->
                 <text id="lbl-a" font-weight="bold" fill="#d32f2f" font-size="16px" text-anchor="middle" alignment-baseline="middle"></text>
                 <text id="lbl-b" font-weight="bold" fill="#1976d2" font-size="16px" text-anchor="middle" alignment-baseline="middle"></text>
                 <text id="lbl-c" font-weight="bold" fill="#e65100" font-size="16px" text-anchor="middle" alignment-baseline="middle"></text>
 
-                <!-- Vertices -->
                 <circle id="dot-a" r="6" fill="#333"/>
                 <text id="txt-a" font-weight="bold" fill="#333" font-size="18px" text-anchor="middle">A</text>
 
@@ -123,7 +84,6 @@
                     <span style="color: #e65100; font-size: 1.2em; display: block; margin-bottom: 5px;">Interior Angle Sum Property</span>
                     <span id="tri-math" class="val-num" style="color: #b71c1c; font-size: 2em;">Angle A + Angle B + Angle C = 180°</span>
                     
-                    <!-- NEW PERIMETER DISPLAY -->
                     <div style="margin-top: 15px; border-top: 2px dashed #ffe082; padding-top: 15px;">
                         <span id="tri-perim" class="val-num" style="color: #1976d2; font-size: 1.5em;">Perimeter = 0 units</span>
                         <span style="color: #666; font-size: 1em; display: block; margin-top: 5px;">Notice how the outer perimeter changes, but the interior angle sum never breaks!</span>
@@ -147,24 +107,19 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
-                <!-- Extended Base Line (B to D) -->
                 <line x1="50" y1="230" x2="450" y2="230" stroke="#333" stroke-width="4" stroke-linecap="round"/>
                 
-                <!-- Triangle Sides -->
                 <line id="ext-side-ab" stroke="#333" stroke-width="4" stroke-linecap="round"/>
                 <line id="ext-side-ac" stroke="#333" stroke-width="4" stroke-linecap="round"/>
 
-                <!-- Angle Wedges -->
                 <path id="ext-arc-a" fill="rgba(211, 47, 47, 0.4)" stroke="#d32f2f" stroke-width="2"/>
                 <path id="ext-arc-b" fill="rgba(25, 118, 210, 0.4)" stroke="#1976d2" stroke-width="2"/>
                 <path id="ext-arc-ext" fill="rgba(123, 31, 162, 0.4)" stroke="#7b1fa2" stroke-width="3"/>
 
-                <!-- Angle Labels -->
                 <text id="ext-lbl-a" font-weight="bold" fill="#d32f2f" font-size="16px" text-anchor="middle" alignment-baseline="middle"></text>
                 <text id="ext-lbl-b" font-weight="bold" fill="#1976d2" font-size="16px" text-anchor="middle" alignment-baseline="middle"></text>
                 <text id="ext-lbl-ext" font-weight="bold" fill="#7b1fa2" font-size="18px" text-anchor="middle" alignment-baseline="middle"></text>
 
-                <!-- Vertices -->
                 <circle id="ext-dot-a" r="6" fill="#333"/>
                 <text id="ext-txt-a" font-weight="bold" fill="#333" font-size="18px" text-anchor="middle">A</text>
 
@@ -218,7 +173,6 @@
     </div>
 
     <script>
-        // Core Mathematical Functions for Angle Calculations
         function normalizeRad(rad) {
             if (rad < 0) rad += 2 * Math.PI;
             return rad;
@@ -235,8 +189,6 @@
             if (endRad < startRad) endRad += 2 * Math.PI;
             let start = polarToCartesian(cx, cy, r, startRad);
             let end = polarToCartesian(cx, cy, r, endRad);
-            
-            // Sweep flag 1 draws positive direction (Clockwise in SVG coordinates)
             return `M ${cx} ${cy} L ${start.x} ${start.y} A ${r} ${r} 0 0 1 ${end.x} ${end.y} Z`;
         }
 
@@ -256,7 +208,6 @@
             let bx = 100, by = 260;
             let cx = 400, cy = 260;
 
-            // Draw Triangle Sides
             document.getElementById('tri-side-ab').setAttribute('x1', ax);
             document.getElementById('tri-side-ab').setAttribute('y1', ay);
             document.getElementById('tri-side-ab').setAttribute('x2', bx);
@@ -267,33 +218,28 @@
             document.getElementById('tri-side-ac').setAttribute('x2', cx);
             document.getElementById('tri-side-ac').setAttribute('y2', cy);
 
-            // Position Vertex A
             document.getElementById('dot-a').setAttribute('cx', ax);
             document.getElementById('dot-a').setAttribute('cy', ay);
             document.getElementById('txt-a').setAttribute('x', ax);
             document.getElementById('txt-a').setAttribute('y', ay - 15);
 
-            // Calculate precise angles in radians
             let radBA = normalizeRad(Math.atan2(ay - by, ax - bx));
-            let radBC = normalizeRad(Math.atan2(cy - by, cx - bx)); // 0 rad
+            let radBC = normalizeRad(Math.atan2(cy - by, cx - bx)); 
             
-            let radCB = normalizeRad(Math.atan2(by - cy, bx - cx)); // Math.PI rad
+            let radCB = normalizeRad(Math.atan2(by - cy, bx - cx)); 
             let radCA = normalizeRad(Math.atan2(ay - cy, ax - cx));
 
             let radAC = normalizeRad(Math.atan2(cy - ay, cx - ax));
             let radAB = normalizeRad(Math.atan2(by - ay, bx - ax));
 
-            // Generate Wedges (Sweeping clockwise in SVG coordinate space)
             document.getElementById('arc-b').setAttribute('d', createWedge(bx, by, 45, radBA, radBC));
             document.getElementById('arc-c').setAttribute('d', createWedge(cx, cy, 45, radCB, radCA));
             document.getElementById('arc-a').setAttribute('d', createWedge(ax, ay, 40, radAC, radAB));
 
-            // Determine Degrees
             let degB = Math.round((radBC < radBA ? radBC + 2*Math.PI - radBA : radBC - radBA) * 180 / Math.PI);
             let degC = Math.round((radCA < radCB ? radCA + 2*Math.PI - radCB : radCA - radCB) * 180 / Math.PI);
-            let degA = 180 - degB - degC; // Force sum strictly to 180
+            let degA = 180 - degB - degC; 
 
-            // Position Labels
             let midB = getMidAngle(radBA, radBC);
             let pB = polarToCartesian(bx, by, 65, midB);
             document.getElementById('lbl-b').setAttribute('x', pB.x);
@@ -312,13 +258,11 @@
             document.getElementById('lbl-a').setAttribute('y', pA.y);
             document.getElementById('lbl-a').textContent = `${degA}°`;
 
-            // Calculate Perimeter
             let lenAB = Math.sqrt(Math.pow(ax - bx, 2) + Math.pow(ay - by, 2));
             let lenAC = Math.sqrt(Math.pow(ax - cx, 2) + Math.pow(ay - cy, 2));
             let lenBC = Math.sqrt(Math.pow(bx - cx, 2) + Math.pow(by - cy, 2));
             let perimeter = Math.round(lenAB + lenAC + lenBC);
 
-            // Dashboard
             document.getElementById('tri-math').textContent = `${degA}° + ${degB}° + ${degC}° = 180°`;
             document.getElementById('tri-perim').textContent = `Perimeter = ${perimeter} units`;
         }
@@ -333,13 +277,12 @@
 
         function updateExterior() {
             let ax = parseInt(sExtX.value);
-            let ay = 100; // Fixed height for simplicity
+            let ay = 100; 
             
             let bx = 100, by = 230;
             let cx = 300, cy = 230;
-            let dx = 450, dy = 230; // Point D is the extension
+            let dx = 450, dy = 230; 
 
-            // Draw Sides
             document.getElementById('ext-side-ab').setAttribute('x1', ax);
             document.getElementById('ext-side-ab').setAttribute('y1', ay);
             document.getElementById('ext-side-ab').setAttribute('x2', bx);
@@ -350,34 +293,28 @@
             document.getElementById('ext-side-ac').setAttribute('x2', cx);
             document.getElementById('ext-side-ac').setAttribute('y2', cy);
 
-            // Position Vertex A
             document.getElementById('ext-dot-a').setAttribute('cx', ax);
             document.getElementById('ext-dot-a').setAttribute('cy', ay);
             document.getElementById('ext-txt-a').setAttribute('x', ax);
             document.getElementById('ext-txt-a').setAttribute('y', ay - 15);
 
-            // Radians Calculation
             let radAC = normalizeRad(Math.atan2(cy - ay, cx - ax));
             let radAB = normalizeRad(Math.atan2(by - ay, bx - ax));
             
             let radBA = normalizeRad(Math.atan2(ay - by, ax - bx));
-            let radBC = normalizeRad(Math.atan2(cy - by, cx - bx)); // 0 rad
+            let radBC = normalizeRad(Math.atan2(cy - by, cx - bx)); 
             
             let radCA = normalizeRad(Math.atan2(ay - cy, ax - cx));
-            let radCD = normalizeRad(Math.atan2(dy - cy, dx - cx)); // 0 rad (extension)
+            let radCD = normalizeRad(Math.atan2(dy - cy, dx - cx)); 
 
-            // Wedges
             document.getElementById('ext-arc-a').setAttribute('d', createWedge(ax, ay, 40, radAC, radAB));
             document.getElementById('ext-arc-b').setAttribute('d', createWedge(bx, by, 40, radBA, radBC));
-            // Exterior angle is from CA to CD
             document.getElementById('ext-arc-ext').setAttribute('d', createWedge(cx, cy, 35, radCA, radCD));
 
-            // Degrees Calculation
             let degA = Math.round((radAB < radAC ? radAB + 2*Math.PI - radAC : radAB - radAC) * 180 / Math.PI);
             let degB = Math.round((radBC < radBA ? radBC + 2*Math.PI - radBA : radBC - radBA) * 180 / Math.PI);
-            let degExt = degA + degB; // Exterior must perfectly equal A + B
+            let degExt = degA + degB; 
 
-            // Labels
             let midA = getMidAngle(radAC, radAB);
             let pA = polarToCartesian(ax, ay, 60, midA);
             document.getElementById('ext-lbl-a').setAttribute('x', pA.x);
@@ -396,7 +333,6 @@
             document.getElementById('ext-lbl-ext').setAttribute('y', pExt.y);
             document.getElementById('ext-lbl-ext').textContent = `${degExt}°`;
 
-            // Dashboard
             document.getElementById('ext-math').textContent = `Exterior Angle (${degExt}°) = ${degA}° + ${degB}°`;
         }
 

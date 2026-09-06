@@ -4,51 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Introduction to Quadrilaterals - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #4a148c; font-size: 2.2em; margin-bottom: 10px; }
-        
-        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .back-btn { display: inline-block; background: #6a1b9a; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateY(-3px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #e1bee7; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #6a1b9a; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #6a1b9a; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #ce93d8; font-size: 0.95em; min-width: 140px; flex: 1; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 500px; height: 350px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
         select { width: 100%; padding: 8px; margin-top: 10px; border-radius: 5px; border: 2px solid #ce93d8; font-family: inherit; font-weight: bold; color: #4a148c; cursor: pointer; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; text-align: left; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; text-align: center; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #f3e5f5; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #6a1b9a; }
-        .qa-question { font-weight: bold; color: #4a148c; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #6a1b9a; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #6a1b9a; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
-        .nav-btn:hover { background: #4a148c; transform: scale(1.05); }
-        
         ul.prop-list { margin: 10px 0 0 0; padding-left: 20px; font-weight: normal; color: #333; line-height: 1.5; }
         ul.prop-list li { margin-bottom: 5px; }
     </style>
 </head>
-<body>
+<body class="theme-ch8">
     <div class="top-nav">
         <a href="../index.html" class="back-btn">🏠 Course Index</a>
     </div>
@@ -121,7 +86,6 @@
 
                 <polygon id="exp-poly" fill="rgba(106, 27, 154, 0.2)" stroke="#6a1b9a" stroke-width="6" style="transition: all 0.4s ease;"/>
                 
-                <!-- Corner Indicators (for 90 degrees) dynamically updated via JS -->
                 <g id="exp-90-corners" opacity="0" stroke="#d32f2f" stroke-width="3" fill="none" style="transition: opacity 0.4s ease;"></g>
             </svg>
 
@@ -147,7 +111,6 @@
             <div class="slider-row">
                 <div class="slider-group" style="border-color: #0288d1; background: #e1f5fe;">
                     <label style="color: #01579b; font-weight: bold;">Lean (Left/Right)</label>
-                    <!-- Range allows it to easily snap to 100 for 90 degrees, and 250 for equal side lengths -->
                     <input type="range" id="s-para-x" min="0" max="250" value="150" step="10">
                 </div>
                 <div class="slider-group" style="border-color: #0288d1; background: #e1f5fe;">
@@ -219,23 +182,18 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 320" style="height: 320px; background: #333;">
-                <!-- Grid -->
                 <pattern id="grid-dark" width="40" height="40" patternUnits="userSpaceOnUse">
                     <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#444" stroke-width="1"/>
                 </pattern>
                 <rect width="100%" height="100%" fill="url(#grid-dark)" />
 
-                <!-- Polygon Outline -->
                 <polygon id="diag-poly" fill="rgba(255,255,255,0.05)" stroke="#fff" stroke-width="2"/>
                 
-                <!-- Diagonals -->
                 <line id="diag-line-1" stroke="#00e5ff" stroke-width="4" stroke-dasharray="6,4"/>
                 <line id="diag-line-2" stroke="#ff4081" stroke-width="4" stroke-dasharray="6,4"/>
 
-                <!-- 90 Degree Indicator -->
                 <path id="diag-90-box" fill="none" stroke="#ffeb3b" stroke-width="3" opacity="0"/>
 
-                <!-- Intersection Dot -->
                 <circle id="diag-dot" r="6" fill="#ffeb3b"/>
             </svg>
 
@@ -321,7 +279,6 @@
                     "A parallelogram where <strong>all four angles are 90°</strong>.",
                     "Opposite sides are parallel and equal."
                 ],
-                // Inside corners for the rectangle coordinates
                 cornersHTML: `
                     <path d="M 140 260 L 140 240 L 120 240" />
                     <path d="M 400 260 L 400 240 L 420 240" />
@@ -345,7 +302,6 @@
                     "The perfect combination: <strong>All 4 sides equal</strong> AND <strong>all 4 angles 90°</strong>.",
                     "It is both a Rectangle and a Rhombus!"
                 ],
-                // Inside corners for the square coordinates
                 cornersHTML: `
                     <path d="M 190 260 L 190 240 L 170 240" />
                     <path d="M 310 260 L 310 240 L 330 240" />
@@ -391,8 +347,7 @@
         }
 
         selShape.addEventListener('change', updateExplorer);
-        updateExplorer(); // Initial run
-
+        updateExplorer(); 
 
         // --- 2. THE PARALLELOGRAM FLEXER LOGIC ---
         const sParaX = document.getElementById('s-para-x');
@@ -403,26 +358,24 @@
         }
 
         function getInteriorAngle(dx1, dy1, dx2, dy2) {
-            // Dot product formula to find angle between vectors
             let dot = dx1*dx2 + dy1*dy2;
             let mag1 = Math.sqrt(dx1*dx1 + dy1*dy1);
             let mag2 = Math.sqrt(dx2*dx2 + dy2*dy2);
             let cosTheta = dot / (mag1 * mag2);
-            cosTheta = Math.max(-1, Math.min(1, cosTheta)); // Clamp
+            cosTheta = Math.max(-1, Math.min(1, cosTheta));
             return Math.acos(cosTheta) * 180 / Math.PI;
         }
 
         function updatePara() {
-            let topX = parseInt(sParaX.value); // x pos of top-left vertex (D)
-            let height = parseInt(sParaY.value); // height from base
+            let topX = parseInt(sParaX.value);
+            let height = parseInt(sParaY.value); 
             
             let ax = 100, ay = 260;
-            let bx = 350, by = 260; // Base length = 250
+            let bx = 350, by = 260; 
             
             let dy = 260 - height;
             let dx = topX;
 
-            // Enforce parallel rule: C must be D + base vector (250, 0)
             let cx = dx + 250;
             let cy = dy;
 
@@ -434,7 +387,6 @@
             document.getElementById('para-dot-d').setAttribute('cx', dx); document.getElementById('para-dot-d').setAttribute('cy', dy);
             document.getElementById('para-txt-d').setAttribute('x', dx - 15); document.getElementById('para-txt-d').setAttribute('y', dy + 5);
 
-            // Move indicator arrows
             document.getElementById('arrow-top').setAttribute('d', `M ${dx + 120} ${dy} L ${dx + 130} ${dy - 5} L ${dx + 120} ${dy - 10}`);
 
             let midLeftX = (ax + dx) / 2; let midLeftY = (ay + dy) / 2;
@@ -445,17 +397,14 @@
             document.getElementById('arrow-right1').setAttribute('d', `M ${midRightX-5} ${midRightY} l 10 10`);
             document.getElementById('arrow-right2').setAttribute('d', `M ${midRightX-5} ${midRightY-8} l 10 10`);
 
-            // Math
             let lenAB = 250;
             let lenAD = Math.round(distance(ax, ay, dx, dy));
 
-            // Angle A (Vectors AB and AD)
             let vABx = bx - ax, vABy = by - ay;
             let vADx = dx - ax, vADy = dy - ay;
             let angA = Math.round(getInteriorAngle(vABx, vABy, vADx, vADy));
             let angB = 180 - angA; 
 
-            // Shape Identification Logic
             let isRightAngle = (angA === 90);
             let isEquilateral = (lenAD === 250); 
             let specificShapeName = "Parallelogram";
@@ -463,16 +412,15 @@
 
             if (isRightAngle && isEquilateral) {
                 specificShapeName = "Square";
-                shapeColor = "#d81b60"; // Pinkish red for square
+                shapeColor = "#d81b60"; 
             } else if (isRightAngle) {
                 specificShapeName = "Rectangle";
-                shapeColor = "#4a148c"; // Deep purple for rectangle
+                shapeColor = "#4a148c"; 
             } else if (isEquilateral) {
                 specificShapeName = "Rhombus";
-                shapeColor = "#00695c"; // Emerald for rhombus
+                shapeColor = "#00695c"; 
             }
 
-            // Update UI with identified shape
             let nameDisplay = document.getElementById('para-shape-name');
             nameDisplay.textContent = specificShapeName;
             nameDisplay.style.color = shapeColor;
@@ -485,7 +433,6 @@
         sParaX.addEventListener('input', updatePara);
         sParaY.addEventListener('input', updatePara);
         updatePara();
-
 
         // --- 3. THE DIAGONAL X-RAY LOGIC ---
         const selDiag = document.getElementById('sel-diag');
@@ -530,18 +477,15 @@
             let pC = coords[2].split(',');
             let pD = coords[3].split(',');
 
-            // Diagonals AC and BD
             document.getElementById('diag-line-1').setAttribute('x1', pA[0]); document.getElementById('diag-line-1').setAttribute('y1', pA[1]);
             document.getElementById('diag-line-1').setAttribute('x2', pC[0]); document.getElementById('diag-line-1').setAttribute('y2', pC[1]);
 
             document.getElementById('diag-line-2').setAttribute('x1', pB[0]); document.getElementById('diag-line-2').setAttribute('y1', pB[1]);
             document.getElementById('diag-line-2').setAttribute('x2', pD[0]); document.getElementById('diag-line-2').setAttribute('y2', pD[1]);
 
-            // Intersection point (Approximate for these specific hardcoded shapes - mostly bounding box center)
             let ix = (parseFloat(pA[0]) + parseFloat(pC[0])) / 2;
             let iy = (parseFloat(pA[1]) + parseFloat(pC[1])) / 2;
             
-            // Kite specific intersection
             if (key === 'kite') {
                 ix = 250; iy = 140;
             }
@@ -549,7 +493,6 @@
             document.getElementById('diag-dot').setAttribute('cx', ix);
             document.getElementById('diag-dot').setAttribute('cy', iy);
 
-            // 90 box
             let box = document.getElementById('diag-90-box');
             if (data.perp) {
                 box.setAttribute('opacity', '1');
@@ -558,7 +501,6 @@
                 box.setAttribute('opacity', '0');
             }
 
-            // Dashboard
             document.getElementById('diag-title').textContent = data.t;
             let ul = document.getElementById('diag-list');
             ul.innerHTML = "";
@@ -583,7 +525,6 @@
         selDiag.addEventListener('change', updateDiag);
         updateDiag();
 
-        // --- Q&A LOGIC ---
         function toggleAnswer(id) {
             const ans = document.getElementById(id);
             const btn = ans.previousElementSibling;

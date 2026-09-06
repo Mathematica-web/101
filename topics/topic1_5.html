@@ -4,51 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laws of Exponents - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #283593; font-size: 2.2em; margin-bottom: 10px; }
-        .back-btn { display: inline-block; background: #3f51b5; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateX(-5px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c5cae9; text-align: left; font-size: 1.1em;}
-        .formula-table th { background: #3f51b5; color: white; }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 700px; aspect-ratio: auto; }
         .math-font { font-family: 'Times New Roman', serif; font-style: italic; font-weight: bold; font-size: 1.2em; color: #c2185b; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #3f51b5; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 700px; height: 250px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #7986cb; font-size: 1em; }
-        input[type=range] { width: 200px; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; }
-        .val-num { font-size: 1.8em; display: block; margin-top: 5px; }
-
-        /* TOGGLE BUTTONS */
         .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
         .toggle-btn { padding: 10px 20px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1em; }
         .toggle-btn.active { background: #e91e63; color: white; border-color: #e91e63; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e8eaf6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #3f51b5; }
-        .qa-question { font-weight: bold; color: #1a237e; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #3f51b5; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #3f51b5; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
     </style>
 </head>
-<body>
-    <a href="../chapters/chapter1.html" class="back-btn">⬅️ Back to Chapter</a>
+<body class="theme-ch1">
+    <a href="../index.html" class="back-btn">🏠 Course Index</a>
 
     <h1>🚀 Laws of Exponents</h1>
     <p class="subtitle">Mastering the ultimate shortcut for repeated multiplication!</p>
@@ -219,6 +186,7 @@
 
     <div class="nav-buttons">
         <a href="topic1_4.html" class="nav-btn">← Prev Topic</a>
+		<a href="../chapters/chapter1.html" class="nav-btn">Chapter Index</a>
         <a href="../chapters/chapter2.html" class="nav-btn">Next Chapter ➡️</a>
     </div>
 
@@ -237,24 +205,20 @@
             let multResult = base * n;
             let expResult = Math.pow(base, n);
 
-            // Generate string representations
             let addStr = Array(n).fill(base).join(" + ");
             document.getElementById('calc-add').textContent = `${addStr} = ${multResult}`;
             
             let multStr = Array(n).fill(base).join(" × ");
             document.getElementById('calc-mult').textContent = `${multStr} = ${expResult}`;
 
-            // Update SVG Bars dynamically
             let maxSvgWidth = 480; 
-            let maxPossibleExp = Math.pow(5, 5); // 3125 (Max constraint for visualizer scale)
+            let maxPossibleExp = Math.pow(5, 5); 
             
-            // Logarithmic scale for UI to prevent extreme bar clipping, or just direct mapping if it fits
             let multWidth = (multResult / 50) * maxSvgWidth; 
             if(multWidth > maxSvgWidth) multWidth = maxSvgWidth;
             if(multWidth < 10) multWidth = 10;
             
             let expWidth = (expResult / maxPossibleExp) * maxSvgWidth;
-            // Boost small numbers visually so the bar doesn't disappear
             expWidth = Math.max((expResult / 125) * maxSvgWidth, 10); 
             if(expWidth > maxSvgWidth) expWidth = maxSvgWidth;
 
@@ -302,7 +266,6 @@
                 visualStr = `(<span style="color:#d32f2f;">${mArr}</span>) &times; (<span style="color:#1976d2;">${nArr}</span>)<br>= ${m+n} total x's multiplied`;
                 finalLawStr = `x<sup>${m}</sup> &middot; x<sup>${n}</sup> = x<sup>${m} + ${n}</sup> = x<sup>${m+n}</sup>`;
             } else {
-                // Ensure M is always greater or equal to N for simpler visual division in this tool
                 if (n > m) {
                     n = m;
                     sNexp.value = n;
@@ -312,7 +275,6 @@
                 let numArr = Array(m).fill('x');
                 let denArr = Array(n).fill('x');
                 
-                // Show cancelling visually using strikethroughs
                 let topHTML = [];
                 for(let i=0; i<m; i++) {
                     if (i < n) topHTML.push(`<strike style="color:#757575;">x</strike>`);

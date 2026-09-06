@@ -4,47 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Angle Sum Property & Theorems - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #4a148c; font-size: 2.2em; margin-bottom: 10px; }
-        
-        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .back-btn { display: inline-block; background: #6a1b9a; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateY(-3px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #e1bee7; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #6a1b9a; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #6a1b9a; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #ce93d8; font-size: 0.95em; min-width: 140px; flex: 1; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #f3e5f5; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #6a1b9a; }
-        .qa-question { font-weight: bold; color: #4a148c; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #6a1b9a; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #6a1b9a; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
-        .nav-btn:hover { background: #4a148c; transform: scale(1.05); }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 500px; height: 350px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
     </style>
 </head>
-<body>
+<body class="theme-ch8">
     <div class="top-nav">
         <a href="../index.html" class="back-btn">🏠 Course Index</a>
     </div>
@@ -183,23 +149,17 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
-                <!-- Fixed Triangle ABC (Bottom) -->
-                <!-- A: 100,250 | B: 350,250 | C: 400,100 -->
                 <polygon points="100,250 350,250 400,100" fill="rgba(56, 142, 60, 0.2)" stroke="#388e3c" stroke-width="4"/>
                 
                 <text x="80" y="270" font-weight="bold" fill="#333" font-size="20px">A</text>
                 <text x="360" y="270" font-weight="bold" fill="#333" font-size="20px">B</text>
                 <text x="420" y="100" font-weight="bold" fill="#333" font-size="20px">C</text>
 
-                <!-- Midpoint of Diagonal AC: ((100+400)/2, (250+100)/2) = (250, 175) -->
                 <circle cx="250" cy="175" r="5" fill="#e65100"/>
                 <text x="260" y="170" font-weight="bold" fill="#e65100" font-size="14px">Midpoint</text>
 
-                <!-- Diagonal Line (Dashed) -->
                 <line x1="100" y1="250" x2="400" y2="100" stroke="#333" stroke-width="3" stroke-dasharray="8,4"/>
 
-                <!-- Rotating Triangle CDA (Top) -->
-                <!-- C: 400,100 | D: 150,100 | A: 100,250 -->
                 <g id="thm-t2" transform="rotate(0 250 175)">
                     <polygon points="400,100 150,100 100,250" fill="rgba(25, 118, 210, 0.6)" stroke="#1976d2" stroke-width="4"/>
                     <text x="130" y="90" font-weight="bold" fill="#1976d2" font-size="20px">D</text>
@@ -247,12 +207,6 @@
     </div>
 
     <script>
-        // Mathematical Helpers
-        function normalizeRad(rad) {
-            if (rad < 0) rad += 2 * Math.PI;
-            return rad;
-        }
-
         function polarToCartesian(cx, cy, r, angleInRads) {
             return {
                 x: cx + r * Math.cos(angleInRads),
@@ -285,7 +239,6 @@
             let dx = parseInt(sQuadX.value);
             let dy = parseInt(sQuadY.value);
             
-            // Fixed Vertices
             let ax = 100, ay = 250;
             let bx = 400, by = 250;
             let cx = 350, cy = 80;
@@ -308,7 +261,7 @@
             let degA = getAngleLawOfCosines(lenAB, lenDA, diagBD);
             let degB = getAngleLawOfCosines(lenBC, lenAB, diagAC);
             let degC = getAngleLawOfCosines(lenCD, lenBC, diagBD);
-            let degD = 360 - (degA + degB + degC); // Force to exactly 360° to avoid float errors
+            let degD = 360 - (degA + degB + degC); 
 
             let radAB = Math.atan2(by - ay, bx - ax);
             let radAD = Math.atan2(dy - ay, dx - ax);
@@ -355,13 +308,11 @@
         const sSplit = document.getElementById('s-split');
 
         function updateSplit() {
-            let offset = parseInt(sSplit.value); // 0 to 100
+            let offset = parseInt(sSplit.value); 
             
-            // T1 moves bottom-right
             let t1X = offset * 0.7;
             let t1Y = offset * 0.7;
             
-            // T2 moves top-left
             let t2X = -offset * 0.7;
             let t2Y = -offset * 0.7;
 
@@ -388,9 +339,8 @@
         const sThm = document.getElementById('s-thm');
 
         function updateThm() {
-            let angle = parseInt(sThm.value); // 0 to 180
+            let angle = parseInt(sThm.value); 
             
-            // Rotate the top triangle around the midpoint of the diagonal (250, 175)
             document.getElementById('thm-t2').setAttribute('transform', `rotate(${angle} 250 175)`);
 
             let status = document.getElementById('thm-status');
@@ -398,11 +348,11 @@
             if (angle === 180) {
                 status.textContent = "✅ Perfect Superposition! The triangles are Congruent. (ΔABC ≅ ΔCDA)";
                 status.style.color = "#388e3c";
-                document.getElementById('thm-t2').setAttribute('fill', 'rgba(56, 142, 60, 0.8)'); // Turn green to match base
+                document.getElementById('thm-t2').setAttribute('fill', 'rgba(56, 142, 60, 0.8)'); 
             } else if (angle === 0) {
                 status.textContent = "Slide to rotate Triangle CDA around the midpoint.";
                 status.style.color = "#00695c";
-                document.getElementById('thm-t2').setAttribute('fill', 'rgba(25, 118, 210, 0.6)'); // Blue original
+                document.getElementById('thm-t2').setAttribute('fill', 'rgba(25, 118, 210, 0.6)'); 
             } else {
                 status.textContent = `Rotating... (${angle}°)`;
                 status.style.color = "#1976d2";

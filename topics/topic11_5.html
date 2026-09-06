@@ -4,45 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conversion of Solids - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; }
-        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
-        .back-btn { display: inline-block; background: #4ecdc4; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateX(-5px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 600px; height: 300px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
         .golden-rule-box { background: #fff3e0; padding: 20px; border-radius: 15px; margin: 20px 0; border-left: 6px solid #ff9800; text-align: center; }
         .big-math { font-size: 1.6em; font-weight: bold; color: #e65100; margin: 15px 0; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #f3e5f5; border: 3px dashed #9c27b0; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 600px; height: 300px; background: white; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #ce93d8; font-size: 0.9em; }
-        input[type=range] { width: 110px; cursor: pointer; display: block; margin-top: 5px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; }
-        .val-num { font-size: 1.5em; display: block; margin-top: 5px; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #4caf50; }
-        .qa-question { font-weight: bold; color: #2e7d32; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; }
-        .show-answer-btn { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #4ecdc4; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
-        .chapter-btn { background: #ff6b6b; }
     </style>
 </head>
-<body>
-    <a href="../chapters/chapter11.html" class="back-btn">⬅️ Back to Chapter</a>
+<body class="theme-ch11">
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
 
     <h1>🔄 Conversion of Solids</h1>
     <p class="subtitle">Melting, molding, and the conservation of volume!</p>
@@ -76,16 +49,13 @@
             </div>
 
             <svg id="melt-svg" class="svg-canvas" viewBox="0 0 600 300">
-                <!-- Original Sphere -->
                 <circle id="melt-sphere" cx="120" cy="150" r="60" fill="#bbdefb" stroke="#1565c0" stroke-width="3"/>
                 <text id="txt-v1" x="120" y="250" font-weight="bold" fill="#1565c0" text-anchor="middle">V = 904.8</text>
 
-                <!-- Arrow -->
-                <path d="M 230 150 L 320 150" stroke="#9c27b0" stroke-width="5" marker-end="url(#arrow)"/>
+                <path d="M 230 150 L 320 150" stroke="#9c27b0" stroke-width="5"/>
                 <polygon points="320,140 340,150 320,160" fill="#9c27b0"/>
                 <text x="285" y="135" font-size="24px" text-anchor="middle">🔥</text>
 
-                <!-- New Cylinder -->
                 <g id="melt-cyl-group">
                     <rect id="melt-cyl-body" x="430" y="100" width="80" height="100" fill="#c8e6c9" stroke="#2e7d32" stroke-width="3"/>
                     <ellipse id="melt-cyl-bot" cx="470" cy="200" rx="40" ry="12" fill="#a5d6a7" stroke="#2e7d32" stroke-width="3"/>
@@ -130,7 +100,6 @@
             </div>
 
             <svg id="multi-svg" class="svg-canvas" viewBox="0 0 600 300">
-                <!-- Big Cylinder -->
                 <g id="multi-cyl">
                     <rect id="mc-body" x="80" y="80" width="100" height="150" fill="#ffe0b2" stroke="#f57c00" stroke-width="3"/>
                     <ellipse id="mc-bot" cx="130" cy="230" rx="50" ry="15" fill="#ffcc80" stroke="#f57c00" stroke-width="3"/>
@@ -138,12 +107,10 @@
                 </g>
                 <text id="txt-big-v" x="130" y="270" font-weight="bold" fill="#e65100" text-anchor="middle">Vol: 14137</text>
 
-                <!-- Arrow -->
-                <path d="M 230 150 L 320 150" stroke="#333" stroke-width="5" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
+                <path d="M 230 150 L 320 150" stroke="#333" stroke-width="5" stroke-dasharray="5,5"/>
                 <polygon points="320,140 340,150 320,160" fill="#333"/>
                 <text x="285" y="135" font-size="20px" text-anchor="middle">Pours into</text>
 
-                <!-- Small Cone -->
                 <g id="multi-cone">
                     <polygon id="mc-cone-body" points="470,120 420,230 520,230" fill="#b2ebf2" stroke="#00acc1" stroke-width="3"/>
                     <ellipse id="mc-cone-bot" cx="470" cy="230" rx="50" ry="15" fill="#80deea" stroke="#00acc1" stroke-width="3"/>
@@ -190,26 +157,21 @@
                     </radialGradient>
                 </defs>
 
-                <!-- Sphere -->
                 <circle id="hc-sphere" cx="120" cy="150" r="50" fill="url(#hc-sphere-grad)" stroke="#880e4f" stroke-width="3"/>
                 <text id="txt-hc-sv" x="120" y="250" font-weight="bold" fill="#880e4f" text-anchor="middle">Total V: 2145</text>
 
-                <!-- Arrow -->
-                <path d="M 230 150 L 320 150" stroke="#00897b" stroke-width="5" marker-end="url(#arrow)"/>
+                <path d="M 230 150 L 320 150" stroke="#00897b" stroke-width="5"/>
                 <polygon points="320,140 340,150 320,160" fill="#00897b"/>
                 <text x="285" y="135" font-size="24px" text-anchor="middle">🔥</text>
 
-                <!-- Hollow Cylinder -->
                 <g id="hc-pipe">
-                    <!-- Outer Body -->
                     <rect id="hc-body" x="410" y="70" width="100" height="150" fill="#b2dfdb" stroke="#00796b" stroke-width="3"/>
-                    <!-- Outer Bottom -->
                     <ellipse id="hc-bot-out" cx="460" cy="220" rx="50" ry="15" fill="#80cbc4" stroke="#00796b" stroke-width="3"/>
-                    <!-- Inner Dashed Line (Hollow indicator) -->
+                    
                     <line id="hc-inner-left" x1="430" y1="70" x2="430" y2="220" stroke="#004d40" stroke-width="2" stroke-dasharray="5,5"/>
                     <line id="hc-inner-right" x1="490" y1="70" x2="490" y2="220" stroke="#004d40" stroke-width="2" stroke-dasharray="5,5"/>
                     <ellipse id="hc-bot-in" cx="460" cy="220" rx="30" ry="9" fill="none" stroke="#004d40" stroke-width="2" stroke-dasharray="4,4"/>
-                    <!-- Top Ring -->
+                    
                     <ellipse id="hc-top-out" cx="460" cy="70" rx="50" ry="15" fill="#e0f2f1" stroke="#00796b" stroke-width="3"/>
                     <ellipse id="hc-top-in" cx="460" cy="70" rx="30" ry="9" fill="#fff" stroke="#004d40" stroke-width="3"/>
                 </g>
@@ -256,15 +218,9 @@
         </div>
     </div>
 
-    <!-- Chapter Completion -->
-    <div class="section-box" style="background: linear-gradient(135deg, #e3f2fd, #bbdefb); border: 3px solid #2196f3; text-align: center;">
-        <h2 style="color: #1565c0; margin-top:0;">🏆 Congratulations! Chapter 11 Complete!</h2>
-        <p style="font-size: 1.2em;">You have officially mastered the geometry of 3D solids!</p>
-        <p style="font-weight: bold; margin-top: 15px; color: #0d47a1;">Ready for Data and Charts? Let's move on to Chapter 12 (Statistics)! 📊</p>
-    </div>
-
     <div class="nav-buttons">
         <a href="topic11_4.html" class="nav-btn chapter-btn">← Prev Topic</a>
+		<a href="../chapters/chapter11.html" class="nav-btn">Chapter Index</a>
         <a href="../chapters/chapter12.html" class="nav-btn">Next Chapter ➡️</a>
     </div>
 
@@ -340,10 +296,9 @@
             document.getElementById('txt-big-v').textContent = "Vol: " + vBig.toFixed(0);
             document.getElementById('txt-small-v').textContent = "Vol: " + vSmall.toFixed(1);
 
-            // Precision adjustment buffer before rounding down
             let n = Math.floor((vBig / vSmall) + 0.0001);
             let remainder = vBig - (n * vSmall);
-            if (remainder < 0.1) remainder = 0; // Fixes microscopic floating point issues
+            if (remainder < 0.1) remainder = 0; 
 
             document.getElementById('calc-n').textContent = n;
             let remText = document.getElementById('calc-rem');
@@ -465,7 +420,6 @@
         sHcInR.addEventListener('input', updateHollowCaster);
         updateHollowCaster();
 
-        // --- Q&A LOGIC ---
         function toggleAnswer(id) {
             const ans = document.getElementById(id);
             const btn = ans.previousElementSibling;

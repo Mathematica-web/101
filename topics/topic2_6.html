@@ -4,34 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Division of Polynomials - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #1b5e20; font-size: 2.2em; margin-bottom: 10px; }
-        .back-btn { display: inline-block; background: #4caf50; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateX(-5px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c8e6c9; text-align: left; font-size: 1.1em; }
-        .formula-table th { background: #4caf50; color: white; }
-        
+        /* INTERACTIVE SPECIFIC STYLES */
         .math-eq { font-family: 'Times New Roman', serif; font-style: italic; font-size: 1.3em; color: #1b5e20; font-weight: bold; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #4caf50; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #81c784; font-size: 0.95em; min-width: 140px; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.6em; display: block; margin-top: 5px; font-family: monospace; }
-        
-        /* LONG DIVISION STYLES */
         .div-bracket-container { display: flex; justify-content: center; align-items: flex-start; font-family: 'Times New Roman', serif; font-size: 1.5em; margin: 20px 0; font-style: italic; }
         .div-divisor { padding-right: 15px; margin-top: 35px; color: #e65100; font-weight: bold; }
         .div-work-area { display: flex; flex-direction: column; align-items: flex-start; }
@@ -39,24 +15,13 @@
         .div-dividend-row { border-left: 2px solid #333; padding-left: 10px; padding-top: 5px; text-align: left; color: #0d47a1; font-weight: bold; }
         .div-sub-row { padding-left: 10px; text-align: left; color: #d32f2f; border-bottom: 2px solid #ccc; width: 100%; display: none; }
         .div-remainder-row { padding-left: 10px; text-align: left; color: #8e24aa; font-weight: bold; padding-top: 5px; display: none; }
-        
         .step-btn { background: #9c27b0; color: white; border: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 1.1em; }
         .step-btn:hover { background: #7b1fa2; transform: scale(1.05); }
         .step-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #4caf50; }
-        .qa-question { font-weight: bold; color: #1b5e20; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #4caf50; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
     </style>
 </head>
-<body>
-    <a href="../chapters/chapter2.html" class="back-btn">⬅️ Back to Chapter Index</a>
+<body class="theme-ch2">
+    <a href="../index.html" class="back-btn">🏠 Course Index</a>
 
     <h1>➗ Division of Polynomials</h1>
     <p class="subtitle">Slicing big equations into smaller, organized pieces!</p>
@@ -252,11 +217,11 @@
 
     <div class="nav-buttons">
         <a href="topic2_5.html" class="nav-btn">← Prev Topic</a>
+		<a href="../chapters/chapter2.html" class="nav-btn">Chapter Index</a>
         <a href="../chapters/chapter3.html" class="nav-btn">Next Chapter ➡️</a>
     </div>
 
     <script>
-        // --- HELPER FORMATTING FUNCTION ---
         function formatPolyTerm(coeff, exp, isFirst) {
             if (coeff === 0) return isFirst ? "0" : "";
             
@@ -426,7 +391,6 @@
             let degP = parseInt(document.getElementById('s-ld-deg-p').value);
             let degG = parseInt(document.getElementById('s-ld-deg-g').value);
             
-            // Constrain Divisor Degree <= Dividend Degree visually
             if (degG > degP) { 
                 degG = degP; 
                 document.getElementById('s-ld-deg-g').value = degG; 
@@ -450,7 +414,7 @@
             }
         }
 
-        buildLDInputs(); // Init dynamic inputs
+        buildLDInputs(); 
 
         let dynSteps = [];
         let currentDynStep = 0;
@@ -642,7 +606,6 @@
             }
         }
 
-        // --- Q&A LOGIC ---
         function toggleAnswer(id) {
             const ans = document.getElementById(id);
             const btn = ans.previousElementSibling;

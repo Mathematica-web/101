@@ -4,54 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sphere & Hemisphere - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; }
-        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
-        .back-btn { display: inline-block; background: #4ecdc4; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateX(-5px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 900px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; }
-        .formula-table th { background: #00838f; color: white; font-size: 1.1em; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fff3e0; border: 3px dashed #ff9800; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 450px; height: 350px; background: white; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #ffcc80; }
-        input[type=range] { width: 120px; cursor: pointer; display: block; margin-top: 5px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; }
-
-        /* TOGGLE BUTTONS */
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 450px; height: 350px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
         .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
         .toggle-btn { padding: 10px 15px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        
         .toggle-btn.btn-shape.active { background: #2196f3; color: white; border-color: #2196f3; }
         .toggle-btn.btn-hollow.active { background: #ff9800; color: white; border-color: #ff9800; }
         .toggle-btn.btn-solid.active { background: #9c27b0; color: white; border-color: #9c27b0; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #4caf50; }
-        .qa-question { font-weight: bold; color: #2e7d32; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; }
-        .show-answer-btn { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #4ecdc4; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
-        .chapter-btn { background: #ff6b6b; }
     </style>
 </head>
-<body>
-    <a href="../chapters/chapter11.html" class="back-btn">⬅️ Back to Chapter</a>
+<body class="theme-ch11">
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
 
     <h1>⚽ Sphere & Hemisphere</h1>
     <p class="subtitle">Calculations for perfect bubbles and bowls!</p>
@@ -117,7 +84,6 @@
                     </radialGradient>
                 </defs>
                 
-                <!-- Dynamic Elements -->
                 <circle id="svg-sphere" cx="225" cy="175" r="80" fill="url(#sphere-grad)" stroke="#0d47a1" stroke-width="3"/>
                 
                 <g id="svg-hemisphere" style="display: none;">
@@ -125,7 +91,6 @@
                     <ellipse id="svg-hemi-top" cx="225" cy="175" rx="80" ry="25" fill="#bbdefb" stroke="#0d47a1" stroke-width="3"/>
                 </g>
 
-                <!-- Labels -->
                 <line id="r-line1" x1="225" y1="175" x2="305" y2="175" stroke="#e91e63" stroke-width="3" stroke-dasharray="4,4"/>
                 <circle id="center-dot1" cx="225" cy="175" r="4" fill="#e91e63"/>
                 <text id="r-txt1" x="260" y="165" font-weight="bold" fill="#e91e63" font-size="1.2em">r</text>
@@ -162,7 +127,6 @@
                 </div>
             </div>
 
-            <!-- DYNAMIC BOWL SVG -->
             <svg class="svg-canvas" viewBox="0 0 450 350" style="background: #f8f9fa;">
                 <defs>
                     <radialGradient id="bowl-grad" cx="50%" cy="80%" r="70%">
@@ -178,7 +142,8 @@
                 <path id="svg-type-dome" d="M 145,175 A 80,80 0 0,0 305,175 Z" fill="url(#bowl-grad)" stroke="#e65100" stroke-width="3"/>
                 <ellipse id="svg-type-top" cx="225" cy="175" rx="80" ry="25" fill="rgba(0,0,0,0.05)" stroke="#e65100" stroke-width="2" stroke-dasharray="5,5"/>
                 
-                <text id="hollow-text" x="225" y="180" font-weight="bold" fill="#e65100" text-anchor="middle" opacity="0.6">Inner Surface Visible!</text>
+                <!-- Fixed Y placement so it sits perfectly inside the bowl body -->
+                <text id="hollow-text" x="225" y="220" font-weight="bold" fill="#e65100" text-anchor="middle" opacity="0.8">Inner Surface Visible!</text>
             </svg>
 
             <div class="live-dashboard">
@@ -224,6 +189,7 @@
 
     <div class="nav-buttons">
         <a href="topic11_3.html" class="nav-btn chapter-btn">← Prev Topic</a>
+		<a href="../chapters/chapter11.html" class="nav-btn">Chapter Index</a>
         <a href="topic11_5.html" class="nav-btn">Next: Conversion ➡️</a>
     </div>
 

@@ -4,53 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Theorems and Proofs - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #1a237e; font-size: 2.2em; margin-bottom: 10px; }
-        
-        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .back-btn { display: inline-block; background: #3949ab; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateY(-3px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c5cae9; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #3949ab; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #3949ab; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #9fa8da; font-size: 0.95em; min-width: 140px; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e8eaf6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #3949ab; }
-        .qa-question { font-weight: bold; color: #1a237e; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #3949ab; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #3949ab; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
-        .nav-btn:hover { background: #283593; transform: scale(1.05); }
-
-        /* PROOF BUILDER */
-        .proof-step { background: #fff; border: 2px solid #c5cae9; border-radius: 10px; padding: 15px; margin-bottom: 10px; text-align: left; opacity: 0.3; transition: 0.5s; font-size: 1.1em; }
-        .proof-step.active { opacity: 1; border-color: #3949ab; box-shadow: 0 4px 10px rgba(57, 73, 171, 0.2); }
-        .btn-next-step { background: #e65100; color: white; border: none; padding: 12px 25px; border-radius: 20px; font-weight: bold; font-size: 1.1em; cursor: pointer; transition: 0.3s; margin-top: 15px; }
-        .btn-next-step:hover { background: #bf360c; transform: scale(1.05); }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 500px; height: 350px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        .proof-step { background: #fff; border: 2px solid var(--border-main); border-radius: 10px; padding: 15px; margin-bottom: 10px; text-align: left; opacity: 0.3; transition: 0.5s; font-size: 1.1em; }
+        .proof-step.active { opacity: 1; border-color: var(--btn-main); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        .btn-next-step { background: var(--btn-main); color: white; border: none; padding: 12px 25px; border-radius: 20px; font-weight: bold; font-size: 1.1em; cursor: pointer; transition: 0.3s; margin-top: 15px; }
+        .btn-next-step:hover { background: var(--btn-hover); transform: scale(1.05); }
     </style>
 </head>
-<body>
+<body class="theme-ch5">
     <div class="top-nav">
         <a href="../index.html" class="back-btn">🏠 Course Index</a>
     </div>
@@ -92,18 +56,14 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
-                <!-- Points P and Q -->
                 <circle cx="150" cy="150" r="8" fill="#333"/>
                 <text x="140" y="130" font-weight="bold" fill="#333" font-size="20px">P</text>
                 
                 <circle cx="350" cy="150" r="8" fill="#333"/>
                 <text x="345" y="130" font-weight="bold" fill="#333" font-size="20px">Q</text>
 
-                <!-- Fixed Blue Line intersecting P and Q -->
                 <line x1="0" y1="150" x2="500" y2="150" stroke="#1976d2" stroke-width="6"/>
 
-                <!-- Dynamic Red Line -->
-                <!-- Accurately pivots through P to perfectly hit Q at the end of the slide -->
                 <path id="red-line" fill="none" stroke="#d32f2f" stroke-width="6"/>
             </svg>
 
@@ -187,19 +147,11 @@
         const bendRule = document.getElementById('bend-rule');
 
         function updateBend() {
-            let t = parseInt(sBend.value) / 100; // 0 to 1
+            let t = parseInt(sBend.value) / 100; 
 
-            // We use a quadratic Bezier curve: M startX startY Q cx cy endX endY
-            // We want it to ALWAYS pass through P(150, 150) at a curve parameter s=0.3.
-            
-            // X-coordinates:
             let startX = 0;
             let cx = 250;
             let endX = 500;
-            
-            // Y-coordinates:
-            // At t=0 (straight line missing Q), y0=225, cy=100, y2=-25
-            // At t=1 (curve hitting Q at x=350), y0=225, cy=46.42, y2=225
             
             let startY = 225;
             let controlY = 100 + (46.42 - 100) * t;
@@ -227,7 +179,6 @@
 
         sBend.addEventListener('input', updateBend);
         updateBend();
-
 
         // --- 2. LOGIC ENGINE ---
         let currentStep = 1;

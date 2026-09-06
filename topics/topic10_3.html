@@ -4,50 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Same Base & Parallels - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #1a237e; font-size: 2.2em; margin-bottom: 10px; }
-        
-        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .back-btn { display: inline-block; background: #3f51b5; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateY(-3px); background: #303f9f; }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c5cae9; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #3f51b5; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #3f51b5; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #9fa8da; font-size: 0.95em; min-width: 140px; flex: 1; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
-        
-        .proof-box { background: #e8eaf6; padding: 20px; border-radius: 10px; border-left: 6px solid #3f51b5; margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
-        .proof-box h3 { color: #1a237e; margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e8eaf6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #3f51b5; }
-        .qa-question { font-weight: bold; color: #1a237e; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #3f51b5; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); background: #303f9f; }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #3f51b5; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
-        .nav-btn:hover { background: #1a237e; transform: scale(1.05); }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 500px; height: 350px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        .proof-box { background: var(--bg-light); padding: 20px; border-radius: 10px; border-left: 6px solid var(--btn-main); margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
+        .proof-box h3 { color: var(--text-main); margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
     </style>
 </head>
-<body>
+<body class="theme-ch10">
     <div class="top-nav">
         <a href="../index.html" class="back-btn">🏠 Course Index</a>
     </div>
@@ -93,22 +58,18 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
-                <!-- Parallel Lines -->
                 <line x1="20" y1="100" x2="480" y2="100" stroke="#ccc" stroke-width="4" stroke-dasharray="8,4"/>
                 <line x1="20" y1="250" x2="480" y2="250" stroke="#ccc" stroke-width="4" stroke-dasharray="8,4"/>
                 <text x="35" y="90" font-weight="bold" fill="#999">Top Parallel</text>
                 <text x="35" y="270" font-weight="bold" fill="#999">Bottom Parallel</text>
 
-                <!-- Fixed Base Highlight -->
                 <line x1="150" y1="250" x2="350" y2="250" stroke="#e91e63" stroke-width="8" stroke-linecap="round"/>
                 
-                <!-- Dynamic Parallelogram -->
                 <polygon id="para-poly" fill="rgba(233, 30, 99, 0.2)" stroke="#e91e63" stroke-width="4"/>
                 
                 <circle cx="150" cy="250" r="6" fill="#880e4f"/>
                 <circle cx="350" cy="250" r="6" fill="#880e4f"/>
 
-                <!-- Height Indicator -->
                 <line id="para-height" x1="150" y1="250" x2="150" y2="100" stroke="#333" stroke-width="2" stroke-dasharray="4,4"/>
                 <path d="M 150 240 L 160 240 L 160 250" fill="none" stroke="#333" stroke-width="2"/>
                 <text x="110" y="180" font-weight="bold" fill="#333">h = 150</text>
@@ -143,23 +104,18 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
-                <!-- Parallel Lines -->
                 <line x1="20" y1="100" x2="480" y2="100" stroke="#ccc" stroke-width="4" stroke-dasharray="8,4"/>
                 <line x1="20" y1="250" x2="480" y2="250" stroke="#ccc" stroke-width="4" stroke-dasharray="8,4"/>
                 
-                <!-- Fixed Base Highlight -->
                 <line x1="150" y1="250" x2="350" y2="250" stroke="#00bcd4" stroke-width="8" stroke-linecap="round"/>
                 
-                <!-- Dynamic Triangle -->
                 <polygon id="tri-poly" fill="rgba(0, 188, 212, 0.2)" stroke="#00bcd4" stroke-width="4"/>
                 
-                <!-- Moving Top Dot -->
                 <circle id="tri-dot-top" r="8" fill="#006064" stroke="#fff" stroke-width="2"/>
                 
                 <circle cx="150" cy="250" r="6" fill="#006064"/>
                 <circle cx="350" cy="250" r="6" fill="#006064"/>
 
-                <!-- Height Indicator -->
                 <line id="tri-height" stroke="#333" stroke-width="2" stroke-dasharray="4,4"/>
                 <path id="tri-90" fill="none" stroke="#333" stroke-width="2"/>
                 <text x="250" y="275" font-weight="bold" fill="#0097a7" text-anchor="middle">Base (b) = 200</text>
@@ -196,11 +152,8 @@
                 <line x1="20" y1="100" x2="480" y2="100" stroke="#ccc" stroke-width="4" stroke-dasharray="8,4"/>
                 <line x1="20" y1="250" x2="480" y2="250" stroke="#ccc" stroke-width="4" stroke-dasharray="8,4"/>
 
-                <!-- Fixed Parallelogram Outline -->
-                <!-- Base: 150 to 350. Top: 250 to 450 -->
                 <polygon points="150,250 350,250 450,100 250,100" fill="rgba(255, 152, 0, 0.1)" stroke="#f57c00" stroke-width="3" stroke-dasharray="5,5"/>
                 
-                <!-- Dynamic Triangle -->
                 <polygon id="combo-tri" fill="rgba(25, 118, 210, 0.4)" stroke="#1976d2" stroke-width="4"/>
                 
                 <line x1="150" y1="250" x2="350" y2="250" stroke="#333" stroke-width="6" stroke-linecap="round"/>
@@ -263,9 +216,8 @@
         function updatePara() {
             let offset = parseInt(sParaX.value);
             let topX1 = offset;
-            let topX2 = offset + 200; // Base is 200 units wide
+            let topX2 = offset + 200; 
 
-            // Base coordinates: (150, 250) to (350, 250)
             document.getElementById('para-poly').setAttribute('points', `150,250 350,250 ${topX2},100 ${topX1},100`);
         }
         sParaX.addEventListener('input', updatePara);
@@ -308,7 +260,6 @@
         sComboX.addEventListener('input', updateCombo);
         updateCombo();
 
-        // --- Q&A LOGIC ---
         function toggleAnswer(id) {
             const ans = document.getElementById(id);
             const btn = ans.previousElementSibling;

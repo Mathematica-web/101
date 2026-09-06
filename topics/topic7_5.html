@@ -4,47 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advanced Triangle Theorems - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #004d40; font-size: 2.2em; margin-bottom: 10px; }
-        
-        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .back-btn { display: inline-block; background: #00695c; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateY(-3px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2dfdb; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #00695c; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #00695c; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #4db6ac; font-size: 0.95em; min-width: 140px; flex: 1; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e0f2f1; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00695c; }
-        .qa-question { font-weight: bold; color: #004d40; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #00695c; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #00695c; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
-        .nav-btn:hover { background: #004d40; transform: scale(1.05); }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 500px; height: 350px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
     </style>
 </head>
-<body>
+<body class="theme-ch7">
     <div class="top-nav">
         <a href="../index.html" class="back-btn">🏠 Course Index</a>
     </div>
@@ -94,26 +60,21 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 320" style="height: 320px; background: #fafafa;">
-                <!-- Triangle Sides -->
                 <line id="med-side-ab" stroke="#333" stroke-width="6" stroke-linecap="round"/>
                 <line id="med-side-bc" x1="100" y1="260" x2="400" y2="260" stroke="#333" stroke-width="6" stroke-linecap="round"/>
                 <line id="med-side-ca" stroke="#333" stroke-width="6" stroke-linecap="round"/>
 
-                <!-- Medians -->
                 <line id="median-a" stroke="#e65100" stroke-width="3" stroke-dasharray="8,4"/>
                 <line id="median-b" stroke="#e65100" stroke-width="3" stroke-dasharray="8,4"/>
                 <line id="median-c" stroke="#e65100" stroke-width="3" stroke-dasharray="8,4"/>
 
-                <!-- Midpoints -->
                 <circle id="mid-bc" cx="250" cy="260" r="5" fill="#1976d2"/>
                 <circle id="mid-ac" r="5" fill="#1976d2"/>
                 <circle id="mid-ab" r="5" fill="#1976d2"/>
 
-                <!-- Centroid -->
                 <circle id="centroid-g" r="7" fill="#d32f2f" stroke="#fff" stroke-width="2"/>
                 <text id="lbl-g" font-weight="bold" fill="#d32f2f" font-size="18px">G</text>
 
-                <!-- Vertices -->
                 <circle id="med-dot-a" r="8" fill="#333"/>
                 <text id="med-txt-a" font-weight="bold" fill="#333" font-size="20px">A</text>
                 
@@ -147,23 +108,17 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 320" style="height: 320px; background: #fafafa;">
-                <!-- Extended Base Line (for outside altitudes) -->
                 <line x1="20" y1="260" x2="480" y2="260" stroke="#ccc" stroke-width="3" stroke-dasharray="5,5"/>
 
-                <!-- Base Side BC -->
                 <line x1="150" y1="260" x2="350" y2="260" stroke="#333" stroke-width="6" stroke-linecap="round"/>
 
-                <!-- Triangle Sides -->
                 <line id="alt-side-ab" stroke="#333" stroke-width="6" stroke-linecap="round"/>
                 <line id="alt-side-ac" stroke="#333" stroke-width="6" stroke-linecap="round"/>
 
-                <!-- Altitude Line -->
                 <line id="altitude-line" stroke="#00897b" stroke-width="4" stroke-dasharray="8,4"/>
                 
-                <!-- 90 Degree Indicator -->
                 <path id="alt-90-box" fill="rgba(0, 137, 123, 0.2)" stroke="#00897b" stroke-width="2"/>
 
-                <!-- Vertices -->
                 <circle id="alt-dot-a" r="8" fill="#333"/>
                 <text id="alt-txt-a" font-weight="bold" fill="#333" font-size="20px">A</text>
                 
@@ -173,7 +128,6 @@
                 <circle cx="350" cy="260" r="8" fill="#333"/>
                 <text x="355" y="280" font-weight="bold" fill="#333" font-size="20px">C</text>
 
-                <!-- Intersection D -->
                 <circle id="alt-dot-d" r="6" fill="#00897b"/>
                 <text id="alt-txt-d" font-weight="bold" fill="#00897b" font-size="18px">D</text>
             </svg>
@@ -210,7 +164,6 @@
                 <path id="bis-arc-1" fill="rgba(123, 31, 162, 0.3)" stroke="#7b1fa2" stroke-width="2"/>
                 <path id="bis-arc-2" fill="rgba(123, 31, 162, 0.3)" stroke="#7b1fa2" stroke-width="2"/>
 
-                <!-- Base Segments Colors -->
                 <line id="bis-side-bd" stroke="#1976d2" stroke-width="6" stroke-linecap="round" y1="260" y2="260"/>
                 <line id="bis-side-dc" stroke="#d32f2f" stroke-width="6" stroke-linecap="round" y1="260" y2="260"/>
 
@@ -314,14 +267,12 @@
             document.getElementById('med-txt-a').setAttribute('x', ax);
             document.getElementById('med-txt-a').setAttribute('y', ay - 15);
 
-            // Midpoints
             let midACx = (ax + cx) / 2; let midACy = (ay + cy) / 2;
             let midABx = (ax + bx) / 2; let midABy = (ay + by) / 2;
 
             document.getElementById('mid-ac').setAttribute('cx', midACx); document.getElementById('mid-ac').setAttribute('cy', midACy);
             document.getElementById('mid-ab').setAttribute('cx', midABx); document.getElementById('mid-ab').setAttribute('cy', midABy);
 
-            // Medians
             document.getElementById('median-a').setAttribute('x1', ax); document.getElementById('median-a').setAttribute('y1', ay);
             document.getElementById('median-a').setAttribute('x2', 250); document.getElementById('median-a').setAttribute('y2', 260);
 
@@ -331,7 +282,6 @@
             document.getElementById('median-c').setAttribute('x1', cx); document.getElementById('median-c').setAttribute('y1', cy);
             document.getElementById('median-c').setAttribute('x2', midABx); document.getElementById('median-c').setAttribute('y2', midABy);
 
-            // Centroid G = (Ax+Bx+Cx)/3
             let gx = (ax + bx + cx) / 3;
             let gy = (ay + by + cy) / 3;
             
@@ -370,7 +320,6 @@
             document.getElementById('alt-txt-a').setAttribute('x', ax);
             document.getElementById('alt-txt-a').setAttribute('y', ay - 15);
 
-            // Altitude drops straight down to y = 260 since base is horizontal
             document.getElementById('altitude-line').setAttribute('x1', ax);
             document.getElementById('altitude-line').setAttribute('y1', ay);
             document.getElementById('altitude-line').setAttribute('x2', ax);
@@ -381,7 +330,6 @@
             document.getElementById('alt-txt-d').setAttribute('x', ax - 15);
             document.getElementById('alt-txt-d').setAttribute('y', 280);
 
-            // 90 degree box
             let boxDir = ax > 250 ? -1 : 1; 
             let p1 = `${ax},260`;
             let p2 = `${ax},245`;
@@ -430,12 +378,9 @@
             document.getElementById('bis-txt-a').setAttribute('x', ax);
             document.getElementById('bis-txt-a').setAttribute('y', ay - 15);
 
-            // Lengths of sides c and b
             let cLen = Math.sqrt(Math.pow(ax - bx, 2) + Math.pow(ay - by, 2));
             let bLen = Math.sqrt(Math.pow(ax - cx, 2) + Math.pow(ay - cy, 2));
 
-            // Bisector Theorem: Point D divides BC in ratio c:b
-            // Dx = (c * cx + b * bx) / (c + b)
             let dx = (cLen * cx + bLen * bx) / (cLen + bLen);
             
             document.getElementById('bisector-line').setAttribute('x1', ax);
@@ -454,7 +399,6 @@
             document.getElementById('bis-side-dc').setAttribute('x1', dx);
             document.getElementById('bis-side-dc').setAttribute('x2', cx);
 
-            // Angles for Wedges
             let radAC = normalizeRad(Math.atan2(cy - ay, cx - ax));
             let radAD = normalizeRad(Math.atan2(260 - ay, dx - ax));
             let radAB = normalizeRad(Math.atan2(by - ay, bx - ax));
@@ -462,7 +406,6 @@
             document.getElementById('bis-arc-1').setAttribute('d', createWedge(ax, ay, 40, radAC, radAD));
             document.getElementById('bis-arc-2').setAttribute('d', createWedge(ax, ay, 40, radAD, radAB));
 
-            // Ratios
             let ratioSide = (cLen / bLen).toFixed(2);
             let lenBD = dx - bx;
             let lenDC = cx - dx;
@@ -475,7 +418,6 @@
         sBisX.addEventListener('input', updateBisector);
         updateBisector();
 
-        // --- Q&A LOGIC ---
         function toggleAnswer(id) {
             const ans = document.getElementById(id);
             const btn = ans.previousElementSibling;

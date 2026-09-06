@@ -4,52 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Integers - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #0d47a1; font-size: 2.2em; margin-bottom: 10px; }
-        .back-btn { display: inline-block; background: #1976d2; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateX(-5px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #bbdefb; text-align: left; }
-        .formula-table th { background: #1976d2; color: white; font-size: 1.1em; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #1976d2; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 700px; height: 200px; background: #f5f5f5; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #90caf9; font-size: 0.95em; }
-        input[type=range] { width: 150px; cursor: pointer; display: block; margin-top: 5px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; }
-        .val-num { font-size: 1.8em; display: block; margin-top: 5px; }
-
-        /* TOGGLE BUTTONS */
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 700px; aspect-ratio: 700 / 200; }
         .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
         .toggle-btn { padding: 10px 20px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.2em; }
-        
         .toggle-btn.btn-pos.active { background: #4caf50; color: white; border-color: #4caf50; }
         .toggle-btn.btn-neg.active { background: #f44336; color: white; border-color: #f44336; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e3f2fd; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #1976d2; }
-        .qa-question { font-weight: bold; color: #0d47a1; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; }
-        .show-answer-btn { background: #1976d2; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #1976d2; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
     </style>
 </head>
-<body>
-    <a href="../chapters/chapter1.html" class="back-btn">⬅️ Back to Chapter</a>
+<body class="theme-ch1">
+    <a href="../index.html" class="back-btn">🏠 Course Index</a>
 
     <h1>➕ Integers ➖</h1>
     <p class="subtitle">Navigating the world of positives, negatives, and zero!</p>
@@ -100,17 +66,12 @@
             </div>
 
             <svg id="walk-svg" class="svg-canvas" viewBox="0 0 700 200">
-                <!-- Base Line -50 to 50 to accommodate -25 + (-25) and 25 + 25 -->
                 <line x1="50" y1="140" x2="650" y2="140" stroke="#333" stroke-width="4"/>
                 <polygon points="50,140 60,135 60,145" fill="#333"/>
                 <polygon points="650,140 640,135 640,145" fill="#333"/>
                 
-                <!-- Tick Marks -->
-                <g id="walk-ticks" fill="#555" font-size="12px" text-anchor="middle">
-                    <!-- Populated via JS for exact spacing -->
-                </g>
+                <g id="walk-ticks" fill="#555" font-size="12px" text-anchor="middle"></g>
 
-                <!-- Arcs -->
                 <path id="arc-a" d="" fill="none" stroke="#f57c00" stroke-width="4" stroke-dasharray="5,5" marker-end="url(#arrow-orange)"/>
                 <path id="arc-b" d="" fill="none" stroke="#00acc1" stroke-width="4" marker-end="url(#arrow-teal)"/>
 
@@ -123,7 +84,6 @@
                     </marker>
                 </defs>
 
-                <!-- Result Dot -->
                 <circle id="walk-dot" cx="350" cy="140" r="6" fill="#d32f2f" stroke="#fff" stroke-width="2"/>
             </svg>
 
@@ -182,15 +142,12 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 700 150" style="height: 120px;">
-                <!-- Base Line -->
                 <line x1="50" y1="100" x2="650" y2="100" stroke="#333" stroke-width="4"/>
                 <line x1="350" y1="90" x2="350" y2="110" stroke="#d32f2f" stroke-width="4"/>
                 <text x="350" y="80" font-size="24px" text-anchor="middle">🏠 0</text>
                 
-                <!-- Person -->
                 <text id="abs-person" x="170" y="85" font-size="24px" text-anchor="middle">🚶</text>
                 
-                <!-- Distance Line -->
                 <line id="abs-dist-line" x1="170" y1="120" x2="350" y2="120" stroke="#1976d2" stroke-width="4"/>
                 <line id="abs-dist-left" x1="170" y1="115" x2="170" y2="125" stroke="#1976d2" stroke-width="4"/>
                 <line id="abs-dist-right" x1="350" y1="115" x2="350" y2="125" stroke="#1976d2" stroke-width="4"/>
@@ -236,6 +193,7 @@
 
     <div class="nav-buttons">
         <a href="topic1_1.html" class="nav-btn">← Prev Topic</a>
+		<a href="../chapters/chapter1.html" class="nav-btn"> Chapter Index</a>
         <a href="topic1_3.html" class="nav-btn">Next: Rational Numbers ➡️</a>
     </div>
 
@@ -245,8 +203,7 @@
         const sliderB = document.getElementById('slider-b');
         const ticksGroup = document.getElementById('walk-ticks');
 
-        // Number line spanning -50 to 50
-        const spacingWalker = 6; // (650 - 50) / 100 units = 6px per unit
+        const spacingWalker = 6; 
         
         function initTicks() {
             for(let i = -50; i <= 50; i++) {
@@ -290,16 +247,14 @@
             let xA = xZero + (a * spacingWalker);
             let xResult = xZero + (result * spacingWalker);
 
-            // Draw Arc 1 (0 to A)
             if(a !== 0) {
-                let heightA = Math.abs(a) * 1.5; // Visual scaling for 50-unit arcs
+                let heightA = Math.abs(a) * 1.5;
                 let sweepA = a > 0 ? 1 : 0;
                 document.getElementById('arc-a').setAttribute('d', `M ${xZero},130 A ${Math.abs((xA-xZero)/2)},${heightA} 0 0,${sweepA} ${xA},130`);
             } else {
                 document.getElementById('arc-a').setAttribute('d', '');
             }
 
-            // Draw Arc 2 (A to Result)
             if(b !== 0) {
                 let heightB = Math.abs(b) * 1.5;
                 let sweepB = b > 0 ? 1 : 0;
@@ -362,7 +317,7 @@
 
         // --- 3. ABSOLUTE VALUE LOGIC ---
         const sliderAbs = document.getElementById('slider-abs');
-        const spacingAbs = 12; // Adjusted spacing for the shorter -25 to 25 slider
+        const spacingAbs = 12; 
         
         function updateAbs() {
             let x = parseInt(sliderAbs.value);

@@ -4,50 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Real-World Applications - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES (ROYAL BLUE THEME) */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #1a237e; font-size: 2.2em; margin-bottom: 10px; }
-        
-        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .back-btn { display: inline-block; background: #3f51b5; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateY(-3px); background: #303f9f; }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c5cae9; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #3f51b5; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #3f51b5; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #9fa8da; font-size: 0.95em; min-width: 140px; flex: 1; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
-        
-        .proof-box { background: #e8eaf6; padding: 20px; border-radius: 10px; border-left: 6px solid #3f51b5; margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
-        .proof-box h3 { color: #1a237e; margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e8eaf6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #3f51b5; }
-        .qa-question { font-weight: bold; color: #1a237e; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #3f51b5; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); background: #303f9f; }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #3f51b5; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
-        .nav-btn:hover { background: #1a237e; transform: scale(1.05); }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 500px; height: 350px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        .proof-box { background: var(--bg-light); padding: 20px; border-radius: 10px; border-left: 6px solid var(--btn-main); margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
+        .proof-box h3 { color: var(--text-main); margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
     </style>
 </head>
-<body>
+<body class="theme-ch10">
     <div class="top-nav">
         <a href="../index.html" class="back-btn">🏠 Course Index</a>
     </div>
@@ -55,7 +20,6 @@
     <h1>🌍 Real-World Applications</h1>
     <p class="subtitle">Applying area formulas to fields, fabrics, and everyday problems!</p>
 
-    <!-- CORE CONCEPT -->
     <div class="section-box">
         <h2>From Paper to Practice</h2>
         <p>In the real world, objects are rarely perfect squares or simple triangles. We must break down complex irregular shapes into fundamental pieces to calculate their total area.</p>
@@ -93,7 +57,6 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
-                <!-- Dirt Texture Pattern -->
                 <pattern id="dirt" width="40" height="40" patternUnits="userSpaceOnUse">
                     <circle cx="10" cy="10" r="1.5" fill="#d7ccc8"/>
                     <circle cx="30" cy="25" r="1" fill="#d7ccc8"/>
@@ -103,15 +66,16 @@
                 <polygon points="100,280 380,280 420,80 150,120" fill="url(#dirt)" stroke="#8d6e63" stroke-width="4"/>
                 
                 <text x="240" y="305" font-weight="bold" fill="#5d4037">Side = 28 m</text>
-                <text x="430" y="190" font-weight="bold" fill="#5d4037">Side = 20 m</text>
-                <text x="280" y="80" font-weight="bold" fill="#5d4037">Side = 27 m</text>
+                <text x="390" y="180" font-weight="bold" fill="#5d4037" text-anchor="start">Side = 20 m</text>
+                <text x="270" y="70" font-weight="bold" fill="#5d4037">Side = 27 m</text>
                 <text x="60" y="200" font-weight="bold" fill="#5d4037">Side = 17 m</text>
 
                 <polygon id="field-t1" points="100,280 380,280 150,120" fill="rgba(255, 152, 0, 0.4)" opacity="0"/>
                 <polygon id="field-t2" points="380,280 420,80 150,120" fill="rgba(33, 150, 243, 0.4)" opacity="0"/>
 
-                <line id="field-diag-line" x1="100" y1="280" x2="100" y2="280" stroke="#d32f2f" stroke-width="5" stroke-dasharray="8,4"/>
-                <text id="field-diag-lbl" x="200" y="220" font-weight="bold" fill="#d32f2f" opacity="0">Diag = 32 m</text>
+                <!-- Connected along Diagonal BD -->
+                <line id="field-diag-line" x1="150" y1="120" x2="150" y2="120" stroke="#d32f2f" stroke-width="5" stroke-dasharray="8,4"/>
+                <text id="field-diag-lbl" x="255" y="195" font-weight="bold" fill="#d32f2f" opacity="0">Diag = 32 m</text>
 
                 <circle cx="100" cy="280" r="5" fill="#3e2723"/><text x="80" y="295" font-weight="bold" fill="#333">A</text>
                 <circle cx="380" cy="280" r="5" fill="#3e2723"/><text x="395" y="295" font-weight="bold" fill="#333">B</text>
@@ -155,9 +119,7 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
-                <g id="umbrella-group" transform="translate(250, 175)">
-                    <!-- 8 Wedges will be drawn dynamically -->
-                </g>
+                <g id="umbrella-group" transform="translate(250, 175)"></g>
                 <circle cx="250" cy="175" r="8" fill="#333" stroke="#fff" stroke-width="2"/>
                 
                 <line id="umb-dim-h" stroke="#333" stroke-width="3" stroke-dasharray="4,4"/>
@@ -202,10 +164,8 @@
                     <rect width="20" height="20" fill="#b2dfdb" stroke="#00796b" stroke-width="1"/>
                 </pattern>
                 
-                <!-- Dynamic Parallelogram Pathway -->
                 <polygon id="path-poly" fill="url(#tile-pattern)" stroke="#004d40" stroke-width="4"/>
                 
-                <!-- Dimension Indicators -->
                 <line x1="100" y1="280" x2="300" y2="280" stroke="#d32f2f" stroke-width="4"/>
                 <text x="200" y="305" font-weight="bold" fill="#d32f2f" text-anchor="middle">Base = 200 m</text>
 
@@ -271,13 +231,15 @@
         function updateField() {
             let offset = parseInt(sFieldDiag.value); // 0 to 100
             
-            // A(100,280), C(420,80)
-            let ax = 100, ay = 280;
-            let cx = 420, cy = 80;
+            // Connect along diagonal BD: D(150, 120) to B(380, 280)
+            let dx = 150, dy = 120;
+            let bx = 380, by = 280;
             
-            let currentX = ax + (cx - ax) * (offset / 100);
-            let currentY = ay + (cy - ay) * (offset / 100);
+            let currentX = dx + (bx - dx) * (offset / 100);
+            let currentY = dy + (by - dy) * (offset / 100);
 
+            document.getElementById('field-diag-line').setAttribute('x1', dx);
+            document.getElementById('field-diag-line').setAttribute('y1', dy);
             document.getElementById('field-diag-line').setAttribute('x2', currentX);
             document.getElementById('field-diag-line').setAttribute('y2', currentY);
 
@@ -302,16 +264,15 @@
         sFieldDiag.addEventListener('input', updateField);
         updateField();
 
-
         // --- 2. UMBRELLA STITCHER LOGIC ---
         const sUmb = document.getElementById('s-umb');
 
         function updateUmbrella() {
-            let baseSize = parseInt(sUmb.value); // 30 to 80
+            let baseSize = parseInt(sUmb.value); 
             document.getElementById('val-umb').textContent = baseSize;
 
             let group = document.getElementById('umbrella-group');
-            group.innerHTML = ''; // Clear existing wedges
+            group.innerHTML = ''; 
 
             let visualSide = 140; 
             let realSide = 60;

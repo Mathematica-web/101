@@ -4,54 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Midpoint Theorem - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #4a148c; font-size: 2.2em; margin-bottom: 10px; }
-        
-        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .back-btn { display: inline-block; background: #6a1b9a; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateY(-3px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #e1bee7; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #6a1b9a; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #6a1b9a; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #ce93d8; font-size: 0.95em; min-width: 140px; flex: 1; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
-
-        /* EDUCATIONAL PROOF BOX */
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 500px; height: 350px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
         .proof-box { background: #f3e5f5; padding: 20px; border-radius: 10px; border-left: 6px solid #9c27b0; margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
         .proof-box h3 { color: #6a1b9a; margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #f3e5f5; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #6a1b9a; }
-        .qa-question { font-weight: bold; color: #4a148c; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #6a1b9a; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #6a1b9a; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
-        .nav-btn:hover { background: #4a148c; transform: scale(1.05); }
-        
         .step-list { padding-left: 25px; margin-top: 10px; }
         .step-list li { margin-bottom: 8px; }
     </style>
 </head>
-<body>
+<body class="theme-ch8">
     <div class="top-nav">
         <a href="../index.html" class="back-btn">🏠 Course Index</a>
     </div>
@@ -97,20 +60,15 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
-                <!-- Base Triangle ABC -->
                 <polygon id="t1-poly" fill="rgba(25, 118, 210, 0.1)" stroke="#ccc" stroke-width="4"/>
                 
-                <!-- Base Line BC -->
                 <line x1="100" y1="260" x2="400" y2="260" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
 
-                <!-- Triangle Sides -->
                 <line id="t1-side-ab" stroke="#333" stroke-width="4" stroke-linecap="round"/>
                 <line id="t1-side-ac" stroke="#333" stroke-width="4" stroke-linecap="round"/>
 
-                <!-- Midpoint Line DE -->
                 <line id="t1-line-de" stroke="#9c27b0" stroke-width="6" stroke-linecap="round"/>
 
-                <!-- Proof Extension Elements (Hidden by default, used in proof logic) -->
                 <g id="proof-elements" style="opacity: 0; transition: opacity 0.5s;">
                     <line id="proof-line-ef" stroke="#d81b60" stroke-width="4" stroke-dasharray="5,5"/>
                     <line id="proof-line-cf" stroke="#d81b60" stroke-width="4" stroke-dasharray="5,5"/>
@@ -118,7 +76,6 @@
                     <text id="t1-txt-f" font-weight="bold" fill="#d81b60" font-size="18px">F</text>
                 </g>
 
-                <!-- Vertices -->
                 <circle cx="100" cy="260" r="6" fill="#333"/>
                 <text x="80" y="275" font-weight="bold" fill="#333" font-size="20px">B</text>
 
@@ -128,7 +85,6 @@
                 <circle id="t1-dot-a" r="8" fill="#333" stroke="#fff" stroke-width="2"/>
                 <text id="t1-txt-a" font-weight="bold" fill="#333" font-size="20px">A</text>
 
-                <!-- Midpoints -->
                 <circle id="t1-dot-d" r="6" fill="#9c27b0"/>
                 <text id="t1-txt-d" font-weight="bold" fill="#9c27b0" font-size="18px">D</text>
 
@@ -180,22 +136,17 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
-                <!-- Outer Random Quadrilateral -->
                 <polygon id="t2-outer-poly" fill="rgba(0, 0, 0, 0.05)" stroke="#666" stroke-width="4" stroke-dasharray="6,4"/>
 
-                <!-- Inner Parallelogram -->
                 <polygon id="t2-inner-poly" fill="rgba(0, 137, 123, 0.3)" stroke="#00897b" stroke-width="4"/>
 
-                <!-- Diagonal (Hidden by default, used for proof) -->
                 <line id="t2-diagonal" stroke="#1976d2" stroke-width="3" stroke-dasharray="5,5" opacity="0.4"/>
 
-                <!-- Vertices -->
                 <circle id="dot-p1" r="6" fill="#333"/>
                 <circle id="dot-p2" r="6" fill="#333"/>
                 <circle id="dot-p3" r="6" fill="#333"/>
                 <circle id="dot-p4" r="6" fill="#333"/>
 
-                <!-- Midpoints -->
                 <circle id="dot-m1" r="6" fill="#00897b"/>
                 <circle id="dot-m2" r="6" fill="#00897b"/>
                 <circle id="dot-m3" r="6" fill="#00897b"/>
@@ -211,6 +162,70 @@
             <div class="proof-box" style="border-left-color: #00897b; background: #e0f2f1;">
                 <h3 style="color: #00695c;">💡 Why does this work?</h3>
                 <p>If you imagine a diagonal line cutting across the large random quadrilateral, you split it into two triangles. By applying the <strong>Midpoint Theorem</strong> to each triangle separately, both opposite inner sides are parallel to the central diagonal, and exactly half its length. Since both inner sides are parallel to the *same* diagonal, they must be parallel and equal to each other! By Theorem 8.8, the inner shape is a guaranteed parallelogram.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE 3: CONVERSE OF THE MIDPOINT THEOREM -->
+    <div class="section-box">
+        <h2 style="color: #d81b60; text-align: center; margin-top: 0;">🛤️ 3. The Converse Explorer</h2>
+        <p style="text-align: center; color: #666;">Start strictly at the midpoint of the left side (Point D) and draw a line <strong>perfectly parallel</strong> to the base. No matter how you warp the triangle, that parallel line will <em>always</em> strike the exact midpoint of the right side (Point E)!</p>
+
+        <div class="interactive-container" style="background: #fce4ec; border-color: #d81b60;">
+            <div class="slider-row">
+                <div class="slider-group" style="border-color: #c2185b; background: #f8bbd0;">
+                    <label style="color: #880e4f; font-weight: bold;">Move Vertex A (Left/Right)</label>
+                    <input type="range" id="s3-ax" min="50" max="450" value="250">
+                </div>
+                <div class="slider-group" style="border-color: #1976d2; background: #e3f2fd;">
+                    <label style="color: #0d47a1; font-weight: bold;">Tilt Base BC</label>
+                    <input type="range" id="s3-btilt" min="-30" max="30" value="0">
+                </div>
+            </div>
+
+            <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
+                <!-- Base Triangle -->
+                <polygon id="t3-poly" fill="rgba(216, 27, 96, 0.1)" stroke="#ccc" stroke-width="4"/>
+                
+                <!-- Parallel Lines Indication -->
+                <line id="t3-side-bc" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
+                <line id="t3-line-de" stroke="#d81b60" stroke-width="6" stroke-linecap="round"/>
+                
+                <!-- Parallel Arrows -->
+                <path id="t3-arrow-bc" fill="none" stroke="#1976d2" stroke-width="3"/>
+                <path id="t3-arrow-de" fill="none" stroke="#d81b60" stroke-width="3"/>
+
+                <line id="t3-side-ab" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+                <line id="t3-side-ac" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+
+                <!-- Vertices -->
+                <circle id="t3-dot-a" r="8" fill="#333" stroke="#fff" stroke-width="2"/>
+                <text id="t3-txt-a" font-weight="bold" fill="#333" font-size="20px">A</text>
+
+                <circle id="t3-dot-b" r="6" fill="#333"/>
+                <text id="t3-txt-b" font-weight="bold" fill="#333" font-size="20px">B</text>
+
+                <circle id="t3-dot-c" r="6" fill="#333"/>
+                <text id="t3-txt-c" font-weight="bold" fill="#333" font-size="20px">C</text>
+
+                <!-- D (Midpoint) and E (Intersection) -->
+                <circle id="t3-dot-d" r="6" fill="#d81b60"/>
+                <text id="t3-txt-d" font-weight="bold" fill="#d81b60" font-size="18px">D</text>
+
+                <circle id="t3-dot-e" r="6" fill="#d81b60"/>
+                <text id="t3-txt-e" font-weight="bold" fill="#d81b60" font-size="18px">E</text>
+            </svg>
+
+            <div class="live-dashboard">
+                <div class="dash-card" style="border-color: #1976d2; background: #e3f2fd;">
+                    <span style="color: #0d47a1; font-size: 1.1em; display: block; margin-bottom: 5px;">Line DE || Base BC</span>
+                    <span id="t3-math-parallel" class="val-num" style="color: #1976d2; font-size: 1.2em;">DE is perfectly parallel to BC.</span>
+                </div>
+                <div class="dash-card" style="border-color: #d81b60; background: #fce4ec;">
+                    <span style="color: #b71c1c; font-size: 1.1em; display: block; margin-bottom: 5px;">Resulting Segments on AC</span>
+                    <span id="t3-math-segments" class="val-num" style="color: #c2185b; font-size: 1.5em;">AE = 120 | EC = 120</span>
+                    <span style="color: #880e4f; font-weight: bold; margin-top: 5px; display: block;">E perfectly bisects AC!</span>
+                </div>
             </div>
         </div>
     </div>
@@ -272,7 +287,6 @@
             document.getElementById('t1-dot-a').setAttribute('cx', ax); document.getElementById('t1-dot-a').setAttribute('cy', ay);
             document.getElementById('t1-txt-a').setAttribute('x', ax); document.getElementById('t1-txt-a').setAttribute('y', ay - 15);
 
-            // Midpoints
             let dx = (ax + bx) / 2; let dy = (ay + by) / 2;
             let ex = (ax + cx) / 2; let ey = (ay + cy) / 2;
 
@@ -285,7 +299,6 @@
             document.getElementById('t1-dot-e').setAttribute('cx', ex); document.getElementById('t1-dot-e').setAttribute('cy', ey);
             document.getElementById('t1-txt-e').setAttribute('x', ex + 10); document.getElementById('t1-txt-e').setAttribute('y', ey - 5);
 
-            // Proof Construction (Extend DE to F such that DE = EF)
             let fx = ex + (ex - dx);
             let fy = ey + (ey - dy);
 
@@ -323,8 +336,8 @@
         function updateSim2() {
             let p1x = parseInt(s2P1.value); let p1y = 50;
             let p2x = parseInt(s2P2.value); let p2y = 80;
-            let p3x = 420; let p3y = 260; // Fixed
-            let p4x = 80; let p4y = 230; // Fixed
+            let p3x = 420; let p3y = 260; 
+            let p4x = 80; let p4y = 230; 
 
             document.getElementById('t2-outer-poly').setAttribute('points', `${p1x},${p1y} ${p2x},${p2y} ${p3x},${p3y} ${p4x},${p4y}`);
 
@@ -333,7 +346,6 @@
             document.getElementById('dot-p3').setAttribute('cx', p3x); document.getElementById('dot-p3').setAttribute('cy', p3y);
             document.getElementById('dot-p4').setAttribute('cx', p4x); document.getElementById('dot-p4').setAttribute('cy', p4y);
 
-            // Calculate Midpoints
             let m1x = (p1x + p2x)/2; let m1y = (p1y + p2y)/2;
             let m2x = (p2x + p3x)/2; let m2y = (p2y + p3y)/2;
             let m3x = (p3x + p4x)/2; let m3y = (p3y + p4y)/2;
@@ -346,7 +358,6 @@
             document.getElementById('dot-m3').setAttribute('cx', m3x); document.getElementById('dot-m3').setAttribute('cy', m3y);
             document.getElementById('dot-m4').setAttribute('cx', m4x); document.getElementById('dot-m4').setAttribute('cy', m4y);
 
-            // Diagonal for proof illustration
             document.getElementById('t2-diagonal').setAttribute('x1', p1x); document.getElementById('t2-diagonal').setAttribute('y1', p1y);
             document.getElementById('t2-diagonal').setAttribute('x2', p3x); document.getElementById('t2-diagonal').setAttribute('y2', p3y);
         }
@@ -355,7 +366,78 @@
         s2P2.addEventListener('input', updateSim2);
         updateSim2();
 
-        // --- Q&A LOGIC ---
+        // --- 3. CONVERSE OF MIDPOINT THEOREM LOGIC ---
+        const s3Ax = document.getElementById('s3-ax');
+        const s3Btilt = document.getElementById('s3-btilt');
+
+        function updateSim3() {
+            let ax = parseInt(s3Ax.value);
+            let ay = 60;
+            let tilt = parseInt(s3Btilt.value);
+
+            let bcLen = 300;
+            let bx = 100;
+            let by = 250;
+            
+            let rad = tilt * Math.PI / 180;
+            let cx = bx + bcLen * Math.cos(rad);
+            let cy = by + bcLen * Math.sin(rad);
+
+            document.getElementById('t3-poly').setAttribute('points', `${ax},${ay} ${bx},${by} ${cx},${cy}`);
+
+            document.getElementById('t3-side-bc').setAttribute('x1', bx); document.getElementById('t3-side-bc').setAttribute('y1', by);
+            document.getElementById('t3-side-bc').setAttribute('x2', cx); document.getElementById('t3-side-bc').setAttribute('y2', cy);
+
+            document.getElementById('t3-side-ab').setAttribute('x1', ax); document.getElementById('t3-side-ab').setAttribute('y1', ay);
+            document.getElementById('t3-side-ab').setAttribute('x2', bx); document.getElementById('t3-side-ab').setAttribute('y2', by);
+
+            document.getElementById('t3-side-ac').setAttribute('x1', ax); document.getElementById('t3-side-ac').setAttribute('y1', ay);
+            document.getElementById('t3-side-ac').setAttribute('x2', cx); document.getElementById('t3-side-ac').setAttribute('y2', cy);
+
+            document.getElementById('t3-dot-a').setAttribute('cx', ax); document.getElementById('t3-dot-a').setAttribute('cy', ay);
+            document.getElementById('t3-txt-a').setAttribute('x', ax); document.getElementById('t3-txt-a').setAttribute('y', ay - 15);
+
+            document.getElementById('t3-dot-b').setAttribute('cx', bx); document.getElementById('t3-dot-b').setAttribute('cy', by);
+            document.getElementById('t3-txt-b').setAttribute('x', bx - 15); document.getElementById('t3-txt-b').setAttribute('y', by + 15);
+
+            document.getElementById('t3-dot-c').setAttribute('cx', cx); document.getElementById('t3-dot-c').setAttribute('cy', cy);
+            document.getElementById('t3-txt-c').setAttribute('x', cx + 15); document.getElementById('t3-txt-c').setAttribute('y', cy + 15);
+
+            let dx = (ax + bx) / 2;
+            let dy = (ay + by) / 2;
+
+            document.getElementById('t3-dot-d').setAttribute('cx', dx); document.getElementById('t3-dot-d').setAttribute('cy', dy);
+            document.getElementById('t3-txt-d').setAttribute('x', dx - 20); document.getElementById('t3-txt-d').setAttribute('y', dy - 5);
+
+            let ex = (ax + cx) / 2;
+            let ey = (ay + cy) / 2;
+
+            document.getElementById('t3-line-de').setAttribute('x1', dx); document.getElementById('t3-line-de').setAttribute('y1', dy);
+            document.getElementById('t3-line-de').setAttribute('x2', ex); document.getElementById('t3-line-de').setAttribute('y2', ey);
+
+            document.getElementById('t3-dot-e').setAttribute('cx', ex); document.getElementById('t3-dot-e').setAttribute('cy', ey);
+            document.getElementById('t3-txt-e').setAttribute('x', ex + 10); document.getElementById('t3-txt-e').setAttribute('y', ey - 5);
+
+            let midBCx = (bx + cx) / 2; let midBCy = (by + cy) / 2;
+            let midDEx = (dx + ex) / 2; let midDEy = (dy + ey) / 2;
+            
+            let arrowOffset = 8;
+            document.getElementById('t3-arrow-bc').setAttribute('d', `M ${midBCx - arrowOffset} ${midBCy - arrowOffset} L ${midBCx + arrowOffset} ${midBCy} L ${midBCx - arrowOffset} ${midBCy + arrowOffset}`);
+            document.getElementById('t3-arrow-bc').setAttribute('transform', `rotate(${tilt} ${midBCx} ${midBCy})`);
+            
+            document.getElementById('t3-arrow-de').setAttribute('d', `M ${midDEx - arrowOffset} ${midDEy - arrowOffset} L ${midDEx + arrowOffset} ${midDEy} L ${midDEx - arrowOffset} ${midDEy + arrowOffset}`);
+            document.getElementById('t3-arrow-de').setAttribute('transform', `rotate(${tilt} ${midDEx} ${midDEy})`);
+
+            let lenAE = Math.round(dist(ax, ay, ex, ey));
+            let lenEC = Math.round(dist(ex, ey, cx, cy));
+
+            document.getElementById('t3-math-segments').textContent = `AE = ${lenAE} units | EC = ${lenEC} units`;
+        }
+
+        s3Ax.addEventListener('input', updateSim3);
+        s3Btilt.addEventListener('input', updateSim3);
+        updateSim3();
+
         function toggleAnswer(id) {
             const ans = document.getElementById(id);
             const btn = ans.previousElementSibling;

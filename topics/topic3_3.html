@@ -4,48 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Section Formula - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
-        .back-btn { display: inline-block; background: #00838f; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateX(-5px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; font-size: 1.05em; }
-        .formula-table th { background: #00838f; color: white; }
-        
+        /* INTERACTIVE SPECIFIC STYLES */
         .math-eq { font-family: 'Times New Roman', serif; font-style: italic; font-size: 1.2em; color: #006064; font-weight: bold; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #00838f; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 550px; height: 550px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        .svg-canvas { max-width: 550px; height: 550px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
         .svg-canvas-2d { height: 400px; max-width: 500px; }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #4dd0e1; font-size: 0.95em; min-width: 140px; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
-        
-        /* Q&A SECTION */
-        .qa-box { background: #e0f7fa; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00838f; }
-        .qa-question { font-weight: bold; color: #006064; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #00838f; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #00838f; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
     </style>
 </head>
-<body>
-    <a href="../chapters/chapter3.html" class="back-btn">⬅️ Back to Chapter Index</a>
+<body class="theme-ch3">
+    <a href="../index.html" class="back-btn">🏠 Course Index</a>
 
     <h1>📏 The Section Formula</h1>
     <p class="subtitle">Slicing line segments into perfect ratios!</p>
@@ -187,7 +155,6 @@
             </div>
 
             <svg id="test-svg" class="svg-canvas svg-canvas-2d" viewBox="0 0 500 400">
-                <!-- Background Grid -->
                 <defs>
                     <pattern id="grid3" width="25" height="25" patternUnits="userSpaceOnUse">
                         <rect width="25" height="25" fill="none" stroke="#f3e5f5" stroke-width="1"/>
@@ -195,10 +162,8 @@
                 </defs>
                 <rect x="0" y="0" width="500" height="400" fill="url(#grid3)" />
 
-                <!-- Extended dashed line -->
                 <line x1="50" y1="400" x2="450" y2="0" stroke="#ccc" stroke-width="4" stroke-dasharray="10,5"/>
                 
-                <!-- Main segment AB -->
                 <line id="test-line-ab" x1="150" y1="300" x2="350" y2="100" stroke="#333" stroke-width="8"/>
                 
                 <circle cx="150" cy="300" r="8" fill="#333"/>
@@ -207,7 +172,6 @@
                 <circle cx="350" cy="100" r="8" fill="#333"/>
                 <text x="365" y="95" font-weight="bold" fill="#333">B</text>
 
-                <!-- Draggable Point P -->
                 <circle id="test-dot-p" cx="250" cy="200" r="12" fill="#7b1fa2" stroke="#fff" stroke-width="3"/>
                 <text id="test-lbl-p" x="270" y="205" font-weight="bold" fill="#7b1fa2" font-size="18px">P</text>
             </svg>
@@ -221,8 +185,39 @@
         </div>
     </div>
 
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-box">
+        <h2>🧠 Test Your Knowledge</h2>
+
+        <div class="qa-box">
+            <div class="qa-question">Q1: Find the coordinates of point P which divides the line segment joining A(4, -3) and B(8, 5) internally in the ratio 3:1.</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans1')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans1">
+                <strong>Step 1:</strong> Identify the values: x₁ = 4, y₁ = -3, x₂ = 8, y₂ = 5, m = 3, n = 1.<br>
+                <strong>Step 2:</strong> Apply the Internal Section Formula for the x-coordinate:<br>
+                x = (mx₂ + nx₁) / (m + n) = (3(8) + 1(4)) / (3 + 1) = (24 + 4) / 4 = 28 / 4 = 7.<br>
+                <strong>Step 3:</strong> Apply the formula for the y-coordinate:<br>
+                y = (my₂ + ny₁) / (m + n) = (3(5) + 1(-3)) / (3 + 1) = (15 - 3) / 4 = 12 / 4 = 3.<br>
+                <strong>Final Answer: P(7, 3)</strong>
+            </div>
+        </div>
+
+        <div class="qa-box">
+            <div class="qa-question">Q2: Find the midpoint of the line segment joining the points (-2, 8) and (-6, -4).</div>
+            <button class="show-answer-btn" onclick="toggleAnswer('ans2')">Show Answer Step-by-Step</button>
+            <div class="qa-answer" id="ans2">
+                <strong>Step 1:</strong> The midpoint divides a segment exactly in half, meaning the ratio is 1:1 (m = 1, n = 1).<br>
+                <strong>Step 2:</strong> Use the simplified midpoint formula: x = (x₁ + x₂) / 2 and y = (y₁ + y₂) / 2.<br>
+                <strong>Step 3:</strong> Calculate x: (-2 + -6) / 2 = -8 / 2 = -4.<br>
+                <strong>Step 4:</strong> Calculate y: (8 + -4) / 2 = 4 / 2 = 2.<br>
+                <strong>Final Answer: The midpoint is (-4, 2).</strong>
+            </div>
+        </div>
+    </div>
+
     <div class="nav-buttons">
         <a href="topic3_2.html" class="nav-btn">← Prev Topic</a>
+		<a href="../chapters/chapter3.html" class="nav-btn">Chapter Index</a>
         <a href="topic3_4.html" class="nav-btn">Next Topic ➡️</a>
     </div>
 
@@ -245,11 +240,9 @@
             document.getElementById('val-int-m').textContent = m;
             document.getElementById('val-int-n').textContent = n;
 
-            // Math
             let px = (m * B_int.x + n * A_int.x) / (m + n);
             let py = (m * B_int.y + n * A_int.y) / (m + n);
 
-            // SVG Updates
             document.getElementById('int-dot-a').setAttribute('cx', mapX(A_int.x));
             document.getElementById('int-dot-a').setAttribute('cy', mapY(A_int.y));
             document.getElementById('int-lbl-a').setAttribute('x', mapX(A_int.x) - 10);
@@ -278,7 +271,6 @@
             document.getElementById('int-line-n').setAttribute('x2', mapX(B_int.x));
             document.getElementById('int-line-n').setAttribute('y2', mapY(B_int.y));
 
-            // Dashboard
             let pxStr = Number.isInteger(px) ? px : px.toFixed(2);
             let pyStr = Number.isInteger(py) ? py : py.toFixed(2);
             document.getElementById('int-calc').textContent = `x = (${m}(${B_int.x}) + ${n}(${A_int.x})) / ${m+n}  |  y = (${m}(${B_int.y}) + ${n}(${A_int.y})) / ${m+n}`;
@@ -310,7 +302,6 @@
             let lblP = document.getElementById('ext-lbl-p');
             let lineFull = document.getElementById('ext-line-full');
 
-            // Draw base A-B
             document.getElementById('ext-dot-a').setAttribute('cx', mapX(A_ext.x));
             document.getElementById('ext-dot-a').setAttribute('cy', mapY(A_ext.y));
             document.getElementById('ext-lbl-a').setAttribute('x', mapX(A_ext.x) - 30);
@@ -350,7 +341,6 @@
                 lblP.setAttribute('x', svgPx + 15);
                 lblP.setAttribute('y', svgPy + 5);
 
-                // Draw extending line
                 let startX = (m > n) ? mapX(A_ext.x) : svgPx;
                 let startY = (m > n) ? mapY(A_ext.y) : svgPy;
                 let endX = (m > n) ? svgPx : mapX(B_ext.x);
@@ -379,7 +369,6 @@
         function updateTester() {
             let t = parseFloat(sTestT.value);
             
-            // Linear interpolation between A(150, 300) and B(350, 100)
             let svgX = 150 + t * (350 - 150); 
             let svgY = 300 + t * (100 - 300);
 
@@ -420,6 +409,18 @@
         sTestT.addEventListener('input', updateTester);
         updateTester();
 
+        // --- Q&A LOGIC ---
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            const btn = ans.previousElementSibling;
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer Step-by-Step';
+            } else {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
     </script>
 </body>
 </html>

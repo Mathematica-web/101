@@ -4,65 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Basics of Probability - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #4a148c; font-size: 2.2em; margin-bottom: 10px; }
-        .back-btn { display: inline-block; background: #ab47bc; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateX(-5px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #e1bee7; text-align: left; }
-        .formula-table th { background: #8e24aa; color: white; font-size: 1.1em; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #ab47bc; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; }
-        .val-num { font-size: 1.5em; display: block; margin-top: 5px; }
-
-        /* BUTTONS */
-        .btn-group { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
-        .action-btn { padding: 12px 25px; border-radius: 25px; border: none; background: #8e24aa; color: white; font-weight: bold; font-size: 1.1em; cursor: pointer; transition: transform 0.2s, background 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .action-btn:hover { transform: scale(1.05); background: #6a1b9a; }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .action-btn { padding: 12px 25px; border-radius: 25px; border: none; background: var(--btn-main); color: white; font-weight: bold; font-size: 1.1em; cursor: pointer; transition: transform 0.2s, background 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .action-btn:hover { transform: scale(1.05); background: var(--btn-hover); }
         .action-btn.btn-reset { background: #ff5252; }
         .action-btn.btn-reset:hover { background: #d32f2f; }
-
-        /* COIN STYLES */
         .coin-stage { display: flex; justify-content: center; margin: 20px 0; height: 120px; align-items: center; }
         .coin { width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(#ffd54f, #ff9800); border: 4px solid #ef6c00; display: flex; justify-content: center; align-items: center; font-size: 2.5em; font-weight: bold; color: #e65100; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.1s; }
         .flipping { animation: flipAnim 0.3s infinite linear; }
         @keyframes flipAnim { 0% { transform: scaleY(1); } 50% { transform: scaleY(0); } 100% { transform: scaleY(1); } }
-
-        /* DICE STYLES & BAR CHART */
-        .dice-stage { font-size: 5em; margin: 10px 0; color: #4a148c; display: flex; justify-content: center; }
+        .dice-stage { font-size: 5em; margin: 10px 0; color: var(--text-main); display: flex; justify-content: center; }
         .rolling { animation: shakeAnim 0.2s infinite linear; }
         @keyframes shakeAnim { 0% { transform: rotate(0deg); } 25% { transform: rotate(15deg); } 75% { transform: rotate(-15deg); } 100% { transform: rotate(0deg); } }
-
         .bar-chart-container { margin-top: 20px; text-align: left; }
         .chart-row { display: flex; align-items: center; margin: 8px 0; }
-        .chart-label { width: 50px; font-weight: bold; font-size: 1.2em; color: #4a148c; }
-        .chart-bar-bg { flex-grow: 1; background: #e1bee7; height: 25px; border-radius: 12px; overflow: hidden; position: relative; }
-        .chart-bar-fill { background: #8e24aa; height: 100%; width: 0%; transition: width 0.3s; display: flex; align-items: center; justify-content: flex-end; padding-right: 5px; color: white; font-weight: bold; font-size: 0.85em; box-sizing: border-box; }
-        
-        /* Q&A SECTION */
-        .qa-box { background: #f3e5f5; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #8e24aa; }
-        .qa-question { font-weight: bold; color: #4a148c; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; }
-        .show-answer-btn { background: #8e24aa; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #ab47bc; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
-        .chapter-btn { background: #ff6b6b; }
+        .chart-label { width: 50px; font-weight: bold; font-size: 1.2em; color: var(--text-main); }
+        .chart-bar-bg { flex-grow: 1; background: var(--bg-dark); height: 25px; border-radius: 12px; overflow: hidden; position: relative; }
+        .chart-bar-fill { background: var(--btn-main); height: 100%; width: 0%; transition: width 0.3s; display: flex; align-items: center; justify-content: flex-end; padding-right: 5px; color: white; font-weight: bold; font-size: 0.85em; box-sizing: border-box; }
     </style>
 </head>
-<body>
-    <a href="../chapters/chapter12.html" class="back-btn">⬅️ Back to Chapter</a>
+<body class="theme-ch12">
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
 
     <h1>🎲 Basics of Probability</h1>
     <p class="subtitle">Measuring the likelihood of events, from coin tosses to drawing cards!</p>
@@ -105,7 +71,7 @@
                 <div class="coin" id="coin-ui">H</div>
             </div>
 
-            <div class="btn-group">
+            <div class="top-nav" style="margin-bottom: 20px;">
                 <button class="action-btn" onclick="flipCoin(1)" style="background: #f57c00;">Flip 1x</button>
                 <button class="action-btn" onclick="flipCoin(10)" style="background: #ef6c00;">Flip 10x</button>
                 <button class="action-btn" onclick="flipCoin(100)" style="background: #e65100;">Flip 100x</button>
@@ -136,10 +102,10 @@
         <h2 style="color: #4a148c; text-align: center; margin-top: 0;">🎲 2. The Dice Roller & Tracker</h2>
         <p style="text-align: center; color: #666;">A standard 6-sided die has a 1/6 theoretical chance of landing on any specific number. Roll the die repeatedly to build a live frequency bar chart, tracking the exact fractions of your experimental data!</p>
 
-        <div class="interactive-container" style="background: #f3e5f5; border-color: #9c27b0;">
+        <div class="interactive-container">
             <div class="dice-stage" id="dice-ui">⚅</div>
 
-            <div class="btn-group">
+            <div class="top-nav" style="margin-bottom: 20px;">
                 <button class="action-btn" onclick="rollDice(1)">Roll 1x</button>
                 <button class="action-btn" onclick="rollDice(50)">Roll 50x</button>
                 <button class="action-btn btn-reset" onclick="resetDice()">Clear Data</button>
@@ -191,6 +157,7 @@
 
     <div class="nav-buttons">
         <a href="topic12_2.html" class="nav-btn chapter-btn">← Prev Topic</a>
+		<a href="../chapters/chapter12.html" class="nav-btn">Chapter Index</a>
         <a href="topic12_4.html" class="nav-btn">Next: Applications ➡️</a>
     </div>
 
@@ -290,7 +257,6 @@
             }
         }
 
-        // --- Q&A LOGIC ---
         function toggleAnswer(id) {
             const ans = document.getElementById(id);
             const btn = ans.previousElementSibling;

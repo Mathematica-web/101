@@ -4,52 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zeroes of a Polynomial - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #1b5e20; font-size: 2.2em; margin-bottom: 10px; }
-        .back-btn { display: inline-block; background: #4caf50; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateX(-5px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c8e6c9; text-align: left; font-size: 1.05em; }
-        .formula-table th { background: #4caf50; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #4caf50; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 600px; height: 300px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #81c784; font-size: 0.95em; min-width: 140px; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; }
-        .val-num { font-size: 1.8em; display: block; margin-top: 5px; }
-        
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 600px; aspect-ratio: 600 / 300; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
         .math-eq { font-family: 'Times New Roman', serif; font-style: italic; font-size: 1.3em; color: #1b5e20; }
-
-        /* TOGGLE BUTTONS */
         .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
         .toggle-btn { padding: 10px 20px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1em; }
         .toggle-btn.active { background: #ff9800; color: white; border-color: #ff9800; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #4caf50; }
-        .qa-question { font-weight: bold; color: #1b5e20; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #4caf50; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
     </style>
 </head>
-<body>
-    <a href="../chapters/chapter2.html" class="back-btn">⬅️ Back to Chapter Index</a>
+<body class="theme-ch2">
+    <a href="../index.html" class="back-btn">🏠 Course Index</a>
 
     <h1>🎯 Zeroes of a Polynomial</h1>
     <p class="subtitle">Finding the magic numbers that make the polynomial vanish!</p>
@@ -100,7 +66,6 @@
             </div>
 
             <svg id="lin-svg" class="svg-canvas" viewBox="0 0 600 300">
-                <!-- Grid Lines -->
                 <g stroke="#eee" stroke-width="1">
                     <line x1="30" y1="0" x2="30" y2="300"/><line x1="90" y1="0" x2="90" y2="300"/>
                     <line x1="150" y1="0" x2="150" y2="300"/><line x1="210" y1="0" x2="210" y2="300"/>
@@ -149,7 +114,6 @@
             </div>
 
             <svg id="quad-svg" class="svg-canvas" viewBox="0 0 600 300">
-                <!-- Grid Lines -->
                 <g stroke="#eee" stroke-width="1">
                     <line x1="60" y1="0" x2="60" y2="300"/><line x1="120" y1="0" x2="120" y2="300"/>
                     <line x1="180" y1="0" x2="180" y2="300"/><line x1="240" y1="0" x2="240" y2="300"/>
@@ -267,6 +231,7 @@
 
     <div class="nav-buttons">
         <a href="topic2_1.html" class="nav-btn">← Prev Topic</a>
+		<a href="../chapters/chapter2.html" class="nav-btn">Chapter Index</a>
         <a href="topic2_3.html" class="nav-btn">Next: Remainder Theorem ➡️</a>
     </div>
 

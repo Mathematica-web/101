@@ -4,54 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Representation - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #4a148c; font-size: 2.2em; margin-bottom: 10px; }
-        .back-btn { display: inline-block; background: #ab47bc; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateX(-5px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #e1bee7; text-align: left; }
-        .formula-table th { background: #8e24aa; color: white; font-size: 1.1em; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #ab47bc; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 600px; height: 350px; background: white; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #ce93d8; font-size: 0.95em; }
-        input[type=range] { width: 110px; cursor: pointer; display: block; margin-top: 5px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; }
-        .val-num { font-size: 1.5em; display: block; margin-top: 5px; }
-
-        /* TOGGLE BUTTONS */
-        .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 600px; height: 350px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
         .toggle-btn { padding: 10px 20px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.05em;}
-        
         .toggle-btn.btn-bar.active { background: #2196f3; color: white; border-color: #2196f3; }
         .toggle-btn.btn-hist.active { background: #e91e63; color: white; border-color: #e91e63; }
         .toggle-btn.btn-poly.active { background: #4caf50; color: white; border-color: #4caf50; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #f3e5f5; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #8e24aa; }
-        .qa-question { font-weight: bold; color: #4a148c; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; }
-        .show-answer-btn { background: #8e24aa; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #ab47bc; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
-        .chapter-btn { background: #ff6b6b; }
     </style>
 </head>
-<body>
-    <a href="../chapters/chapter12.html" class="back-btn">⬅️ Back to Chapter</a>
+<body class="theme-ch12">
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">🏠 Course Index</a>
+    </div>
 
     <h1>📈 Data Representation</h1>
     <p class="subtitle">Turning raw numbers into compelling visual stories!</p>
@@ -179,20 +145,17 @@
             </div>
 
             <svg id="poly-svg" class="svg-canvas" viewBox="0 0 600 350">
-                <!-- Axes -->
                 <line x1="50" y1="300" x2="550" y2="300" stroke="#333" stroke-width="3"/>
                 <line x1="50" y1="300" x2="50" y2="30" stroke="#333" stroke-width="3"/>
                 
                 <text x="35" y="55" fill="#666" text-anchor="end">25</text>
                 <line x1="45" y1="50" x2="50" y2="50" stroke="#333" stroke-width="2"/>
 
-                <!-- Histogram Base -->
                 <rect id="pr1" x="150" y="250" width="80" height="50" fill="#b2dfdb" stroke="#00796b" stroke-width="1"/>
                 <rect id="pr2" x="230" y="150" width="80" height="150" fill="#b2dfdb" stroke="#00796b" stroke-width="1"/>
                 <rect id="pr3" x="310" y="100" width="80" height="200" fill="#b2dfdb" stroke="#00796b" stroke-width="1"/>
                 <rect id="pr4" x="390" y="220" width="80" height="80" fill="#b2dfdb" stroke="#00796b" stroke-width="1"/>
 
-                <!-- X-axis Labels (Continuous) -->
                 <text x="70" y="320" font-weight="bold" fill="#666" text-anchor="middle">-10</text>
                 <text x="150" y="320" font-weight="bold" fill="#333" text-anchor="middle">0</text>
                 <text x="230" y="320" font-weight="bold" fill="#333" text-anchor="middle">10</text>
@@ -201,16 +164,15 @@
                 <text x="470" y="320" font-weight="bold" fill="#333" text-anchor="middle">40</text>
                 <text x="550" y="320" font-weight="bold" fill="#666" text-anchor="middle">50</text>
 
-                <!-- Frequency Polygon Elements -->
                 <polyline id="poly-line" points="" fill="none" stroke="#e91e63" stroke-width="4" style="display:none;" />
                 
                 <g id="poly-dots" style="display:none;">
-                    <circle id="pd0" cx="110" cy="300" r="5" fill="#e91e63"/> <!-- Pre-anchor -->
+                    <circle id="pd0" cx="110" cy="300" r="5" fill="#e91e63"/> 
                     <circle id="pd1" cx="190" cy="250" r="6" fill="#e91e63" stroke="#fff" stroke-width="2"/>
                     <circle id="pd2" cx="270" cy="150" r="6" fill="#e91e63" stroke="#fff" stroke-width="2"/>
                     <circle id="pd3" cx="350" cy="100" r="6" fill="#e91e63" stroke="#fff" stroke-width="2"/>
                     <circle id="pd4" cx="430" cy="220" r="6" fill="#e91e63" stroke="#fff" stroke-width="2"/>
-                    <circle id="pd5" cx="510" cy="300" r="5" fill="#e91e63"/> <!-- Post-anchor -->
+                    <circle id="pd5" cx="510" cy="300" r="5" fill="#e91e63"/> 
                 </g>
             </svg>
         </div>
@@ -242,7 +204,7 @@
     </div>
 
     <div class="nav-buttons">
-        <a href="topic11_5.html" class="nav-btn chapter-btn">← Prev Chapter</a>
+        <a href="../chapters/chapter12.html" class="nav-btn chapter-btn">← Chapter Index</a>
         <a href="topic12_2.html" class="nav-btn">Next Topic ➡️</a>
     </div>
 
@@ -270,7 +232,6 @@
             let r1 = document.getElementById('rect1'), r2 = document.getElementById('rect2'), r3 = document.getElementById('rect3'), r4 = document.getElementById('rect4');
 
             if(currentMode === 'bar') {
-                // Update Labels
                 document.getElementById('lbl-1').textContent = "Apples"; document.getElementById('lbl-2').textContent = "Bananas";
                 document.getElementById('lbl-3').textContent = "Oranges"; document.getElementById('lbl-4').textContent = "Mangoes";
                 
@@ -280,13 +241,11 @@
                 document.getElementById('xlbl0').style.display = 'none';
                 document.getElementById('xlbl5').style.display = 'none';
 
-                // Positioning with gaps (width 60, gap 40)
                 r1.setAttribute('x', 90); r1.setAttribute('width', 80);
                 r2.setAttribute('x', 210); r2.setAttribute('width', 80);
                 r3.setAttribute('x', 330); r3.setAttribute('width', 80);
                 r4.setAttribute('x', 450); r4.setAttribute('width', 80);
 
-                // Colors
                 r1.setAttribute('fill', '#64b5f6'); r1.setAttribute('stroke', '#1e88e5');
                 r2.setAttribute('fill', '#81c784'); r2.setAttribute('stroke', '#43a047');
                 r3.setAttribute('fill', '#ffb74d'); r3.setAttribute('stroke', '#fb8c00');
@@ -295,7 +254,6 @@
                 document.getElementById('dash-insight').textContent = "Notice the gaps? Categorical data blocks are distinct and separate.";
 
             } else {
-                // Update Labels to continuous data
                 document.getElementById('lbl-1').textContent = "0-10"; document.getElementById('lbl-2').textContent = "10-20";
                 document.getElementById('lbl-3').textContent = "20-30"; document.getElementById('lbl-4').textContent = "30-40";
                 
@@ -305,13 +263,11 @@
                 document.getElementById('xlbl0').style.display = 'block';
                 document.getElementById('xlbl5').style.display = 'none';
 
-                // Positioning with NO gaps (width 100)
                 r1.setAttribute('x', 50); r1.setAttribute('width', 120);
                 r2.setAttribute('x', 170); r2.setAttribute('width', 120);
                 r3.setAttribute('x', 290); r3.setAttribute('width', 120);
                 r4.setAttribute('x', 410); r4.setAttribute('width', 120);
 
-                // Colors (Uniform for histograms)
                 r1.setAttribute('fill', '#f48fb1'); r1.setAttribute('stroke', '#c2185b');
                 r2.setAttribute('fill', '#f48fb1'); r2.setAttribute('stroke', '#c2185b');
                 r3.setAttribute('fill', '#f48fb1'); r3.setAttribute('stroke', '#c2185b');
@@ -320,13 +276,11 @@
                 document.getElementById('dash-insight').textContent = "No gaps! Continuous data flows smoothly from one interval to the next.";
             }
 
-            // Set Heights
             r1.setAttribute('y', yBase - h1); r1.setAttribute('height', h1);
             r2.setAttribute('y', yBase - h2); r2.setAttribute('height', h2);
             r3.setAttribute('y', yBase - h3); r3.setAttribute('height', h3);
             r4.setAttribute('y', yBase - h4); r4.setAttribute('height', h4);
             
-            // Re-center X labels
             document.getElementById('xlbl1').setAttribute('x', r1.getAttribute('x')*1 + r1.getAttribute('width')/2);
             document.getElementById('xlbl2').setAttribute('x', r2.getAttribute('x')*1 + r2.getAttribute('width')/2);
             document.getElementById('xlbl3').setAttribute('x', r3.getAttribute('x')*1 + r3.getAttribute('width')/2);
@@ -369,13 +323,12 @@
             document.getElementById('pr3').setAttribute('y', yBase - h3); document.getElementById('pr3').setAttribute('height', h3);
             document.getElementById('pr4').setAttribute('y', yBase - h4); document.getElementById('pr4').setAttribute('height', h4);
 
-            // Update Polyline points
-            let p0x = 110, p0y = yBase; // Anchor 1
+            let p0x = 110, p0y = yBase; 
             let p1x = 190, p1y = yBase - h1;
             let p2x = 270, p2y = yBase - h2;
             let p3x = 350, p3y = yBase - h3;
             let p4x = 430, p4y = yBase - h4;
-            let p5x = 510, p5y = yBase; // Anchor 2
+            let p5x = 510, p5y = yBase; 
 
             let pointsStr = `${p0x},${p0y} ${p1x},${p1y} ${p2x},${p2y} ${p3x},${p3y} ${p4x},${p4y} ${p5x},${p5y}`;
             document.getElementById('poly-line').setAttribute('points', pointsStr);
@@ -390,7 +343,6 @@
         sp3.addEventListener('input', updateGraph2); sp4.addEventListener('input', updateGraph2);
         updateGraph2();
 
-        // Q&A Toggle
         function toggleAnswer(id) {
             const ans = document.getElementById(id);
             const btn = ans.previousElementSibling;

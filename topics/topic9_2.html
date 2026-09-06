@@ -4,50 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Properties of Chords - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #006064; font-size: 2.2em; margin-bottom: 10px; }
-        
-        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .back-btn { display: inline-block; background: #00838f; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateY(-3px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2ebf2; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #00838f; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #00838f; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #80deea; font-size: 0.95em; min-width: 140px; flex: 1; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
-        
-        .proof-box { background: #e0f7fa; padding: 20px; border-radius: 10px; border-left: 6px solid #00838f; margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
-        .proof-box h3 { color: #006064; margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e0f7fa; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00838f; }
-        .qa-question { font-weight: bold; color: #006064; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #00838f; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #00838f; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
-        .nav-btn:hover { background: #006064; transform: scale(1.05); }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 500px; height: 350px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        .proof-box { background: var(--bg-light); padding: 20px; border-radius: 10px; border-left: 6px solid var(--btn-main); margin-top: 20px; text-align: left; color: #333; line-height: 1.6; }
+        .proof-box h3 { color: var(--text-main); margin-top: 0; margin-bottom: 10px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
     </style>
 </head>
-<body>
+<body class="theme-ch9">
     <div class="top-nav">
         <a href="../index.html" class="back-btn">🏠 Course Index</a>
     </div>
@@ -96,21 +61,17 @@
                 <circle cx="250" cy="175" r="100" fill="rgba(255, 143, 0, 0.05)" stroke="#ff8f00" stroke-width="4"/>
                 <circle cx="250" cy="175" r="5" fill="#333"/>
                 
-                <!-- Central Angle Wedges -->
                 <path id="wedge1" fill="rgba(211, 47, 47, 0.2)" stroke="none"/>
                 <path id="wedge2" fill="rgba(25, 118, 210, 0.2)" stroke="none"/>
 
-                <!-- Radii -->
-                <line id="r1a" x1="250" y1="175" stroke="#ccc" stroke-width="2"/>
-                <line id="r1b" x1="250" y1="175" stroke="#ccc" stroke-width="2"/>
-                <line id="r2a" x1="250" y1="175" stroke="#ccc" stroke-width="2"/>
-                <line id="r2b" x1="250" y1="175" stroke="#ccc" stroke-width="2"/>
+                <line id="r1a" stroke="#ccc" stroke-width="2"/>
+                <line id="r1b" stroke="#ccc" stroke-width="2"/>
+                <line id="r2a" stroke="#ccc" stroke-width="2"/>
+                <line id="r2b" stroke="#ccc" stroke-width="2"/>
 
-                <!-- Chords -->
                 <line id="chord1" stroke="#d32f2f" stroke-width="6" stroke-linecap="round"/>
                 <line id="chord2" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
 
-                <!-- Labels -->
                 <text id="lbl-ang1" font-weight="bold" fill="#d32f2f" font-size="16px" text-anchor="middle"></text>
                 <text id="lbl-ang2" font-weight="bold" fill="#1976d2" font-size="16px" text-anchor="middle"></text>
             </svg>
@@ -146,17 +107,13 @@
                 <circle cx="250" cy="150" r="5" fill="#333"/>
                 <text x="245" y="140" font-weight="bold" fill="#333">Center</text>
 
-                <!-- Chord Halves -->
                 <line id="chord-half1" stroke="#e65100" stroke-width="6" stroke-linecap="round"/>
                 <line id="chord-half2" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
 
-                <!-- Perpendicular Line -->
                 <line id="perp-line" x1="250" y1="150" x2="250" stroke="#333" stroke-width="3" stroke-dasharray="6,4"/>
                 
-                <!-- 90 Degree Box -->
                 <path id="box-90" fill="rgba(0,0,0,0.1)" stroke="#333" stroke-width="2"/>
 
-                <!-- Midpoint -->
                 <circle id="mid-dot" cx="250" r="6" fill="#333"/>
             </svg>
 
@@ -208,17 +165,21 @@
     </div>
 
     <script>
-        function polarToCartesian(cx, cy, r, angleInRads) {
+        // Bulletproof SVG Cartesian mapping
+        function polarToCartesianSVG(cx, cy, r, angleInDegrees) {
+            let rad = angleInDegrees * Math.PI / 180.0;
             return {
-                x: cx + r * Math.cos(angleInRads),
-                y: cy - r * Math.sin(angleInRads)
+                x: cx + r * Math.cos(rad),
+                y: cy + r * Math.sin(rad)
             };
         }
 
-        function createWedge(cx, cy, r, startRad, endRad) {
-            let start = polarToCartesian(cx, cy, r, startRad);
-            let end = polarToCartesian(cx, cy, r, endRad);
-            return `M ${cx} ${cy} L ${start.x} ${start.y} A ${r} ${r} 0 0 1 ${end.x} ${end.y} Z`;
+        function createWedgeSVG(cx, cy, r, startAng, endAng) {
+            while(endAng <= startAng) endAng += 360;
+            let start = polarToCartesianSVG(cx, cy, r, startAng);
+            let end = polarToCartesianSVG(cx, cy, r, endAng);
+            let largeArcFlag = endAng - startAng <= 180 ? "0" : "1";
+            return `M ${cx} ${cy} L ${start.x} ${start.y} A ${r} ${r} 0 ${largeArcFlag} 1 ${end.x} ${end.y} Z`;
         }
 
         // --- 1. EQUAL CHORDS LOGIC ---
@@ -234,44 +195,50 @@
 
             let cx = 250, cy = 175, r = 100;
 
-            // Angle = 2 * arcsin(L / 2R)
-            let angRad1 = 2 * Math.asin(l1 / (2 * r));
-            let angRad2 = 2 * Math.asin(l2 / (2 * r));
-            
-            let deg1 = Math.round(angRad1 * 180 / Math.PI);
-            let deg2 = Math.round(angRad2 * 180 / Math.PI);
+            let angDeg1 = 2 * Math.asin(l1 / (2 * r)) * 180 / Math.PI;
+            let angDeg2 = 2 * Math.asin(l2 / (2 * r)) * 180 / Math.PI;
 
-            // Left Chord (centered at 180 deg / PI rad)
-            let start1 = Math.PI - angRad1/2;
-            let end1 = Math.PI + angRad1/2;
-            let p1a = polarToCartesian(cx, cy, r, start1);
-            let p1b = polarToCartesian(cx, cy, r, end1);
+            // Place Chord 1 symmetric around 180 degrees (Left side)
+            let start1 = 180 - angDeg1/2;
+            let end1 = 180 + angDeg1/2;
+            let p1a = polarToCartesianSVG(cx, cy, r, start1);
+            let p1b = polarToCartesianSVG(cx, cy, r, end1);
 
             document.getElementById('chord1').setAttribute('x1', p1a.x); document.getElementById('chord1').setAttribute('y1', p1a.y);
             document.getElementById('chord1').setAttribute('x2', p1b.x); document.getElementById('chord1').setAttribute('y2', p1b.y);
-            document.getElementById('r1a').setAttribute('x2', p1a.x); document.getElementById('r1a').setAttribute('y2', p1a.y);
-            document.getElementById('r1b').setAttribute('x2', p1b.x); document.getElementById('r1b').setAttribute('y2', p1b.y);
-            document.getElementById('wedge1').setAttribute('d', createWedge(cx, cy, 35, start1, end1));
             
-            let lbl1 = polarToCartesian(cx, cy, 55, Math.PI);
+            document.getElementById('r1a').setAttribute('x1', cx); document.getElementById('r1a').setAttribute('y1', cy);
+            document.getElementById('r1a').setAttribute('x2', p1a.x); document.getElementById('r1a').setAttribute('y2', p1a.y);
+            
+            document.getElementById('r1b').setAttribute('x1', cx); document.getElementById('r1b').setAttribute('y1', cy);
+            document.getElementById('r1b').setAttribute('x2', p1b.x); document.getElementById('r1b').setAttribute('y2', p1b.y);
+            
+            document.getElementById('wedge1').setAttribute('d', createWedgeSVG(cx, cy, 35, start1, end1));
+            
+            let lbl1 = polarToCartesianSVG(cx, cy, 55, 180);
             document.getElementById('lbl-ang1').setAttribute('x', lbl1.x); document.getElementById('lbl-ang1').setAttribute('y', lbl1.y + 5);
-            document.getElementById('lbl-ang1').textContent = `${deg1}°`;
+            document.getElementById('lbl-ang1').textContent = `${Math.round(angDeg1)}°`;
 
-            // Right Chord (centered at 0 deg / 0 rad)
-            let start2 = -angRad2/2 + 2*Math.PI;
-            let end2 = angRad2/2;
-            let p2a = polarToCartesian(cx, cy, r, start2);
-            let p2b = polarToCartesian(cx, cy, r, end2);
+            // Place Chord 2 symmetric around 0 degrees / 360 (Right side)
+            let start2 = 360 - angDeg2/2;
+            let end2 = angDeg2/2; // It will internally wrap around 360 in the wedge function
+            let p2a = polarToCartesianSVG(cx, cy, r, start2);
+            let p2b = polarToCartesianSVG(cx, cy, r, end2);
 
             document.getElementById('chord2').setAttribute('x1', p2a.x); document.getElementById('chord2').setAttribute('y1', p2a.y);
             document.getElementById('chord2').setAttribute('x2', p2b.x); document.getElementById('chord2').setAttribute('y2', p2b.y);
+            
+            document.getElementById('r2a').setAttribute('x1', cx); document.getElementById('r2a').setAttribute('y1', cy);
             document.getElementById('r2a').setAttribute('x2', p2a.x); document.getElementById('r2a').setAttribute('y2', p2a.y);
+            
+            document.getElementById('r2b').setAttribute('x1', cx); document.getElementById('r2b').setAttribute('y1', cy);
             document.getElementById('r2b').setAttribute('x2', p2b.x); document.getElementById('r2b').setAttribute('y2', p2b.y);
-            document.getElementById('wedge2').setAttribute('d', createWedge(cx, cy, 35, start2, end2));
+            
+            document.getElementById('wedge2').setAttribute('d', createWedgeSVG(cx, cy, 35, start2, end2));
 
-            let lbl2 = polarToCartesian(cx, cy, 55, 0);
+            let lbl2 = polarToCartesianSVG(cx, cy, 55, 0);
             document.getElementById('lbl-ang2').setAttribute('x', lbl2.x); document.getElementById('lbl-ang2').setAttribute('y', lbl2.y + 5);
-            document.getElementById('lbl-ang2').textContent = `${deg2}°`;
+            document.getElementById('lbl-ang2').textContent = `${Math.round(angDeg2)}°`;
 
             let status = document.getElementById('c-status');
             if (l1 === l2) {
@@ -300,19 +267,15 @@
             
             let xDist = Math.sqrt(r*r - offset*offset);
             
-            // Left half
             document.getElementById('chord-half1').setAttribute('x1', cx - xDist); document.getElementById('chord-half1').setAttribute('y1', y);
             document.getElementById('chord-half1').setAttribute('x2', cx); document.getElementById('chord-half1').setAttribute('y2', y);
             
-            // Right half
             document.getElementById('chord-half2').setAttribute('x1', cx); document.getElementById('chord-half2').setAttribute('y1', y);
             document.getElementById('chord-half2').setAttribute('x2', cx + xDist); document.getElementById('chord-half2').setAttribute('y2', y);
 
-            // Perpendicular Drop
             document.getElementById('perp-line').setAttribute('y2', y);
             document.getElementById('mid-dot').setAttribute('cy', y);
 
-            // 90 box
             document.getElementById('box-90').setAttribute('d', `M 250 ${y-15} L 265 ${y-15} L 265 ${y}`);
 
             let len = xDist.toFixed(1);
@@ -322,7 +285,6 @@
         sPerpY.addEventListener('input', updatePerp);
         updatePerp();
 
-        // --- Q&A LOGIC ---
         function toggleAnswer(id) {
             const ans = document.getElementById(id);
             const btn = ans.previousElementSibling;

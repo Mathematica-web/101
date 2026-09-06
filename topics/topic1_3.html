@@ -4,54 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rational Numbers - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #0d47a1; font-size: 2.2em; margin-bottom: 10px; }
-        .back-btn { display: inline-block; background: #1976d2; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateX(-5px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #bbdefb; text-align: left; }
-        .formula-table th { background: #1976d2; color: white; font-size: 1.1em; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #1976d2; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 700px; height: 180px; background: #f5f5f5; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #90caf9; font-size: 1em; }
-        input[type=range] { width: 200px; cursor: pointer; display: block; margin-top: 10px; }
-        input[type=number] { width: 80px; padding: 5px; font-size: 1.1em; text-align: center; border: 2px solid #ce93d8; border-radius: 5px; font-weight: bold; color: #8e24aa;}
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; }
-        .val-num { font-size: 1.8em; display: block; margin-top: 5px; }
-
-        /* PROOF BOX (Decoder) */
-        .proof-box { background: #fff; border: 2px solid #ce93d8; border-radius: 10px; padding: 20px; text-align: left; font-family: monospace; font-size: 1.2em; color: #4a148c; line-height: 1.6; margin-top: 15px; box-shadow: inset 0 3px 5px rgba(0,0,0,0.05); }
-
-        /* TOGGLE BUTTONS */
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 700px; aspect-ratio: auto; } 
+        input[type=number] { width: 80px; padding: 5px; font-size: 1.1em; text-align: center; border: 2px solid var(--border-main); border-radius: 5px; font-weight: bold; color: var(--text-main);}
+        .proof-box { background: #fff; border: 2px solid var(--border-main); border-radius: 10px; padding: 20px; text-align: left; font-family: monospace; font-size: 1.2em; color: var(--text-main); line-height: 1.6; margin-top: 15px; box-shadow: inset 0 3px 5px rgba(0,0,0,0.05); }
         .face-toggles { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
         .toggle-btn { padding: 10px 20px; border-radius: 20px; border: 2px solid #ccc; background: white; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1em; }
         .toggle-btn.active { background: #ff9800; color: white; border-color: #ff9800; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e3f2fd; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #1976d2; }
-        .qa-question { font-weight: bold; color: #0d47a1; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; }
-        .show-answer-btn { background: #1976d2; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #1976d2; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; }
     </style>
 </head>
-<body>
-    <a href="../chapters/chapter1.html" class="back-btn">⬅️ Back to Chapter</a>
+<body class="theme-ch1">
+    <a href="../index.html" class="back-btn">🏠 Course Index</a>
 
     <h1>🍕 Rational Numbers</h1>
     <p class="subtitle">Exploring fractions, divisions, and the infinite space in between!</p>
@@ -100,7 +65,6 @@
             </div>
 
             <svg id="pizza-svg" class="svg-canvas" viewBox="0 0 600 200" style="background: #fff; height: 200px;">
-                <!-- Filled via JS -->
                 <g id="pizza-grid"></g>
             </svg>
 
@@ -128,21 +92,16 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 600 150" style="height: 150px; background: white;">
-                <!-- Magnifying Glass Effect Background -->
                 <rect x="50" y="20" width="500" height="110" fill="#e0f2f1" rx="10"/>
                 
-                <!-- Base Line -->
                 <line x1="80" y1="80" x2="520" y2="80" stroke="#004d40" stroke-width="4"/>
                 
-                <!-- Left Bound (Always 0) -->
                 <line x1="100" y1="65" x2="100" y2="95" stroke="#d32f2f" stroke-width="4"/>
                 <text x="100" y="55" font-size="22px" font-weight="bold" fill="#d32f2f" text-anchor="middle">0</text>
                 
-                <!-- Right Bound -->
                 <line x1="500" y1="65" x2="500" y2="95" stroke="#1976d2" stroke-width="4"/>
                 <text id="zoom-right" x="500" y="55" font-size="22px" font-weight="bold" fill="#1976d2" text-anchor="middle">1</text>
 
-                <!-- Dynamic Midpoint -->
                 <line x1="300" y1="60" x2="300" y2="100" stroke="#ff9800" stroke-width="5"/>
                 <text id="zoom-mid" x="300" y="50" font-size="26px" font-weight="bold" fill="#ff9800" text-anchor="middle">1 / 2</text>
                 
@@ -171,9 +130,7 @@
                 </div>
             </div>
 
-            <div class="proof-box" id="decoder-proof">
-                <!-- Filled via JS -->
-            </div>
+            <div class="proof-box" id="decoder-proof"></div>
 
             <div class="live-dashboard">
                 <div class="dash-card" style="border-color: #8e24aa; background: #f3e5f5; flex-basis: 100%;">
@@ -210,6 +167,7 @@
 
     <div class="nav-buttons">
         <a href="topic1_2.html" class="nav-btn">← Prev Topic</a>
+		<a href="../chapters/chapter1.html" class="nav-btn">Chapter Index</a>
         <a href="topic1_4.html" class="nav-btn">Next: Irrational Numbers ➡️</a>
     </div>
 
@@ -335,11 +293,9 @@
         // --- 3. REPEATING DECIMAL DECODER LOGIC ---
         function updateDecoder() {
             let inputVal = document.getElementById('num-repeat').value;
-            // Fallback for empty or negative
             if(!inputVal || parseInt(inputVal) < 0) {
                 inputVal = '3';
             }
-            // Limit length visually to prevent math overflow, max 6 digits
             if(inputVal.length > 6) {
                 inputVal = inputVal.substring(0, 6);
                 document.getElementById('num-repeat').value = inputVal;
@@ -351,25 +307,19 @@
             let numerator = parseInt(repeatStr);
             let denominator = multiplier - 1;
             
-            // Build the visual string of repeating digits (e.g., 333333 or 454545)
             let repVisual = repeatStr.repeat(Math.ceil(6 / nDigits)).substring(0, 6) + "...";
 
-            // Step 1: Let x
             let line1 = `Let x = 0.${repVisual}`;
-            // Step 2: Multiply
             let line2 = `Multiply both sides by ${multiplier} (since there are ${nDigits} repeating digits):<br>`;
             line2 += `&nbsp;&nbsp;&nbsp;&nbsp;${multiplier}x = ${numerator}.${repVisual}`;
-            // Step 3: Subtract
             let line3 = `Subtract x from both sides:<br>`;
             line3 += `&nbsp;&nbsp;&nbsp;&nbsp;${multiplier}x - x = ${numerator}.${repVisual} - 0.${repVisual}<br>`;
             line3 += `&nbsp;&nbsp;&nbsp;&nbsp;${denominator}x = ${numerator}`;
-            // Step 4: Isolate x
             let line4 = `Isolate x:<br>`;
             line4 += `&nbsp;&nbsp;&nbsp;&nbsp;x = ${numerator} / ${denominator}`;
 
             document.getElementById('decoder-proof').innerHTML = `${line1}<br><br>${line2}<br><br>${line3}<br><br>${line4}`;
 
-            // Simplify
             let divisor = gcd(numerator, denominator);
             let simpNum = numerator / divisor;
             let simpDen = denominator / divisor;
@@ -377,7 +327,6 @@
             document.getElementById('calc-dec-frac').textContent = `${simpNum} / ${simpDen}`;
         }
         
-        // Initial call
         updateDecoder();
 
 

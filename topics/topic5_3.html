@@ -4,47 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Equivalent Versions of Euclid's 5th Postulate - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #1a237e; font-size: 2.2em; margin-bottom: 10px; }
-        
-        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .back-btn { display: inline-block; background: #3949ab; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateY(-3px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #c5cae9; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #3949ab; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #3949ab; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #9fa8da; font-size: 0.95em; min-width: 140px; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e8eaf6; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #3949ab; }
-        .qa-question { font-weight: bold; color: #1a237e; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #3949ab; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #3949ab; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
-        .nav-btn:hover { background: #283593; transform: scale(1.05); }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 500px; height: 350px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
     </style>
 </head>
-<body>
+<body class="theme-ch5">
     <div class="top-nav">
         <a href="../index.html" class="back-btn">🏠 Course Index</a>
     </div>
@@ -86,16 +52,13 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
-                <!-- Fixed Line L -->
                 <line x1="0" y1="220" x2="500" y2="220" stroke="#1976d2" stroke-width="6"/>
                 <text x="470" y="210" font-weight="bold" fill="#1976d2" font-size="20px">L</text>
 
-                <!-- Rotating Line M -->
                 <g id="playfair-line" transform="translate(250, 100) rotate(20)">
                     <line x1="-300" y1="0" x2="300" y2="0" stroke="#d32f2f" stroke-width="4"/>
                 </g>
 
-                <!-- Fixed Point P -->
                 <circle cx="250" cy="100" r="8" fill="#333" stroke="#fff" stroke-width="2"/>
                 <text x="245" y="85" font-weight="bold" fill="#333" font-size="20px">P</text>
                 <text x="470" y="90" font-weight="bold" fill="#d32f2f" font-size="20px">M</text>
@@ -124,22 +87,18 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
-                <!-- Line A (Rotated 30 deg) -->
                 <g transform="translate(250, 150) rotate(30)">
                     <line x1="-300" y1="0" x2="300" y2="0" stroke="#f57c00" stroke-width="4" stroke-dasharray="10,5"/>
                     <text x="200" y="-10" font-weight="bold" fill="#f57c00" font-size="18px">Line A</text>
                 </g>
 
-                <!-- Line B (Rotated -30 deg) -->
                 <g transform="translate(250, 150) rotate(-30)">
                     <line x1="-300" y1="0" x2="300" y2="0" stroke="#1976d2" stroke-width="4" stroke-dasharray="10,5"/>
                     <text x="200" y="-10" font-weight="bold" fill="#1976d2" font-size="18px">Line B</text>
                 </g>
 
-                <!-- Center Intersection Point -->
                 <circle cx="250" cy="150" r="6" fill="#333"/>
 
-                <!-- Test Line C (Offset to the left) -->
                 <g id="test-line" transform="translate(100, 150) rotate(0)">
                     <line x1="-150" y1="0" x2="450" y2="0" stroke="#7b1fa2" stroke-width="6"/>
                     <text x="-50" y="-10" font-weight="bold" fill="#7b1fa2" font-size="18px">Line C</text>
@@ -168,22 +127,17 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 350" style="background: #fff; height: 350px;">
-                <!-- The Sphere -->
                 <circle cx="250" cy="175" r="140" fill="#e1bee7" stroke="#8e24aa" stroke-width="3"/>
                 
-                <!-- Equator Curve -->
                 <path d="M 110 175 Q 250 220 390 175" fill="none" stroke="#8e24aa" stroke-width="2" stroke-dasharray="5,5"/>
                 <text x="250" y="215" font-weight="bold" fill="#8e24aa" font-size="14px" text-anchor="middle">The Equator</text>
 
-                <!-- North Pole -->
                 <circle cx="250" cy="35" r="6" fill="#d32f2f"/>
                 <text x="250" y="20" font-weight="bold" fill="#d32f2f" font-size="16px" text-anchor="middle">North Pole</text>
 
-                <!-- Walker Paths -->
                 <path id="path-left" fill="none" stroke="#1976d2" stroke-width="4"/>
                 <path id="path-right" fill="none" stroke="#1976d2" stroke-width="4"/>
 
-                <!-- Walker Starting Points -->
                 <circle id="dot-left" r="8" fill="#1976d2"/>
                 <circle id="dot-right" r="8" fill="#1976d2"/>
             </svg>
@@ -249,7 +203,6 @@
         sPlayfairAng.addEventListener('input', updatePlayfair);
         updatePlayfair();
 
-
         // --- 2. INTERSECTING LINES LOGIC ---
         const sTestAng = document.getElementById('s-test-ang');
 
@@ -275,37 +228,25 @@
         sTestAng.addEventListener('input', updateIntersecting);
         updateIntersecting();
 
-
         // --- 3. BEYOND EUCLID (SPHERICAL) LOGIC ---
         const sSphereDist = document.getElementById('s-sphere-dist');
 
         function updateSphere() {
             let dist = parseInt(sSphereDist.value);
             
-            // Sphere center (250, 175). Pole is at (250, 35)
-            // Equator curve goes roughly through y=190 in the middle
-            
             let xLeft = 250 - dist;
             let xRight = 250 + dist;
             
-            // Calculate starting Y on the drawn equator curve using a simple quadratic estimation
-            // Curve: M 110 175 Q 250 220 390 175
-            // Equation of parabola roughly: y = a*(x-250)^2 + 200
-            // When x=110, y=175. 175 = a*(-140)^2 + 200 => a = -25/19600
             let a = -25 / 19600;
-            let yLeft = a * Math.pow(xLeft - 250, 2) + 197; // Adjusted visually
+            let yLeft = a * Math.pow(xLeft - 250, 2) + 197; 
             let yRight = a * Math.pow(xRight - 250, 2) + 197;
 
-            // Draw Paths to North Pole (250, 35) curving along the sphere
-            // Left Path
             let pathL = `M ${xLeft} ${yLeft} Q ${xLeft + (250-xLeft)*0.2} 100 250 35`;
             document.getElementById('path-left').setAttribute('d', pathL);
             
-            // Right Path
             let pathR = `M ${xRight} ${yRight} Q ${xRight - (xRight-250)*0.2} 100 250 35`;
             document.getElementById('path-right').setAttribute('d', pathR);
 
-            // Move dots
             document.getElementById('dot-left').setAttribute('cx', xLeft);
             document.getElementById('dot-left').setAttribute('cy', yLeft);
             
@@ -315,7 +256,6 @@
 
         sSphereDist.addEventListener('input', updateSphere);
         updateSphere();
-
 
         // --- Q&A LOGIC ---
         function toggleAnswer(id) {

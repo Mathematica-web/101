@@ -4,47 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Properties and More Congruence Rules - Mathematics 101</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🎨 GLOBAL STYLES */
-        body { font-family: 'Comic Sans MS', 'Verdana', sans-serif; background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #004d40; font-size: 2.2em; margin-bottom: 10px; }
-        
-        .top-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .back-btn { display: inline-block; background: #00695c; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
-        .back-btn:hover { transform: translateY(-3px); }
-        .subtitle { color: #555; font-size: 1em; margin-bottom: 30px; }
-        
-        .section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; }
-        
-        .formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
-        .formula-table th, .formula-table td { padding: 15px; border: 2px solid #b2dfdb; text-align: left; font-size: 1.05em; line-height: 1.4; }
-        .formula-table th { background: #00695c; color: white; }
-        
-        /* INTERACTIVE CONTAINER */
-        .interactive-container { background: #fafafa; border: 3px dashed #00695c; border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
-        .svg-canvas { width: 100%; max-width: 500px; height: 350px; background: #fff; border-radius: 10px; border: 2px solid #ddd; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-        .slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid #4db6ac; font-size: 0.95em; min-width: 140px; flex: 1; }
-        input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
-
-        .live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
-        .dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 150px; font-weight: bold; flex: 1; text-align: center; transition: 0.3s; }
-        .val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; }
-
-        /* Q&A SECTION */
-        .qa-box { background: #e0f2f1; padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid #00695c; }
-        .qa-question { font-weight: bold; color: #004d40; font-size: 1.05em; margin-bottom: 10px; }
-        .qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
-        .show-answer-btn { background: #00695c; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
-        .show-answer-btn:hover { transform: scale(1.05); }
-
-        .nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
-        .nav-btn { background: #00695c; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; min-width: 150px; text-align: center; transition: 0.3s; }
-        .nav-btn:hover { background: #004d40; transform: scale(1.05); }
+        /* INTERACTIVE SPECIFIC STYLES */
+        .svg-canvas { max-width: 500px; height: 350px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
     </style>
 </head>
-<body>
+<body class="theme-ch7">
     <div class="top-nav">
         <a href="../index.html" class="back-btn">🏠 Course Index</a>
     </div>
@@ -90,21 +56,15 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 300" style="height: 300px; background: #fafafa;">
-                <!-- Altitude Line -->
                 <line x1="250" y1="50" x2="250" y2="250" stroke="#ccc" stroke-width="2" stroke-dasharray="5,5"/>
-
-                <!-- Base -->
                 <line x1="100" y1="250" x2="400" y2="250" stroke="#333" stroke-width="6" stroke-linecap="round"/>
 
-                <!-- Sides -->
                 <line id="iso-side-l" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
                 <line id="iso-side-r" stroke="#d32f2f" stroke-width="6" stroke-linecap="round"/>
 
-                <!-- Base Arcs -->
                 <path id="iso-arc-l" fill="rgba(25, 118, 210, 0.3)" stroke="#1976d2" stroke-width="2"/>
                 <path id="iso-arc-r" fill="rgba(211, 47, 47, 0.3)" stroke="#d32f2f" stroke-width="2"/>
 
-                <!-- Labels -->
                 <text id="lbl-ang-l" font-weight="bold" fill="#1976d2" font-size="16px" text-anchor="middle">Angle B</text>
                 <text id="lbl-ang-r" font-weight="bold" fill="#d32f2f" font-size="16px" text-anchor="middle">Angle C</text>
 
@@ -146,23 +106,18 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 350" style="height: 350px; background: #fafafa;">
-                <!-- Fixed Base Side C -->
                 <line x1="125" y1="280" x2="375" y2="280" stroke="#388e3c" stroke-width="8" stroke-linecap="round"/>
                 <text x="250" y="310" font-weight="bold" fill="#388e3c" font-size="18px" text-anchor="middle">Base Side C (Fixed 250 units)</text>
 
-                <!-- Construction Circles -->
                 <circle id="sss-circ-a" cx="125" cy="280" fill="none" stroke="#d32f2f" stroke-width="2" stroke-dasharray="8,4" opacity="0.5"/>
                 <circle id="sss-circ-b" cx="375" cy="280" fill="none" stroke="#1976d2" stroke-width="2" stroke-dasharray="8,4" opacity="0.5"/>
 
-                <!-- Resulting Triangle Sides -->
                 <line id="sss-side-a" stroke="#d32f2f" stroke-width="6" stroke-linecap="round"/>
                 <line id="sss-side-b" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
 
-                <!-- Intersection Point -->
                 <circle id="sss-dot-top" r="8" fill="#7b1fa2" stroke="#fff" stroke-width="2"/>
                 <text id="sss-txt-top" font-weight="bold" fill="#7b1fa2" font-size="18px" text-anchor="middle"></text>
 
-                <!-- Base Vertices -->
                 <circle cx="125" cy="280" r="6" fill="#333"/>
                 <circle cx="375" cy="280" r="6" fill="#333"/>
             </svg>
@@ -175,7 +130,7 @@
         </div>
     </div>
 
-    <!-- INTERACTIVE 3: RHS CONGRUENCE (TWO TRIANGLES) -->
+    <!-- INTERACTIVE 3: RHS CONGRUENCE -->
     <div class="section-box">
         <h2 style="color: #7b1fa2; text-align: center; margin-top: 0;">📐 3. The RHS Scanner</h2>
         <p style="text-align: center; color: #666;">In a right-angled triangle, if you know the length of the <strong>Hypotenuse (H)</strong> and one <strong>Side (S)</strong>, the triangle is completely locked. Below are two separate right-angled triangles sharing the same Base Leg. Adjust their hypotenuses until they match!</p>
@@ -193,30 +148,24 @@
             </div>
 
             <svg class="svg-canvas" viewBox="0 0 500 320" style="height: 320px; background: #fafafa;">
-                <!-- Right Angle Indicators -->
                 <path d="M 80 260 L 100 260 L 100 280" fill="rgba(0,0,0,0.1)" stroke="#333" stroke-width="2"/>
                 <path d="M 440 260 L 420 260 L 420 280" fill="rgba(0,0,0,0.1)" stroke="#333" stroke-width="2"/>
 
-                <!-- Fixed Base Legs (120 units each) -->
                 <line x1="80" y1="280" x2="200" y2="280" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
                 <line x1="320" y1="280" x2="440" y2="280" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
 
                 <text x="140" y="310" font-weight="bold" fill="#1976d2" font-size="14px" text-anchor="middle">Base 1 (120 units)</text>
                 <text x="380" y="310" font-weight="bold" fill="#1976d2" font-size="14px" text-anchor="middle">Base 2 (120 units)</text>
 
-                <!-- Vertical Legs (Heights) -->
                 <line id="rhs1-vert" x1="80" y1="280" x2="80" stroke="#e65100" stroke-width="6" stroke-linecap="round"/>
                 <line id="rhs2-vert" x1="440" y1="280" x2="440" stroke="#e65100" stroke-width="6" stroke-linecap="round"/>
 
-                <!-- Hypotenuses -->
                 <line id="rhs1-hyp" x2="200" y2="280" x1="80" stroke="#7b1fa2" stroke-width="6" stroke-linecap="round"/>
                 <line id="rhs2-hyp" x2="320" y2="280" x1="440" stroke="#7b1fa2" stroke-width="6" stroke-linecap="round"/>
 
-                <!-- Dots at the top vertex -->
                 <circle id="rhs1-dot" cx="80" r="8" fill="#7b1fa2" stroke="#fff" stroke-width="2"/>
                 <circle id="rhs2-dot" cx="440" r="8" fill="#7b1fa2" stroke="#fff" stroke-width="2"/>
 
-                <!-- Hypotenuse Labels -->
                 <text id="rhs1-lbl" x="155" font-weight="bold" fill="#7b1fa2" font-size="16px" text-anchor="middle"></text>
                 <text id="rhs2-lbl" x="365" font-weight="bold" fill="#7b1fa2" font-size="16px" text-anchor="middle"></text>
             </svg>
@@ -259,12 +208,11 @@
     </div>
 
     <script>
-        // Mathematical Helpers
         function polarToCartesian(cx, cy, r, angleInDegrees) {
             let angleInRadians = (angleInDegrees) * Math.PI / 180.0;
             return {
                 x: cx + r * Math.cos(angleInRadians),
-                y: cy - r * Math.sin(angleInRadians) // SVG Y is inverted
+                y: cy - r * Math.sin(angleInRadians) 
             };
         }
 
@@ -286,11 +234,9 @@
             let cx = 400, cy = 250;
             let ax = 250, ay = 250 - height;
 
-            // Update Vertex A
             document.getElementById('iso-dot-top').setAttribute('cy', ay);
             document.getElementById('txt-iso-top').setAttribute('y', ay - 15);
 
-            // Update Sides
             document.getElementById('iso-side-l').setAttribute('x1', bx);
             document.getElementById('iso-side-l').setAttribute('y1', by);
             document.getElementById('iso-side-l').setAttribute('x2', ax);
@@ -301,16 +247,13 @@
             document.getElementById('iso-side-r').setAttribute('x2', ax);
             document.getElementById('iso-side-r').setAttribute('y2', ay);
 
-            // Math calculations
             let sideLen = Math.sqrt(Math.pow(150, 2) + Math.pow(height, 2));
-            let angleRad = Math.atan2(height, 150); // Base angle
+            let angleRad = Math.atan2(height, 150); 
             let angleDeg = Math.round(angleRad * 180 / Math.PI);
 
-            // Draw Wedges
             document.getElementById('iso-arc-l').setAttribute('d', createWedge(bx, by, 40, 0, angleRad * 180 / Math.PI));
             document.getElementById('iso-arc-r').setAttribute('d', createWedge(cx, cy, 40, 180 - (angleRad * 180 / Math.PI), 180));
 
-            // Position Labels
             document.getElementById('lbl-ang-l').setAttribute('x', bx + 65);
             document.getElementById('lbl-ang-l').setAttribute('y', by - 15);
             document.getElementById('lbl-ang-l').textContent = `${angleDeg}°`;
@@ -325,7 +268,6 @@
             document.getElementById('lbl-side-r').setAttribute('x', cx - 75 + 20);
             document.getElementById('lbl-side-r').setAttribute('y', by - height/2 - 10);
 
-            // Dashboard
             document.getElementById('iso-math-sides').textContent = `AB = AC = ${Math.round(sideLen)} units`;
             document.getElementById('iso-math-angles').textContent = `∠B = ∠C = ${angleDeg}°`;
         }
@@ -339,8 +281,8 @@
         const sSssB = document.getElementById('s-sss-b');
 
         function updateSss() {
-            let rA = parseInt(sSssA.value); // Left radius
-            let rB = parseInt(sSssB.value); // Right radius
+            let rA = parseInt(sSssA.value); 
+            let rB = parseInt(sSssB.value); 
             
             document.getElementById('val-sss-a').textContent = rA;
             document.getElementById('val-sss-b').textContent = rB;
@@ -354,14 +296,12 @@
 
             let status = document.getElementById('sss-status');
 
-            // Triangle Inequality Check
             if (rA + rB > baseLen && rA + baseLen > rB && rB + baseLen > rA) {
-                // Circles intersect. Calculate intersection point.
                 let x = (rA*rA - rB*rB + baseLen*baseLen) / (2 * baseLen);
                 let y = Math.sqrt(rA*rA - x*x);
 
                 let intersectX = bx + x;
-                let intersectY = by - y; // SVG Y inverted
+                let intersectY = by - y; 
 
                 document.getElementById('sss-side-a').setAttribute('x1', bx);
                 document.getElementById('sss-side-a').setAttribute('y1', by);
@@ -386,7 +326,6 @@
                 status.textContent = "Triangle uniquely formed! Exactly 1 intersection.";
                 status.style.color = "#00695c";
             } else {
-                // No intersection
                 document.getElementById('sss-side-a').style.display = 'none';
                 document.getElementById('sss-side-b').style.display = 'none';
                 document.getElementById('sss-dot-top').style.display = 'none';
@@ -415,18 +354,15 @@
 
             let legBase = 120;
             
-            // Heights using Pythagoras
             let h1 = Math.sqrt(hyp1*hyp1 - legBase*legBase);
             let h2 = Math.sqrt(hyp2*hyp2 - legBase*legBase);
 
-            // T1 Updates
             document.getElementById('rhs1-vert').setAttribute('y2', 280 - h1);
             document.getElementById('rhs1-hyp').setAttribute('y1', 280 - h1);
             document.getElementById('rhs1-dot').setAttribute('cy', 280 - h1);
             document.getElementById('rhs1-lbl').setAttribute('y', 280 - h1/2);
             document.getElementById('rhs1-lbl').textContent = `${hyp1} units`;
 
-            // T2 Updates
             document.getElementById('rhs2-vert').setAttribute('y2', 280 - h2);
             document.getElementById('rhs2-hyp').setAttribute('y1', 280 - h2);
             document.getElementById('rhs2-dot').setAttribute('cy', 280 - h2);
@@ -456,7 +392,6 @@
         sRhsHyp2.addEventListener('input', updateRhs);
         updateRhs();
 
-        // --- Q&A LOGIC ---
         function toggleAnswer(id) {
             const ans = document.getElementById(id);
             const btn = ans.previousElementSibling;
