@@ -3,26 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chapter 6 Game: Laser Architect</title>
+    <title>Chapter 6 Game: Transversal Turret</title>
     <link rel="stylesheet" href="minigames.css">
     <style>
-        :root { --theme-main: #0288d1; --theme-light: #e1f5fe; --theme-accent: #01579b; --correct: #4caf50; --wrong: #d32f2f; }
-        .radar-board { background: #111; padding: 15px; text-align: center; border-bottom: 3px solid var(--theme-main); z-index: 15; color: white; }
-        .radar-board h3 { font-size: 0.9em; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; color: #aaa; }
-        .radar-board h1 { font-size: 1.8em; letter-spacing: 1px; color: var(--theme-main); text-shadow: 0 0 10px var(--theme-main); }
-        .game-area { background: linear-gradient(135deg, #e1f5fe 0%, #b3e5fc 100%); position: relative; display: flex; justify-content: center; }
+        :root { 
+            --theme-main: #0288d1; 
+            --theme-light: #e1f5fe; 
+            --theme-accent: #01579b;
+            --correct: #4caf50; 
+            --wrong: #f44336; 
+            --base-node: #ffb300;
+        }
         
-        /* Falling Laser Beam */
-        .laser-beam { position: absolute; width: 6px; height: 60px; background: white; box-shadow: 0 0 15px 5px var(--theme-main); top: -60px; border-radius: 5px; transition: opacity 0.1s; }
+        .target-board { 
+            background: #000; 
+            padding: 15px; 
+            text-align: center; 
+            border-bottom: 3px solid var(--theme-main); 
+            z-index: 15; 
+            box-shadow: 0 4px 10px rgba(2, 136, 209, 0.3); 
+        }
         
-        /* Base Mirror/Shield at the bottom */
-        .shield-base { position: absolute; bottom: 20px; width: 80px; height: 20px; background: #555; border-radius: 10px 10px 0 0; border: 2px solid #777; border-bottom: none; display: flex; justify-content: center; align-items: center; box-shadow: 0 -5px 15px rgba(0,0,0,0.5); z-index: 10; transition: background 0.2s, box-shadow 0.2s; }
-        .shield-base::after { content: 'MIRROR'; font-size: 0.6em; color: white; font-weight: bold; letter-spacing: 1px; }
-
-        /* 2x2 Button Grid for Mobile */
-        .angle-controls { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; height: 160px; background: #111; border-top: 3px solid var(--theme-main); z-index: 20; }
-        .angle-btn { border: 1px solid #333; background: #222; font-size: 1.5em; font-weight: bold; color: white; cursor: pointer; transition: background 0.1s; }
-        .angle-btn:active { background: var(--theme-main); }
+        .target-board h3 { 
+            color: #888; 
+            font-size: 0.9em; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            margin-bottom: 5px; 
+        }
+        
+        .target-board h1 { 
+            color: var(--theme-main); 
+            font-size: 1.8em; 
+            letter-spacing: 1px; 
+            text-shadow: 0 0 10px rgba(2, 136, 209, 0.5); 
+        }
+        
+        .timer-container { 
+            width: 90%; max-width: 350px; 
+            height: 8px; 
+            background: #333; 
+            border-radius: 4px; 
+            margin: 15px auto 0; 
+            overflow: hidden; 
+        }
+        
+        .timer-bar { 
+            height: 100%; 
+            width: 100%; 
+            background: var(--theme-main); 
+            transition: width 0.1s linear; 
+        }
+        
+        .game-area { 
+            background: #0a192f; 
+            position: relative;
+        }
+        
+        .track-grid {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            overflow: hidden;
+        }
+        
+        /* 
+           MATHEMATICAL ANCHORS
+           Recalculated for the steeper 40% -> 60% transversal slope.
+        */
+        .intersection {
+            position: absolute; 
+            width: 0; height: 0;
+            z-index: 10;
+        }
+        .int-1 { top: 35%; left: 47%; }
+        .int-2 { top: 65%; left: 53%; }
+        
+        .node {
+            position: absolute; 
+            width: 44px; height: 44px; 
+            border: 2px solid rgba(255,255,255,0.3); 
+            border-radius: 50%;
+            transform: translate(-50%, -50%); 
+            cursor: crosshair; 
+            transition: transform 0.1s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
+            display: flex; justify-content: center; align-items: center; 
+            color: rgba(255,255,255,0.9); 
+            font-weight: bold; font-size: 1.1em;
+            background: rgba(2, 136, 209, 0.2);
+            backdrop-filter: blur(2px);
+        }
+        
+        .node:active { transform: translate(-50%, -50%) scale(0.9); }
+        
+        /* 
+           Aggressive pixel offsets:
+           Nodes 1 and 5 pushed -58px left.
+           Nodes 4 and 8 pushed +58px right.
+        */
+        .node-tl { top: -38px; left: -58px; } 
+        .node-tr { top: -48px; left: 22px; }  
+        .node-bl { top: 48px; left: -22px; }  
+        .node-br { top: 38px; left: 58px; }   
+        
+        /* Interaction States */
+        .node.base-node {
+            background: rgba(255, 179, 0, 0.9);
+            border-color: var(--base-node);
+            box-shadow: 0 0 15px var(--base-node);
+            color: #000;
+            z-index: 15;
+            animation: pulseBase 1s infinite alternate;
+        }
+        
+        .node.show-correct {
+            background: var(--correct);
+            border-color: var(--correct);
+            box-shadow: 0 0 25px var(--correct);
+            color: white;
+            z-index: 20;
+            transform: translate(-50%, -50%) scale(1.15);
+        }
+        
+        .node.show-wrong {
+            background: var(--wrong);
+            border-color: var(--wrong);
+            box-shadow: 0 0 25px var(--wrong);
+            color: white;
+            z-index: 20;
+            transform: translate(-50%, -50%) scale(1.15);
+        }
+        
+        @keyframes pulseBase {
+            0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 10px rgba(255, 179, 0, 0.5); }
+            100% { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 20px rgba(255, 179, 0, 1); }
+        }
     </style>
 </head>
 <body>
@@ -34,171 +148,189 @@
         <div>Lives: <span id="lives-disp">❤️❤️❤️</span></div>
     </div>
 
-    <div class="radar-board">
-        <h3 id="question-type">Calibrating...</h3>
-        <h1 id="question-val">--</h1>
+    <div class="target-board">
+        <h3>Radar Lock:</h3>
+        <h1 id="prompt-disp">Target Data...</h1>
+        <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
     </div>
 
     <div class="game-area" id="game-area">
-        <div class="shield-base" id="shield"></div>
+        
+        <div class="track-grid">
+            <!-- Steeper transversal slope (40% to 60%) to create more horizontal separation -->
+            <svg width="100%" height="100%" style="position:absolute; top:0; left:0; pointer-events:none; z-index:1;">
+                <line x1="0" y1="35%" x2="100%" y2="35%" stroke="#0288d1" stroke-width="3" stroke-opacity="0.6" />
+                <line x1="0" y1="65%" x2="100%" y2="65%" stroke="#0288d1" stroke-width="3" stroke-opacity="0.6" />
+                <line x1="40%" y1="0" x2="60%" y2="100%" stroke="#0288d1" stroke-width="3" stroke-opacity="0.6" />
+            </svg>
+            
+            <div class="intersection int-1">
+                <div class="node node-tl" id="node-1" onmousedown="fireTurret(1)" ontouchstart="fireTurret(1)">1</div>
+                <div class="node node-tr" id="node-2" onmousedown="fireTurret(2)" ontouchstart="fireTurret(2)">2</div>
+                <div class="node node-bl" id="node-3" onmousedown="fireTurret(3)" ontouchstart="fireTurret(3)">3</div>
+                <div class="node node-br" id="node-4" onmousedown="fireTurret(4)" ontouchstart="fireTurret(4)">4</div>
+            </div>
+            
+            <div class="intersection int-2">
+                <div class="node node-tl" id="node-5" onmousedown="fireTurret(5)" ontouchstart="fireTurret(5)">5</div>
+                <div class="node node-tr" id="node-6" onmousedown="fireTurret(6)" ontouchstart="fireTurret(6)">6</div>
+                <div class="node node-bl" id="node-7" onmousedown="fireTurret(7)" ontouchstart="fireTurret(7)">7</div>
+                <div class="node node-br" id="node-8" onmousedown="fireTurret(8)" ontouchstart="fireTurret(8)">8</div>
+            </div>
+        </div>
 
         <div class="screen" id="start-screen">
-            <h2>Laser Architect</h2>
-            <p>Set your mirror to the exact angle needed to deflect the laser! Calculate complementary, supplementary, and vertically opposite angles before impact.</p>
-            <button class="start-btn" onclick="startGame()">▶ Play Now</button>
+            <h2>Transversal Turret</h2>
+            <p>One angle will pulse yellow. Read the radar prompt and tap the correct target node (Alternate Interior, Corresponding, etc.) before the timer expires!</p>
+            <button class="start-btn" onclick="startGame()">▶ Engage</button>
         </div>
 
         <div class="screen hidden" id="game-over-screen">
-            <h2 id="end-title" style="color: var(--wrong);">Game Over!</h2>
-            <p>Lasers Deflected: <strong id="final-score">0</strong></p>
-            <button class="start-btn" onclick="startGame()">🔄 Try Again</button>
+            <h2 id="end-title" style="color: var(--wrong);">Target Lost!</h2>
+            <p>Nodes Destroyed: <strong id="final-score">0</strong></p>
+            <button class="start-btn" onclick="startGame()">🔄 Retry Mission</button>
         </div>
 
         <div class="screen victory-screen hidden" id="victory-screen">
-            <h2>Level Cleared! 🏆</h2>
+            <h2>Sector Cleared! 🏆</h2>
             <p>Next Chapter in <strong id="redirect-counter">3</strong>...</p>
         </div>
-    </div>
-
-    <div class="angle-controls">
-        <button class="angle-btn" id="btn-0" onmousedown="checkAnswer(0)" ontouchstart="checkAnswer(0)">--</button>
-        <button class="angle-btn" id="btn-1" onmousedown="checkAnswer(1)" ontouchstart="checkAnswer(1)">--</button>
-        <button class="angle-btn" id="btn-2" onmousedown="checkAnswer(2)" ontouchstart="checkAnswer(2)">--</button>
-        <button class="angle-btn" id="btn-3" onmousedown="checkAnswer(3)" ontouchstart="checkAnswer(3)">--</button>
     </div>
 </div>
 
 <script>
-    let score = 0, lives = 3, fallSpeed = 1, gameInterval;
-    let correctAnswer = 0, currentLaser = null, laserY = -60;
+    const missionBank = [
+        { prompt: "Vertically Opposite", base: 1, target: 4 },
+        { prompt: "Corresponding Angle", base: 1, target: 5 },
+        { prompt: "Alternate Exterior", base: 1, target: 8 },
+        
+        { prompt: "Alternate Interior", base: 3, target: 6 },
+        { prompt: "Corresponding Angle", base: 3, target: 7 },
+        { prompt: "Co-Interior (Supplementary)", base: 3, target: 5 },
+        { prompt: "Vertically Opposite", base: 3, target: 2 },
+        
+        { prompt: "Alternate Interior", base: 4, target: 5 },
+        { prompt: "Corresponding Angle", base: 4, target: 8 },
+        { prompt: "Co-Interior (Supplementary)", base: 4, target: 6 },
+        { prompt: "Vertically Opposite", base: 4, target: 1 },
+        
+        { prompt: "Alternate Interior", base: 6, target: 3 },
+        { prompt: "Corresponding Angle", base: 6, target: 2 },
+        { prompt: "Co-Interior (Supplementary)", base: 6, target: 4 },
+        { prompt: "Vertically Opposite", base: 6, target: 7 },
+        
+        { prompt: "Alternate Exterior", base: 8, target: 1 },
+        { prompt: "Corresponding Angle", base: 8, target: 4 },
+        { prompt: "Vertically Opposite", base: 8, target: 5 },
+        
+        { prompt: "Alternate Exterior", base: 2, target: 7 },
+        { prompt: "Corresponding Angle", base: 2, target: 6 },
+        
+        { prompt: "Alternate Exterior", base: 7, target: 2 },
+        { prompt: "Corresponding Angle", base: 7, target: 3 },
+        
+        { prompt: "Vertically Opposite", base: 5, target: 8 },
+        { prompt: "Corresponding Angle", base: 5, target: 1 }
+    ];
+
+    let score = 0, lives = 3, timeLimit = 10000, timeRemaining, timerInterval;
+    let currentMission = null, availableMissions = [];
     let roundActive = false;
-    let currentOptions = [];
-    let availableAngles = [];
 
-    const gameArea = document.getElementById('game-area');
-    const shield = document.getElementById('shield');
-    const qTypeDisp = document.getElementById('question-type');
-    const qValDisp = document.getElementById('question-val');
+    const promptDisp = document.getElementById('prompt-disp');
+    const timerBar = document.getElementById('timer-bar');
 
-    function fillAngles() {
-        availableAngles = [];
-        const types = ["complementary", "supplementary", "vertical"];
-        types.forEach(type => {
-            let max = (type === "complementary") ? 8 : 17;
-            for(let i=1; i<=max; i++) {
-                availableAngles.push({ type: type, val: i*10 });
-            }
-        });
-        availableAngles.sort(() => Math.random() - 0.5);
+    function resetNodes() {
+        for(let i = 1; i <= 8; i++) {
+            const node = document.getElementById(`node-${i}`);
+            node.className = `node ${[1,5].includes(i) ? 'node-tl' : [2,6].includes(i) ? 'node-tr' : [3,7].includes(i) ? 'node-bl' : 'node-br'}`;
+            node.textContent = i;
+        }
     }
 
     function startGame() {
         document.getElementById('start-screen').classList.add('hidden');
         document.getElementById('game-over-screen').classList.add('hidden');
-        score = 0; lives = 3; fallSpeed = 1;
-        fillAngles();
+        score = 0; lives = 3; 
+        timeLimit = 10000; 
+        availableMissions = [...missionBank].sort(() => Math.random() - 0.5);
         updateHUD();
         nextRound();
     }
 
-    function generateQuestion() {
-        if (availableAngles.length === 0) fillAngles();
-        const q = availableAngles.pop();
-        const qType = q.type;
-        const givenAngle = q.val;
-
-        if (qType === "complementary") {
-            correctAnswer = 90 - givenAngle;
-            qTypeDisp.textContent = "Deflect with Complementary Angle to:";
-        } else if (qType === "supplementary") {
-            correctAnswer = 180 - givenAngle;
-            qTypeDisp.textContent = "Deflect with Supplementary Angle to:";
-        } else {
-            correctAnswer = givenAngle;
-            qTypeDisp.textContent = "Deflect with Vertically Opposite Angle to:";
-        }
-        
-        qValDisp.textContent = `${givenAngle}°`;
-
-        currentOptions = [correctAnswer];
-        while (currentOptions.length < 4) {
-            let decoy = correctAnswer + (Math.floor(Math.random() * 6) - 3) * 10;
-            if (decoy <= 0) decoy += 180;
-            if (decoy >= 180) decoy -= 90;
-            if (!currentOptions.includes(decoy)) currentOptions.push(decoy);
-        }
-        
-        currentOptions.sort(() => Math.random() - 0.5);
-        for (let i = 0; i < 4; i++) {
-            document.getElementById(`btn-${i}`).textContent = `${currentOptions[i]}°`;
-        }
-    }
-
     function nextRound() {
-        if (currentLaser) currentLaser.remove();
-        generateQuestion();
-        
-        currentLaser = document.createElement('div');
-        currentLaser.className = 'laser-beam';
-        laserY = -60;
-        currentLaser.style.top = `${laserY}px`;
-        gameArea.appendChild(currentLaser);
-        
         roundActive = true;
-        clearInterval(gameInterval);
-        gameInterval = setInterval(updateLaser, 20);
-    }
-
-    function updateLaser() {
-        const bottomLimit = gameArea.offsetHeight - 40; 
-        laserY += fallSpeed;
-        currentLaser.style.top = `${laserY}px`;
+        resetNodes();
         
-        if (laserY >= bottomLimit) loseLife();
+        if (availableMissions.length === 0) availableMissions = [...missionBank].sort(() => Math.random() - 0.5);
+        currentMission = availableMissions.pop();
+        
+        promptDisp.textContent = `Target: ${currentMission.prompt}`;
+        
+        const baseNode = document.getElementById(`node-${currentMission.base}`);
+        baseNode.classList.add('base-node');
+        baseNode.innerHTML = `<span style="font-size:0.5em;">BASE</span>`;
+        
+        timeRemaining = timeLimit;
+        
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            timeRemaining -= 50;
+            const percentage = (timeRemaining / timeLimit) * 100;
+            timerBar.style.width = `${percentage}%`;
+            
+            if (percentage < 30) timerBar.style.background = 'var(--wrong)';
+            else timerBar.style.background = 'var(--theme-main)';
+
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                roundActive = false;
+                processResult(false, null);
+            }
+        }, 50);
     }
 
-    function checkAnswer(btnIndex) {
-        if (!roundActive) return;
+    function fireTurret(nodeId) {
+        if (!roundActive || nodeId === currentMission.base) return;
+        
         roundActive = false;
-        clearInterval(gameInterval);
+        clearInterval(timerInterval);
         
-        if (currentOptions[btnIndex] === correctAnswer) {
+        const targetNode = document.getElementById(`node-${nodeId}`);
+        const isCorrect = (nodeId === currentMission.target);
+        
+        processResult(isCorrect, targetNode);
+    }
+
+    function processResult(isCorrect, hitNode) {
+        if (isCorrect) {
             score++;
-            shield.style.background = 'var(--correct)';
-            shield.style.boxShadow = '0 -10px 30px var(--correct)';
-            currentLaser.style.opacity = '0';
+            hitNode.classList.add('show-correct');
+            hitNode.innerHTML = '🎯';
+            
+            if (score >= 10) return triggerVictory('../chapters/chapter7.html', 'math101_trophy_ch6');
+            
+            timeLimit = Math.max(4000, timeLimit - 500); 
+            setTimeout(nextRound, 600);
+        } else {
+            lives--;
+            if (hitNode) {
+                hitNode.classList.add('show-wrong');
+                hitNode.innerHTML = '❌';
+            }
+            
+            const correctNode = document.getElementById(`node-${currentMission.target}`);
+            correctNode.classList.add('show-correct');
+            
+            document.getElementById('game-area').style.background = '#300';
+            setTimeout(() => document.getElementById('game-area').style.background = '#0a192f', 200);
             
             setTimeout(() => {
-                shield.style.background = '#555';
-                shield.style.boxShadow = '0 -5px 15px rgba(0,0,0,0.5)';
-                if (score >= 10) triggerVictory('../chapters/chapter7.html', 'math101_trophy_ch6');
-                else {
-                    if (score % 3 === 0) fallSpeed += 0.5;
-                    nextRound();
-                }
-            }, 300);
-        } else {
-            loseLife();
+                if (lives <= 0) endGame();
+                else nextRound();
+            }, 1000);
         }
         updateHUD();
-    }
-
-    function loseLife() {
-        roundActive = false;
-        clearInterval(gameInterval);
-        lives--;
-        shield.style.background = 'var(--wrong)';
-        currentLaser.style.background = 'var(--wrong)';
-        currentLaser.style.boxShadow = '0 0 15px 5px var(--wrong)';
-        gameArea.style.background = '#4a0000';
-        
-        setTimeout(() => {
-            shield.style.background = '#555';
-            gameArea.style.background = 'linear-gradient(135deg, #e1f5fe 0%, #b3e5fc 100%)';
-            updateHUD();
-            if (lives <= 0) endGame();
-            else nextRound();
-        }, 400);
     }
 
     function updateHUD() {
@@ -207,11 +339,14 @@
     }
 
     function triggerVictory(nextUrl, trophyKey) {
+        clearInterval(timerInterval);
         localStorage.setItem(trophyKey, 'earned');
         document.getElementById('victory-screen').classList.remove('hidden');
+        
         let countdown = 3;
         const counterDisp = document.getElementById('redirect-counter');
         counterDisp.textContent = countdown;
+        
         const countInterval = setInterval(() => {
             countdown--;
             if (countdown > 0) counterDisp.textContent = countdown;
@@ -220,6 +355,7 @@
     }
 
     function endGame() {
+        clearInterval(timerInterval);
         document.getElementById('game-over-screen').classList.remove('hidden');
         document.getElementById('final-score').textContent = score;
     }
