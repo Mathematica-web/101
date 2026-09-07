@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 2 Game: Factor Slicer</title>
+    <link rel="stylesheet" href="minigames.css">
+    <style>
+        :root { --theme-main: #9c27b0; --theme-light: #f3e5f5; --theme-accent: #4a148c; --correct: #4caf50; --wrong: #d32f2f; }
+        .target-board { background: white; padding: 15px; text-align: center; border-bottom: 3px solid var(--theme-main); z-index: 15; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .target-board h3 { color: #555; font-size: 1em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        .target-board h1 { color: var(--theme-main); font-size: 2.2em; letter-spacing: 2px; }
+        .target-board p { color: #888; font-size: 0.9em; margin-top: 5px; font-weight: bold; }
+        .game-area { background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); cursor: crosshair; }
+        .bubble { position: absolute; padding: 15px 20px; background: white; border: 3px solid var(--theme-main); border-radius: 30px; font-weight: 900; font-size: 1.3em; color: #333; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transform: translateX(-50%); transition: background 0.15s, border-color 0.15s, transform 0.1s; cursor: pointer; }
+        .bubble:active { transform: translateX(-50%) scale(0.9); }
+    </style>
+</head>
+<body>
+
+<div class="game-wrapper">
+    <div class="header">
+        <a href="../chapters/chapter2.html" class="back-btn">⬅ Exit</a>
+        <div>Score: <span id="score-disp">0</span> / 10</div>
+        <div>Lives: <span id="lives-disp">❤️❤️❤️</span></div>
+    </div>
+
+    <div class="target-board">
+        <h3>Factor This:</h3>
+        <h1 id="target-poly">x² - 9</h1>
+        <p id="factors-status">Find 2 Factors!</p>
+    </div>
+
+    <div class="game-area" id="game-area">
+        <div class="screen" id="start-screen">
+            <h2>Factor Slicer</h2>
+            <p>Tap the correct factors! Solve 10 polynomials to clear the level.</p>
+            <button class="start-btn" onclick="startGame()">▶ Play Now</button>
+        </div>
+
+        <div class="screen hidden" id="game-over-screen">
+            <h2 id="end-title" style="color: var(--wrong);">Game Over!</h2>
+            <p>Polynomials Solved: <strong id="final-score">0</strong></p>
+            <button class="start-btn" onclick="startGame()">🔄 Try Again</button>
+        </div>
+
+        <div class="screen victory-screen hidden" id="victory-screen">
+            <h2>Level Cleared! 🏆</h2>
+            <p>Next Chapter in <strong id="redirect-counter">3</strong>...</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const polyBank = [
+        { eq: "x² - 4", factors: ["x - 2", "x + 2"], decoys: ["x - 4", "x + 4", "x - 1"] },
+        { eq: "x² - 9", factors: ["x - 3", "x + 3"], decoys: ["x - 9", "x + 1", "x - 6"] },
+        { eq: "x² - 16", factors: ["x - 4", "x + 4"], decoys: ["x - 8", "x + 2", "x - 16"] },
+        { eq: "x² - 25", factors: ["x - 5", "x + 5"], decoys: ["x - 25", "x + 25", "x + 1"] },
+        { eq: "x² - 36", factors: ["x - 6", "x + 6"], decoys: ["x - 12", "x + 3", "x - 36"] },
+        { eq: "x² - 49", factors: ["x - 7", "x + 7"], decoys: ["x - 14", "x + 49", "x - 1"] },
+        { eq: "x² + 5x + 6", factors: ["x + 2", "x + 3"], decoys: ["x + 5", "x + 6", "x - 2"] },
+        { eq: "x² - x - 6", factors: ["x - 3", "x + 2"], decoys: ["x + 3", "x - 2", "x - 6"] },
+        { eq: "x² + 4x + 4", factors: ["x + 2", "x + 2"], decoys: ["x + 4", "x - 2", "x + 8"] },
+        { eq: "x² - 7x + 10", factors: ["x - 5", "x - 2"], decoys: ["x + 5", "x + 2", "x - 10"] },
+        { eq: "x² + 6x + 8", factors: ["x + 4", "x + 2"], decoys: ["x + 8", "x + 1", "x - 4"] },
+        { eq: "x² - 2x - 8", factors: ["x - 4", "x + 2"], decoys: ["x + 4", "x - 2", "x - 8"] },
+        { eq: "x² + 7x + 12", factors: ["x + 4", "x + 3"], decoys: ["x + 7", "x + 12", "x - 4"] },
+        { eq: "x² - 8x + 15", factors: ["x - 5", "x - 3"], decoys: ["x + 5", "x + 3", "x - 15"] }
+    ];
+
+    let score = 0, lives = 3, gameInterval, spawnInterval, riseSpeed = 2.5, spawnRate = 1200, activeBubbles = [];
+    let currentPoly = null, neededFactors = [];
+    let availablePolys = [];
+    const gameArea = document.getElementById('game-area');
+
+    function startGame() {
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('game-over-screen').classList.add('hidden');
+        score = 0; lives = 3; riseSpeed = 2.5; spawnRate = 1200;
+        availablePolys = [...polyBank].sort(() => Math.random() - 0.5);
+        activeBubbles.forEach(b => b.element.remove()); activeBubbles = [];
+        updateHUD(); loadNextPolynomial();
+        gameInterval = setInterval(updateGame, 20); spawnBubble();
+    }
+
+    function loadNextPolynomial() {
+        if (availablePolys.length === 0) availablePolys = [...polyBank].sort(() => Math.random() - 0.5);
+        currentPoly = availablePolys.pop();
+        neededFactors = [...currentPoly.factors];
+        document.getElementById('target-poly').textContent = currentPoly.eq;
+        updateFactorStatus();
+    }
+
+    function updateFactorStatus() {
+        const status = document.getElementById('factors-status');
+        if (neededFactors.length === 2) status.textContent = "Find 2 Factors!";
+        else if (neededFactors.length === 1) status.textContent = "Find 1 More Factor!";
+    }
+
+    function spawnBubble() {
+        const bubble = document.createElement('div'); bubble.className = 'bubble';
+        let bubbleText = "", isCorrect = false;
+        
+        if (Math.random() > 0.4 && neededFactors.length > 0) {
+            bubbleText = neededFactors[Math.floor(Math.random() * neededFactors.length)]; isCorrect = true;
+        } else {
+            bubbleText = currentPoly.decoys[Math.floor(Math.random() * currentPoly.decoys.length)];
+        }
+        bubble.textContent = `(${bubbleText})`;
+        bubble.style.left = `${20 + Math.random() * 60}%`; bubble.style.bottom = '-60px';
+        
+        bubble.onmousedown = () => sliceBubble(bubble, bubbleText, isCorrect);
+        bubble.ontouchstart = (e) => { e.preventDefault(); sliceBubble(bubble, bubbleText, isCorrect); };
+        
+        gameArea.appendChild(bubble);
+        activeBubbles.push({ element: bubble, y: -60, text: bubbleText, isCorrect: isCorrect });
+        spawnInterval = setTimeout(spawnBubble, spawnRate);
+    }
+
+    function updateGame() {
+        const topLimit = gameArea.offsetHeight;
+        activeBubbles.forEach((bubbleObj, index) => {
+            bubbleObj.y += riseSpeed; bubbleObj.element.style.bottom = `${bubbleObj.y}px`;
+            if (bubbleObj.y >= topLimit + 60) {
+                bubbleObj.element.remove(); activeBubbles.splice(index, 1);
+            }
+        });
+    }
+
+    function sliceBubble(element, text, isCorrect) {
+        if (element.style.pointerEvents === 'none') return;
+        element.style.pointerEvents = 'none';
+        const factorIndex = neededFactors.indexOf(text);
+
+        if (factorIndex > -1) {
+            element.style.background = '#e8f5e9'; element.style.borderColor = 'var(--correct)'; element.style.color = 'var(--correct)';
+            neededFactors.splice(factorIndex, 1); updateFactorStatus();
+
+            setTimeout(() => {
+                element.remove();
+                if (neededFactors.length === 0) {
+                    score++; updateHUD();
+                    gameArea.style.background = '#e8f5e9';
+                    setTimeout(() => gameArea.style.background = 'linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%)', 200);
+                    
+                    if (score >= 10) return triggerVictory('../chapters/chapter3.html', 'math101_trophy_ch2');
+                    
+                    if (score % 3 === 0) { riseSpeed += 0.3; spawnRate = Math.max(700, spawnRate - 100); }
+                    activeBubbles.forEach(b => b.element.remove()); activeBubbles = [];
+                    loadNextPolynomial();
+                }
+            }, 150);
+        } else {
+            loseLife();
+            element.style.background = '#ffebee'; element.style.borderColor = 'var(--wrong)'; element.style.color = 'var(--wrong)';
+            setTimeout(() => element.remove(), 200);
+        }
+    }
+
+    function loseLife() {
+        lives--; updateHUD();
+        gameArea.style.background = '#ffcdd2';
+        setTimeout(() => gameArea.style.background = 'linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%)', 150);
+        if (lives <= 0) endGame();
+    }
+
+    function updateHUD() {
+        document.getElementById('score-disp').textContent = score;
+        document.getElementById('lives-disp').textContent = '❤️'.repeat(lives);
+    }
+
+    function triggerVictory(nextUrl, trophyKey) {
+        if (typeof gameInterval !== 'undefined') clearInterval(gameInterval); 
+        if (typeof spawnInterval !== 'undefined') clearTimeout(spawnInterval);
+        localStorage.setItem(trophyKey, 'earned');
+        document.getElementById('victory-screen').classList.remove('hidden');
+        let countdown = 3;
+        const counterDisp = document.getElementById('redirect-counter');
+        counterDisp.textContent = countdown;
+        const countInterval = setInterval(() => {
+            countdown--;
+            if (countdown > 0) counterDisp.textContent = countdown;
+            else { clearInterval(countInterval); window.location.href = nextUrl; }
+        }, 1000);
+    }
+
+    function endGame() {
+        clearInterval(gameInterval); clearTimeout(spawnInterval);
+        document.getElementById('game-over-screen').classList.remove('hidden');
+        document.getElementById('final-score').textContent = score;
+    }
+</script>
+</body>
+</html>

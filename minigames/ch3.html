@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 3 Game: Cartesian Treasure Hunt</title>
+    <link rel="stylesheet" href="minigames.css">
+    <style>
+        :root { --theme-main: #e65100; --theme-light: #fff3e0; --theme-accent: #bf360c; --correct: #4caf50; --wrong: #d32f2f; }
+        .target-board { background: white; padding: 15px; text-align: center; border-bottom: 3px solid var(--theme-main); z-index: 15; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .target-board h3 { color: #555; font-size: 1em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        .target-board h1 { color: var(--theme-main); font-size: 2.2em; letter-spacing: 2px; font-family: monospace; }
+        .timer-container { width: 90%; max-width: 350px; height: 10px; background: #ccc; border-radius: 5px; margin: 15px auto 0; overflow: hidden; }
+        .timer-bar { height: 100%; width: 100%; background: var(--theme-main); transition: width 0.1s linear; }
+        .game-area { background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 20px; }
+        
+        .grid-container { display: grid; grid-template-columns: repeat(9, 1fr); grid-template-rows: repeat(9, 1fr); width: 95%; max-width: 360px; aspect-ratio: 1 / 1; background: #fff8e1; border: 3px solid var(--theme-main); box-shadow: 0 5px 15px rgba(0,0,0,0.1); position: relative; }
+        
+        /* Custom Red Target Reticle & Hitbox */
+        .cell { position: relative; cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><line x1="12" y1="2" x2="12" y2="22" stroke="red" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="12" x2="22" y2="12" stroke="red" stroke-width="2" stroke-linecap="round"/></svg>') 12 12, crosshair; }
+        .cell::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #cfd8dc; transform: translateY(-50%); z-index: 1; pointer-events: none; }
+        .cell::after { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: #cfd8dc; transform: translateX(-50%); z-index: 1; pointer-events: none; }
+        .cell:active { background: rgba(0,0,0,0.05); }
+        
+        /* Thick Main Axes */
+        .grid-axis-x { position: absolute; top: 50%; left: 0; right: 0; height: 3px; background: #263238; transform: translateY(-50%); pointer-events: none; z-index: 3; }
+        .grid-axis-y { position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; background: #263238; transform: translateX(-50%); pointer-events: none; z-index: 3; }
+        
+        /* Coordinate Markers */
+        .marker { position: absolute; width: 16px; height: 16px; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; opacity: 0; transition: opacity 0.1s, transform 0.2s; z-index: 10; }
+        .marker.show-correct { background: var(--correct); opacity: 1; box-shadow: 0 0 8px var(--correct); transform: translate(-50%, -50%) scale(1.2); }
+        .marker.show-wrong { background: var(--wrong); opacity: 1; box-shadow: 0 0 8px var(--wrong); transform: translate(-50%, -50%) scale(1.2); }
+        
+        /* Axis Labels & Numbers */
+        .label { position: absolute; font-size: 0.85em; font-weight: bold; color: #263238; pointer-events: none; z-index: 5; }
+        .label-x { right: -22px; top: 50%; transform: translateY(-50%); }
+        .label-y { top: -25px; left: 50%; transform: translateX(-50%); }
+        
+        .axis-num { position: absolute; font-size: 0.6em; color: #546e7a; z-index: 4; pointer-events: none; font-weight: bold; background: rgba(255,255,255,0.7); border-radius: 3px; padding: 0 2px; }
+        .axis-num-x { bottom: 2px; left: 50%; transform: translateX(-50%); }
+        .axis-num-y { left: 4px; top: 50%; transform: translateY(-50%); }
+    </style>
+</head>
+<body>
+
+<div class="game-wrapper">
+    <div class="header">
+        <a href="../chapters/chapter3.html" class="back-btn">⬅ Exit</a>
+        <div>Score: <span id="score-disp">0</span> / 10</div>
+        <div>Lives: <span id="lives-disp">❤️❤️❤️</span></div>
+    </div>
+
+    <div class="target-board">
+        <h3>Plot Coordinate:</h3>
+        <h1 id="target-coord">(0, 0)</h1>
+        <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
+    </div>
+
+    <div class="game-area" id="game-area">
+        <div class="grid-container" id="grid-container">
+            <!-- Grid is dynamically built here -->
+        </div>
+
+        <div class="screen" id="start-screen">
+            <h2>Cartesian Treasure Hunt</h2>
+            <p>Tap the exact intersection of the X and Y coordinates before the timer runs out. Score 10 to clear the level!</p>
+            <button class="start-btn" onclick="startGame()">▶ Play Now</button>
+        </div>
+
+        <div class="screen hidden" id="game-over-screen">
+            <h2 id="end-title" style="color: var(--wrong);">Game Over!</h2>
+            <p>Coordinates Plotted: <strong id="final-score">0</strong></p>
+            <button class="start-btn" onclick="startGame()">🔄 Try Again</button>
+        </div>
+
+        <div class="screen victory-screen hidden" id="victory-screen">
+            <h2>Level Cleared! 🏆</h2>
+            <p>Next Chapter in <strong id="redirect-counter">3</strong>...</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    let score = 0, lives = 3;
+    let targetX = 0, targetY = 0;
+    let availableCoords = [];
+    let timeRemaining = 100;
+    let timerInterval;
+    let roundActive = false;
+
+    const gridContainer = document.getElementById('grid-container');
+    const targetCoordDisp = document.getElementById('target-coord');
+    const timerBar = document.getElementById('timer-bar');
+
+    function buildGrid() {
+        gridContainer.innerHTML = `
+            <div class="grid-axis-x"></div>
+            <div class="grid-axis-y"></div>
+            <div class="label label-x">X</div>
+            <div class="label label-y">Y</div>
+        `;
+        
+        for (let y = 4; y >= -4; y--) {
+            for (let x = -4; x <= 4; x++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                
+                if (y === 0 && x !== 0) {
+                    const num = document.createElement('div');
+                    num.className = 'axis-num axis-num-x';
+                    num.textContent = x;
+                    cell.appendChild(num);
+                }
+                if (x === 0 && y !== 0) {
+                    const num = document.createElement('div');
+                    num.className = 'axis-num axis-num-y';
+                    num.textContent = y;
+                    cell.appendChild(num);
+                }
+                
+                const marker = document.createElement('div');
+                marker.className = 'marker';
+                cell.appendChild(marker);
+
+                const interact = (e) => { e.preventDefault(); checkCoordinate(x, y, marker); };
+                cell.onmousedown = interact;
+                cell.ontouchstart = interact;
+
+                gridContainer.appendChild(cell);
+            }
+        }
+    }
+
+    function fillCoords() {
+        availableCoords = [];
+        for (let x = -4; x <= 4; x++) {
+            for (let y = -4; y <= 4; y++) {
+                availableCoords.push({x, y});
+            }
+        }
+        availableCoords.sort(() => Math.random() - 0.5);
+    }
+
+    function startGame() {
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('game-over-screen').classList.add('hidden');
+        score = 0; lives = 3;
+        fillCoords();
+        buildGrid();
+        updateHUD();
+        nextRound();
+    }
+
+    function nextRound() {
+        roundActive = true;
+        
+        if (availableCoords.length === 0) fillCoords();
+        const coord = availableCoords.pop();
+        targetX = coord.x; targetY = coord.y;
+        
+        targetCoordDisp.textContent = `(${targetX}, ${targetY})`;
+        timeRemaining = 100;
+        
+        const drainSpeed = score >= 5 ? (score >= 8 ? 1.2 : 0.8) : 0.6; 
+        
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            timeRemaining -= drainSpeed;
+            timerBar.style.width = `${timeRemaining}%`;
+            
+            if (timeRemaining < 30) timerBar.style.background = 'var(--wrong)';
+            else timerBar.style.background = 'var(--theme-main)';
+
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                loseLife();
+            }
+        }, 50);
+    }
+
+    function checkCoordinate(clickedX, clickedY, markerElement) {
+        if (!roundActive) return;
+        roundActive = false;
+        clearInterval(timerInterval);
+
+        if (clickedX === targetX && clickedY === targetY) {
+            markerElement.classList.add('show-correct');
+            score++;
+            updateHUD();
+            setTimeout(() => {
+                markerElement.classList.remove('show-correct');
+                if (score >= 10) triggerVictory('../chapters/chapter4.html', 'math101_trophy_ch3');
+                else nextRound();
+            }, 400);
+        } else {
+            markerElement.classList.add('show-wrong');
+            const allCells = gridContainer.querySelectorAll('.cell');
+            const targetIndex = ((4 - targetY) * 9) + (targetX + 4); 
+            const correctMarker = allCells[targetIndex].querySelector('.marker');
+            correctMarker.classList.add('show-correct');
+
+            setTimeout(() => {
+                markerElement.classList.remove('show-wrong');
+                correctMarker.classList.remove('show-correct');
+                loseLife();
+            }, 600);
+        }
+    }
+
+    function loseLife() {
+        lives--; updateHUD();
+        const area = document.getElementById('game-area');
+        area.style.background = '#ffcdd2';
+        setTimeout(() => area.style.background = 'linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%)', 150);
+        if (lives <= 0) endGame();
+        else nextRound();
+    }
+
+    function updateHUD() {
+        document.getElementById('score-disp').textContent = score;
+        document.getElementById('lives-disp').textContent = '❤️'.repeat(lives);
+    }
+
+    function triggerVictory(nextUrl, trophyKey) {
+        if (typeof timerInterval !== 'undefined') clearInterval(timerInterval);
+        localStorage.setItem(trophyKey, 'earned');
+        document.getElementById('victory-screen').classList.remove('hidden');
+        let countdown = 3;
+        const counterDisp = document.getElementById('redirect-counter');
+        counterDisp.textContent = countdown;
+        const countInterval = setInterval(() => {
+            countdown--;
+            if (countdown > 0) counterDisp.textContent = countdown;
+            else { clearInterval(countInterval); window.location.href = nextUrl; }
+        }, 1000);
+    }
+
+    function endGame() {
+        roundActive = false;
+        clearInterval(timerInterval);
+        document.getElementById('game-over-screen').classList.remove('hidden');
+        document.getElementById('final-score').textContent = score;
+    }
+</script>
+</body>
+</html>

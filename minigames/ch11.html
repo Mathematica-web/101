@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 11 Game: Formula Forge</title>
+    <link rel="stylesheet" href="minigames.css">
+    <style>
+        :root { --theme-main: #4ecdc4; --theme-light: #e0f7fa; --theme-accent: #006064; --correct: #4caf50; --wrong: #d32f2f; }
+        .game-area { background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+        
+        /* Forge Board */
+        .forge-ui { background: #37474f; width: 95%; max-width: 380px; padding: 25px 20px; border: 4px solid var(--theme-main); border-radius: 15px; box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.3); text-align: center; position: relative; transition: transform 0.2s, border-color 0.2s; }
+        
+        .forge-ui h3 { color: #80deea; font-size: 0.9em; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
+        .prompt-data { font-size: 1.4em; color: #fff; font-weight: bold; padding: 15px; border-radius: 10px; background: rgba(0,0,0,0.4); border: 2px solid #546e7a; min-height: 90px; display: flex; flex-direction: column; justify-content: center; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .prompt-data span.highlight { display: block; color: var(--theme-main); font-size: 1.1em; font-weight: 900; margin-top: 5px; }
+        
+        /* Timer */
+        .timer-container { width: 100%; height: 8px; background: #222; border-radius: 4px; margin-top: 25px; overflow: hidden; }
+        .timer-bar { height: 100%; width: 100%; background: var(--theme-main); transition: width 0.1s linear; }
+
+        /* Option Grid */
+        .option-controls { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; height: 180px; background: #111; border-top: 4px solid var(--theme-main); z-index: 20; }
+        .option-btn { border: 1px solid #333; background: #263238; font-size: 1.2em; font-weight: bold; color: #e0f7fa; cursor: pointer; transition: background 0.1s, color 0.1s; display: flex; align-items: center; justify-content: center; }
+        .option-btn:active { background: var(--theme-main); color: white; }
+    </style>
+</head>
+<body>
+
+<div class="game-wrapper">
+    <div class="header">
+        <a href="../chapters/chapter11.html" class="back-btn">⬅ Exit</a>
+        <div>Score: <span id="score-disp">0</span> / 10</div>
+        <div>Lives: <span id="lives-disp">❤️❤️❤️</span></div>
+    </div>
+
+    <div class="game-area" id="game-area">
+        
+        <div class="forge-ui" id="forge-board">
+            <h3>Identify the Formula</h3>
+            <div class="prompt-data" id="prompt-disp">
+                Loading...
+            </div>
+            <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
+        </div>
+
+        <div class="screen" id="start-screen">
+            <h2>Formula Forge</h2>
+            <p>Rapidly select the correct formula for the Volume, CSA, or TSA of the given 3D shape. Score 10 to clear the level!</p>
+            <button class="start-btn" onclick="startGame()">▶ Play Now</button>
+        </div>
+
+        <div class="screen hidden" id="game-over-screen">
+            <h2 id="end-title" style="color: var(--wrong);">Forge Cooled!</h2>
+            <p>Formulas Forged: <strong id="final-score">0</strong></p>
+            <button class="start-btn" onclick="startGame()">🔄 Try Again</button>
+        </div>
+
+        <div class="screen victory-screen hidden" id="victory-screen">
+            <h2>Level Cleared! 🏆</h2>
+            <p>Next Chapter in <strong id="redirect-counter">3</strong>...</p>
+        </div>
+    </div>
+
+    <div class="option-controls">
+        <button class="option-btn" id="btn-0" onmousedown="checkAnswer(0)" ontouchstart="checkAnswer(0)">--</button>
+        <button class="option-btn" id="btn-1" onmousedown="checkAnswer(1)" ontouchstart="checkAnswer(1)">--</button>
+        <button class="option-btn" id="btn-2" onmousedown="checkAnswer(2)" ontouchstart="checkAnswer(2)">--</button>
+        <button class="option-btn" id="btn-3" onmousedown="checkAnswer(3)" ontouchstart="checkAnswer(3)">--</button>
+    </div>
+</div>
+
+<script>
+    const formulaBank = [
+        { shape: "Cuboid", type: "Volume", ans: "l × b × h", decoys: ["2(lb + bh + hl)", "2h(l + b)", "l³"] },
+        { shape: "Cuboid", type: "TSA", ans: "2(lb + bh + hl)", decoys: ["l × b × h", "2h(l + b)", "6a²"] },
+        { shape: "Cuboid", type: "CSA (Lateral)", ans: "2h(l + b)", decoys: ["2(lb + bh + hl)", "l × b × h", "4a²"] },
+        { shape: "Cube", type: "Volume", ans: "a³", decoys: ["6a²", "4a²", "l × b × h"] },
+        { shape: "Cube", type: "TSA", ans: "6a²", decoys: ["a³", "4a²", "2(lb + bh + hl)"] },
+        { shape: "Cube", type: "CSA (Lateral)", ans: "4a²", decoys: ["6a²", "a³", "2h(l + b)"] },
+        { shape: "Cylinder", type: "Volume", ans: "πr²h", decoys: ["2πrh", "2πr(r + h)", "⅓πr²h"] },
+        { shape: "Cylinder", type: "CSA", ans: "2πrh", decoys: ["πr²h", "2πr(r + h)", "πrl"] },
+        { shape: "Cylinder", type: "TSA", ans: "2πr(r + h)", decoys: ["2πrh", "πr²h", "πr(r + l)"] },
+        { shape: "Cone", type: "Volume", ans: "⅓πr²h", decoys: ["πr²h", "πrl", "⅓πr²l"] },
+        { shape: "Cone", type: "CSA", ans: "πrl", decoys: ["πr²h", "⅓πr²h", "πr(r + l)"] },
+        { shape: "Cone", type: "TSA", ans: "πr(r + l)", decoys: ["πrl", "2πr(r + h)", "⅓πr²h"] },
+        { shape: "Sphere", type: "Volume", ans: "4/3 πr³", decoys: ["4πr²", "2/3 πr³", "3πr²"] },
+        { shape: "Sphere", type: "Surface Area", ans: "4πr²", decoys: ["4/3 πr³", "3πr²", "2πr²"] },
+        { shape: "Hemisphere", type: "Volume", ans: "2/3 πr³", decoys: ["4/3 πr³", "2πr²", "3πr²"] },
+        { shape: "Hemisphere", type: "CSA", ans: "2πr²", decoys: ["3πr²", "4πr²", "2/3 πr³"] },
+        { shape: "Hemisphere", type: "TSA", ans: "3πr²", decoys: ["2πr²", "4πr²", "2/3 πr³"] }
+    ];
+
+    let score = 0, lives = 3, timeLimit = 10000, timeRemaining, timerInterval;
+    let correctAnswer = "", currentOptions = [], availableQuestions = [];
+    let roundActive = false;
+
+    const promptDisp = document.getElementById('prompt-disp');
+    const timerBar = document.getElementById('timer-bar');
+    const forgeBoard = document.getElementById('forge-board');
+
+    function startGame() {
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('game-over-screen').classList.add('hidden');
+        score = 0; lives = 3; timeLimit = 10000;
+        availableQuestions = [...formulaBank].sort(() => Math.random() - 0.5);
+        updateHUD();
+        nextRound();
+    }
+
+    function generateOptions(ans, decoys) {
+        currentOptions = [ans];
+        const shuffledDecoys = [...decoys].sort(() => Math.random() - 0.5);
+        while (currentOptions.length < 4) currentOptions.push(shuffledDecoys.pop());
+        currentOptions.sort(() => Math.random() - 0.5); 
+        for (let i = 0; i < 4; i++) document.getElementById(`btn-${i}`).textContent = currentOptions[i];
+    }
+
+    function nextRound() {
+        roundActive = true;
+        if (availableQuestions.length === 0) availableQuestions = [...formulaBank].sort(() => Math.random() - 0.5);
+        const question = availableQuestions.pop();
+        correctAnswer = question.ans;
+        
+        promptDisp.innerHTML = `${question.shape}<span class="highlight">${question.type}</span>`;
+        generateOptions(question.ans, question.decoys);
+        
+        timeRemaining = timeLimit;
+        forgeBoard.style.borderColor = 'var(--theme-main)';
+        
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            timeRemaining -= 50;
+            const percentage = (timeRemaining / timeLimit) * 100;
+            timerBar.style.width = `${percentage}%`;
+            
+            if (percentage < 30) timerBar.style.background = 'var(--wrong)';
+            else timerBar.style.background = 'var(--theme-main)';
+
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                roundActive = false;
+                processResult(false);
+            }
+        }, 50);
+    }
+
+    function checkAnswer(btnIndex) {
+        if (!roundActive) return;
+        roundActive = false;
+        clearInterval(timerInterval);
+        processResult(currentOptions[btnIndex] === correctAnswer);
+    }
+
+    function processResult(isCorrect) {
+        if (isCorrect) {
+            score++;
+            forgeBoard.style.borderColor = 'var(--correct)';
+            forgeBoard.style.boxShadow = 'inset 0 0 40px rgba(76,175,80,0.5), 0 10px 20px rgba(0,0,0,0.3)';
+            if (score >= 10) return triggerVictory('../chapters/chapter12.html', 'math101_trophy_ch11');
+            if (score % 3 === 0) timeLimit = Math.max(5000, timeLimit - 1000); 
+            setTimeout(nextRound, 500);
+        } else {
+            lives--;
+            forgeBoard.style.borderColor = 'var(--wrong)';
+            forgeBoard.style.transform = 'translateX(-10px)';
+            setTimeout(() => forgeBoard.style.transform = 'translateX(10px)', 50);
+            setTimeout(() => forgeBoard.style.transform = 'translateX(-10px)', 100);
+            setTimeout(() => forgeBoard.style.transform = 'translateX(0)', 150);
+            setTimeout(() => {
+                if (lives <= 0) endGame();
+                else nextRound();
+            }, 800);
+        }
+        updateHUD();
+    }
+
+    function updateHUD() {
+        document.getElementById('score-disp').textContent = score;
+        document.getElementById('lives-disp').textContent = '❤️'.repeat(lives);
+    }
+
+    function triggerVictory(nextUrl, trophyKey) {
+        clearInterval(timerInterval);
+        localStorage.setItem(trophyKey, 'earned');
+        document.getElementById('victory-screen').classList.remove('hidden');
+        let countdown = 3;
+        const counterDisp = document.getElementById('redirect-counter');
+        counterDisp.textContent = countdown;
+        const countInterval = setInterval(() => {
+            countdown--;
+            if (countdown > 0) counterDisp.textContent = countdown;
+            else { clearInterval(countInterval); window.location.href = nextUrl; }
+        }, 1000);
+    }
+
+    function endGame() {
+        clearInterval(timerInterval);
+        document.getElementById('game-over-screen').classList.remove('hidden');
+        document.getElementById('final-score').textContent = score;
+    }
+</script>
+</body>
+</html>

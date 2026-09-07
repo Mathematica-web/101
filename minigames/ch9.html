@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 9 Game: Circle Sonar</title>
+    <link rel="stylesheet" href="minigames.css">
+    <style>
+        :root { --theme-main: #00838f; --theme-light: #e0f7fa; --theme-accent: #006064; --correct: #4caf50; --wrong: #d32f2f; }
+        .game-area { background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; position: relative; overflow: hidden; }
+        
+        /* Sonar Radar Display */
+        .sonar-screen { background: radial-gradient(circle, #006064 0%, #000 100%); width: 95%; max-width: 380px; padding: 30px 20px; border: 4px solid var(--theme-main); border-radius: 50%; aspect-ratio: 1/1; box-shadow: inset 0 0 40px rgba(0,131,143,0.5), 0 0 20px rgba(0,131,143,0.3); text-align: center; position: relative; transition: border-color 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+        
+        /* Radar Sweep Animation */
+        .sonar-screen::before { content: ''; position: absolute; top: 50%; left: 50%; width: 50%; height: 50%; background: linear-gradient(90deg, transparent 50%, rgba(0,255,255,0.4) 100%); transform-origin: 0 0; animation: sweep 3s linear infinite; z-index: 1; border-radius: 100% 0 0 0; }
+        @keyframes sweep { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .sonar-screen h3 { color: #80deea; font-size: 0.85em; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; font-family: monospace; z-index: 2; }
+        .theorem-text { font-size: 1.1em; color: #fff; font-weight: bold; z-index: 2; text-shadow: 0 2px 4px rgba(0,0,0,0.8); line-height: 1.4; padding: 0 10px; }
+        
+        /* Timer */
+        .timer-container { width: 80%; height: 6px; background: #111; border-radius: 3px; margin-top: 25px; overflow: hidden; z-index: 2; }
+        .timer-bar { height: 100%; width: 100%; background: #80deea; transition: width 0.1s linear; }
+
+        /* 2x2 Option Grid */
+        .option-controls { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; height: 180px; background: #000; border-top: 3px solid var(--theme-main); z-index: 20; }
+        .option-btn { border: 1px solid #111; background: #00363a; font-size: 1em; font-weight: bold; color: #80deea; cursor: pointer; transition: background 0.1s, color 0.1s; display: flex; align-items: center; justify-content: center; padding: 10px; text-align: center; }
+        .option-btn:active { background: var(--theme-main); color: white; }
+    </style>
+</head>
+<body>
+
+<div class="game-wrapper">
+    <div class="header">
+        <a href="../chapters/chapter9.html" class="back-btn">⬅ Exit</a>
+        <div>Score: <span id="score-disp">0</span> / 10</div>
+        <div>Lives: <span id="lives-disp">❤️❤️❤️</span></div>
+    </div>
+
+    <div class="game-area" id="game-area">
+        
+        <div class="sonar-screen" id="sonar-screen">
+            <h3>Complete the Theorem</h3>
+            <div class="theorem-text" id="theorem-disp">Loading...</div>
+            <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
+        </div>
+
+        <div class="screen" id="start-screen">
+            <h2>Circle Sonar</h2>
+            <p>Read the incomplete circle theorem on the radar. Tap the correct missing phrase before the sonar pulse fades out!</p>
+            <button class="start-btn" onclick="startGame()">▶ Play Now</button>
+        </div>
+
+        <div class="screen hidden" id="game-over-screen">
+            <h2 id="end-title" style="color: var(--wrong);">Signal Lost!</h2>
+            <p>Theorems Completed: <strong id="final-score">0</strong></p>
+            <button class="start-btn" onclick="startGame()">🔄 Try Again</button>
+        </div>
+
+        <div class="screen victory-screen hidden" id="victory-screen">
+            <h2>Level Cleared! 🏆</h2>
+            <p>Next Chapter in <strong id="redirect-counter">3</strong>...</p>
+        </div>
+    </div>
+
+    <div class="option-controls">
+        <button class="option-btn" id="btn-0" onmousedown="checkAnswer(0)" ontouchstart="checkAnswer(0)">--</button>
+        <button class="option-btn" id="btn-1" onmousedown="checkAnswer(1)" ontouchstart="checkAnswer(1)">--</button>
+        <button class="option-btn" id="btn-2" onmousedown="checkAnswer(2)" ontouchstart="checkAnswer(2)">--</button>
+        <button class="option-btn" id="btn-3" onmousedown="checkAnswer(3)" ontouchstart="checkAnswer(3)">--</button>
+    </div>
+</div>
+
+<script>
+    const theoremBank = [
+        { text: "The angle subtended by a diameter at the circumference is...", answer: "90°", decoys: ["180°", "45°", "360°"] },
+        { text: "A perpendicular drawn from the center of a circle to a chord...", answer: "Bisects the chord", decoys: ["Doubles the chord", "Is parallel to it", "Forms a tangent"] },
+        { text: "Equal chords of a circle subtend...", answer: "Equal angles at the center", decoys: ["Unequal angles", "Complementary angles", "Right angles"] },
+        { text: "Angles in the same segment of a circle are...", answer: "Equal", decoys: ["Supplementary", "Complementary", "Always 90°"] },
+        { text: "The sum of either pair of opposite angles of a cyclic quadrilateral is...", answer: "180°", decoys: ["90°", "360°", "Equal"] },
+        { text: "The longest chord of a circle is known as its...", answer: "Diameter", decoys: ["Radius", "Secant", "Tangent"] },
+        { text: "Chords equidistant from the center of a circle are...", answer: "Equal in length", decoys: ["Parallel", "Perpendicular", "Unequal"] },
+        { text: "The angle subtended by an arc at the center is ____ the angle at the remaining part.", answer: "Double", decoys: ["Half", "Equal to", "Triple"] },
+        { text: "If a line segment joining two points subtends equal angles at two other points, the four points are...", answer: "Concyclic", decoys: ["Collinear", "Parallel", "Intersecting"] },
+        { text: "Exterior angle of a cyclic quadrilateral is equal to the...", answer: "Interior opposite angle", decoys: ["Adjacent angle", "Exterior opposite angle", "90 degrees"] }
+    ];
+
+    let score = 0, lives = 3, timeLimit = 12000, timeRemaining, timerInterval;
+    let currentQuestion = null, availableQuestions = [];
+    let currentOptions = [];
+    let roundActive = false;
+
+    const theoremDisp = document.getElementById('theorem-disp');
+    const timerBar = document.getElementById('timer-bar');
+    const sonarScreen = document.getElementById('sonar-screen');
+
+    function startGame() {
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('game-over-screen').classList.add('hidden');
+        score = 0; lives = 3; timeLimit = 12000;
+        availableQuestions = [...theoremBank].sort(() => Math.random() - 0.5);
+        updateHUD();
+        nextRound();
+    }
+
+    function generateOptions() {
+        currentOptions = [currentQuestion.answer, ...currentQuestion.decoys];
+        currentOptions.sort(() => Math.random() - 0.5); 
+        for (let i = 0; i < 4; i++) document.getElementById(`btn-${i}`).textContent = currentOptions[i];
+    }
+
+    function nextRound() {
+        roundActive = true;
+        if (availableQuestions.length === 0) availableQuestions = [...theoremBank].sort(() => Math.random() - 0.5);
+        currentQuestion = availableQuestions.pop();
+        
+        theoremDisp.textContent = `"${currentQuestion.text}"`;
+        generateOptions();
+        
+        timeRemaining = timeLimit;
+        sonarScreen.style.borderColor = 'var(--theme-main)';
+        sonarScreen.style.boxShadow = 'inset 0 0 40px rgba(0,131,143,0.5), 0 0 20px rgba(0,131,143,0.3)';
+        
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            timeRemaining -= 50;
+            const percentage = (timeRemaining / timeLimit) * 100;
+            timerBar.style.width = `${percentage}%`;
+            
+            if (percentage < 30) timerBar.style.background = 'var(--wrong)';
+            else timerBar.style.background = '#80deea';
+
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                roundActive = false;
+                processResult(false);
+            }
+        }, 50);
+    }
+
+    function checkAnswer(btnIndex) {
+        if (!roundActive) return;
+        roundActive = false;
+        clearInterval(timerInterval);
+        processResult(currentOptions[btnIndex] === currentQuestion.answer);
+    }
+
+    function processResult(isCorrect) {
+        if (isCorrect) {
+            score++;
+            sonarScreen.style.borderColor = 'var(--correct)';
+            sonarScreen.style.boxShadow = 'inset 0 0 60px rgba(76,175,80,0.5), 0 0 30px rgba(76,175,80,0.8)';
+            if (score >= 10) return triggerVictory('../chapters/chapter10.html', 'math101_trophy_ch9');
+            if (score % 3 === 0) timeLimit = Math.max(6000, timeLimit - 1000);
+            setTimeout(nextRound, 500);
+        } else {
+            lives--;
+            sonarScreen.style.borderColor = 'var(--wrong)';
+            sonarScreen.style.boxShadow = 'inset 0 0 60px rgba(211,47,47,0.5), 0 0 30px rgba(211,47,47,0.8)';
+            
+            sonarScreen.style.transform = 'scale(0.95)';
+            setTimeout(() => sonarScreen.style.transform = 'scale(1.05)', 100);
+            setTimeout(() => sonarScreen.style.transform = 'scale(1)', 200);
+            
+            setTimeout(() => {
+                if (lives <= 0) endGame();
+                else nextRound();
+            }, 800);
+        }
+        updateHUD();
+    }
+
+    function updateHUD() {
+        document.getElementById('score-disp').textContent = score;
+        document.getElementById('lives-disp').textContent = '❤️'.repeat(lives);
+    }
+
+    function triggerVictory(nextUrl, trophyKey) {
+        clearInterval(timerInterval);
+        localStorage.setItem(trophyKey, 'earned');
+        document.getElementById('victory-screen').classList.remove('hidden');
+        let countdown = 3;
+        const counterDisp = document.getElementById('redirect-counter');
+        counterDisp.textContent = countdown;
+        const countInterval = setInterval(() => {
+            countdown--;
+            if (countdown > 0) counterDisp.textContent = countdown;
+            else { clearInterval(countInterval); window.location.href = nextUrl; }
+        }, 1000);
+    }
+
+    function endGame() {
+        clearInterval(timerInterval);
+        document.getElementById('game-over-screen').classList.remove('hidden');
+        document.getElementById('final-score').textContent = score;
+    }
+</script>
+</body>
+</html>

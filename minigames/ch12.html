@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 12 Game: The Casino Heist</title>
+    <link rel="stylesheet" href="minigames.css">
+    <style>
+        :root { --theme-main: #ab47bc; --theme-light: #f3e5f5; --theme-accent: #4a148c; --correct: #4caf50; --wrong: #d32f2f; }
+        .game-area { background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+        
+        /* Casino Table UI */
+        .table-ui { background: var(--theme-main); width: 95%; max-width: 380px; padding: 25px 20px; border: 8px solid var(--theme-accent); border-radius: 20px; box-shadow: inset 0 0 30px rgba(0,0,0,0.6), 0 10px 20px rgba(0,0,0,0.4); text-align: center; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+        
+        /* Card / Challenge Area */
+        .table-ui h3 { color: #f3e5f5; font-size: 0.9em; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+        .dealer-prompt { font-size: 1.2em; color: #333; font-weight: bold; background: white; padding: 15px; border-radius: 10px; min-height: 100px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 4px 8px rgba(0,0,0,0.3); border: 2px solid #ddd; }
+        
+        /* Timer */
+        .timer-container { width: 100%; height: 8px; background: rgba(0,0,0,0.3); border-radius: 4px; margin-top: 25px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.5); }
+        .timer-bar { height: 100%; width: 100%; background: var(--theme-light); transition: width 0.1s linear; }
+
+        /* Chips & Bankroll Display */
+        .bankroll-display { font-size: 1.2em; font-weight: bold; color: var(--theme-accent); background: rgba(0,0,0,0.05); padding: 5px 15px; border-radius: 20px; border: 1px solid var(--theme-accent); }
+
+        /* 2x2 Option Grid (Betting Chips) */
+        .option-controls { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; height: 180px; background: var(--theme-accent); border-top: 4px solid #111; z-index: 20; padding: 10px; gap: 10px; }
+        .option-btn { border: 4px dashed #ccc; border-radius: 50%; background: white; font-size: 1.2em; font-weight: bold; color: #333; cursor: pointer; transition: transform 0.1s, background 0.1s, border-color 0.1s; display: flex; align-items: center; justify-content: center; margin: 0 auto; width: 70px; height: 70px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .option-btn:active { transform: scale(0.9); background: #eee; }
+    </style>
+</head>
+<body>
+
+<div class="game-wrapper">
+    <div class="header">
+        <a href="../chapters/chapter12.html" class="back-btn">⬅ Exit</a>
+        <div class="bankroll-display">Bank: $<span id="score-disp">1000</span></div>
+    </div>
+
+    <div class="game-area" id="game-area">
+        
+        <div class="table-ui" id="table-board">
+            <h3>Beat the House</h3>
+            <div class="dealer-prompt" id="prompt-disp">
+                Loading Data...
+            </div>
+            <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
+        </div>
+
+        <div class="screen" id="start-screen">
+            <h2>The Casino Heist</h2>
+            <p>Rely on quick reflexes and rapid mental math to place winning bets against the rigged house AI. Win +$400, Lose -$300.</p>
+            <p><strong>Goal: Reach $5000 to clear the vault!</strong></p>
+            <button class="start-btn" onclick="startGame()">▶ Place Bets</button>
+        </div>
+
+        <div class="screen hidden" id="game-over-screen">
+            <h2 id="end-title" style="color: var(--wrong);">Broke!</h2>
+            <p>Final Bankroll: $<strong id="final-score">0</strong></p>
+            <button class="start-btn" onclick="startGame()">🔄 Rebuy & Try Again</button>
+        </div>
+
+        <div class="screen victory-screen hidden" id="victory-screen">
+            <h2>Vault Cleared! 🏆</h2>
+            <p>Exiting Casino in <strong id="redirect-counter">3</strong>...</p>
+        </div>
+    </div>
+
+    <div class="option-controls">
+        <button class="option-btn" id="btn-0" onmousedown="checkAnswer(0)" ontouchstart="checkAnswer(0)">--</button>
+        <button class="option-btn" id="btn-1" onmousedown="checkAnswer(1)" ontouchstart="checkAnswer(1)">--</button>
+        <button class="option-btn" id="btn-2" onmousedown="checkAnswer(2)" ontouchstart="checkAnswer(2)">--</button>
+        <button class="option-btn" id="btn-3" onmousedown="checkAnswer(3)" ontouchstart="checkAnswer(3)">--</button>
+    </div>
+</div>
+
+<script>
+    const heistBank = [
+        { q: "Probability of flipping Heads?", ans: "1/2", decoys: ["1/3", "1/4", "1"] },
+        { q: "Probability of rolling a 6 on a die?", ans: "1/6", decoys: ["1/2", "1/3", "1/5"] },
+        { q: "Mean of 10 and 20?", ans: "15", decoys: ["10", "20", "30"] },
+        { q: "Median of 1, 2, 3, 4, 5?", ans: "3", decoys: ["2", "4", "3.5"] },
+        { q: "Mode of 7, 7, 8, 9?", ans: "7", decoys: ["8", "9", "None"] },
+        { q: "Probability of drawing a Red card?", ans: "1/2", decoys: ["1/4", "1/13", "1/3"] },
+        { q: "Mean of 2, 4, 6?", ans: "4", decoys: ["2", "6", "12"] },
+        { q: "Probability of an Even roll on a die?", ans: "1/2", decoys: ["1/3", "1/6", "2/3"] },
+        { q: "Median of 10, 20, 30?", ans: "20", decoys: ["10", "15", "30"] },
+        { q: "Mode of 1, 2, 2, 3?", ans: "2", decoys: ["1", "3", "None"] },
+        { q: "Mean of 0, 10, 20?", ans: "10", decoys: ["0", "15", "30"] },
+        { q: "Probability of drawing a Heart?", ans: "1/4", decoys: ["1/2", "1/13", "1/3"] },
+        { q: "Median of 5, 7, 9?", ans: "7", decoys: ["5", "6", "8"] },
+        { q: "Mean of 50 and 100?", ans: "75", decoys: ["50", "100", "150"] },
+        { q: "Probability of an impossible event?", ans: "0", decoys: ["1", "1/2", "-1"] },
+        { q: "Probability of a sure event?", ans: "1", decoys: ["0", "1/2", "100"] },
+        { q: "Mean of 1, 2, 3?", ans: "2", decoys: ["1", "3", "6"] },
+        { q: "Probability of rolling > 4 on a die?", ans: "1/3", decoys: ["1/2", "1/6", "2/3"] },
+        { q: "Median of 10, 30, 20?", ans: "20", decoys: ["10", "30", "15"] },
+        { q: "Mode of 4, 4, 4, 8?", ans: "4", decoys: ["8", "12", "None"] },
+        { q: "Probability of drawing a Queen?", ans: "1/13", decoys: ["1/4", "1/52", "4/13"] },
+        { q: "Mean of 100, 200, 300?", ans: "200", decoys: ["100", "300", "150"] },
+        { q: "Median of 5, 1, 9?", ans: "5", decoys: ["1", "9", "6"] },
+        { q: "Probability of an Odd roll on a die?", ans: "1/2", decoys: ["1/3", "1/6", "2/3"] },
+        { q: "Mode of 5, 6, 6, 7?", ans: "6", decoys: ["5", "7", "None"] },
+        { q: "Mean of 8 and 12?", ans: "10", decoys: ["8", "12", "20"] },
+        { q: "Probability of drawing a Diamond?", ans: "1/4", decoys: ["1/2", "1/13", "1/3"] },
+        { q: "Probability of a leap year having 366 days?", ans: "1", decoys: ["0", "1/2", "365/366"] },
+        { q: "Mean of 20, 40, 60?", ans: "40", decoys: ["20", "60", "30"] },
+        { q: "Median of 9, 2, 7, 4, 5?", ans: "5", decoys: ["7", "4", "2"] },
+        { q: "Mode of 9, 9, 1, 2?", ans: "9", decoys: ["1", "2", "None"] },
+        { q: "Probability of rolling a 7 on a standard die?", ans: "0", decoys: ["1/6", "1", "1/7"] },
+        { q: "Mean of 3, 4, 5?", ans: "4", decoys: ["3", "5", "12"] },
+        { q: "Probability of drawing a Black card?", ans: "1/2", decoys: ["1/4", "1/13", "1/3"] },
+        { q: "Probability of a month having 32 days?", ans: "0", decoys: ["1", "1/12", "1/2"] }
+    ];
+
+    let bankroll = 1000;
+    const WIN_AMT = 400;
+    const LOSE_AMT = 300;
+    const GOAL_AMT = 5000; 
+    
+    let timeLimit = 12000, timeRemaining, timerInterval;
+    let correctAnswer = "", currentQuestion = null;
+    let currentOptions = [];
+    let availableQuestions = [];
+    let roundActive = false;
+
+    const promptDisp = document.getElementById('prompt-disp');
+    const timerBar = document.getElementById('timer-bar');
+    const tableBoard = document.getElementById('table-board');
+    const scoreDisp = document.getElementById('score-disp');
+
+    function startGame() {
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('game-over-screen').classList.add('hidden');
+        bankroll = 1000; timeLimit = 12000;
+        availableQuestions = [...heistBank].sort(() => Math.random() - 0.5);
+        updateHUD();
+        nextRound();
+    }
+
+    function generateOptions(ans, decoys) {
+        currentOptions = [ans, ...decoys];
+        currentOptions.sort(() => Math.random() - 0.5); 
+        
+        for (let i = 0; i < 4; i++) {
+            document.getElementById(`btn-${i}`).textContent = currentOptions[i];
+            document.getElementById(`btn-${i}`).style.borderColor = "#ccc";
+            document.getElementById(`btn-${i}`).style.background = "white";
+        }
+    }
+
+    function nextRound() {
+        roundActive = true;
+        
+        // Refill and shuffle deck if empty
+        if (availableQuestions.length === 0) {
+            availableQuestions = [...heistBank].sort(() => Math.random() - 0.5);
+        }
+        
+        // Pop guaranteed unique question from the deck
+        currentQuestion = availableQuestions.pop();
+        correctAnswer = currentQuestion.ans;
+        promptDisp.innerHTML = `${currentQuestion.q}`;
+        
+        generateOptions(currentQuestion.ans, currentQuestion.decoys);
+        
+        timeRemaining = timeLimit;
+        tableBoard.style.boxShadow = 'inset 0 0 30px rgba(0,0,0,0.6), 0 10px 20px rgba(0,0,0,0.4)';
+        
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            timeRemaining -= 50;
+            const percentage = (timeRemaining / timeLimit) * 100;
+            timerBar.style.width = `${percentage}%`;
+            
+            if (percentage < 30) timerBar.style.background = 'var(--wrong)';
+            else timerBar.style.background = 'var(--theme-light)';
+
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                roundActive = false;
+                processResult(false, null);
+            }
+        }, 50);
+    }
+
+    function checkAnswer(btnIndex) {
+        if (!roundActive) return;
+        roundActive = false;
+        clearInterval(timerInterval);
+        
+        const btn = document.getElementById(`btn-${btnIndex}`);
+        const selectedAnswer = currentOptions[btnIndex];
+        const isCorrect = (selectedAnswer === correctAnswer);
+        
+        processResult(isCorrect, btn);
+    }
+
+    function processResult(isCorrect, btnElement) {
+        if (isCorrect) {
+            bankroll += WIN_AMT;
+            if (btnElement) {
+                btnElement.style.borderColor = "var(--theme-accent)";
+                btnElement.style.background = "#fff9c4";
+            }
+            
+            tableBoard.style.boxShadow = 'inset 0 0 50px rgba(74, 20, 140, 0.6), 0 10px 20px rgba(0,0,0,0.4)';
+            
+            if (bankroll >= GOAL_AMT) {
+                updateHUD();
+                return triggerVictory('../mcq_test.html', 'math101_trophy_ch12');
+            }
+            
+            if (bankroll >= 3000) timeLimit = 9000; 
+            setTimeout(nextRound, 600);
+        } else {
+            bankroll -= LOSE_AMT;
+            if (btnElement) {
+                btnElement.style.borderColor = "var(--wrong)";
+                btnElement.style.background = "#ffcdd2";
+            }
+            
+            tableBoard.style.transform = 'translateX(-10px)';
+            setTimeout(() => tableBoard.style.transform = 'translateX(10px)', 50);
+            setTimeout(() => tableBoard.style.transform = 'translateX(-10px)', 100);
+            setTimeout(() => tableBoard.style.transform = 'translateX(0)', 150);
+            
+            setTimeout(() => {
+                if (bankroll <= 0) endGame();
+                else nextRound();
+            }, 800);
+        }
+        updateHUD();
+    }
+
+    function updateHUD() {
+        scoreDisp.textContent = bankroll;
+        scoreDisp.style.color = bankroll > parseInt(scoreDisp.textContent) ? 'var(--correct)' : (bankroll < parseInt(scoreDisp.textContent) ? 'var(--wrong)' : 'var(--theme-accent)');
+        setTimeout(() => scoreDisp.style.color = 'var(--theme-accent)', 300);
+    }
+
+    function triggerVictory(nextUrl, trophyKey) {
+        clearInterval(timerInterval);
+        localStorage.setItem(trophyKey, 'earned');
+        document.getElementById('victory-screen').classList.remove('hidden');
+        
+        let countdown = 3;
+        const counterDisp = document.getElementById('redirect-counter');
+        counterDisp.textContent = countdown;
+        
+        const countInterval = setInterval(() => {
+            countdown--;
+            if (countdown > 0) counterDisp.textContent = countdown;
+            else { clearInterval(countInterval); window.location.href = nextUrl; }
+        }, 1000);
+    }
+
+    function endGame() {
+        clearInterval(timerInterval);
+        document.getElementById('game-over-screen').classList.remove('hidden');
+        document.getElementById('final-score').textContent = bankroll;
+    }
+</script>
+</body>
+</html>

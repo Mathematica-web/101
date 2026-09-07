@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 1 Game: Number Drop</title>
+    <link rel="stylesheet" href="minigames.css">
+    <style>
+        :root { --theme-main: #f44336; --theme-light: #ffebee; --theme-accent: #b71c1c; --correct: #4caf50; --wrong: #d32f2f; }
+        .falling-number { position: absolute; width: 80px; height: 80px; background: white; border: 3px solid var(--theme-main); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 900; font-size: 1.2em; color: #333; box-shadow: 0 4px 8px rgba(0,0,0,0.2); left: 50%; transform: translateX(-50%); transition: background 0.15s, border-color 0.15s; }
+        .controls { display: flex; height: 120px; background: white; border-top: 3px solid var(--theme-main); z-index: 20; }
+        .btn { flex: 1; border: none; font-size: 1.5em; font-weight: bold; color: white; cursor: pointer; transition: opacity 0.1s; }
+        .btn:active { opacity: 0.7; }
+        .btn-rational { background: var(--theme-main); border-right: 2px solid white; }
+        .btn-irrational { background: var(--theme-accent); border-left: 2px solid white; }
+        .game-area { background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); }
+    </style>
+</head>
+<body>
+
+<div class="game-wrapper">
+    <div class="header">
+        <a href="../chapters/chapter1.html" class="back-btn">⬅ Exit</a>
+        <div>Score: <span id="score-disp">0</span> / 15</div>
+        <div>Lives: <span id="lives-disp">❤️❤️❤️</span></div>
+    </div>
+
+    <div class="game-area" id="game-area">
+        <div class="screen" id="start-screen">
+            <h2>Number Drop</h2>
+            <p>Categorize falling numbers! Score 15 to clear the level.</p>
+            <button class="start-btn" onclick="startGame()">▶ Play Now</button>
+        </div>
+
+        <div class="screen hidden" id="game-over-screen">
+            <h2 id="end-title" style="color: var(--wrong);">Game Over!</h2>
+            <p>Final Score: <strong id="final-score">0</strong></p>
+            <button class="start-btn" onclick="startGame()">🔄 Try Again</button>
+        </div>
+
+        <div class="screen victory-screen hidden" id="victory-screen">
+            <h2>Level Cleared! 🏆</h2>
+            <p>Next Chapter in <strong id="redirect-counter">3</strong>...</p>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="btn btn-rational" onmousedown="checkAnswer('rational')" ontouchstart="checkAnswer('rational')">Rational</button>
+        <button class="btn btn-irrational" onmousedown="checkAnswer('irrational')" ontouchstart="checkAnswer('irrational')">Irrational</button>
+    </div>
+</div>
+
+<script>
+    const numberBank = [
+        { text: "√2", type: "irrational" }, { text: "π", type: "irrational" }, { text: "√9", type: "rational" },
+        { text: "22/7", type: "rational" }, { text: "0.33...", type: "rational" }, { text: "√5", type: "irrational" },
+        { text: "0", type: "rational" }, { text: "-4", type: "rational" }, { text: "√16", type: "rational" },
+        { text: "1.414", type: "rational" }, { text: "√23", type: "irrational" }, { text: "√225", type: "rational" },
+        { text: "0.101001...", type: "irrational" }, { text: "√3", type: "irrational" }, { text: "5/9", type: "rational" },
+        { text: "-√25", type: "rational" }, { text: "1.732", type: "rational" }, { text: "√8", type: "irrational" },
+        { text: "2.5", type: "rational" }, { text: "-3/4", type: "rational" }, { text: "√100", type: "rational" },
+        { text: "√12", type: "irrational" }, { text: "0.999...", type: "rational" }, { text: "√49", type: "rational" },
+        { text: "11/13", type: "rational" }, { text: "√7", type: "irrational" }, { text: "-2.2", type: "rational" }
+    ];
+
+    let score = 0, lives = 3, gameInterval, spawnInterval, fallSpeed = 2, spawnRate = 2000, activeBlocks = [];
+    let availableNumbers = [];
+    const gameArea = document.getElementById('game-area');
+
+    function startGame() {
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('game-over-screen').classList.add('hidden');
+        score = 0; lives = 3; fallSpeed = 2; spawnRate = 2000;
+        availableNumbers = [...numberBank].sort(() => Math.random() - 0.5);
+        activeBlocks.forEach(b => b.element.remove()); activeBlocks = [];
+        updateHUD();
+        gameInterval = setInterval(updateGame, 20);
+        spawnBlock();
+    }
+
+    function spawnBlock() {
+        if (availableNumbers.length === 0) availableNumbers = [...numberBank].sort(() => Math.random() - 0.5);
+        const data = availableNumbers.pop();
+        
+        const block = document.createElement('div');
+        block.className = 'falling-number'; block.textContent = data.text;
+        block.style.left = `${10 + Math.random() * 80}%`; block.style.top = '-80px';
+        gameArea.appendChild(block);
+        activeBlocks.push({ element: block, type: data.type, y: -80 });
+        spawnInterval = setTimeout(spawnBlock, spawnRate);
+    }
+
+    function updateGame() {
+        const bottomLimit = gameArea.offsetHeight;
+        activeBlocks.forEach((blockObj, index) => {
+            blockObj.y += fallSpeed; blockObj.element.style.top = `${blockObj.y}px`;
+            if (blockObj.y + 80 >= bottomLimit) {
+                loseLife(); blockObj.element.remove(); activeBlocks.splice(index, 1);
+            }
+        });
+    }
+
+    function checkAnswer(selectedType) {
+        if (activeBlocks.length === 0) return;
+        let targetIndex = 0, maxY = activeBlocks[0].y;
+        for (let i = 1; i < activeBlocks.length; i++) {
+            if (activeBlocks[i].y > maxY) { maxY = activeBlocks[i].y; targetIndex = i; }
+        }
+        const targetBlock = activeBlocks[targetIndex];
+
+        if (targetBlock.type === selectedType) {
+            score++;
+            targetBlock.element.style.background = '#e8f5e9'; targetBlock.element.style.borderColor = 'var(--correct)'; targetBlock.element.style.color = 'var(--correct)';
+            setTimeout(() => targetBlock.element.remove(), 100);
+            activeBlocks.splice(targetIndex, 1);
+            
+            if (score >= 15) return triggerVictory('../chapters/chapter2.html', 'math101_trophy_ch1');
+            if (score % 5 === 0) { fallSpeed += 0.5; spawnRate = Math.max(800, spawnRate - 200); }
+        } else {
+            loseLife();
+            targetBlock.element.style.background = '#ffebee'; targetBlock.element.style.borderColor = 'var(--wrong)'; targetBlock.element.style.color = 'var(--wrong)';
+            setTimeout(() => targetBlock.element.remove(), 100);
+            activeBlocks.splice(targetIndex, 1);
+        }
+        updateHUD();
+    }
+
+    function loseLife() {
+        lives--; updateHUD();
+        gameArea.style.background = '#ffcdd2';
+        setTimeout(() => gameArea.style.background = 'linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%)', 150);
+        if (lives <= 0) endGame();
+    }
+
+    function updateHUD() {
+        document.getElementById('score-disp').textContent = score;
+        document.getElementById('lives-disp').textContent = '❤️'.repeat(lives);
+    }
+
+    function triggerVictory(nextUrl, trophyKey) {
+        if (typeof gameInterval !== 'undefined') clearInterval(gameInterval); 
+        if (typeof spawnInterval !== 'undefined') clearTimeout(spawnInterval);
+        localStorage.setItem(trophyKey, 'earned');
+        document.getElementById('victory-screen').classList.remove('hidden');
+        let countdown = 3;
+        const counterDisp = document.getElementById('redirect-counter');
+        counterDisp.textContent = countdown;
+        const countInterval = setInterval(() => {
+            countdown--;
+            if (countdown > 0) counterDisp.textContent = countdown;
+            else { clearInterval(countInterval); window.location.href = nextUrl; }
+        }, 1000);
+    }
+
+    function endGame() {
+        clearInterval(gameInterval); clearTimeout(spawnInterval);
+        document.getElementById('game-over-screen').classList.remove('hidden');
+        document.getElementById('final-score').textContent = score;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 5 Game: Axiom Scanner</title>
+    <link rel="stylesheet" href="minigames.css">
+    <style>
+        :root { --theme-main: #3949ab; --theme-light: #e8eaf6; --theme-accent: #1a237e; --correct: #4caf50; --wrong: #d32f2f; }
+        .game-area { background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+        
+        /* Statement Scanner UI */
+        .scanner-box { background: white; width: 90%; max-width: 350px; padding: 30px 20px; border: 4px solid var(--theme-main); border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); text-align: center; position: relative; transition: transform 0.2s; }
+        .scanner-box h3 { color: var(--theme-accent); font-size: 0.9em; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
+        .statement-text { font-size: 1.3em; color: #333; font-weight: bold; min-height: 100px; display: flex; align-items: center; justify-content: center; }
+        
+        /* Timer */
+        .timer-container { width: 100%; height: 8px; background: #eee; border-radius: 4px; margin-top: 20px; overflow: hidden; }
+        .timer-bar { height: 100%; width: 100%; background: var(--theme-main); transition: width 0.1s linear; }
+
+        /* Controls */
+        .controls { display: flex; height: 120px; background: white; border-top: 3px solid var(--theme-main); z-index: 20; }
+        .btn { flex: 1; border: none; font-size: 1.5em; font-weight: bold; color: white; cursor: pointer; transition: opacity 0.1s; }
+        .btn:active { opacity: 0.7; }
+        .btn-true { background: var(--correct); border-right: 2px solid white; }
+        .btn-false { background: var(--wrong); border-left: 2px solid white; }
+    </style>
+</head>
+<body>
+
+<div class="game-wrapper">
+    <div class="header">
+        <a href="../chapters/chapter5.html" class="back-btn">⬅ Exit</a>
+        <div>Score: <span id="score-disp">0</span> / 10</div>
+        <div>Lives: <span id="lives-disp">❤️❤️❤️</span></div>
+    </div>
+
+    <div class="game-area" id="game-area">
+        
+        <div class="scanner-box" id="scanner-box">
+            <h3>Is this a valid Euclidean Axiom/Postulate?</h3>
+            <div class="statement-text" id="statement-disp">Loading...</div>
+            <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
+        </div>
+
+        <div class="screen" id="start-screen">
+            <h2>Axiom Scanner</h2>
+            <p>Read the geometric statement. Is it a true Euclidean postulate/axiom, or a false statement? Answer before time runs out!</p>
+            <button class="start-btn" onclick="startGame()">▶ Play Now</button>
+        </div>
+
+        <div class="screen hidden" id="game-over-screen">
+            <h2 id="end-title" style="color: var(--wrong);">Game Over!</h2>
+            <p>Statements Verified: <strong id="final-score">0</strong></p>
+            <button class="start-btn" onclick="startGame()">🔄 Try Again</button>
+        </div>
+
+        <div class="screen victory-screen hidden" id="victory-screen">
+            <h2>Level Cleared! 🏆</h2>
+            <p>Next Chapter in <strong id="redirect-counter">3</strong>...</p>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="btn btn-true" onmousedown="checkAnswer(true)" ontouchstart="checkAnswer(true)">TRUE</button>
+        <button class="btn btn-false" onmousedown="checkAnswer(false)" ontouchstart="checkAnswer(false)">FALSE</button>
+    </div>
+</div>
+
+<script>
+    const statements = [
+        { text: "A straight line may be drawn from any one point to any other point.", isTrue: true },
+        { text: "A terminated line can be produced indefinitely.", isTrue: true },
+        { text: "A circle can be drawn with any centre and any radius.", isTrue: true },
+        { text: "All right angles are equal to one another.", isTrue: true },
+        { text: "Things which are equal to the same thing are equal to one another.", isTrue: true },
+        { text: "The whole is greater than the part.", isTrue: true },
+        { text: "Things which coincide with one another are equal to one another.", isTrue: true },
+        { text: "If equals are added to equals, the wholes are equal.", isTrue: true },
+        { text: "If equals are subtracted from equals, the remainders are equal.", isTrue: true },
+        { text: "Things which are double of the same things are equal to one another.", isTrue: true },
+        { text: "A terminated line cannot be extended beyond its end points.", isTrue: false },
+        { text: "The whole is exactly equal to the part.", isTrue: false },
+        { text: "Only one circle can pass through a given specific point.", isTrue: false },
+        { text: "Two distinct intersecting lines can both be parallel to the same line.", isTrue: false },
+        { text: "Right angles can have different degree measures depending on the shape.", isTrue: false },
+        { text: "If unequals are added to equals, the wholes are equal.", isTrue: false },
+        { text: "Two distinct points can have multiple straight lines passing through both.", isTrue: false }
+    ];
+
+    let score = 0, lives = 3, timeLimit = 8000, timeRemaining, timerInterval;
+    let currentStatement = null, availableStatements = [];
+    let roundActive = false;
+
+    const statementDisp = document.getElementById('statement-disp');
+    const timerBar = document.getElementById('timer-bar');
+    const scannerBox = document.getElementById('scanner-box');
+
+    function startGame() {
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('game-over-screen').classList.add('hidden');
+        score = 0; lives = 3; timeLimit = 8000;
+        availableStatements = [...statements].sort(() => Math.random() - 0.5);
+        updateHUD();
+        nextRound();
+    }
+
+    function nextRound() {
+        roundActive = true;
+        
+        if (availableStatements.length === 0) availableStatements = [...statements].sort(() => Math.random() - 0.5);
+        currentStatement = availableStatements.pop();
+        
+        statementDisp.textContent = `"${currentStatement.text}"`;
+        timeRemaining = timeLimit;
+        scannerBox.style.borderColor = 'var(--theme-main)';
+        
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            timeRemaining -= 50;
+            const percentage = (timeRemaining / timeLimit) * 100;
+            timerBar.style.width = `${percentage}%`;
+            
+            if (percentage < 30) timerBar.style.background = 'var(--wrong)';
+            else timerBar.style.background = 'var(--theme-main)';
+
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                roundActive = false;
+                processResult(false, true); 
+            }
+        }, 50);
+    }
+
+    function checkAnswer(userChoice) {
+        if (!roundActive) return;
+        roundActive = false;
+        clearInterval(timerInterval);
+        const isCorrect = (userChoice === currentStatement.isTrue);
+        processResult(isCorrect, false);
+    }
+
+    function processResult(isCorrect, timedOut) {
+        if (isCorrect) {
+            score++;
+            scannerBox.style.borderColor = 'var(--correct)';
+            scannerBox.style.transform = 'scale(1.05)';
+            setTimeout(() => scannerBox.style.transform = 'scale(1)', 150);
+            
+            if (score >= 10) return triggerVictory('../chapters/chapter6.html', 'math101_trophy_ch5');
+            if (score % 3 === 0) timeLimit = Math.max(4000, timeLimit - 1000); 
+            setTimeout(nextRound, 400);
+        } else {
+            lives--;
+            scannerBox.style.borderColor = 'var(--wrong)';
+            if (timedOut) statementDisp.textContent = "TIME'S UP!";
+            
+            scannerBox.style.transform = 'translateX(-10px)';
+            setTimeout(() => scannerBox.style.transform = 'translateX(10px)', 50);
+            setTimeout(() => scannerBox.style.transform = 'translateX(-10px)', 100);
+            setTimeout(() => scannerBox.style.transform = 'translateX(0)', 150);
+            
+            setTimeout(() => {
+                if (lives <= 0) endGame();
+                else nextRound();
+            }, 800);
+        }
+        updateHUD();
+    }
+
+    function updateHUD() {
+        document.getElementById('score-disp').textContent = score;
+        document.getElementById('lives-disp').textContent = '❤️'.repeat(lives);
+    }
+
+    function triggerVictory(nextUrl, trophyKey) {
+        clearInterval(timerInterval);
+        localStorage.setItem(trophyKey, 'earned');
+        document.getElementById('victory-screen').classList.remove('hidden');
+        let countdown = 3;
+        const counterDisp = document.getElementById('redirect-counter');
+        counterDisp.textContent = countdown;
+        const countInterval = setInterval(() => {
+            countdown--;
+            if (countdown > 0) counterDisp.textContent = countdown;
+            else { clearInterval(countInterval); window.location.href = nextUrl; }
+        }, 1000);
+    }
+
+    function endGame() {
+        clearInterval(timerInterval);
+        document.getElementById('game-over-screen').classList.remove('hidden');
+        document.getElementById('final-score').textContent = score;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 8 Game: Quadrilateral Vault</title>
+    <link rel="stylesheet" href="minigames.css">
+    <style>
+        :root { --theme-main: #d81b60; --theme-light: #fce4ec; --theme-accent: #880e4f; --correct: #4caf50; --wrong: #d32f2f; }
+        .game-area { background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+        
+        /* Vault Display */
+        .vault-screen { background: #111; width: 95%; max-width: 380px; padding: 30px 20px; border: 6px solid var(--theme-main); border-radius: 10px; box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 10px 20px rgba(0,0,0,0.2); text-align: center; position: relative; transition: border-color 0.2s, box-shadow 0.2s; }
+        .vault-screen h3 { color: #f48fb1; font-size: 0.8em; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 15px; font-family: monospace; }
+        .property-text { font-size: 1.2em; color: #fff; font-weight: bold; min-height: 100px; display: flex; align-items: center; justify-content: center; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        
+        /* Timer */
+        .timer-container { width: 100%; height: 6px; background: #333; border-radius: 3px; margin-top: 20px; overflow: hidden; }
+        .timer-bar { height: 100%; width: 100%; background: #f48fb1; transition: width 0.1s linear; }
+
+        /* 2x2 Button Grid */
+        .shape-controls { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; height: 160px; background: white; border-top: 3px solid var(--theme-main); z-index: 20; }
+        .shape-btn { border: 1px solid #ddd; background: var(--theme-light); font-size: 1.1em; font-weight: bold; color: var(--theme-main); cursor: pointer; transition: background 0.1s, color 0.1s; display: flex; align-items: center; justify-content: center; padding: 10px; }
+        .shape-btn:active { background: var(--theme-main); color: white; }
+    </style>
+</head>
+<body>
+
+<div class="game-wrapper">
+    <div class="header">
+        <a href="../chapters/chapter8.html" class="back-btn">⬅ Exit</a>
+        <div>Score: <span id="score-disp">0</span> / 10</div>
+        <div>Lives: <span id="lives-disp">❤️❤️❤️</span></div>
+    </div>
+
+    <div class="game-area" id="game-area">
+        
+        <div class="vault-screen" id="vault-screen">
+            <h3>Unlock Vault: Identify Shape</h3>
+            <div class="property-text" id="property-disp">Loading parameters...</div>
+            <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
+        </div>
+
+        <div class="screen" id="start-screen">
+            <h2>Quadrilateral Vault</h2>
+            <p>Read the geometric property on the vault screen and tap the exact quadrilateral it describes before the security timer runs out!</p>
+            <button class="start-btn" onclick="startGame()">▶ Play Now</button>
+        </div>
+
+        <div class="screen hidden" id="game-over-screen">
+            <h2 id="end-title" style="color: var(--wrong);">Security Lockout!</h2>
+            <p>Vaults Unlocked: <strong id="final-score">0</strong></p>
+            <button class="start-btn" onclick="startGame()">🔄 Try Again</button>
+        </div>
+
+        <div class="screen victory-screen hidden" id="victory-screen">
+            <h2>Level Cleared! 🏆</h2>
+            <p>Next Chapter in <strong id="redirect-counter">3</strong>...</p>
+        </div>
+    </div>
+
+    <div class="shape-controls">
+        <button class="shape-btn" id="btn-0" onmousedown="checkAnswer(0)" ontouchstart="checkAnswer(0)">--</button>
+        <button class="shape-btn" id="btn-1" onmousedown="checkAnswer(1)" ontouchstart="checkAnswer(1)">--</button>
+        <button class="shape-btn" id="btn-2" onmousedown="checkAnswer(2)" ontouchstart="checkAnswer(2)">--</button>
+        <button class="shape-btn" id="btn-3" onmousedown="checkAnswer(3)" ontouchstart="checkAnswer(3)">--</button>
+    </div>
+</div>
+
+<script>
+    const allShapes = ["Parallelogram", "Rectangle", "Rhombus", "Square", "Trapezium", "Kite", "Isosceles Trapezium"];
+    
+    const propertyBank = [
+        { text: "Diagonals are equal and bisect each other at 90°.", answer: "Square" },
+        { text: "Diagonals bisect each other at 90°, but are NOT equal.", answer: "Rhombus" },
+        { text: "Diagonals are equal and bisect each other, but NOT at 90°.", answer: "Rectangle" },
+        { text: "Opposite sides are parallel, diagonals bisect each other, but are NOT equal.", answer: "Parallelogram" },
+        { text: "Exactly one pair of opposite sides is parallel.", answer: "Trapezium" },
+        { text: "Two distinct pairs of adjacent sides are equal.", answer: "Kite" },
+        { text: "All angles are 90° but adjacent sides are NOT equal.", answer: "Rectangle" },
+        { text: "All sides are equal, but angles are NOT 90°.", answer: "Rhombus" },
+        { text: "A parallelogram with one right angle.", answer: "Rectangle" },
+        { text: "A rhombus with one right angle.", answer: "Square" },
+        { text: "Non-parallel sides are equal in length.", answer: "Isosceles Trapezium" }
+    ];
+
+    let score = 0, lives = 3, timeLimit = 10000, timeRemaining, timerInterval;
+    let currentQuestion = null, availableQuestions = [];
+    let currentOptions = [];
+    let roundActive = false;
+
+    const propertyDisp = document.getElementById('property-disp');
+    const timerBar = document.getElementById('timer-bar');
+    const vaultScreen = document.getElementById('vault-screen');
+
+    function startGame() {
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('game-over-screen').classList.add('hidden');
+        score = 0; lives = 3; timeLimit = 10000;
+        availableQuestions = [...propertyBank].sort(() => Math.random() - 0.5);
+        updateHUD();
+        nextRound();
+    }
+
+    function generateOptions(correctAnswer) {
+        currentOptions = [correctAnswer];
+        while (currentOptions.length < 4) {
+            const randomShape = allShapes[Math.floor(Math.random() * allShapes.length)];
+            if (!currentOptions.includes(randomShape)) currentOptions.push(randomShape);
+        }
+        currentOptions.sort(() => Math.random() - 0.5);
+        for (let i = 0; i < 4; i++) document.getElementById(`btn-${i}`).textContent = currentOptions[i];
+    }
+
+    function nextRound() {
+        roundActive = true;
+        if (availableQuestions.length === 0) availableQuestions = [...propertyBank].sort(() => Math.random() - 0.5);
+        currentQuestion = availableQuestions.pop();
+        
+        propertyDisp.textContent = `"${currentQuestion.text}"`;
+        generateOptions(currentQuestion.answer);
+        
+        timeRemaining = timeLimit;
+        vaultScreen.style.borderColor = 'var(--theme-main)';
+        vaultScreen.style.boxShadow = 'inset 0 0 20px rgba(0,0,0,0.8), 0 10px 20px rgba(0,0,0,0.2)';
+        
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            timeRemaining -= 50;
+            const percentage = (timeRemaining / timeLimit) * 100;
+            timerBar.style.width = `${percentage}%`;
+            
+            if (percentage < 30) timerBar.style.background = 'var(--wrong)';
+            else timerBar.style.background = '#f48fb1';
+
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                roundActive = false;
+                processResult(false);
+            }
+        }, 50);
+    }
+
+    function checkAnswer(btnIndex) {
+        if (!roundActive) return;
+        roundActive = false;
+        clearInterval(timerInterval);
+        processResult(currentOptions[btnIndex] === currentQuestion.answer);
+    }
+
+    function processResult(isCorrect) {
+        if (isCorrect) {
+            score++;
+            vaultScreen.style.borderColor = 'var(--correct)';
+            vaultScreen.style.boxShadow = '0 0 30px var(--correct)';
+            if (score >= 10) return triggerVictory('../chapters/chapter9.html', 'math101_trophy_ch8');
+            if (score % 3 === 0) timeLimit = Math.max(5000, timeLimit - 1000); 
+            setTimeout(nextRound, 500);
+        } else {
+            lives--;
+            vaultScreen.style.borderColor = 'var(--wrong)';
+            vaultScreen.style.boxShadow = '0 0 30px var(--wrong)';
+            
+            vaultScreen.style.transform = 'translateX(-10px)';
+            setTimeout(() => vaultScreen.style.transform = 'translateX(10px)', 50);
+            setTimeout(() => vaultScreen.style.transform = 'translateX(-10px)', 100);
+            setTimeout(() => vaultScreen.style.transform = 'translateX(0)', 150);
+            
+            setTimeout(() => {
+                if (lives <= 0) endGame();
+                else nextRound();
+            }, 800);
+        }
+        updateHUD();
+    }
+
+    function updateHUD() {
+        document.getElementById('score-disp').textContent = score;
+        document.getElementById('lives-disp').textContent = '❤️'.repeat(lives);
+    }
+
+    function triggerVictory(nextUrl, trophyKey) {
+        clearInterval(timerInterval);
+        localStorage.setItem(trophyKey, 'earned');
+        document.getElementById('victory-screen').classList.remove('hidden');
+        let countdown = 3;
+        const counterDisp = document.getElementById('redirect-counter');
+        counterDisp.textContent = countdown;
+        const countInterval = setInterval(() => {
+            countdown--;
+            if (countdown > 0) counterDisp.textContent = countdown;
+            else { clearInterval(countInterval); window.location.href = nextUrl; }
+        }, 1000);
+    }
+
+    function endGame() {
+        clearInterval(timerInterval);
+        document.getElementById('game-over-screen').classList.remove('hidden');
+        document.getElementById('final-score').textContent = score;
+    }
+</script>
+</body>
+</html>
