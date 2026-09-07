@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics 101 - Class 9</title>
+    <!-- Bring in a friendly, modern font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Trophy Badge Styles */
+        .chapter-card { position: relative; } 
+        .trophy-badge { 
+            position: absolute; 
+            top: -15px; 
+            right: -15px; 
+            font-size: 2.5rem; 
+            display: none; 
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); 
+            z-index: 10;
+        }
+        .trophy-badge.earned { 
+            display: block; 
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
+        }
+        @keyframes popIn { 
+            0% { transform: scale(0) rotate(-20deg); opacity: 0; } 
+            100% { transform: scale(1) rotate(0deg); opacity: 1; } 
+        }
+    </style>
+</head>
+<body class="index-page">
+
+    <!-- 🌟 HEADER -->
+    <h1>Mathematics 101</h1>
+    <p class="subtitle">Welcome to Class 9! Pick a chapter to start learning.</p>
+
+    <!-- 📚 CHAPTERS LIST -->
+    <div class="grid-container">
+
+        <!-- Chapter 1 -->
+        <a href="chapters/chapter1.html" class="chapter-card card-1">
+            <span class="chapter-icon">🌟</span>
+            <div class="chapter-title">Number System</div>
+            <div class="chapter-desc">Counting, Decimals & Big Numbers</div>
+            <div class="trophy-badge" id="trophy-1">🏆</div>
+        </a>
+
+        <!-- Chapter 2 -->
+        <a href="chapters/chapter2.html" class="chapter-card card-2">
+            <span class="chapter-icon">🔤</span>
+            <div class="chapter-title">Polynomials</div>
+            <div class="chapter-desc">Letter Shapes in Math</div>
+            <div class="trophy-badge" id="trophy-2">🏆</div>
+        </a>
+
+        <!-- Chapter 3 -->
+        <a href="chapters/chapter3.html" class="chapter-card card-3">
+            <span class="chapter-icon">🗺️</span>
+            <div class="chapter-title">Coordinate Geometry</div>
+            <div class="chapter-desc">Finding Places on a Map</div>
+            <div class="trophy-badge" id="trophy-3">🏆</div>
+        </a>
+
+        <!-- Chapter 4 -->
+        <a href="chapters/chapter4.html" class="chapter-card card-4">
+            <span class="chapter-icon">⚖️</span>
+            <div class="chapter-title">Linear Equations</div>
+            <div class="chapter-desc">Balancing Two Scales</div>
+            <div class="trophy-badge" id="trophy-4">🏆</div>
+        </a>
+
+        <!-- Chapter 5 -->
+        <a href="chapters/chapter5.html" class="chapter-card card-5">
+            <span class="chapter-icon">🏛️</span>
+            <div class="chapter-title">Euclidean Geometry</div>
+            <div class="chapter-desc">Ancient Math Rules</div>
+            <div class="trophy-badge" id="trophy-5">🏆</div>
+        </a>
+
+        <!-- Chapter 6 -->
+        <a href="chapters/chapter6.html" class="chapter-card card-6">
+            <span class="chapter-icon">📐</span>
+            <div class="chapter-title">Lines & Angles</div>
+            <div class="chapter-desc">Straight Lines & Turns</div>
+            <div class="trophy-badge" id="trophy-6">🏆</div>
+        </a>
+
+        <!-- Chapter 7 -->
+        <a href="chapters/chapter7.html" class="chapter-card card-7">
+            <span class="chapter-icon">🔺</span>
+            <div class="chapter-title">Triangles</div>
+            <div class="chapter-desc">Three-Sided Friends</div>
+            <div class="trophy-badge" id="trophy-7">🏆</div>
+        </a>
+
+        <!-- Chapter 8 -->
+        <a href="chapters/chapter8.html" class="chapter-card card-8">
+            <span class="chapter-icon">🟥</span>
+            <div class="chapter-title">Quadrilaterals</div>
+            <div class="chapter-desc">Four-Sided Buddies</div>
+            <div class="trophy-badge" id="trophy-8">🏆</div>
+        </a>
+
+        <!-- Chapter 9 -->
+        <a href="chapters/chapter9.html" class="chapter-card card-9">
+            <span class="chapter-icon">⭕</span>
+            <div class="chapter-title">Circles</div>
+            <div class="chapter-desc">Round Everything</div>
+            <div class="trophy-badge" id="trophy-9">🏆</div>
+        </a>
+
+        <!-- Chapter 10 -->
+        <a href="chapters/chapter10.html" class="chapter-card card-10">
+            <span class="chapter-icon">📏</span>
+            <div class="chapter-title">Areas of Parallelograms and Triangles</div>
+            <div class="chapter-desc">Measuring Space Inside</div>
+            <div class="trophy-badge" id="trophy-10">🏆</div>
+        </a>
+
+        <!-- Chapter 11 -->
+        <a href="chapters/chapter11.html" class="chapter-card card-11">
+            <span class="chapter-icon">🧊</span>
+            <div class="chapter-title">Surface Area & Volume</div>
+            <div class="chapter-desc">How Much Space Does It Take?</div>
+            <div class="trophy-badge" id="trophy-11">🏆</div>
+        </a>
+
+        <!-- Chapter 12 -->
+        <a href="chapters/chapter12.html" class="chapter-card card-12">
+            <span class="chapter-icon">📊</span>
+            <div class="chapter-title">Statistics and Probability</div>
+            <div class="chapter-desc">Data Detective</div>
+            <div class="trophy-badge" id="trophy-12">🏆</div>
+        </a>
+
+    </div>
+
+    <!-- 🏆 Progression Logic -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Loop through all 12 chapters to check for earned trophies
+            for (let i = 1; i <= 12; i++) {
+                const trophyStatus = localStorage.getItem(`math101_trophy_ch${i}`);
+                if (trophyStatus === 'earned') {
+                    const badge = document.getElementById(`trophy-${i}`);
+                    if (badge) {
+                        badge.classList.add('earned');
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

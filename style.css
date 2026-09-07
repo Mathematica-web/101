@@ -1,0 +1,260 @@
+/* 🎨 MASTER COURSE STYLESHEET */
+
+/* 1. GLOBAL BOX-SIZING FIX (Crucial for mobile) */
+* { 
+    box-sizing: border-box; 
+}
+
+body { 
+    font-family: 'Nunito', 'Comic Sans MS', 'Verdana', sans-serif; 
+    margin: 0; 
+    padding: 20px; 
+    text-align: center; 
+    color: #333; 
+    /* Default Theme fallback */
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    /* Prevent horizontal scroll bounce on mobile */
+    overflow-x: hidden; 
+}
+
+/* =========================================
+   THEME VARIABLES PER CHAPTER 
+   ========================================= */
+.theme-ch1 { --bg-light: #ffebee; --bg-dark: #ffcdd2; --btn-main: #f44336; --btn-hover: #d32f2f; --border-main: #ef9a9a; --text-main: #b71c1c; background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); }
+.theme-ch2 { --bg-light: #f3e5f5; --bg-dark: #e1bee7; --btn-main: #9c27b0; --btn-hover: #7b1fa2; --border-main: #ce93d8; --text-main: #4a148c; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); }
+.theme-ch3 { --bg-light: #fff3e0; --bg-dark: #ffebee; --btn-main: #e65100; --btn-hover: #bf360c; --border-main: #ffb300; --text-main: #bf360c; background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); }
+.theme-ch4 { --bg-light: #f3e5f5; --bg-dark: #ede7f6; --btn-main: #5e35b1; --btn-hover: #4527a0; --border-main: #d1c4e9; --text-main: #311b92; background: linear-gradient(135deg, #ede7f6 0%, #d1c4e9 100%); }
+.theme-ch5 { --bg-light: #e8eaf6; --bg-dark: #c5cae9; --btn-main: #3949ab; --btn-hover: #283593; --border-main: #9fa8da; --text-main: #1a237e; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); }
+.theme-ch6 { --bg-light: #e1f5fe; --bg-dark: #b3e5fc; --btn-main: #0288d1; --btn-hover: #01579b; --border-main: #81d4fa; --text-main: #01579b; background: linear-gradient(135deg, #e1f5fe 0%, #b3e5fc 100%); }
+.theme-ch7 { --bg-light: #e0f2f1; --bg-dark: #b2dfdb; --btn-main: #00897b; --btn-hover: #00695c; --border-main: #80cbc4; --text-main: #004d40; background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); }
+.theme-ch8 { --bg-light: #fce4ec; --bg-dark: #f8bbd0; --btn-main: #d81b60; --btn-hover: #ad1457; --border-main: #f48fb1; --text-main: #880e4f; background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%); }
+.theme-ch9 { --bg-light: #e0f7fa; --bg-dark: #b2ebf2; --btn-main: #00838f; --btn-hover: #006064; --border-main: #80deea; --text-main: #006064; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); }
+.theme-ch10 { --bg-light: #e8eaf6; --bg-dark: #c5cae9; --btn-main: #3f51b5; --btn-hover: #303f9f; --border-main: #9fa8da; --text-main: #1a237e; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); }
+.theme-ch11 { --bg-light: #e0f7fa; --bg-dark: #b2ebf2; --btn-main: #4ecdc4; --btn-hover: #00838f; --border-main: #80deea; --text-main: #006064; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); }
+.theme-ch12 { --bg-light: #f3e5f5; --bg-dark: #e1bee7; --btn-main: #ab47bc; --btn-hover: #8e24aa; --border-main: #ce93d8; --text-main: #4a148c; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); }
+
+/* FLUID TYPOGRAPHY */
+h1 { color: var(--text-main, #333); font-size: clamp(1.8em, 5vw, 2.8em); font-weight: 800; margin-bottom: 10px; }
+.subtitle { color: #555; font-size: clamp(0.95em, 3vw, 1.2em); margin-bottom: 40px; }
+
+
+/* =========================================
+   📚 1. INDEX PAGE: GRID CARDS
+   ========================================= */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+    max-width: 1050px;
+    margin: 0 auto 50px auto;
+}
+
+.chapter-card {
+    display: block;
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    text-align: left;
+    text-decoration: none !important;
+    color: inherit;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-bottom: 8px solid transparent; 
+}
+
+.chapter-icon { font-size: 2.5em; display: block; margin-bottom: 12px; }
+
+/* Increased topic/chapter title size */
+.chapter-title { 
+    font-size: 1.6em; 
+    font-weight: 800; 
+    margin-top: 0;
+    margin-bottom: 6px; 
+    color: #333; 
+    transition: color 0.3s ease; 
+}
+
+.chapter-desc { color: #666; font-size: 0.85em; line-height: 1.4; margin: 0; }
+
+/* SPECIFIC THEME COLORS FOR INDEX PAGE BOTTOM BORDERS */
+.chapter-card.card-1 { border-bottom-color: #f44336; } 
+.chapter-card.card-2 { border-bottom-color: #9c27b0; } 
+.chapter-card.card-3 { border-bottom-color: #e65100; } 
+.chapter-card.card-4 { border-bottom-color: #5e35b1; } 
+.chapter-card.card-5 { border-bottom-color: #3949ab; } 
+.chapter-card.card-6 { border-bottom-color: #0288d1; } 
+.chapter-card.card-7 { border-bottom-color: #00897b; } 
+.chapter-card.card-8 { border-bottom-color: #d81b60; } 
+.chapter-card.card-9 { border-bottom-color: #00838f; } 
+.chapter-card.card-10 { border-bottom-color: #3f51b5; }
+.chapter-card.card-11 { border-bottom-color: #4ecdc4; }
+.chapter-card.card-12 { border-bottom-color: #ab47bc; }
+
+
+//* =========================================
+   📄 2. CHAPTER PAGES: HORIZONTAL LIST 
+   ========================================= */
+.topic-list, .chapter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 850px;
+    margin: 0 auto 50px auto;
+}
+
+.topic-list a, .chapter-list a {
+    display: block;
+    background: white;
+    border-radius: 12px;
+    padding: 20px 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    text-align: left;
+    text-decoration: none !important;
+    color: inherit;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 8px solid var(--btn-main, #3f51b5);
+}
+
+/* Aggressively target ANY title element in the list */
+.topic-list a h2, .topic-list a h3, 
+.chapter-list a h2, .chapter-list a h3,
+.topic-list a .topic-title, .chapter-list a .topic-title,
+.topic-list a .chapter-title, .chapter-list a .chapter-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.6em; /* Large Topic Name */
+    font-weight: 800;
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: var(--text-main, #333);
+}
+
+/* Aggressively target ANY description element in the list */
+.topic-list a p, .chapter-list a p,
+.topic-list a .topic-desc, .chapter-list a .topic-desc,
+.topic-list a .chapter-desc, .chapter-list a .chapter-desc {
+    color: #555;
+    font-size: 0.9em; /* Smaller Subtext */
+    line-height: 1.4;
+    margin: 0;
+    font-weight: normal;
+}
+
+/* Increased topic/chapter title size */
+.topic-list a h2, .topic-list a h3, .chapter-list a h2, .chapter-list a h3 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.6em;
+    font-weight: 800;
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: var(--text-main, #333);
+}
+
+.topic-list a p, .chapter-list a p {
+    color: #555;
+    font-size: 0.85em;
+    line-height: 1.4;
+    margin: 0;
+}
+
+
+/* =========================================
+   HOVER EFFECTS (For Non-Touch Devices)
+   ========================================= */
+@media (hover: hover) {
+    /* Index Cards Hover */
+    .chapter-card:hover { transform: translateY(-6px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+    .chapter-card.card-1:hover .chapter-title { color: #f44336; }
+    .chapter-card.card-2:hover .chapter-title { color: #9c27b0; }
+    .chapter-card.card-3:hover .chapter-title { color: #e65100; }
+    .chapter-card.card-4:hover .chapter-title { color: #5e35b1; }
+    .chapter-card.card-5:hover .chapter-title { color: #3949ab; }
+    .chapter-card.card-6:hover .chapter-title { color: #0288d1; }
+    .chapter-card.card-7:hover .chapter-title { color: #00897b; }
+    .chapter-card.card-8:hover .chapter-title { color: #d81b60; }
+    .chapter-card.card-9:hover .chapter-title { color: #00838f; }
+    .chapter-card.card-10:hover .chapter-title { color: #3f51b5; }
+    .chapter-card.card-11:hover .chapter-title { color: #4ecdc4; }
+    .chapter-card.card-12:hover .chapter-title { color: #ab47bc; }
+
+    /* Topic List Hover */
+    .topic-list a:hover, .chapter-list a:hover {
+        transform: translateX(8px); 
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+    /* Buttons Hover */
+    .back-btn:hover, .nav-btn:hover { transform: translateY(-3px); background: var(--btn-hover, #555); }
+    .show-answer-btn:hover { transform: scale(1.05); background: var(--btn-hover, #555); }
+}
+
+
+/* =========================================
+   SIMULATORS, NAVIGATION & CONTENT BLOCKS
+   ========================================= */
+.top-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+.back-btn, .nav-btn { display: inline-block; background: var(--btn-main, #333); color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: transform 0.3s; }
+.nav-buttons { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; gap: 10px; flex-wrap: wrap; }
+
+.section-box { max-width: 950px; margin: 30px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: left; overflow-x: auto; }
+.interactive-container { background: var(--bg-light); border: 3px dashed var(--btn-main); border-radius: 15px; padding: 25px; text-align: center; margin: 20px 0; }
+
+.formula-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+.formula-table th, .formula-table td { padding: 15px; border: 2px solid var(--border-main); text-align: left; font-size: 1.05em; line-height: 1.4; }
+.formula-table th { background: var(--btn-main); color: white; }
+
+.slider-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+.slider-group { background: white; padding: 10px 15px; border-radius: 10px; border: 2px solid var(--border-main); font-size: 0.95em; min-width: 140px; flex: 1; }
+input[type=range] { width: 100%; cursor: pointer; display: block; margin-top: 10px; }
+
+.live-dashboard { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; text-align: center; }
+.dash-card { background: white; padding: 15px; border-radius: 10px; border: 2px solid #ddd; min-width: 140px; font-weight: bold; flex: 1; transition: 0.3s; }
+.val-num { font-size: 1.4em; display: block; margin-top: 5px; font-family: monospace; text-align: center; word-break: break-word; }
+
+.qa-box { background: var(--bg-light); padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 6px solid var(--btn-main); }
+.qa-question { font-weight: bold; color: var(--text-main); font-size: 1.05em; margin-bottom: 10px; }
+.qa-answer { background: white; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; color: #555; line-height: 1.5; }
+.show-answer-btn { background: var(--btn-main); color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: transform 0.2s; }
+
+/* =========================================
+   SVG SIMULATOR RESPONSIVENESS FIX
+   ========================================= */
+.svg-canvas {
+    width: 100% !important;
+    max-width: 100%;
+}
+/* =========================================
+   📱 MOBILE RESPONSIVENESS RULES 
+   ========================================= */
+@media (max-width: 600px) {
+    body { padding: 10px; }
+    
+    .section-box { padding: 15px; margin: 15px auto; border-radius: 12px; }
+    .interactive-container { padding: 15px; margin: 10px 0; border-radius: 10px; }
+    
+    .formula-table th, .formula-table td { padding: 10px; font-size: 0.95em; }
+    
+    .nav-buttons { justify-content: center; }
+    .nav-btn { width: 100%; margin-bottom: 10px; }
+    
+    .grid-container, .topic-list, .chapter-list { gap: 15px; padding: 0 10px; }
+    .chapter-card, .topic-list a, .chapter-list a { padding: 20px; }
+    
+    .chapter-icon { font-size: 2em; }
+    
+    .chapter-title, 
+    .topic-list a h2, .topic-list a h3, 
+    .chapter-list a h2, .chapter-list a h3,
+    .topic-list a .topic-title, .chapter-list a .topic-title,
+    .topic-list a .chapter-title, .chapter-list a .chapter-title { 
+        font-size: 1.2em; 
+    }
+
+    /* Force SVGs to scale proportionally on phones */
+    .svg-canvas, .svg-canvas-quad {
+        height: auto !important; 
+    }
+}
