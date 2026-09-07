@@ -136,9 +136,9 @@
         </a>
 
     </div>
-	<button class="nav-btn" onclick="localStorage.clear(); window.location.reload();">
-    🔄 Reset All Progress
-    </button>
+	<button class="back-btn" onclick="if(confirm('Reset all progress?')) { localStorage.clear(); window.location.reload(); }">
+    Reset All Progress
+	</button>
 
     <!-- 🏆 Progression Logic -->
     <script>
