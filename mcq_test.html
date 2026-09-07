@@ -68,8 +68,9 @@
         </div>
     </div>
 
-    <script>
-        const masterQuestionBank = [
+   <script>
+    /* KEEP YOUR ENTIRE masterQuestionBank ARRAY HERE. DO NOT DELETE IT. */
+	const masterQuestionBank = [
             // Chapter 1: Number Systems
             { chapter: "Ch 1: Number System", question: "Which of the following is an irrational number?", options: ["√4", "3.14", "√7", "22/7"], correct: 2, explanation: "√7 is irrational because 7 is not a perfect square, meaning its decimal expansion is non-terminating and non-repeating." },
             { chapter: "Ch 1: Number System", question: "Every rational number is:", options: ["A whole number", "A natural number", "An integer", "A real number"], correct: 3, explanation: "The set of real numbers includes all rational and irrational numbers. Not every rational number (like 1/2) is an integer or whole number." },
@@ -532,133 +533,162 @@
             { chapter: "Ch 13: Probability", question: "Which of the following cannot be the empirical probability of an event?", options: ["2/3", "-1.5", "15%", "0.7"], correct: 1, explanation: "Probability must always be a value between 0 and 1 (inclusive). It can never be a negative number." }
         ];
 
-        const TOTAL_QUESTIONS_LIMIT = 20; 
-        let activeQuestions = [];
-        let currentIndex = 0;
-        let score = 0;
-        let answeredCurrent = false;
+    const TOTAL_QUESTIONS_LIMIT = 20; 
+    let activeQuestions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let answeredCurrent = false;
 
-        function shuffleArray(array) {
-            let curId = array.length;
-            while (0 !== curId) {
-                let randId = Math.floor(Math.random() * curId);
-                curId -= 1;
-                let tmp = array[curId];
-                array[curId] = array[randId];
-                array[randId] = tmp;
-            }
-            return array;
+    // 1. Incognito Mode Failsafe Wrappers
+    function safeGet(key) {
+        try { return JSON.parse(localStorage.getItem(key)); } 
+        catch (e) { return null; }
+    }
+    
+    function safeSet(key, value) {
+        try { localStorage.setItem(key, JSON.stringify(value)); } 
+        catch (e) { console.warn("Incognito Mode: Saving disabled."); }
+    }
+    
+    function safeRemove(key) {
+        try { localStorage.removeItem(key); } 
+        catch (e) {}
+    }
+
+    // 2. Master Pacing & Randomization
+    function shuffleArray(array) {
+        let curId = array.length;
+        while (0 !== curId) {
+            let randId = Math.floor(Math.random() * curId);
+            curId -= 1;
+            let tmp = array[curId];
+            array[curId] = array[randId];
+            array[randId] = tmp;
+        }
+        return array;
+    }
+
+    function initTest() {
+        const savedData = safeGet('math101_mcq');
+        if (savedData && savedData.activeQuestions && savedData.activeQuestions.length > 0) {
+            activeQuestions = savedData.activeQuestions;
+            currentIndex = savedData.currentIndex;
+            score = savedData.score;
+        } else {
+            let shuffled = shuffleArray([...masterQuestionBank]);
+            activeQuestions = shuffled.slice(0, Math.min(TOTAL_QUESTIONS_LIMIT, shuffled.length));
+            currentIndex = 0;
+            score = 0;
+            saveProgress();
         }
 
-        function initTest() {
-            const savedData = JSON.parse(localStorage.getItem('math101_mcq'));
-            if (savedData && savedData.activeQuestions && savedData.activeQuestions.length > 0) {
-                activeQuestions = savedData.activeQuestions;
-                currentIndex = savedData.currentIndex;
-                score = savedData.score;
-            } else {
-                let shuffled = shuffleArray([...masterQuestionBank]);
-                activeQuestions = shuffled.slice(0, Math.min(TOTAL_QUESTIONS_LIMIT, shuffled.length));
-                currentIndex = 0;
-                score = 0;
-                saveProgress();
-            }
-
-            if (currentIndex >= activeQuestions.length) {
-                showEndScreen();
-            } else {
-                renderQuestion();
-            }
+        if (currentIndex >= activeQuestions.length) {
+            showEndScreen();
+        } else {
+            renderQuestion();
         }
+    }
 
-        function renderQuestion() {
-            answeredCurrent = false;
-            document.getElementById('next-container').style.display = "none";
-            document.getElementById('q-explanation').style.display = "none";
-            
-            const qData = activeQuestions[currentIndex];
-            const totalQ = activeQuestions.length;
+    function renderQuestion() {
+        answeredCurrent = false;
+        document.getElementById('next-container').style.display = "none";
+        document.getElementById('q-explanation').style.display = "none";
+        
+        const qData = activeQuestions[currentIndex];
+        const totalQ = activeQuestions.length;
 
-            document.getElementById('question-counter').textContent = `Question: ${currentIndex + 1} / ${totalQ}`;
-            document.getElementById('score-tracker').textContent = `Score: ${score}`;
-            document.getElementById('progress-bar').style.width = `${(currentIndex / totalQ) * 100}%`;
+        document.getElementById('question-counter').textContent = `Question: ${currentIndex + 1} / ${totalQ}`;
+        document.getElementById('score-tracker').textContent = `Score: ${score}`;
+        document.getElementById('progress-bar').style.width = `${(currentIndex / totalQ) * 100}%`;
 
-            document.getElementById('q-text').textContent = qData.question;
+        document.getElementById('q-text').textContent = qData.question;
 
-            const optionsContainer = document.getElementById('q-options');
-            optionsContainer.innerHTML = "";
+        const optionsContainer = document.getElementById('q-options');
+        optionsContainer.innerHTML = "";
 
-            qData.options.forEach((optText, index) => {
-                let btn = document.createElement('button');
-                btn.className = "mcq-option";
-                btn.textContent = optText;
-                btn.onclick = () => selectOption(index, btn);
-                optionsContainer.appendChild(btn);
-            });
-        }
+        qData.options.forEach((optText, index) => {
+            let btn = document.createElement('button');
+            btn.className = "mcq-option";
+            btn.textContent = optText;
+            btn.onclick = () => selectOption(index, btn);
+            optionsContainer.appendChild(btn);
+        });
+    }
 
-        function selectOption(selectedIndex, clickedBtn) {
-            if (answeredCurrent) return; 
-            answeredCurrent = true;
+    function selectOption(selectedIndex, clickedBtn) {
+        if (answeredCurrent) return; 
+        answeredCurrent = true;
 
-            const qData = activeQuestions[currentIndex];
-            const buttons = document.getElementById('q-options').children;
+        const qData = activeQuestions[currentIndex];
+        const buttons = document.getElementById('q-options').children;
 
-            for (let i = 0; i < buttons.length; i++) {
-                buttons[i].disabled = true; 
-                if (i === qData.correct) {
-                    buttons[i].classList.add('correct');
-                }
-            }
-
-            if (selectedIndex === qData.correct) {
-                score++;
-            } else {
-                clickedBtn.classList.add('wrong');
-            }
-
-            document.getElementById('exp-text').textContent = qData.explanation;
-            document.getElementById('q-explanation').style.display = "block";
-            document.getElementById('next-container').style.display = "block";
-
-            saveProgress(currentIndex + 1, score);
-            document.getElementById('score-tracker').textContent = `Score: ${score}`;
-        }
-
-        function nextQuestion() {
-            currentIndex++;
-            if (currentIndex >= activeQuestions.length) {
-                document.getElementById('progress-bar').style.width = `100%`;
-                showEndScreen();
-            } else {
-                renderQuestion();
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].disabled = true; 
+            if (i === qData.correct) {
+                buttons[i].classList.add('correct');
             }
         }
 
-        function showEndScreen() {
-            document.getElementById('quiz-area').style.display = "none";
-            document.getElementById('end-screen').style.display = "block";
-            document.getElementById('final-score').textContent = `${score} / ${activeQuestions.length}`;
-            localStorage.removeItem('math101_mcq'); 
+        if (selectedIndex === qData.correct) {
+            score++;
+        } else {
+            clickedBtn.classList.add('wrong');
         }
 
-        function saveProgress(nextIdx = currentIndex, currentScore = score) {
-            const data = {
-                activeQuestions: activeQuestions,
-                currentIndex: nextIdx,
-                score: currentScore
-            };
-            localStorage.setItem('math101_mcq', JSON.stringify(data));
-        }
+        document.getElementById('exp-text').textContent = qData.explanation;
+        document.getElementById('q-explanation').style.display = "block";
+        document.getElementById('next-container').style.display = "block";
 
-        function resetProgress() {
-            if(confirm("Are you sure you want to reset your test? All progress will be lost!")) {
-                localStorage.removeItem('math101_mcq');
-                location.reload();
-            }
-        }
+        saveProgress(currentIndex + 1, score);
+        document.getElementById('score-tracker').textContent = `Score: ${score}`;
+    }
 
-        window.onload = initTest;
-    </script>
+    function nextQuestion() {
+        currentIndex++;
+        if (currentIndex >= activeQuestions.length) {
+            document.getElementById('progress-bar').style.width = `100%`;
+            showEndScreen();
+        } else {
+            renderQuestion();
+        }
+    }
+
+    function showEndScreen() {
+        document.getElementById('quiz-area').style.display = "none";
+        const endScreen = document.getElementById('end-screen');
+        endScreen.style.display = "block";
+        document.getElementById('final-score').textContent = `${score} / ${activeQuestions.length}`;
+        
+        // 3. Platinum Trophy Logic
+        if (score === activeQuestions.length) {
+            try { localStorage.setItem('math101_trophy_platinum', 'earned'); } catch(e) {}
+            endScreen.innerHTML += `
+                <h1 style="font-size: 5em; margin: 15px 0;">💎</h1>
+                <h2 style="color: #1976d2;">Platinum Trophy Unlocked!</h2>
+                <p style="color: #666;">You have achieved true mathematical mastery.</p>
+            `;
+        }
+        
+        safeRemove('math101_mcq'); 
+    }
+
+    function saveProgress(nextIdx = currentIndex, currentScore = score) {
+        const data = {
+            activeQuestions: activeQuestions,
+            currentIndex: nextIdx,
+            score: currentScore
+        };
+        safeSet('math101_mcq', data);
+    }
+
+    function resetProgress() {
+        if(confirm("Are you sure you want to reset your test? All progress will be lost!")) {
+            safeRemove('math101_mcq');
+            location.reload();
+        }
+    }
+
+    window.onload = initTest;
+</script>
 </body>
 </html>

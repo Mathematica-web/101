@@ -28,6 +28,13 @@
             0% { transform: scale(0) rotate(-20deg); opacity: 0; } 
             100% { transform: scale(1) rotate(0deg); opacity: 1; } 
         }
+        
+        /* Special styling to make the Master Assessment stand out */
+        .card-master {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border: 2px solid #ffb300;
+            grid-column: 1 / -1; /* Spans the full width of the grid */
+        }
     </style>
 </head>
 <body class="index-page">
@@ -135,23 +142,41 @@
             <div class="trophy-badge" id="trophy-12">🏆</div>
         </a>
 
-    </div>
-	<button class="back-btn" onclick="if(confirm('Reset all progress?')) { localStorage.clear(); window.location.reload(); }">
-    Reset All Progress
-	</button>
+        <!-- MASTER ASSESSMENT -->
+        <a href="mcq_test.html" class="chapter-card card-master">
+            <span class="chapter-icon">👑</span>
+            <div class="chapter-title">Master Challenge</div>
+            <div class="chapter-desc">The Final 20-Question Test</div>
+            <div class="trophy-badge" id="trophy-platinum" style="font-size: 3rem;">💎</div>
+        </a>
 
-    <!-- 🏆 Progression Logic -->
+    </div>
+    
+    <div style="text-align: center; margin-top: 30px;">
+        <button class="back-btn" onclick="if(confirm('Reset all progress?')) { localStorage.clear(); window.location.reload(); }">
+        Reset All Progress
+        </button>
+    </div>
+
+    <!-- 🏆 Progression Logic with Incognito Failsafes -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Loop through all 12 chapters to check for earned trophies
-            for (let i = 1; i <= 12; i++) {
-                const trophyStatus = localStorage.getItem(`math101_trophy_ch${i}`);
-                if (trophyStatus === 'earned') {
-                    const badge = document.getElementById(`trophy-${i}`);
-                    if (badge) {
-                        badge.classList.add('earned');
+            try {
+                // Check all 12 standard chapters[cite: 2]
+                for (let i = 1; i <= 12; i++) {
+                    if (localStorage.getItem(`math101_trophy_ch${i}`) === 'earned') {
+                        const badge = document.getElementById(`trophy-${i}`);
+                        if (badge) badge.classList.add('earned');
                     }
                 }
+                
+                // Check for the Master Assessment Platinum Trophy
+                if (localStorage.getItem('math101_trophy_platinum') === 'earned') {
+                    const platTrophy = document.getElementById('trophy-platinum');
+                    if (platTrophy) platTrophy.classList.add('earned');
+                }
+            } catch (e) {
+                console.warn("Storage access restricted by browser settings.");
             }
         });
     </script>
