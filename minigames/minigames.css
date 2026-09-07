@@ -1,28 +1,152 @@
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-body { background: #f0f4f8; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; user-select: none; }
+/* ==============================================================
+   CORE LAYOUT & MOBILE FIXES
+   ============================================================== */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    /* Prevents pull-to-refresh and accidental scrolling away from buttons */
+    overflow: hidden; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #111; /* Fallback safe area color */
+}
 
-/* Responsive Game Board */
-.game-wrapper { width: 100%; max-width: 450px; height: 100vh; max-height: 800px; background: white; position: relative; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-radius: 0; }
-@media (min-width: 500px) { .game-wrapper { height: 90vh; border-radius: 20px; overflow: hidden; } }
+*, *::before, *::after {
+    box-sizing: border-box;
+}
 
-/* Top Navigation & HUD */
-.header { background: var(--theme-main); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; font-size: 1.1em; z-index: 20; }
-.back-btn { color: white; text-decoration: none; font-size: 0.9em; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 5px; }
+.game-wrapper {
+    display: flex;
+    flex-direction: column;
+    /* 100dvh prevents mobile browser UI (address bar) from cutting off the bottom */
+    height: 100dvh; 
+    max-height: 100%; 
+    overflow: hidden;
+    position: relative;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
 
-/* Game Area Base */
-.game-area { flex-grow: 1; position: relative; overflow: hidden; background: var(--theme-light); }
+@media (min-width: 500px) { 
+    .game-wrapper { height: 90vh; border-radius: 20px; } 
+}
 
-/* Screens & Trophies */
-.screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.95); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; z-index: 30; }
-.screen h2 { font-size: 2.2em; color: var(--theme-main); margin-bottom: 10px; }
-.screen p { font-size: 1.1em; color: #555; margin-bottom: 25px; }
-.start-btn { background: var(--theme-main); color: white; padding: 15px 30px; border: none; border-radius: 30px; font-size: 1.2em; font-weight: bold; cursor: pointer; transition: opacity 0.2s; }
-.start-btn:active { opacity: 0.8; }
-.trophy { font-size: 4em; margin-bottom: 10px; display: none; }
-.hidden { display: none !important; }
+.game-area {
+    /* Flex: 1 ensures the game board stretches to fill available space, but no more */
+    flex: 1; 
+    position: relative;
+    overflow: hidden;
+    display: flex;
+}
 
-/* Victory Screen Overlay */
-.victory-screen { background: rgba(76, 175, 80, 0.95); z-index: 40; }
-.victory-screen h2 { color: white; font-size: 3em; animation: popIn 0.5s ease-out; }
-.victory-screen p { color: #e8f5e9; font-size: 1.2em; font-weight: bold; }
-@keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+/* ==============================================================
+   HEADER & HUD
+   ============================================================== */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: var(--theme-main, #333);
+    color: white;
+    font-size: 1.1em;
+    font-weight: bold;
+    z-index: 20;
+    /* Prevents the header from shrinking on small screens */
+    flex-shrink: 0; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.back-btn {
+    color: white;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    transition: background 0.2s;
+}
+
+.back-btn:active {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* ==============================================================
+   OVERLAY SCREENS (START, GAME OVER, VICTORY)
+   ============================================================== */
+.screen {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 25px;
+    z-index: 30;
+    backdrop-filter: blur(5px);
+}
+
+.screen h2 {
+    color: var(--theme-main, #333);
+    font-size: 2.2em;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.screen p {
+    font-size: 1.1em;
+    color: #444;
+    margin-bottom: 25px;
+    line-height: 1.5;
+    max-width: 400px;
+}
+
+.start-btn {
+    background: var(--theme-main, #333);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.start-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.victory-screen h2 {
+    color: #fbc02d; 
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Utility to toggle screens */
+.hidden {
+    display: none !important;
+}
+
+/* ==============================================================
+   BOTTOM CONTROL GRIDS (ANTI-SHRINK ANCHORS)
+   ============================================================== */
+/* Targets every custom button layout across all 12 chapters */
+.controls, 
+.angle-controls, 
+.option-controls, 
+.shape-controls, 
+.criteria-controls {
+    /* Prevents mobile browsers from squishing the buttons */
+    flex-shrink: 0; 
+    width: 100%;
+    /* Adds safety padding for modern iPhones with no physical home button */
+    padding-bottom: env(safe-area-inset-bottom); 
+    position: relative;
+    z-index: 20;
+}
